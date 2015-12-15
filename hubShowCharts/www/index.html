@@ -1242,7 +1242,7 @@
     };
     function showScore(_this,score){
         $('#showscoreId').remove();
-        $(document.body).append('<div id=showscoreId style="position:absolute; width:auto; height:auto; padding:0.2rem 0.3rem; border-radius:0.2rem; -webkit-border-radius:0.2rem; border:1px solid #666; font-size:0.6rem; z-index:9000; left:'+_this.offset().left+'px; top:'+_this.offset().top+'px; margin-top:-1.2rem;">'+score+'</div>');
+        $(document.body).append('<div id=showscoreId style="position:absolute; width:auto; height:auto; padding:0.2rem 0.3rem; border-radius:0.2rem; -webkit-border-radius:0.2rem; border:1px solid #666; background: #fff; font-size:0.6rem; z-index:9000; left:'+_this.offset().left+'px; top:'+_this.offset().top+'px; margin-top:-1.2rem;">'+score+'</div>');
     };
     function hideScore(){
         if(scoreStatus == 0){
