@@ -31,8 +31,8 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="5184" max-vertical-offset="39393">
-              <caret line="188" column="0" selection-start-line="188" selection-start-column="0" selection-end-line="188" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.30577576" vertical-offset="1782" max-vertical-offset="39312">
+              <caret line="76" column="152" selection-start-line="76" selection-start-column="152" selection-end-line="76" selection-end-column="152" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -48,16 +48,16 @@
                 <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#1;n#div#1;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="e#7475#7493#0" expanded="false" />
-                <marker date="1450083513496" expanded="true" signature="15301:15319" placeholder="..." />
-                <marker date="1450083513496" expanded="true" signature="25165:25182" placeholder="..." />
-                <marker date="1450083513496" expanded="true" signature="25672:25689" placeholder="..." />
-                <marker date="1450083513496" expanded="true" signature="33497:33507" placeholder="..." />
-                <marker date="1450083513496" expanded="true" signature="35565:35577" placeholder="..." />
-                <marker date="1450083513496" expanded="true" signature="35591:35608" placeholder="..." />
-                <marker date="1450083513496" expanded="true" signature="35638:35656" placeholder="..." />
-                <marker date="1450083513496" expanded="true" signature="36115:36132" placeholder="..." />
-                <marker date="1450083513496" expanded="true" signature="49944:49961" placeholder="..." />
-                <marker date="1450083513496" expanded="true" signature="50071:50088" placeholder="..." />
+                <marker date="1450144229579" expanded="true" signature="15301:15319" placeholder="..." />
+                <marker date="1450144229579" expanded="true" signature="25165:25182" placeholder="..." />
+                <marker date="1450144229579" expanded="true" signature="25672:25689" placeholder="..." />
+                <marker date="1450144229579" expanded="true" signature="33497:33507" placeholder="..." />
+                <marker date="1450144229579" expanded="true" signature="35565:35577" placeholder="..." />
+                <marker date="1450144229579" expanded="true" signature="35591:35608" placeholder="..." />
+                <marker date="1450144229579" expanded="true" signature="35638:35656" placeholder="..." />
+                <marker date="1450144229579" expanded="true" signature="36115:36132" placeholder="..." />
+                <marker date="1450144229579" expanded="true" signature="49944:49961" placeholder="..." />
+                <marker date="1450144229579" expanded="true" signature="50071:50088" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -348,15 +348,15 @@
       <BehatRunner />
       <method />
     </configuration>
-    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
-      <method />
-    </configuration>
     <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
       <node-options />
       <gulpfile />
       <tasks />
       <pass-parent-envs>true</pass-parent-envs>
       <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
       <method />
     </configuration>
     <list size="5">
@@ -390,7 +390,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="1" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -399,7 +399,7 @@
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18958333" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.178125" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32911393" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -444,10 +444,79 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../../../工作/接口文档/index.html">
+    <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.7123443" vertical-offset="8964" max-vertical-offset="26676">
-          <caret line="380" column="26" selection-start-line="380" selection-start-column="12" selection-end-line="380" selection-end-column="26" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="38610">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#2;n#div#2;n#div#1;n#div#2;n#div#1;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#3;n#div#2;n#div#1;n#div#2;n#div#1;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#1;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="e#7475#7493#0" expanded="false" />
+            <marker date="1450144229579" expanded="true" signature="15301:15319" placeholder="..." />
+            <marker date="1450144229579" expanded="true" signature="25165:25182" placeholder="..." />
+            <marker date="1450144229579" expanded="true" signature="25672:25689" placeholder="..." />
+            <marker date="1450144229579" expanded="true" signature="33497:33507" placeholder="..." />
+            <marker date="1450144229579" expanded="true" signature="35565:35577" placeholder="..." />
+            <marker date="1450144229579" expanded="true" signature="35591:35608" placeholder="..." />
+            <marker date="1450144229579" expanded="true" signature="35638:35656" placeholder="..." />
+            <marker date="1450144229579" expanded="true" signature="36115:36132" placeholder="..." />
+            <marker date="1450144229579" expanded="true" signature="49944:49961" placeholder="..." />
+            <marker date="1450144229579" expanded="true" signature="50071:50088" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testTeacherApi.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="710" max-vertical-offset="1620">
+          <caret line="35" column="6" selection-start-line="35" selection-start-column="6" selection-end-line="35" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/indexTeacher.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="18387" max-vertical-offset="23571">
+          <caret line="782" column="43" selection-start-line="782" selection-start-column="43" selection-end-line="782" selection-end-column="43" />
+          <folding>
+            <element signature="n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#div#2;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#div#1;n#div#3;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#div#1;n#div#4;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <marker date="1449641356573" expanded="true" signature="25959:25968" placeholder="..." />
+            <marker date="1449641356573" expanded="true" signature="29754:29763" placeholder="..." />
+            <marker date="1449641356573" expanded="true" signature="31960:32028" placeholder="..." />
+            <marker date="1449641356573" expanded="true" signature="36181:36190" placeholder="..." />
+            <marker date="1449641356573" expanded="true" signature="39710:39719" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3861">
+          <caret line="0" column="113" selection-start-line="0" selection-start-column="86" selection-end-line="0" selection-end-column="113" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/english.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="216" max-vertical-offset="2457">
+          <caret line="8" column="11" selection-start-line="8" selection-start-column="1" selection-end-line="8" selection-end-column="11" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -465,13 +534,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../../工作/接口文档/英语录音demo/在线语音评测SDK20150525 (1)/在线语音评测SDK20150525/SDK/android/aiengine.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1863">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/newTeacherApi.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="14156" max-vertical-offset="16902">
@@ -483,27 +545,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="405" max-vertical-offset="8910">
           <caret line="22" column="37" selection-start-line="22" selection-start-column="20" selection-end-line="22" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../工作/接口文档/资源中心补充 考题试卷  状态 弹窗/resourceCss/resetPublic.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.03374578" vertical-offset="30" max-vertical-offset="7641">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../工作/接口文档/资源中心补充 考题试卷  状态 弹窗/js/selfResource.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33295837" vertical-offset="1216" max-vertical-offset="6264">
-          <caret line="56" column="40" selection-start-line="56" selection-start-column="32" selection-end-line="56" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../工作/接口文档/资源中心补充 考题试卷  状态 弹窗/searchlist试卷 .html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="8.546308" vertical-offset="2106" max-vertical-offset="11178">
-          <caret line="343" column="52" selection-start-line="343" selection-start-column="40" selection-end-line="343" selection-end-column="52" />
         </state>
       </provider>
     </entry>
@@ -533,13 +574,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.02937976" vertical-offset="1215" max-vertical-offset="3294">
           <caret line="45" column="31" selection-start-line="45" selection-start-column="8" selection-end-line="45" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../软件/多级菜单/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="324" max-vertical-offset="3672">
-          <caret line="23" column="53" selection-start-line="23" selection-start-column="43" selection-end-line="23" selection-end-column="53" />
         </state>
       </provider>
     </entry>
@@ -638,13 +672,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.8200225" vertical-offset="405" max-vertical-offset="2295">
           <caret line="52" column="38" selection-start-line="52" selection-start-column="34" selection-end-line="52" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../软件/public/app/views/setUser/setting.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.09173273" vertical-offset="486" max-vertical-offset="5130">
-          <caret line="21" column="19" selection-start-line="21" selection-start-column="8" selection-end-line="21" selection-end-column="19" />
         </state>
       </provider>
     </entry>
@@ -817,8 +844,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="5184" max-vertical-offset="39393">
-          <caret line="188" column="0" selection-start-line="188" selection-start-column="0" selection-end-line="188" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.30577576" vertical-offset="1782" max-vertical-offset="39312">
+          <caret line="76" column="152" selection-start-line="76" selection-start-column="152" selection-end-line="76" selection-end-column="152" />
           <folding>
             <element signature="n#style#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -834,16 +861,16 @@
             <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#div#1;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="e#7475#7493#0" expanded="false" />
-            <marker date="1450083513496" expanded="true" signature="15301:15319" placeholder="..." />
-            <marker date="1450083513496" expanded="true" signature="25165:25182" placeholder="..." />
-            <marker date="1450083513496" expanded="true" signature="25672:25689" placeholder="..." />
-            <marker date="1450083513496" expanded="true" signature="33497:33507" placeholder="..." />
-            <marker date="1450083513496" expanded="true" signature="35565:35577" placeholder="..." />
-            <marker date="1450083513496" expanded="true" signature="35591:35608" placeholder="..." />
-            <marker date="1450083513496" expanded="true" signature="35638:35656" placeholder="..." />
-            <marker date="1450083513496" expanded="true" signature="36115:36132" placeholder="..." />
-            <marker date="1450083513496" expanded="true" signature="49944:49961" placeholder="..." />
-            <marker date="1450083513496" expanded="true" signature="50071:50088" placeholder="..." />
+            <marker date="1450144229579" expanded="true" signature="15301:15319" placeholder="..." />
+            <marker date="1450144229579" expanded="true" signature="25165:25182" placeholder="..." />
+            <marker date="1450144229579" expanded="true" signature="25672:25689" placeholder="..." />
+            <marker date="1450144229579" expanded="true" signature="33497:33507" placeholder="..." />
+            <marker date="1450144229579" expanded="true" signature="35565:35577" placeholder="..." />
+            <marker date="1450144229579" expanded="true" signature="35591:35608" placeholder="..." />
+            <marker date="1450144229579" expanded="true" signature="35638:35656" placeholder="..." />
+            <marker date="1450144229579" expanded="true" signature="36115:36132" placeholder="..." />
+            <marker date="1450144229579" expanded="true" signature="49944:49961" placeholder="..." />
+            <marker date="1450144229579" expanded="true" signature="50071:50088" placeholder="..." />
           </folding>
         </state>
       </provider>
