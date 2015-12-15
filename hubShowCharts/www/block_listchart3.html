@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=9">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <title>我的书桌</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+
+    <script src="js/every.js"></script>
+    <script src="js/turnpage.js"></script>
+
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/echarts/esl.js"></script>
+    <script src="js/yxMobileSlider.js"></script>
+    <script>
+        setTimeout(function(){
+            var oScript = document.createElement('script');
+            oScript.src = 'js/echarts/echarts.js';
+            document.getElementsByTagName('head')[0].appendChild(oScript);
+        },200);
+    </script>
+    <script src="js/statis/EChartsInfo.js"></script>
+
+    <style>
+        #box{display:block; width:18rem; height:11.3rem; margin:2rem auto; position:relative;}/*用于获取更加体验*/
+        #box ul li{ width:18rem; float:left; position: relative; display: none;}
+        #box span{width:10px;height:10px;margin-right:5px; margin-left: 5px; border-radius:50%;background:#666;font-size:0}
+        #box span.current{background:#ff0000;}
+        #loading{width: 100%; text-align: center;}
+    </style>
+</head>
+<body style="background: #fff;">
+<div class="main">
+    <div class="header"><div class="l" onclick="returnIframe();">关闭</div><div class="m" id="mName">课时1：平均分</div><div class="r"></div></div>
+    <div class="list_book">
+        <ul>
+            <li><span>当前课时(<label id="timeName">课时1：平均分</label>)</span></li>
+        </ul>
+    </div>
+    <div class="section">
+        <div style="float:right; display: none;">
+            <input type="text" class="date" id="txtbegin" style="width: 100px;" onfocus="beginfocus()" readonly> 至
+            <input type="text" class="date" id="txtend" style="width: 100px;" onfocus="endfocus()" readonly>
+            <button class="btn btn-default" onclick="postseacher()">查询</button>
+        </div>
+        <div id="box">
+            <div id="loading"><img src="img/loading.gif" style="margin-top: 5rem;"></div>
+            <ul>
+                <li>
+                    <!--<div id="ChartMain" style="width:100%; height: 12.8rem;"></div>-->
+                    <!--<label>正确率</label>-->
+                </li>
+                <li>
+                    <!--<div id="ChartMain1" style="width:700px; height: 12.8rem;"></div>;-->
+                    <!--<label>完成率</label>-->
+                </li>
+                <li>
+                    <!--<div id="ChartMain2" style="width:700px; height: 12.8rem;"></div>-->
+                    <!--<label>首次完成率</label>-->
+                </li>
+            </ul>
+        </div>
+        <div class="lip" id="lip" style="margin-top: 0.5rem;">
+            <p>
+                <input class="cur" type="button" value="课时1：平均分">
+                <input type="button" value="课时2：练习二">
+                <input type="button" value="课时3：除法">
+                <input type="button" value="课时4：练习三">
+                <input type="button" value="课时5：用2～6的乘法口诀求商">
+            </p>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    var aLiInput = document.querySelectorAll('#lip p input');
+    var oLabelName = document.querySelector('#timeName');
+    var oDivName = document.querySelector('#mName');
+    for(var i=0; i<aLiInput.length; i++){
+        aLiInput[i].onclick = function(){
+            for(var i=0; i<aLiInput.length; i++){
+                aLiInput[i].className = '';
+            };
+            this.className = 'cur';
+            oLabelName.innerHTML = this.value;
+            oDivName.innerHTML = this.value;
+        };
+    };
+</script>
+
+<script type="text/javascript" src="js/statis/ApiConfig.js?v={$nowtime}"></script>
+<script type="text/javascript">
+    function beginfocus()
+    {
+        WdatePicker({dateFmt:"yyyy-MM-dd",minDate:"#F{$dp.$D('txtend',{d:-30})}",maxDate:"%y-%M-%d}}"});
+    }
+    function endfocus()
+    {
+        WdatePicker({dateFmt:"yyyy-MM-dd",minDate:"#F{$dp.$D('txtbegin')}",maxDate:"%y-%M-%d}}"});
+    }
+
+    $("#txtbegin").val(new Date().dateAdd("d",-30).format("yyyy-MM-dd"));
+    $("#txtend").val(new Date().dateAdd("d",-1).format("yyyy-MM-dd"));
+
+
+    var  tableHeader = [
+        { "Name": "日期", "Code": "strdate" },
+        { "Name": "学习时长", "Code": "LearnResidenceTime" },
+        { "Name": "在线时长", "Code": "ResidenceTime" },
+        { "Name": "在线人数", "Code": "usercount" },
+        { "Name": "访问量", "Code": "pageviews" }
+    ];
+    var _timemax=0;
+    var _timemin=0;
+    var _learntimemax=0;
+    var _learntimemin=0;
+    var _learntime="";
+    var _onlinetime="";
+    var _date="";
+    var _pageviews="";
+    var _usercount="";
+    var count = 0
+
+
+    var _siteID=apisiteid;
+    var api=apiurl +"/api/api2.ashx?type=sysvistor&siteid="+_siteID;
+
+    function totalinit()
+    {
+        //totalsysvistor
+        $.ajax({
+            url: apiurl +"/api/api2.ashx?type=totalsysvistor&siteid="+_siteID,
+            dataType: "jsonp",
+            jsonp: "callback",
+            async: false,
+            success: function (data) {
+                $("#WrapContent_Title").append("<span style='color:#00d8d8'>历史在线时长："+data[0].ResidenceTime+"(时)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;历史学习时长："+data[0].learnResidenceTime+"(时)</span>");
+                $("#WrapContent_Title").append("<span style='color:#3FE267;margin-left:20px;'>历史访问量："+data[0].PageViews+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;历史上线人数："+data[0].uvid+"</span>")
+            }
+        });
+    }
+    totalinit();
+    function random()
+    {
+        return parseInt( Math.random()*100000,10)
+    }
+    function init(begin,endate) {
+        _date="";
+        _learntime="";
+        _onlinetime="";
+        _pageviews="";
+        _usercount="";
+        var c1=random();
+        var c2=random();
+        var c3=random();
+
+        $("#box > ul > li:eq(0)").append("<div id='ChartMain"+c1+"' style='width: 18rem; height: 14.8rem;'></div>");
+        $("#box > ul > li:eq(1)").append("<div id='ChartMain"+c2+"' style='width: 18rem; height: 14.8rem;'></div>");;
+        $("#box > ul > li:eq(2)").append("<div id='ChartMain"+c3+"' style='width: 18rem; height: 14.8rem;'</div>");
+
+        var apiurl=api+"&begindate="+begin+"&enddate="+endate;
+        $.ajax({
+            url: apiurl,
+            dataType: "jsonp",
+            jsonp: "callback",
+            async: false,
+            success: function (data) {
+                //console.log(data.ds)
+                for (var i = 0; i < data.length; i++) {
+                    if (_timemax <parseInt(data[i].ResidenceTime,10)) {
+                        _timemax = parseInt(data[i].ResidenceTime,10);
+                    }
+                    if (_learntimemax < parseInt(data[i].LearnResidenceTime,10)) {
+                        _learntimemax = parseInt(data[i].LearnResidenceTime,10);
+                    }
+                    if(_timemin==0)
+                    {
+                        _timemin = parseInt(data[i].ResidenceTime,10);
+                    }
+                    if (_timemin > parseInt(data[i].ResidenceTime,10)) {
+                        _timemin = parseInt(data[i].ResidenceTime,10);
+                    }
+                    if(_learntimemin==0)
+                    {
+                        _learntimemin = parseInt(data[i].LearnResidenceTime,10);
+                    }
+                    if (_learntimemin > parseInt(data[i].LearnResidenceTime,10)) {
+                        _learntimemin = parseInt(data[i].LearnResidenceTime,10);
+                    }
+                    if (_learntime != "") {
+                        _learntime = _learntime + ",";
+                    }
+                    _learntime = _learntime + data[i].LearnResidenceTime;
+                    ;
+                    if (_onlinetime != "") {
+                        _onlinetime = _onlinetime + ",";
+                    }
+                    _onlinetime = _onlinetime + data[i].ResidenceTime;
+                    ;
+                    if (_date != "") {
+                        _date = _date + ",";
+                    }
+                    _date = _date + data[i].strdate;
+                    ;
+                    if (_pageviews != "") {
+                        _pageviews = _pageviews + ",";
+                    }
+                    _pageviews = _pageviews + data[i].pageviews;
+                    ;
+                    if (_usercount != "") {
+                        _usercount = _usercount + ",";
+                    }
+                    _usercount = _usercount + data[i].usercount;
+                    ;
+
+                }
+
+
+                var options0="{tooltip:{trigger:'axis'},legend:{x:'left',data:['学习时长','在线时长']},toolbox:{show:true,feature:{mark:{show:false},magicType:{show:true,type:['line','bar']},restore:{show:true},saveAsImage:{show:false}}},xAxis:[{type:'category',data:['"+_date.replace(/,/g,"','")+"']}],yAxis:[{type:'value',name:'时长（分）'}],series:[{name:'在线时长',type:'bar',data:["+_onlinetime+"],markPoint:{data:[{type:'max',name:'在线最大值'},{type:'min',name:'在线最小值'}]},markLine:{data:[{type:'average',name:'平均值'}]}},{name:'学习时长',type:'bar',data:["+_learntime+"],markPoint:{data:[{type:'max',name:'学习最大值'},{type:'min',name:'学习最小值'}]},markLine:{data:[{type:'average',name:'平均值'}]}}],grid:{x:36,y:36,x2:12,y2:54}}";
+                var options1="{tooltip:{trigger:'axis'},toolbox:{show:true,feature:{mark:{show:false},magicType:{show:true,type:['line','bar']},restore:{show:true},saveAsImage:{show:false}}},xAxis:[{type:'category',boundaryGap:false,data:['"+_date.replace(/,/g,"','")+"']}],yAxis:[{type:'value',name:'访问量'}],series:[{name:'访问量',type:'line',data:["+_pageviews+"],markLine:{data:[{type:'average',name:'平均值'}]}}],grid:{x:36,y:36,x2:12,y2:54}}"
+                var options2="{tooltip:{trigger:'axis'},toolbox:{show:true,feature:{mark:{show:false},magicType:{show:true,type:['line','bar']},restore:{show:true},saveAsImage:{show:false}}},xAxis:[{type:'category',data:['"+_date.replace(/,/g,"','")+"']}],yAxis:[{type:'value',name:'上线人数'}],series:[{name:'上线人数',type:'bar',data:["+_usercount+"],markLine:{data:[{type:'average',name:'平均值'}]}}],grid:{x:36,y:36,x2:12,y2:54}}"
+                require(
+                        [
+                            'echarts',
+                            'echarts/chart/pie'
+
+                        ],
+                        function (ec) {
+                            var myChart = ec.init(document.getElementById('ChartMain'+c1), "macarons");
+                            var myChart1 = ec.init(document.getElementById('ChartMain'+c2), "macarons");
+                            var  myChart2 = ec.init(document.getElementById('ChartMain'+c3), "macarons");
+                            // myChart.showLoading()
+                            myChart.setOption(eval("("+options0+")"),true);
+                            //myChart1.showLoading()
+                            myChart1.setOption(eval("("+options1+")"),true);
+                            // myChart2.showLoading()
+                            myChart2.setOption(eval("("+options2+")"),true);
+
+                        });
+                $("#box > #loading").html("");
+                $("#box").yxMobileSlider({width:'100%',height:296,during:6000});
+            }
+        });
+    }
+    init($("#txtbegin").val(),$("#txtend").val());
+    function postseacher()
+    {
+        init($("#txtbegin").val(),$("#txtend").val());
+    }
+</script>
+</html>

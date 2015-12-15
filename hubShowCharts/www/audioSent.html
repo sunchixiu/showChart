@@ -1,0 +1,1036 @@
+
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>
+
+</title>
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="js/audio/load_core.js"></script>
+    <script type="text/javascript" src="js/audio/jquery.jplayer.min.js"></script>
+    <script>
+        var Config = {
+            appKey:"1446447870000011",
+            secretKey:"85e004235e203a23de16ff40cc964f8e"
+        };
+    </script>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+
+        }
+        body{font-family: 'Microsoft Yahei', sans-serif;}
+        .blackboard {
+            background: url(img/audio/blackboard.png) no-repeat;
+            height: 662px;
+            width: 980px;
+            overflow: hidden;
+            margin-left: auto;
+            margin-right: auto;
+            position:relative;
+            font-size:14px;
+        }
+
+        .blackboard h1 {
+            color: #2E596A;
+            text-align: center;
+            font-weight: normal;
+            font-size: 18px;
+            padding-top: 30px;
+        }
+
+        .blackboard .blackboard_container {
+            width: 764px;
+            height: 461px;
+            margin-top: 34px;
+            margin-left: auto;
+            margin-right: auto;
+            overflow: hidden;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        .blackboard .blackboard_container .bc_header {
+            padding-top: 10px;
+            height: 24px;
+            padding-bottom: 10px;
+            text-align: center;
+        }
+
+        .blackboard .blackboard_container .bc_header.wordheader {
+            text-align: center;
+        }
+
+        .blackboard .blackboard_container .bc_header.textheader a {
+            width: 30px;
+            height: 23px;
+            margin-right: 10px;
+            display: inline-block;
+            background: url(img/audio/speed.png) no-repeat;
+            color: #000;
+            text-align: center;
+            padding-top: 7px;
+            font-size: 12px;
+        }
+
+        .blackboard .blackboard_container .bc_header.textheader a:hover, .blackboard .blackboard_container .bc_header.textheader a.active {
+            background: url(img/audio/speed_hover.png) no-repeat;
+            color: #fff;
+        }
+
+        .blackboard .blackboard_container .bc_header .proccess {
+            display: inline-block;
+            background: url(img/audio/big_proccess.png) no-repeat;
+            height: 9px;
+            width: 570px;
+        }
+
+        .blackboard .blackboard_container .bc_header .proccess div {
+            background: #7AC960;
+            width: 0;
+            border-radius: 9px;
+            height: 9px;
+        }
+
+        .blackboard .blackboard_container .bc_header .bc_score {
+            display: inline-block;
+            color: #7AC960;
+        }
+
+        .blackboard .blackboard_container .bc_header.wordheader a {
+            width: 24px;
+            height: 22px;
+            margin-right: 10px;
+            display: inline-block;
+            background: url(img/audio/wordheader.png) no-repeat;
+            color: #000;
+            text-align: center;
+            padding-top: 2px;
+            font-size: 16px;
+        }
+
+        .blackboard .blackboard_container .bc_header.wordheader a:hover, .blackboard .blackboard_container .bc_header.wordheader a.active {
+            background: url(img/audio/wordheader_hover.png) no-repeat;
+            color: #fff;
+        }
+
+        .blackboard .blackboard_container .bc_content {
+            height: 345px;
+            padding-left: 20px;
+            padding-right: 20px;
+            clear: both;
+            overflow-y: auto;
+            margin-bottom: 8px;
+        }
+
+        .blackboard .blackboard_container .bc_content dl {
+            overflow: hidden;
+            padding-top: 10px;
+            font-family:Arial,'Times New Roman','Microsoft YaHei',SimHei;
+        }
+
+        .blackboard .blackboard_container .bc_content dl dt {
+            width: 600px;
+            float: left;
+            font-size: 17px;
+        }
+
+        .blackboard .blackboard_container .bc_content dl dt i {
+            color: #f00;
+            font-style: normal;
+        }
+
+        .blackboard .blackboard_container .bc_content dl dt input {
+            border: 0;
+            height: 30px;
+            width: 580px;
+        }
+
+        .blackboard .blackboard_container .bc_content dl dt span {
+            margin-right: 6px;
+        }
+
+        .blackboard .blackboard_container .bc_content dl dd {
+            width: 90px;
+            float: right;
+        }
+
+        .blackboard .blackboard_container .bc_content dd a {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            margin-right: 10px;
+        }
+
+        .blackboard .blackboard_container .bc_content dd a.minaudio {
+            background: url(img/audio/min_audio.png) no-repeat;
+        }
+
+        .blackboard .blackboard_container .bc_content dd a.minkey {
+            background: url(img/audio/min_key.png) no-repeat;
+            width: 20px;
+        }
+
+        .blackboard .blackboard_container .bc_content dd a.minread {
+            background: url(img/audio/min_read.png) no-repeat;
+        }
+
+        .blackboard .blackboard_container .bc_content dd a.minaudio:hover, .blackboard .blackboard_container .bc_content dd a.minaudio.active {
+            background: url(img/audio/min_audio_hover.png) no-repeat;
+        }
+
+        .blackboard .blackboard_container .bc_content dd a.minkey:hover, .blackboard .blackboard_container .bc_content dd a.minkey.active {
+            background: url(img/audio/min_key_hover.png) no-repeat;
+            width: 20px;
+        }
+
+        .blackboard .blackboard_container .bc_content dd a.minread:hover, .blackboard .blackboard_container .bc_content dd a.minread.active {
+            background: url(img/audio/min_read_hover.png) no-repeat;
+        }
+
+        .blackboard .blackboard_container .bc_footer {
+            clear: both;
+            width: 380px;
+            overflow: hidden;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 100px;
+        }
+
+        .blackboard .blackboard_container .bc_footer a {
+            display: inline-block;
+            margin-right: 20px;
+            width: 66px;
+            height: 66px;
+        }
+
+        .blackboard .blackboard_container .bc_footer .bc_big_audio {
+            background: url(img/audio/audio.png) no-repeat;
+        }
+
+        .blackboard .blackboard_container .bc_footer .bc_big_audio:hover, .blackboard .blackboard_container .bc_footer .bc_big_audio.active {
+            background: url(img/audio/audio_hover.png) no-repeat;
+        }
+
+        .blackboard .blackboard_container .bc_footer .bc_big_audio.pause {
+            background: url(img/audio/big_audio_pause.png) no-repeat;
+        }
+
+        .blackboard .blackboard_container .bc_footer .bc_big_key:hover, .blackboard .blackboard_container .bc_footer .bc_big_key.active {
+            background: url(img/audio/key_hover.png) no-repeat;
+        }
+
+        .blackboard .blackboard_container .bc_footer .bc_big_key {
+            background: url(img/audio/key.png) no-repeat;
+        }
+
+        .blackboard .blackboard_container .bc_footer .bc_big_read {
+            background: url(img/audio/read.png) no-repeat;
+        }
+
+        .blackboard .blackboard_container .bc_footer .bc_big_read:hover,
+        .blackboard .blackboard_container .bc_footer .bc_big_read.active {
+            background: url(img/audio/read_hover.png) no-repeat;
+        }
+
+        .blackboard .blackboard_container .bc_footer span {
+            color: #7CC961;
+            font-size: 38px;
+            font-weight: bold;
+            display: block;
+            float: right;
+            margin-top: 12px;
+        }
+
+        .blackboard .blackboard_container .bc_content .audioread dt {
+            color: #7CC961;
+            font-size: 20px;
+        }
+        .blackboard .blackboard_container .bc_content .audioread dt span{
+            color: #fff;
+
+        }
+        .blackboard .alertcontainer{
+
+            position:absolute;
+            width:768px;
+            height:465px;
+            left:107px; top:80px;display:none;
+            z-index:100;
+        }
+        .blackboard .alertcontainer .alertcontainer_bg {
+            left:0; top:0;filter: alpha(opacity=70); opacity: 0.7; background:#fff;
+            position:absolute;
+            width:768px;
+            height:463px;
+            z-index:101;
+        }
+        .blackboard .alertcontainer .alert{ z-index:102;position:absolute;  width:668px;color:#666; height:401px; left:50px; top:30px; background:url(img/audio/big_blackboard.png) no-repeat}
+        .blackboard .alert .alerttitle {
+            position:relative;
+            height:30px;
+        }
+        .blackboard .alert .alerttitle span {
+            cursor:pointer; position:absolute; background:url(img/audio/alert_close.png) no-repeat; display:inline-block;
+            width:15px; height:15px;top: 15px;right: 15px;
+
+        }
+
+        .blackboard .alert .alertcontent {
+
+            margin:10px 20px;font-size:18px;
+            height:280px;
+        }
+        .blackboard .alert .alertcontent .alertreadcontent,.blackboard .alert .alertcontent .keycontent {
+            height:210px;
+            overflow-y:auto;
+        }
+        .blackboard .alert .alertcontent .alertreadcontent .alertread
+        {
+            color:#39B2D6;line-height:22px; margin-bottom:5px;
+            font-family:Arial,'Times New Roman','Microsoft YaHei',SimHei;
+        }
+        .blackboard .alert .alertcontent i{ color:#f00; font-style:normal; cursor:pointer;}
+
+        .blackboard .alert .alertcontent div{ line-height:30px;}
+        .blackboard .alert .alertcontent div span{ color:#7AC960; font-weight:bold; }
+        .blackboard .alert .alertcontent .keycontent .keyinput {
+            font-size:15px;
+        }
+        .blackboard .alert .alertbutton {
+
+            text-align:center;
+            height:36px;
+        }
+        .blackboard .alert .alertbutton a {
+            width:74px; height:26px; display:inline-block; margin-right:18px;
+            background:url(img/audio/alert_btn.png) no-repeat;
+            text-align:center;
+            padding-top:6px;
+        }
+        .blackboard .alert .alertbutton a:hover {
+
+            background:url(img/audio/alert_btn_hover.png) no-repeat;
+            color:#fff;
+        }
+    </style>
+
+</head>
+<body class="autoConnectRecorder">
+<form method="post" action="text.aspx?unitid=1&amp;pointid=8048b7ee755448ae900cd266be8fc0f6&amp;gradeid=1&amp;versionid=3&amp;termid=10&amp;userid=7cf33630c0ee41119afa591f3bf29081&amp;sex=&amp;siteid=1000" id="form1">
+    <div class="aspNetHidden">
+        <input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUJNzQ5MTAxNDY5ZGRa+o33xTTtJIJEmnz8QLOZxLBbrg==" />
+    </div>
+</form>
+<div class="blackboard">
+    <h1>课时1：Learn to say</h1>
+    <div class="blackboard_container">
+        <div class="bc_header textheader">
+            <a data-value="-2">慢速</a>
+            <a class="active" data-value="0">正常</a>
+            <div class="proccess">
+                <div></div>
+            </div>
+            <div class="bc_score"></div>
+        </div>
+        <div class="bc_content">
+        </div>
+        <div id="player"></div>
+        <div class="bc_footer">
+            <a class="bc_big_audio"></a>
+            <a class="bc_big_read"></a>
+            <a class="bc_big_key"></a>
+            <span id="audioscore"></span>
+        </div>
+        <div class="aiPanel" id="aiPanel">
+            <span class="record"></span>
+        </div>
+
+    </div>
+    <div class="alertcontainer">
+        <div class="alertcontainer_bg"></div>
+        <div class="alert">
+            <div class="alerttitle"><span onclick="$('.alertcontainer').hide()"></span></div>
+            <div class="alertcontent">
+            </div>
+            <div class="alertbutton">
+                <a  class="alertbtn_reread">重读</a>
+                <a  class="alertbtn_nextread">下一句</a>
+                <a  class="alertbtn_rekey">重写</a>
+                <a  class="alertbtn_nextkey">下一句</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="aiMediaDialogOverlay" class="aiMediaDialogOverlay">
+</div>
+<div id="aiMediaDialog" class="aiMediaDialog">
+    <div class="dialogTitle">
+        设置面板
+        <button class="dialogCloseButton">
+            X
+        </button>
+    </div>
+    <div class="dialogFlashError">
+        <p class="flashVersion hidden">
+            您电脑的Flash版本过低，请点击此链接升级。
+            <br />
+            <a href="http://get.adobe.com/flashplayer/" target="_blank">点击下载最新Flash版本</a>
+        </p>
+        <p class="flashPlugin hidden">
+            您的电脑没有安装或者禁用Flash插件，请确认。
+            <br />
+            <a href="http://get.adobe.com/flashplayer/" target="_blank">点击下载最新Flash版本</a>
+        </p>
+    </div>
+    <div class="dialogBody">
+        <div id="recorder">
+        </div>
+    </div>
+    <div class="dialogInfo">
+        <h5>状态信息</h5>
+        <ul>
+            <li class="loadFlashPlayer hidden">
+                <span class="info">正在下载Flash播放器...</span>
+            </li>
+            <li class="loadFlashRecorder hidden">
+                <span class="info">正在下载Flash录音机...</span>
+            </li>
+            <li class="connectServerInit hidden">
+                <span class="error">还没有连接录音服务器</span>
+            </li>
+            <li class="connectServerStart hidden">
+                <span class="info">正在连接录音服务器，请稍候...</span>
+            </li>
+            <li class="connectServerSuccess hidden">
+                <span class="success">连接录音服务器成功</span>
+            </li>
+            <li class="connectServerError hidden">
+                <span class="error">连接录音服务器失败，请<a href="javascript:aiPanel.recorder.reconnect();">重试</a></span>
+            </li>
+            <li class="micStatusAllow hidden">
+                <span class="success">Flash可以访问麦克风</span>
+            </li>
+            <li class="micStatusDisallow hidden">
+                <span class="error">Flash不能访问麦克风，请设置</span>
+            </li>
+            <li class="micStatusError hidden">
+                <span class="error">没有找到录音设备，请检查</span>
+            </li>
+            <li class="mmscfgError hidden">
+                <span class="error">Flash被禁止访问麦克风，请手动删除 mms.cfg文件，然后重试</span>
+            </li>
+        </ul>
+    </div>
+    <div class="dialogButton">
+        <button class="okButton">
+            确定
+        </button>
+    </div>
+</div>
+<script type="text/javascript">
+    var json = {"PrepareStatus":"9","List":[{"ID":"31397","Voice":"","IsAudio":"True","GUID":"38c07ed6abf845e1979fc61f5a7ad4c2","English":"Hi!I'm Millie,a new student at Sunshine Middle School.I'm 12 years old.I have short hair.I love reading.Now let's meet my new classmates.","Chinese":"" ,"ParagraphID":"0","Spacinginterval":"1","Openingmusic":"","IsRepeat":"False","List":[{"VoiceName":"Eric","Duration":"11","Speed":"-2","Pitch":"0"},{"VoiceName":"Eric","Duration":"10","Speed":"0","Pitch":"0"},{"VoiceName":"Kendra","Duration":"12","Speed":"-2","Pitch":"0"},{"VoiceName":"Kendra","Duration":"10","Speed":"0","Pitch":"0"}]},{"ID":"31398","Voice":"","IsAudio":"True","GUID":"5b291b552e374a47809e66d3b48c8335","English":"Hello!My name is Simon.I'm tall.I like sports.I often play football after school.","Chinese":"" ,"ParagraphID":"0","Spacinginterval":"1","Openingmusic":"","IsRepeat":"False","List":[{"VoiceName":"Eric","Duration":"7","Speed":"-2","Pitch":"0"},{"VoiceName":"Eric","Duration":"6","Speed":"0","Pitch":"0"},{"VoiceName":"Kendra","Duration":"8","Speed":"-2","Pitch":"0"},{"VoiceName":"Kendra","Duration":"7","Speed":"0","Pitch":"0"}]},{"ID":"31399","Voice":"","IsAudio":"True","GUID":"b39c200573d34ac8bd3a7b02e6ffed87","English":"This is Sandy.She is tall and slim.Her hair is long.She likes music.","Chinese":"" ,"ParagraphID":"0","Spacinginterval":"1","Openingmusic":"","IsRepeat":"False","List":[{"VoiceName":"Eric","Duration":"6","Speed":"-2","Pitch":"0"},{"VoiceName":"Eric","Duration":"5","Speed":"0","Pitch":"0"},{"VoiceName":"Kendra","Duration":"6","Speed":"-2","Pitch":"0"},{"VoiceName":"Kendra","Duration":"5","Speed":"0","Pitch":"0"}]},{"ID":"31400","Voice":"","IsAudio":"True","GUID":"35060a88483e4b64a0f1c10744f9bc92","English":"This is Daniel.He is from Nanjing.He is short.He is good at Maths.","Chinese":"" ,"ParagraphID":"0","Spacinginterval":"1","Openingmusic":"","IsRepeat":"False","List":[{"VoiceName":"Eric","Duration":"6","Speed":"-2","Pitch":"0"},{"VoiceName":"Eric","Duration":"5","Speed":"0","Pitch":"0"},{"VoiceName":"Kendra","Duration":"5","Speed":"-2","Pitch":"0"},{"VoiceName":"Kendra","Duration":"4","Speed":"0","Pitch":"0"}]}]};
+
+    var data = {"data":{"params":{"audio":{"channel":1,"audioType":"ogg","sampleRate":16000,"sampleBytes":2},"app":{"applicationId":"1446447870000011","timestamp":"1449120769","userId":"guest","sig":"a95e61326576acef783b395f93df35a9bacf1686"},"request":{"scoreType":100,"tokenId":"565fd4001c77e7002a000001","refText":"This is Sandy.She is tall and slim.Her hair is long.She likes music.","rank":100,"coreType":"en.sent.score"}},"eof":1,"recordId":"565fd4043cbd08e07d0ca56b","tokenId":"565fd4001c77e7002a000001","refText":"This is Sandy.She is tall and slim.Her hair is long.She likes music.","result":{"integrity":31,"rhythm":{"stress":100,"tone":100,"overall":50,"sense":0},"overall":30,"res":"eng.snt.G4.0.10","useref":1,"delaytime":71,"statics":[{"count":1,"char":"sil-dh+ih","score":100},{"count":1,"char":"dh-ih+th","score":100},{"count":1,"char":"ih-s+hh","score":99},{"count":1,"char":"s-s+sil","score":77},{"count":1,"char":"sil-s+ih","score":100},{"count":1,"char":"s-ih+z","score":100},{"count":1,"char":"ey-z+ch","score":100},{"count":1,"char":"z-t+ao","score":96},{"count":1,"char":"t-ao+l","score":99},{"count":1,"char":"ow-l+ax","score":100},{"count":1,"char":"l-ax+n","score":87},{"count":1,"char":"ax-n+sil","score":100},{"count":1,"char":"sil-ax+hh","score":97},{"count":1,"char":"axr-hh+ea","score":99},{"count":1,"char":"zh-ea+l","score":99},{"count":1,"char":"ea-r+ih","score":99},{"count":1,"char":"r-ih+z","score":97},{"count":1,"char":"ey-z+sil","score":83},{"count":1,"char":"sil-ih+l","sco...onescore":0,"senseref":0,"char":"and","score":0,"toneref":0,"stressscore":0,"stressref":0,"indict":1,"fluency":0,"sensescore":1,"dur":780,"start":2520,"end":3300},{"tonescore":0,"senseref":0,"char":"slim.her","score":0,"toneref":0,"stressscore":0,"stressref":0,"indict":0,"fluency":18,"sensescore":0,"dur":280,"start":3740,"end":4020},{"tonescore":0,"senseref":0,"char":"hair","score":6,"toneref":0,"stressscore":0,"stressref":0,"indict":1,"fluency":100,"sensescore":0,"dur":400,"start":4020,"end":4420},{"tonescore":0,"senseref":0,"char":"is","score":0,"toneref":0,"stressscore":0,"stressref":0,"indict":1,"fluency":99,"sensescore":1,"dur":160,"start":4420,"end":4580},{"tonescore":0,"senseref":0,"char":"long.she","score":0,"toneref":0,"stressscore":0,"stressref":0,"indict":0,"fluency":97,"sensescore":0,"dur":60,"start":5240,"end":5300},{"tonescore":0,"senseref":0,"char":"likes","score":86,"toneref":0,"stressscore":0,"stressref":0,"indict":1,"fluency":99,"sensescore":0,"dur":440,"start":5300,"end":5740},{"tonescore":0,"senseref":1,"char":"music","score":0,"toneref":0,"stressscore":0,"stressref":0,"indict":1,"fluency":0,"sensescore":0,"dur":0,"start":0,"end":0}],"usehookw":1,"is_en":1,"en_prob":1,"pron":1,"info":{"clip":0,"snr":8.371868,"tipId":10006,"volume":1160,"trunc":0},"wavetime":5980,"accuracy":43,"systime":1834,"version":"0.0.80.2015.11.19.11:17:49","fluency":{"pause":3,"overall":55,"speed":139}},"applicationId":"1446447870000011","dtLastResponse":"2015-12-03 13:32:58:448"}}
+
+    var currentid="985d1772c4a2421a8ed9eacb26d5f9cf";
+    var _pointid = "8048b7ee755448ae900cd266be8fc0f6";
+    var _unitid = "1";
+    var _termid = 10;
+    var _versionid = "3";
+    var _gradeid = 1;
+    var _userid="7cf33630c0ee41119afa591f3bf29081";
+    var _prepareLessonID=1226;
+    var _optionid=0;
+    var SP = {};
+    SP.init = '';
+    SP.step = '';
+    SP.startpos = '';
+    var readjhtml="";
+    var readscore=0;
+    var readfscore=0;
+    var keyhtml="";
+    var _minglobalstatus=0;
+    function init(){
+        var html="";
+        for(var i=0;i<json.List.length;i++)
+        {
+            html=html+"<dl id=\""+json.List[i].GUID+"\" data-index=\""+i+"\">";
+            html=html+"<dt>"+json.List[i].English+"</dt>";
+            html=html+" <dd data-id=\""+json.List[i].GUID+"\">";
+            if(json.PrepareStatus==9)
+            {
+                if(json.List[i].List.length>0)
+                {
+                    html=html+"<a class=\"minaudio\" data-id=\""+json.List[i].GUID+"\"></a><a class=\"minread\"></a>";
+                }
+            }
+            html=html+"<a class=\"minkey\"></a></dd>";
+            html=html+"</dl>";
+        }
+        $(".bc_content").html(html);
+        $(".minaudio").bind("click",function(){
+
+
+            if(_minglobalstatus>4)
+            {
+                if(_minglobalstatus==5)
+                    alert("正在进行朗读");
+                if(_minglobalstatus==6)
+                    alert("正在进行听写");
+                return false;
+            }
+            _minglobalstatus=4;
+            $(this).addClass("active");
+            wordplay($(this).attr("data-id"));
+
+        });
+        $(".minkey").bind("click",function(){
+            hidealertbtn();
+            console.log(_minglobalstatus);
+            if(_minglobalstatus>3&&_minglobalstatus!=6)
+            {
+                if(_minglobalstatus==5)
+                    alert("正在进行朗读");
+                if(_minglobalstatus==4)
+                    alert("正在进行听读");
+                return false;
+            }
+            _minglobalstatus=6;
+            var index=parseInt( $(this).parent().parent().attr("data-index"),10);
+            _optionid=index;
+            if($(this).hasClass("active"))
+            {
+                wordplayclear();
+                var english=$(this).parent().prev().find("input[type='text']").val();//.replace("!"," ").replace(","," ").replace(";"," ").replace("."," ");
+                addlog(json.List[index].ID,english,0);
+                if(globalstatus==3)
+                {
+                    if(keyhtml!="")
+                    {
+                        keyhtml=keyhtml+"|";
+                    }
+                    keyhtml=keyhtml+index+"#@#"+english;
+                }
+                else
+                {
+                    keyhtml=index+"#@#"+english;
+                    $(".alertcontainer").show();
+                    $(".alertbtn_rekey").show();
+                    $(".alertbtn_nextkey").show();
+                    init();
+
+                }
+                _minglobalstatus=0;
+                // console.log(keyhtml);
+                var _temphtml="";
+                var _totalchar=0;
+                var _totalkeychar=0;
+                for(var k=0;k<keyhtml.split("|").length;k++)
+                {
+                    var _index=keyhtml.split("|")[k].split("#@#")[0];
+                    var _english=keyhtml.split("|")[k].split("#@#")[1]
+                    var scourse=json.List[_index].English;
+                    var _name="";
+                    if(scourse.indexOf("</span>")>0)
+                    {_name=scourse.substr(0,scourse.indexOf("</span>")+7);
+                        scourse=scourse.replace(_name,"");
+                    }
+                    var _template="";
+                    _totalchar=_totalchar+scourse.split(" ").length;
+                    if($.trim(_english)!="")
+                        _totalkeychar=_totalkeychar+_english.split(" ").length;
+                    for(var y=0;y<scourse.split(" ").length;y++)
+                    {
+                        var _temp=scourse.split(" ")[y];//.replace("!","").replace(",","").replace(";","").replace(".","");
+
+                        var _ischeck=false;
+                        if($.trim(_temp)!="")
+                        {
+                            for(var i=0;i<_english.split(" ").length;i++)
+                            {
+
+                                if(replacesymbol(_english.split(" ")[i])==replacesymbol(_temp))
+                                {
+                                    _ischeck=true;
+                                    break;
+                                }
+                            }
+                            if(!_ischeck)
+                                _temp="<i>"+_temp+"</i>";
+                            _template=_template+_temp+" ";
+                        }
+                    }
+                    _temphtml=_temphtml+"<p class='keysource'>"+_template+"</p>";
+
+                }
+                _temphtml="<div class='keycontent'>"+_temphtml+"</div><div>正确率："+(Math.round(_totalkeychar/_totalchar*100,2))+"%</div>"
+                $('.alertcontent').html(_temphtml);
+
+                $(this).removeClass("active");
+                $(this).parent().prev().find("input").remove();
+            }
+            else
+            {
+                if($(".minkey.active").length>0)
+                {
+                    alert("正在进行默写！")
+                }
+                else
+                {
+                    $(this).addClass("active");
+                    var html=$(this).parent().prev().html();
+                    var _name="";
+                    if(html.indexOf("</span>")>0)
+                    {_name=html.substr(0,html.indexOf("</span>")+7);
+                    }
+                    var phtml="<p>"+_name+json.List[index].Chinese+"</p>";
+                    $(this).parent().prev().html(phtml+"<input type='text'/>")
+                    wordplay($(this).prev().prev().attr("data-id"),true);
+                    if(globalstatus==0)
+                        globalkeyevent(index);
+                }
+            }
+
+            //$(this).parent().parent().addClass("audioread");
+        });
+        $(".minread").bind("click",function(){
+
+
+            if(_minglobalstatus>3&&_minglobalstatus!=5)
+            {
+                if(_minglobalstatus==4)
+                    alert("正在进行听读");
+                if(_minglobalstatus==6)
+                    alert("正在进行听写");
+                return false;
+            }
+            _minglobalstatus=5;
+            hidealertbtn();
+            $(this).addClass("active");
+            $(this).parent().parent().addClass("audioread");
+            var guid=$(this).prev().attr("data-id");
+            var index=parseInt( $(this).parent().parent().attr("data-index"),10);
+            _optionid=index;
+
+            refText = $(this).parent().prev().html();
+            if(refText.indexOf("</span>")>0)
+            {
+                refText=refText.substr(refText.indexOf("</span>")+7);
+            }
+            duration=( 2000 + $.trim(refText).split(" ").length * 600 );
+            var index=$(this).parent().parent().attr("data-index");
+            //console.log(index);
+            if(json.List[index].List.length>0)
+            {
+                duration=json.List[index].List[0].Duration*1000;
+            }
+            var speed=$(".textheader").find("a[class='active']").attr("data-value");
+            var url = "http://182.48.115.253:8082/services/audio.ashx?type=teacher&lang="+getVoinceName(guid)+"&guid=" + guid + "&speed="+speed+"&pitch=0";
+            aiPanel.setData({
+                audioUrl: url,
+                duration: duration,
+                serverParams: {
+                    coreType: "en.sent.score",
+                    refText: refText,
+                    userId: "guest"
+                }
+            });
+            $(".record").click();
+        });
+    }
+    init();
+    $(function () {
+        $("#jplayMP3").jPlayer({
+            swfPath: "/scripts/jplay",
+            wmode: "window",
+            supplied: "mp3",
+            preload: "none"
+        });
+        var refText = "work";
+        var refMp3 = 'http://182.48.115.253:8082/Resources/sound/word/Amy/9b/9bc42de2b9334cdf976e894295bee5a6.mp3';
+        var duration = 1000;
+
+        window.aiPanel = new chivox.AiPanel(
+                {
+                    appKey: Config.appKey,
+                    secretKey: Config.secretKey,
+                    data: {
+                        audioUrl: refMp3,//音频URL
+                        ///duration: duration, //传入参数手动设置录音时长
+                        serverParams: {//录音服务参数
+                            coreType: "en.sent.score",
+                            refText: refText,
+                            rank: 100
+                        }
+                    },
+                    onDialogOpened: function () {
+                        $("body").removeClass("autoConnectRecorder");
+                    },
+                    onBeforeRecord: function () {//录音之前需要清除评分，可以在这里设置录音参数
+
+                        $('.proccess').find("div").css({ "width":"0%" });
+                        $(".alertcontainer").hide();
+                    },
+                    onScore: function (data) {//评分成功需要显示评分结果
+                        var resultObj = new chivox.EnSentScore(data);
+                        var durl = resultObj.getAudioUrl();  //下载url
+                        var s1 = resultObj.getOverall();   //评分
+                        var s2 = resultObj.getFluency();  //评价
+
+                        $('.proccess').find("div").css({ "width":"100%" });
+                        $(".audioread").each(function () {
+                            $(this).removeClass("audioread");});
+                        var index=parseInt( $(".minread.active").parent().parent().attr("data-index"),10);
+                        $(".minread.active").removeClass("active");
+                        addlog(json.List[index].ID,"",s1);
+                        var html ='';
+                        var htmlread="";
+                        htmlread= '<p class="alertread">';
+                        for (var i = 0; i < resultObj.getWordSize(); i++) {
+                            if(resultObj.getWord(i).getScore()>=80)
+                            {
+                                htmlread +=resultObj.getWord(i).getChar()+" "
+                            }
+                            else
+                            {
+                                htmlread +="<i title=\"读音打分"+resultObj.getWord(i).getScore()+"分\">"+resultObj.getWord(i).getChar()+"</i> ";
+                            }
+
+                        }
+                        htmlread+="</p>";
+                        html+="<div class=\"alertreadcontent\">"+htmlread+"</div>"
+                        html+="<div>发音得分：<span>"+s1+"分</span></div>";
+                        html+="<div>流利度得分：<span>"+s2+"分</span></div>";
+                        if(globalstatus==2)
+                        {
+                            readjhtml=readjhtml+htmlread;
+                            readscore=readscore+parseInt(s1,10);
+                            readfscore=readfscore+parseInt(s2,10);
+
+                        }
+                        else
+                        {
+                            $(".alertcontainer").show();
+                            $('.alertcontent').html(html);
+                            $(".alertbtn_reread").show();
+                            $(".alertbtn_nextread").show();
+                            _minglobalstatus=0;
+                        }
+
+                        if(globalstatus==2)
+                        {
+                            hidealertbtn();
+                            if($("dl").length-1==index)
+                            {
+                                $(".alertcontainer").show();
+                                readjhtml="<div class=\"alertreadcontent\">"+readjhtml+"</div>"
+                                readjhtml+="<div  style='padding-top:10px;'>总发音得分：<span>"+(readscore)/$("dl").length+"分</span></div>";
+                                readjhtml+="<div  style='padding-top:10px;'>总流利度得分：<span>"+(readfscore)/$("dl").length+"分</span></div>";
+                                $('.alertcontent').html(readjhtml);
+                                readjhtml="";
+                                readscore=0;
+                                readfscore=0;
+                                globalstatus=0;
+                                _minglobalstatus=0;
+                                $("dd").css("visibility","visible");
+                                $(".bc_big_read").removeClass("active");
+                            }
+                            else
+                            {
+                                $("dl").eq(index+1).find(".minread").click();
+                            }
+                        }
+
+                    },
+                    onScoreError: function (errorType) {//评分失败的显示 "TIMEOUT", "NO_DATA", ErrorID
+                        var errorObj = chivox.AiStatusCode.get(errorType, "cn");
+                        alert(errorObj.feedback);
+                    },
+                    onRecordStart: function () {
+                        alert(duration);
+                        SP.step=(duration/10);
+                        SP.startpos = 0;
+                        SP.init = setInterval("process()", 100);
+                    },
+                    onAfterRecord: function () {
+                        window.clearInterval(SP.init);
+                    }
+                });
+
+        aiPanel.Dialog.close();
+    });
+    function process() {
+        SP.startpos = SP.startpos + SP.step;
+        alert(duration);
+        $('.proccess').find("div").css({ "width": Math.round(SP.startpos/duration*100) + "%" });
+
+    }
+
+    function wordplayclear()
+    {
+        $("#jplayMP3").jPlayer("clearMedia");
+        $("#jplayMP3").jPlayer("stop");
+        $("#jplayMP3").unbind($.jPlayer.event.ended);
+        $("#jplayMP3").unbind($.jPlayer.event.progress);
+        $(".audioread").each(function () {
+            $(this).removeClass("audioread");
+            $(this).removeAttr("style");
+            $(this).find(".minaudio").removeClass("active");
+        });
+        $(".proccess").find("div").width(0);
+    }
+    function wordplay(guid,isrepeat,isplaylist) {
+        $("#"+guid).addClass("audioread");
+        if(typeof isrepeat=="undefined")
+        {
+            isrepeat=false;
+        }
+        var speed=$(".textheader").find("a[class='active']").attr("data-value");
+
+        var url = "http://182.48.115.253:8082/services/audio.ashx?type=teacher&lang="+getVoinceName(guid)+"&guid=" + guid + "&speed="+speed+"&pitch=0";
+        $("#jplayMP3").bind($.jPlayer.event.ended, function (event) {
+            wordplayclear();
+
+            if(isplaylist)
+            {
+                var index=parseInt( $("#"+guid).attr("data-index"),10);
+                if($("dl").length-1==index)
+                {
+                    $("dd").css("visibility","visible");
+                    $(".bc_big_audio").removeClass("active")
+                    globalstatus=0;
+                }
+                else
+                {
+                    guid= $("#"+guid).next().attr("id");
+                    setTimeout("wordplay('"+guid+"',false,true)",1000);
+                }
+            }
+            else if(isrepeat)
+            {
+                wordplay(guid,isrepeat);
+            }
+            else
+            {
+                _minglobalstatus=0;
+            }
+        });
+
+
+        $("#jplayMP3").bind($.jPlayer.event.timeupdate, function(event) { // Add a listener to report the time play began
+            if(event.jPlayer.status.duration>0)
+                $(".proccess").find("div").width(event.jPlayer.status.currentTime/event.jPlayer.status.duration*100+"%")
+        });
+        $("#jplayMP3").jPlayer("setMedia", { mp3: url }).jPlayer("play");
+
+    }
+
+    $(".textheader").find("a").bind("click",function(){
+        $(".textheader").find("a").removeClass("active");
+        $(this).addClass("active");
+    });
+    var globalstatus=0;
+    var isStop=false;
+    $(".bc_big_audio").bind("click",function(){
+
+        if(globalstatus>0&&globalstatus!=1)
+        {
+            if(globalstatus==3)
+                alert("正在进行全文拼写");
+            if(globalstatus==2)
+                alert("正在进行全文朗读");
+            return false;
+        }
+
+        if($(this).hasClass("active"))
+        {
+            if(!isStop)
+            { $("#jplayMP3").jPlayer("pause");isStop=true;$(this).addClass("pause")}
+            else
+            { $("#jplayMP3").jPlayer("play");isStop=false;$(this).removeClass("pause")}
+
+        }
+        else
+        {
+            $(this).addClass("active");
+            $("dd").css("visibility","hidden");
+            globalstatus=1;
+            isStop=false;
+            isglobalevent=true;
+            wordplay(json.List[0].GUID,false,true);
+        }
+
+    });
+    $(".bc_big_key").bind("click",function(){
+        console.log(globalstatus)
+        if(globalstatus>0&&globalstatus!=3)
+        {
+            if(globalstatus==1)
+                alert("正在进行全文听读");
+            if(globalstatus==2)
+                alert("正在进行全文朗读");
+            return false;
+        }
+
+        if(!$(this).hasClass("active"))
+        {
+            $(this).addClass("active");
+            $("dd").css("visibility","hidden");
+            globalstatus=3;
+            globalkeyevent(0);
+        }
+
+    });
+    $(".bc_big_read").bind("click",function(){
+
+        if(globalstatus>0&&globalstatus!=2)
+        {
+            if(globalstatus==3)
+                alert("正在进行全文拼写");
+            if(globalstatus==1)
+                alert("正在进行全文听读");
+            return false;
+        }
+
+        if(!$(this).hasClass("active"))
+        {
+            $(this).addClass("active");
+            $("dd").css("visibility","hidden");
+            globalstatus=2;
+            $("dl").eq(0).find(".minread").click();
+        }
+
+
+    });
+    function globalkeyevent(index)
+    {
+        if(globalstatus==3)
+        {
+            $("dl").eq(index).find(".minkey").click();
+        }
+        $("input[type='text']").focus();
+        $("input[type='text']").keyup(function(event){
+            var keycode = event.which;
+            if (keycode == 13) {
+                var index=parseInt( $(this).parent().parent().attr("data-index"),10);
+                $("dl").eq(index).find(".minkey").click();
+                if(globalstatus==3)
+                {
+                    if($("dl").length-1==index)
+                    {
+                        $(".bc_big_key").removeClass("active");
+                        $("dd").css("visibility","visible");
+                        globalstatus=0;
+                        $(".alertcontainer").show();
+                        init();
+                    }
+                    else
+                    {
+                        //$("dl").eq(index+1).find(".minkey").click();
+                        globalkeyevent(index+1);
+                        //return false;
+                    }
+                }
+
+            }
+        });
+    }
+    function getVoinceName( guid)
+    {
+        for(var i=0;i<json.List.length;i++)
+        {
+            if(json.List[i].GUID==guid)
+            {
+                if(json.List[i].Voice!="")
+                {
+                    return json.List[i].Voice;
+                }
+                else
+                {
+                    if(json.List[i].List.length>0)
+                    {
+                        return json.List[i].List[0].VoiceName;
+                    }
+                }
+            }
+        }
+        return "";
+    }
+    function replacesymbol(content)
+    {
+        return content.replace(/\?/g,"").replace(/\;/g,"").replace(/\,/g,"").replace(/\!/g,"")
+    }
+    function addlog(wordid,keycontent,score)
+    {
+        $.ajax({
+            url:"/services/studyroomlist.ashx",
+            type:"post",
+            dataType:"json",
+
+            data:{guid:currentid,gradeid:_gradeid,userid:_userid,type:"add",otype:2,versionid:_versionid,termid:_termid,pointid:_pointid,unitid:_unitid,id:wordid,prepareLessonID:_prepareLessonID,keycontent:keycontent,audiosore:score,siteid:1000},
+            success:function(json)
+            {}
+
+        })
+    }
+    function hidealertbtn()
+    {
+        $(".alertbtn_reread").hide();
+        $(".alertbtn_nextread").hide();
+        $(".alertbtn_rekey").hide();
+        $(".alertbtn_nextkey").hide();
+    }
+    $(".alertbtn_reread").bind("click",function(){
+        $(".alertcontainer").hide();
+        $('.alertcontent').html("");
+
+        $("dl[data-index='"+(_optionid)+"']").find(".minread").click();
+
+
+    });
+    $(".alertbtn_nextread").bind("click",function(){
+        $(".alertcontainer").hide();
+        $('.alertcontent').html("");
+        if( _optionid>= $("dl").length-1)
+        {
+
+        }
+        else
+        {
+            $("dl[data-index='"+(_optionid+1)+"']").find(".minread").click();
+        }
+
+    });
+    $(".alertbtn_rekey").bind("click",function(){
+        $(".alertcontainer").hide();
+        $('.alertcontent').html("");
+
+        $("dl[data-index='"+(_optionid)+"']").find(".minkey").click();
+
+
+    });
+    $(".alertbtn_nextkey").bind("click",function(){
+        $(".alertcontainer").hide();
+        $('.alertcontent').html("");
+
+        $("dl[data-index='"+(_optionid+1)+"']").find(".minkey").click();
+
+
+    });
+</script>
+<div id="jplayMP3">
+</div>
+<style type="text/css">
+    .aiMediaDialogClosed {
+        width: 0px;
+        height: 0px;
+        overflow: hidden;
+    }
+</style>
+</body>
+</html>

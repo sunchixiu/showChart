@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=9">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <title>我的书桌</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" href="css/mobilebone.css">
+
+    <!--<script src="cordova.js"></script>-->
+    <script src="js/every.js"></script>
+    <script src="js/turnpage.js"></script>
+    <script src="js/iscroll.js"></script>
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/common.js"></script>
+    <!--<script src="js/echarts/esl.js"></script>-->
+    <script>
+        var timer = null;
+    </script>
+    <script>
+        setTimeout(function(){
+            var oScript = document.createElement('script');
+            oScript.src = 'js/echarts/esl.js';
+            document.getElementsByTagName('head')[0].appendChild(oScript);
+        },200);
+    </script>
+    <script src="js/statis/EChartsInfo.js"></script>
+    <!--<script src="js/echarts/echarts.js"></script>-->
+    <script>
+        setTimeout(function(){
+            var oScript = document.createElement('script');
+            oScript.src = 'js/echarts/echarts.js';
+            document.getElementsByTagName('head')[0].appendChild(oScript);
+        },200);
+    </script>
+
+    <!--Android交互-->
+    <!--<script>-->
+        <!--var json = {};-->
+        <!--setTimeout(function(){-->
+            <!--var output = "";-->
+
+            <!--for(var i in document.UserInfo){-->
+                <!--var property=document.UserInfo[i];-->
+                <!--output+=i+" = "+property+"\n";-->
+            <!--}-->
+            <!--alert(output);-->
+
+            <!--alert(cordova.plugins.traceclass.httpPost);-->
+
+            <!--var server = new Object, arg = new Object;-->
+            <!--server.Server = "http://182.48.115.253:70/TSB_ISCHOOL_LCS_SERVER/tchmyroom/getgradecourseunitlist";-->
+            <!--arg.teacherid = "4bb6a1cc784943708e24714bc7e99287";-->
+<!--//            arg.teacherid = document.UserInfo.UserID;-->
+
+            <!--var args =  [server, arg];-->
+
+            <!--cordova.plugins.traceclass.httpPost(-->
+                <!--function success(result){-->
+                    <!--json = JSON.parse(result.Result);-->
+                    <!--getUserInfo();-->
+                <!--}, function error(result) {-->
+
+                <!--}, args);-->
+
+        <!--},1000);-->
+    <!--</script>-->
+
+    <script>
+        var json = {
+            "code": 1,
+            "errorCode": 0,
+            "data": {
+                "schoolid": "799db0e2aa1e4a1e83bc20a34b17b3b6",
+                "schoolname": "湖北省武汉市第二中学",
+                "courselist": [
+                    {
+                        "schoolid": "799db0e2aa1e4a1e83bc20a34b17b3b6",
+                        "schoolname": "湖北省武汉市第二中学",
+                        "gradetype": 3,
+                        "gradeid": "c787ddeeedb04237aae89ac2e3375c8f",
+                        "gradenum": "2",
+                        "gradename": "一年级",
+                        "classid": "de17eff140514d7893d0dabe1a6ba1c1",
+                        "classname": "一年级一班",
+                        "subjectid": "13",
+                        "subjectname": "数学",
+                        "versionid": "2",
+                        "versionname": "人教版",
+                        "termtype": "20",
+                        "subjectthemeid": null,
+                        "scores": "0",
+                        "unitlist": [
+                            {
+                                "unitid": "1",
+                                "unitname": "第一章　有理数",
+                                "unitsort": "1"
+                            },
+                            {
+                                "unitid": "2",
+                                "unitname": "第二章　整式的加减",
+                                "unitsort": "1"
+                            },
+                            {
+                                "unitid": "3",
+                                "unitname": "第三章　一元一次方程",
+                                "unitsort": "1"
+                            },
+                            {
+                                "unitid": "4",
+                                "unitname": "第四章　几何图形初步",
+                                "unitsort": "1"
+                            }
+                        ]
+                    },
+                    {
+                        "schoolid": "799db0e2aa1e4a1e83bc20a34b17b3b6",
+                        "schoolname": "湖北省武汉市第二中学",
+                        "gradetype": 2,
+                        "gradeid": "c787ddeeedb04237aae89ac2e3375c8f",
+                        "gradenum": "7",
+                        "gradename": "一年级",
+                        "classid": "9d40d46753bb43eba50369b7995e7cc7",
+                        "classname": "数学班",
+                        "subjectid": "10",
+                        "subjectname": "英语",
+                        "versionid": "11",
+                        "versionname": "译林版",
+                        "termtype": "10",
+                        "subjectthemeid": null,
+                        "scores": "0",
+                        "unitlist": [
+                            {
+                                "unitid": "1",
+                                "unitname": "Unit1 This is me!",
+                                "unitsort": "1"
+                            },
+                            {
+                                "unitid": "2",
+                                "unitname": " Unit2 Let's play sports!",
+                                "unitsort": "2"
+                            },
+                            {
+                                "unitid": "3",
+                                "unitname": "Unit3 Welcome to our school!",
+                                "unitsort": "3"
+                            },
+                            {
+                                "unitid": "4",
+                                "unitname": "Unit4 My day ",
+                                "unitsort": "4"
+                            },
+                            {
+                                "unitid": "5",
+                                "unitname": "Unit5 Let's celebrate!",
+                                "unitsort": "5"
+                            },
+                            {
+                                "unitid": "6",
+                                "unitname": "Unit6 Food and lifestyle",
+                                "unitsort": "6"
+                            },
+                            {
+                                "unitid": "7",
+                                "unitname": "Unit7 Shopping",
+                                "unitsort": "7"
+                            },
+                            {
+                                "unitid": "8",
+                                "unitname": "Unit8 Fashion",
+                                "unitsort": "8"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "errorMessage": ""
+        };
+        setTimeout(function(){
+            getUserInfo();
+        },1000);
+    </script>
+
+    <script>
+        var pageIndex = 0;//goback参数
+
+        function  pageGoback(){
+            switch (pageIndex){
+                case 0:window.location.href='#&pageHome';break;
+                case 1:window.location.href='#&page1';pageIndex--;break;
+                case 2:window.location.href='#&page2';pageIndex--;break;
+                default:window.location.href='#&pageHome';break;
+            };
+        };
+        function closeWebview(){
+
+        };
+    </script>
+    <style>
+        .personFrame{width: 90%; height: 95%; position: absolute; display: table; margin: 5% 5% 0 5%; z-index: -1; -webkit-transition: .3s all ease; transition: .3s all ease; opacity: 0;}
+        .personDiv{display: table-cell; vertical-align: middle;}
+        .personDiv ul{width: 92%; max-height: 92%; position: relative; padding: 4%; overflow-y: auto; overflow-x: hidden; background: #fff; border-radius: 0.2rem; -webkit-border-radius: 0.2rem;}
+        .personDiv ul li{height: 1.2rem; line-height: 1rem; font-size: 0.6rem; color: #666; margin: 0.6rem 0; border-bottom: 1px solid #33ccff; margin-top: 0.4rem;}
+    </style>
+</head>
+<body onload="loaded('isection')">
+<div class="main page out" id="pageHome">
+    <div class="iheader"><div class="l"><a href="javascript:closeWebview();">&laquo;返回</a></div><div class="m" id="schoolNameId">我的书桌</div><div class="r"></div></div>
+    <div class="isection">
+        <div class="block_book">
+            <ul>
+                <li style="border-bottom: none; font-size: 0.8rem; height: 0.8rem; border-top: none;"><span>老师好，请选择您的课本。</span></li>
+            </ul>
+            <ul id="bookIndex">
+                <div class="tempLoading"></div>
+                <!--<li onclick="popDiv(1,'abc')">-->
+                    <!--<span><img src="img/book.jpg"></span>-->
+                    <!--<span class="right">-->
+                        <!--<p class="up">英语</p>-->
+                        <!--<p class="down">小学二年级(上)</p>-->
+                    <!--</span>-->
+                <!--</li>-->
+                <!--<li onclick="popDiv(1,'abc')">-->
+                    <!--<span><img src="img/book.jpg"></span>-->
+                    <!--<span class="right">-->
+                        <!--<p class="up">数学</p>-->
+                        <!--<p class="down">小学二年级(下)</p>-->
+                    <!--</span>-->
+                <!--</li>-->
+                <!--<li onclick="popDiv(1,'abc')">-->
+                    <!--<span><img src="img/book.jpg"></span>-->
+                    <!--<span class="right">-->
+                        <!--<p class="up">语文</p>-->
+                        <!--<p class="down">小学三年级(中)</p>-->
+                    <!--</span>-->
+                <!--</li>-->
+                <!--<li onclick="popDiv(1,'abc')">-->
+                    <!--<span><img src="img/book.jpg"></span>-->
+                    <!--<span class="right">-->
+                        <!--<p class="up">语文</p>-->
+                        <!--<p class="down">小学二年级(下)</p>-->
+                    <!--</span>-->
+                <!--</li>-->
+                <!--<li onclick="popDiv(1,'abc')">-->
+                    <!--<span><img src="img/book.jpg"></span>-->
+                    <!--<span class="right">-->
+                        <!--<p class="up">语文</p>-->
+                        <!--<p class="down">小学二年级(下)</p>-->
+                    <!--</span>-->
+                <!--</li>-->
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!--二级页面-->
+<div class="main page out" id="page1">
+    <div class="header"><div class="l"><a href="#&pageHome" data-rel="back">&laquo;返回</a></div><div class="m" id="teacherBookName">书本名称</div><div class="r"></div></div>
+    <div class="section">
+        <div class="list_book">
+            <!--<ul>-->
+                <!--<li><span>章节学习统计表</span></li>-->
+            <!--</ul>-->
+            <div class="lip" style="margin-top: 0.4rem;">
+                <p>
+                    <input type="button" class="cur" value="全体班级" id="allClassId">
+                    <input type="button" value="个人" id="person" onclick="showWindow('personDiv');">
+                </p>
+            </div>
+            <div class="chart_k">
+                <div class="WrapContent" style="clear: both;">
+                    <div style="overflow: hidden;" id="DataLoadContainer">
+                        <div id="chartunitcon" style="overflow:hidden">
+                            <h1 class="echart_h1 more_h1" style="height: 1rem;"></h1>
+                            <div id="chartunit" data-status="0" style="width: 17.3rem; height:14rem; text-align: center;"><div class="tempLoading"></div></div>
+                        </div>
+                        <!--<div style="overflow: hidden;">-->
+                            <!--<h1 class="echart_h1 more_h1 "></h1>-->
+                            <!--<div style="height: 14rem; overflow: hidden;">-->
+                                <!--<div id="charttimes" style="height: 17rem; width: 18rem; text-align: center; vertical-align: middle;" data-status="0"><img src="img/loading.gif" style="margin-top: 5rem;"></div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    </div>
+                    <div style="overflow: hidden; padding: 10px; display: none;" class="alert alert-warning" class="dataerror">
+                        暂无数据
+                    </div>
+                </div>
+            </div>
+            <ul>
+                <li><span>章节选择</span></li>
+            </ul>
+            <div id="divunit"><div style="display: none;"></div></div>
+            <div class="lip">
+                <p id="unitP"></p>
+            </div>
+        </div>
+    </div>
+</div>
+<div  class="personFrame" id="personDiv">
+    <div class="personDiv" id="divstudent">
+        <ul></ul>
+        <input type="hidden" value="" />
+    </div>
+</div>
+
+
+<!--三级页面-->
+<div class="main page out" id="page2">
+    <div class="iiheader"><div class="l"><a href="#&page1" data-rel="back">&laquo;返回</a></div><div class="m">课时学习统计表</div><div class="r"></div></div>
+    <div class="iisection">
+        <div class="chart_k">
+            <h1 class="echart_h1 more_h1 "></h1>
+            <div>
+                <a class="btn btn-success btn-default lessonchartbtn" onclick="selectLessonRate(1)">正确率</a><a class="btn btn-default lessonchartbtn" onclick="selectLessonRate(2)">完成率</a>
+            </div>
+            <div id="chartlessons" style="width: 17.3rem; height:14rem;"><div class="tempLoading" style="margin-top: -5rem;"></div></div>
+            <div style="overflow: hidden; padding: 0.5rem; display: none;" class="alert alert-warning" class="dataerror">
+                暂无数据
+            </div>
+        </div>
+
+        <div class="list_book">
+            <ul>
+                <li><span>详细课时选择</span></li>
+            </ul>
+            <div class="lip" id="lipPoint">
+                <p>
+                    <input type="button" value="课时1：平均分" onclick="popIframe('block_listchart3.html');">
+                    <input type="button" value="课时2：练习二" onclick="popIframe('block_listchart3.html');">
+                    <input type="button" value="课时3：除法" onclick="popIframe('block_listchart3.html');">
+                    <input type="button" value="课时4：练习三" onclick="popIframe('block_listchart3.html');">
+                    <input type="button" value="课时5：用2～6的乘法口诀求商" onclick="popIframe('block_listchart3.html');">
+                </p>
+            </div>
+        </div>
+        <div class="bottomHeight"></div>
+    </div>
+</div>
+
+<!--四级页面-->
+<div class="main page out" id="page3">
+    <script src="js/yxMobileSlider.js"></script>
+    <div class="iiheader"><div class="l"><a href="#&page2" data-rel="back">关闭</a></div><div class="m" id="mName">课时统计表</div><div class="r"></div></div>
+
+    <div class="iisection">
+        <div class="chart_k">
+            <h1 class="echart_h1 more_h1 "></h1>
+            <div>
+                <a class="btn btn-default btn-success" onclick="showChartQuestion(1,'')" id="qestion_btn_lianxi">练习</a>
+                <div class="dropdown" id="qestion_btn_suitang" style="margin-top: -0.2rem;">
+                    <div>随堂练习</div>
+                    <ul class="dropdown-menu"></ul>
+                </div>
+                <a class="btn btn-default btn-default" onclick="showChartQuestion(2,'')" id="qestion_btn_zuoye">作业</a>
+            </div>
+            <div id="chartquestionscon" style="height:14rem; overflow:hidden;">
+                <div id="chartquestions" style="height: 14rem; width: 17.3rem; text-align: center;"><div class="tempLoading" style="margin-top: -6rem;"></div></div>
+            </div>
+        </div>
+        <div class="lip" id="lipPointContent" style="margin-top: 0.5rem;">
+            <p>
+                <input class="cur" type="button" value="课时1：平均分">
+                <input type="button" value="课时2：练习二">
+                <input type="button" value="课时3：除法">
+                <input type="button" value="课时4：练习三">
+                <input type="button" value="课时5：用2～6的乘法口诀求商">
+            </p>
+        </div>
+        <div class="bottomHeight"></div>
+    </div>
+</div>
+
+<script src="js/mobilebone.js"></script>
+<script type="text/javascript" src="js/statis/ApiConfig.js"></script>
+<script>
+    function popDiv(index,str){
+        if(index == 1){
+            window.location.href = '#&page1';
+            if(str){
+                if($('#chartunit').attr('data-status') == 0){
+                    $('#teacherBookName').html(str);
+                    $('#chartunit').html('<div class="tempLoading"></div>');
+                    $('#unitP').html('');
+                    Init();
+                }else{
+//                $('#chartunit').html('<img src="img/loading.gif" style="margin-top: 5rem;">');
+//                Init();
+                };
+            };
+            pageIndex = 0;
+        }else if(index == 2){
+            window.location.href = '#&page2';
+            if($('#charttimes2').attr('data-status') == 0){
+//                Init(2);
+            };
+            pageIndex = 1;
+        }else if(index == 3){
+            window.location.href = '#&page3';
+//            init3($("#txtbegin").val(),$("#txtend").val());
+            pageIndex = 2;
+        };
+    };
+
+//    $("#back").on("tap", function() {
+//        location.href = this.href;
+//    });
+</script>
+
+
+
+
+
+<!--真实老师数据-->
+<script>
+    var UserId, htmlLi, gradeid, classid, subjectid, termtype, versionid;
+
+    function getUserInfo(){
+    	UserId = '684b356a9560466887266e4800ea0776';//c4519e53ddb842e4bb817fd7b2b9163b
+	    htmlLi = '';
+	    gradeid = 2;
+	    classid = 'de17eff140514d7893d0dabe1a6ba1c1';
+	    subjectid = 13;
+	    termtype = 20;
+	    versionid = 2;
+
+//        $('#schoolNameId').html(json.data.schoolname);
+	    var JsonCourselist = json.data.courselist;
+	
+	//    var JsonCourselist = JSON.parse(json.data).courselist;
+	    for(var i=0; i<JsonCourselist.length; i++){
+	        var termtypeName;
+	        if(JsonCourselist[i].termtype == 10){
+	            termtypeName = '上';
+	        }else if(JsonCourselist[i].termtype == 20){
+	            termtypeName = '下';
+	        };
+	        htmlLi += '<li data-gradeid="'+JsonCourselist[i].gradenum+'" data-classid="'+JsonCourselist[i].classid+'" data-subjectid="'+JsonCourselist[i].subjectid+'" data-termtype="'+JsonCourselist[i].termtype+'" data-versionid="'+JsonCourselist[i].versionid+'" data-unitlist="'+JsonCourselist[i].unitlist+'"><span><img src="img/book.jpg"></span><span class="right"><p class="up">'+JsonCourselist[i].subjectname+'（'+JsonCourselist[i].versionname+'）</p><p class="down">'+JsonCourselist[i].gradename+JsonCourselist[i].classname+'（'+termtypeName+'）</p></span></li>';
+	    };
+	    $('#bookIndex').html(htmlLi);
+	    $('#bookIndex').find('li').bind('click',function(){
+	        gradeid = $(this).attr('data-gradeid');
+	        classid = $(this).attr('data-classid');
+	        subjectid = $(this).attr('data-subjectid');
+	        termtype = $(this).attr('data-termtype');
+	        versionid = $(this).attr('data-versionid');
+	
+	        popDiv(1,$(this).find('.up').html());
+	    });
+    };
+
+    var unitid = 0;
+//    var pointid = '45d757b406ea11e586103c77a0bfdb0b';//首次不能获得
+
+    var classjson = [];
+    var LegendTitle = ["课时", "作业正确率", "练习正确率", "随堂测试"];
+    var para = ["PointName", "Work", "Exercise", "Test"];
+    var Data_Source = [];
+    var data_Point = [];
+    var student_data = [];
+    var teacherdata_Unit = [];
+
+    var examData = [];
+    var FiresPointId = "";
+    var FiresPointName = "";
+    var FiresChapterID = "";
+    var FiresChapterName = "";
+
+    function Init() {
+        $.ajax({
+            url: apiurl + '/api/teacherapi.ashx?type=GetTeacherClass&&siteid=' + apisiteid + '&teacherid=' + UserId,
+            dataType: "jsonp",
+            jsonp: "callback",
+            async: false,
+            success: function (data) {
+//                classjson = data;
+                getdropdownclass(gradeid);
+            }
+        });
+    }
+
+
+    function getdropdownclass(id) {
+        onlineunit();
+        online();
+        getstudentlist();
+    }
+
+    //学生列表
+    function getstudentlist(){
+        $.ajax({
+            url: apiurl + '/api/teacherapi.ashx?type=GetStudentList&siteid=' + apisiteid + '&classid=' + classid,
+            dataType: "jsonp",
+            jsonp: "callback",
+            async: false,
+            success: function (data) {
+                var ghtml = "";
+                for (var i = 0; i < data.length; i++) {
+
+                    ghtml = ghtml + "<li data-value='" + data[i].userid + "'>" + data[i].username + "</li>";
+
+                }
+
+                $("#personDiv").find("ul").html(ghtml);
+                $("#personDiv").find("li").bind("click", function () {
+
+                    $('#person').val($(this).html()).addClass('cur');
+                    $('#allClassId').removeClass('cur');
+
+                    $(this).parent().parent().find("input").val($(this).attr("data-value"));
+                    $('#unitP').find('input').addClass('no').attr('disabled','disabled');
+                    onlineunit_student();
+
+                    //在线作业
+                    online_student();
+                });
+            }
+        });
+    }
+
+//    全班学生
+    $("#allClassId").bind("click", function(){
+//        var _legendTitle = ["章节", "作业首次正确率", "作业完成率", "练习首次平均确率", "练习完成率", "随堂平均正确率", "微课完成率", "预习完成率"];
+        $('#person').removeClass('cur');
+        $('#allClassId').addClass('cur');
+        $('#person').val('个人');
+        $("#divstudent").find("input").val('');
+        unitData('全部章节');
+    });
+
+    //全部章节图表
+    function unitData(unitname){
+        var _title = "全部章节";
+        if ($("#divstudent").find("input").val() == "") {
+            //$(".lessonchartbtn").show();
+
+            var teacherdata = SetData(data_Point, unitname);
+            Data_Source = teacherdata;
+
+//            var _legendTitle = ["章节", "作业首次正确率", "作业完成率", "练习首次平均确率", "练习完成率", "随堂平均正确率", "微课完成率", "预习完成率"];
+            var _legendTitle = ["章节", "作业首次正确率", "作业完成率"];
+            var _para = ["ChapterName", "Work", "ClassWork", "Exercise", "ClassExercise", "Test", "Micro", "Preview"];
+            EChartsLoad("chartunit", "Borkenline", teacherdata_Unit, _legendTitle, _para, "章节学习统计表", "ChapterID", false);
+            $('#unitP').find('input').removeClass('no').removeAttr('disabled');
+        };
+    }
+
+    //具体章节图表
+    function unitDataSingle(unitname){
+        var _title = "全部章节";
+        if (unitname != "全部章节")
+        {
+            _title = "当前章节：" + unitname;
+        }
+        else
+        {
+            if(unitid!=0)
+            {
+//                _title = _title + "(当前章节：" + GetUnitName(unitid) + ")";
+            }
+        }
+        clearTimeout(timer);
+        timer = setTimeout(function(){
+            if ($("#divstudent").find("input").val() == "") { //是否选择学生个人，点击整个班级都执行
+                //$(".lessonchartbtn").show();
+
+                var teacherdata = SetData(data_Point, unitname);
+                Data_Source = teacherdata;
+
+                var htmlP = '';
+                for(var i=0; i<Data_Source.length; i++){
+                    htmlP += '<input type="button" value=\"'+Data_Source[i].PointName+'\" data-name=\"'+Data_Source[i].PointName+'\" data-value=\"'+Data_Source[i].PointID+'\">';
+                };
+                $('#lipPoint > p').html(htmlP);
+                $('#lipPointContent > p').html(htmlP);
+                $('#lipPoint > p').find('input').bind('click',function(){
+                    GetWork_Practice($(this).attr('data-name'),$(this).attr('data-value'));
+                    var name = $(this).attr('data-name');
+                    $('#lipPointContent > p').find("input[data-name='"+name+"']").addClass('cur').siblings().removeClass('cur');
+                    popDiv(3,'abc');
+                });
+                $('#lipPointContent > p').find('input').bind('click',function(){
+                    GetWork_Practice($(this).attr('data-name'),$(this).attr('data-value'));
+                    $(this).addClass('cur').siblings().removeClass('cur');
+                });
+
+//            var _legendTitle = ["章节", "作业首次正确率", "作业完成率", "练习首次平均确率", "练习完成率", "随堂平均正确率", "微课完成率", "预习完成率"];
+                var _legendTitle = ["章节", "作业首次正确率", "作业完成率"];
+                var _para = ["ChapterName", "Work", "ClassWork", "Exercise", "ClassExercise", "Test", "Micro", "Preview"];
+                EChartsLoad("chartlessons", "Borkenline", Data_Source, LegendTitle, para, _title, "PointID", true);
+            }else{
+                var studentdata = SetData(student_data, unitname);
+                var htmlP = '';
+                for(var i=0; i<studentdata.length; i++){
+                    htmlP += '<input type="button" value="'+studentdata[i].PointName+'" data-name="'+studentdata[i].PointName+'" data-value="'+studentdata[i].PointID+'">';
+                };
+                $('#lipPoint > p').html(htmlP);
+                $('#lipPointContent > p').html(htmlP);
+                $('#lipPoint > p').find('input').bind('click',function(){
+                    GetWork_Practice($(this).attr('data-name'),$(this).attr('data-value'));
+                    var name = $(this).attr('data-name');
+                    $('#lipPointContent > p').find("input[data-name="+name+"]").addClass('cur').siblings().removeClass('cur');
+                    popDiv(3,'abc');
+                });
+                $('#lipPointContent > p').find('input').bind('click',function(){
+                    GetWork_Practice($(this).attr('data-name'),$(this).attr('data-value'));
+                    $(this).addClass('cur').siblings().removeClass('cur');
+                });
+//            $(".lessonchartbtn").hide();
+                Data_Source = studentdata;
+                _title="<span style='color:red'>" + $('#person').val() + "</span> - "+_title;
+//            var _legendTitle = ["课时", "作业首次正确率", "全班作业正确率", "练习首次正确率", "全班练习正确率", "随堂平均正确率", "全班随堂平均正确率"];
+                var _legendTitle = ["课时", "作业首次正确率", "全班作业正确率"];
+                var _para = ["PointName", "Work", "ClassWork", "Exercise", "ClassExercise", "Test", "ClassTest"];
+                EChartsLoad("chartlessons", "Borkenline", studentdata, _legendTitle, _para, _title, "PointID", true);
+            };
+        },300)
+
+        //当前课时
+        //GetWork_Practice();
+    }
+
+    //课堂章节数据
+    function online() {
+        if ($("#divstudent").find("input").val() == "") {
+            $.ajax({
+                url: apiurl + '/api/teacherapi.ashx?type=Get&&siteid=' + apisiteid + '&versionid=' + versionid + '&subjectid=' + subjectid + '&gradeid=' + gradeid + "&classid=" + classid+ "&termid=" + termtype,
+                dataType: "jsonp",
+                jsonp: "callback",
+                async: false,
+                success: function (data) {
+                    if (data.length > 0) {
+//                        $("#DataLoadContainer").show();
+                        //$(".dataerror").hide();
+                        data_Point = data;
+                        unitData($("#unitP").find("input").val());
+                    }
+                    else {
+//                        $("#DataLoadContainer").hide();
+//                        $(".dataerror").show();
+                    }
+                }
+            });
+        }
+        else {
+
+        }
+
+    }
+
+    //学生章节数据
+    function onlineunit_student() {
+        $.ajax({
+            url: apiurl + '/api/studentapi.ashx?type=GetUnit&siteid=' + apisiteid + '&versionid=' + versionid + '&subjectid=' + subjectid+ '&gradeid=' +gradeid + "&classid=" + classid + "&studentid=" + $("#divstudent").find("input").val() + "&termid=" + termtype,
+            dataType: "jsonp",
+            jsonp: "callback",
+            async: false,
+            success: function (data) {
+                if (data.length > 0) {
+//                    $("#DataLoadContainer").show();
+//                    $(".dataerror").hide();
+//                    var _legendTitle = ["章节", "作业首次正确率", "全班作业正确率", "练习首次平均正确率", "全班练习正确率"];
+                    var _legendTitle = ["章节", "作业首次正确率", "全班作业正确率"];
+                    var _para = ["ChapterName", "Work", "ClassWork", "Exercise", "ClassExercise"];
+                    $("#chartunit").css("height", "14rem");
+                    EChartsLoad("chartunit", "Borkenline", data, _legendTitle, _para,  "章节学习统计表", "ChapterID", false);
+                }
+            }
+        });
+    }
+
+    //在线作业数据
+    function online_student() {
+            $.ajax({
+                url: apiurl + '/api/studentapi.ashx?type=Get&&siteid=' + apisiteid + '&versionid=' + versionid + '&subjectid=' + subjectid+ '&gradeid=' + gradeid + "&classid=" + classid + "&studentid=" + $("#divstudent").find("input").val() + "&termid=" + termtype,
+                dataType: "jsonp",
+                jsonp: "callback",
+                async: false,
+                success: function (data) {
+                    if (data.length > 0) {
+//                        $("#DataLoadContainer").show();
+//                        $(".dataerror").hide();
+                        student_data = data;
+                        $('#unitP').find('input').removeClass('no').removeAttr('disabled');
+                        //unitData($("#divunit").find("div").html());//此处重复一次
+                    }
+                    else {
+//                        $("#DataLoadContainer").hide();
+//                        $(".dataerror").show();
+                    }
+                }
+            });
+    }
+
+    //当前课时
+    function GetWork_Practice(FiresPointName,FiresPointId){
+        var _title = "当前课时：<span style='color:red'>" + FiresPointName + "</span>";
+        $("#chartquestions").parent().parent().find("h1").html(_title);
+        if ($("#divstudent").find("input").val() == "") {
+            $.ajax({
+                url: apiurl + '/api/teacherapi.ashx?type=GetExam&siteid=' + apisiteid + '&versionid=' + versionid + '&subjectid=' + subjectid + '&gradeid=' + gradeid + "&classid=" + classid+ "&termid=" + termtype + "&pointid=" + FiresPointId,
+                dataType: "jsonp",
+                jsonp: "callback",
+                async: false,
+                success: function (data) {
+                    $("#qestion_btn_lianxi").hide();
+                    $("#qestion_btn_zuoye").hide();
+                    $("#qestion_btn_suitang").hide();
+//                    $("#chartquestionscon").css("height", "0");
+                    $("#studentlistquestions").html("");
+                    if (data.length > 0) {
+                        $("#chartquestionscon").css("height", "14rem");
+                        getExam(data);
+                    }else{
+                        $("#chartquestionscon").html('<div class="dataerror">暂无数据</div>');
+                    };
+
+                }
+            });
+        }
+        else {
+            $.ajax({
+                url: apiurl + '/api/studentapi.ashx?type=GetExam&siteid=' + apisiteid + '&versionid=' + versionid + '&subjectid=' + subjectid + '&gradeid=' + gradeid + "&classid=" + classid+ "&termid=" + termtype + "&pointid=" + FiresPointId+"&studentid=" + $("#divstudent").find("input").val(),
+                dataType: "jsonp",
+                jsonp: "callback",
+                async: false,
+                success: function (data) {
+                    $("#qestion_btn_lianxi").hide();
+                    $("#qestion_btn_zuoye").hide();
+                    $("#qestion_btn_suitang").hide();
+                    //$("#chartquestionscon").css("height", "0");
+                    $("#studentlistquestions").html("");
+                    if (data.length > 0) {
+                        $("#chartquestionscon").css("height", "14rem");
+                        getExam(data);
+                    }else{
+                        $("#chartquestionscon").html('<div style="overflow: hidden; width: 100%; text-align: center; margin-top: 5rem;" class="dataerror">暂无数据</div>');
+                    };
+                }
+            });
+
+
+        }
+    }
+
+    //获取章节列表
+    function onlineunit() {
+        $.ajax({
+            url: apiurl + '/api/teacherapi.ashx?type=GetUnit&siteid=' + apisiteid + '&versionid=' + versionid + '&subjectid=' + subjectid + '&gradeid=' + gradeid + "&classid=" + classid+ "&termid=" + termtype,
+            dataType: "jsonp",
+            jsonp: "callback",
+            async: false,
+            success: function (data) {
+                if (data.length > 0) {
+//                    $("#DataLoadContainer").show();
+//                    $(".dataerror").hide();
+                    teacherdata_Unit = data;
+                    var ghtml = "<input class='no' disabled='disabled' type='button' data-value='' value='全部章节'>";
+                    for (var i = 0; i < data.length; i++) {
+                        ghtml = ghtml + "<input class='no' disabled='disabled' type='button' data-value='" + data[i].ChapterID + "' value='"+data[i].ChapterName+"'>";
+                    }
+                    $("#unitP").html(ghtml);
+                    $("#unitP").find("input").bind("click", function () {
+                        $('#divunit').find("div").html($(this).val());
+                        unitid=$(this).attr('data-value');
+                        pointid="";
+                        unitDataSingle($(this).val());
+                        popDiv(2,'abc');
+                    });
+                }
+            }
+        });
+    }
+
+    function EChartsLoad(objId, chartType, data, LegendTitle, para, title, key, bclick) {
+
+        if (title != "") {
+            $("#" + objId).parent().find("h1").html(title);
+        }
+        EChartsInit(objId, chartType, data, LegendTitle, para, key, bclick);
+    }
+
+    function SetData(data, selectContent) {
+        if (data.length > 0) {
+            var _index=0;
+            var _setp=0;
+            var dataNew = [];
+            var _title="";
+            for (var i = 0; i < data.length; i++) {
+
+                if (data[i]["ChapterName"] == selectContent) {
+
+                    dataNew.push(data[i]);
+                }
+                else if (selectContent == "全部章节")
+                {
+                    if(unitid==0)
+                    {
+                        dataNew.push(data[i]);
+                    }
+                    else
+                    {
+                        if (parseInt(data[i]["ChapterID"],10) == unitid) {
+                            dataNew.push(data[i]);
+                            _title=data[i]["ChapterName"];
+                            if(data[i]["PointID"] == pointid)
+                            {
+                                _index=_setp;
+                            }
+                            _setp=_setp+1;
+                        }
+                    }
+                }
+            }
+            if (dataNew.length == 0) {
+                dataNew = data;
+            }
+            FiresPointId = dataNew[_index]["PointID"];
+            FiresPointName = dataNew[_index]["PointName"];
+            FiresChapterID = dataNew[_index]["ChapterID"];
+            FiresChapterName = dataNew[_index]["ChapterName"];
+
+            return dataNew;
+        }
+    }
+
+    //正确率和完成率切换
+    function selectLessonRate(type){
+        if ($("#divstudent").find("input").val() == "") {
+            LegendTitle = ["课时", "作业正确率", "练习正确率", "随堂测试"];
+            para = ["PointName", "Work", "Exercise", "Test"];
+            if (type == 2) {
+                LegendTitle = ["课时", "作业完成率", "练习完成率", "微课完成率", "预习完成率"];
+                para = ["PointName", "ClassWork", "ClassExercise", "Micro", "Preview"];
+            }
+        }
+        else {
+            LegendTitle = ["课时", "作业首次正确率", "全班作业正确率", "练习首次正确率", "全班练习正确率"];
+        }
+        $("#chartlessons").prev().find("a").removeClass("btn-success");
+        $("#chartlessons").prev().find("a").eq(type - 1).addClass("btn-success");
+        var unitname=$("#divunit").find("div").html();
+        var personName = $('#person').val() + ' - ';
+        if($('#person').val() == '个人'){
+            personName = '';
+        };
+        var _title = "<span style='color:red'>" + personName + "</span>";
+        if (unitname != "全部章节")
+        {
+            _title = _title + "当前章节：" + unitname;
+        }else{
+            _title = '全部章节';
+        };
+        EChartsLoad("chartlessons", "Borkenline", Data_Source, LegendTitle, para, _title, "PointID", true);
+    }
+
+    function getExam(data){
+        examData = data;
+
+        var _type = 0;
+        var drphtml = "";
+        var _setp = 0;
+        var _epid = "";
+        for (var i = 0; i < examData.length; i++) {
+            if (examData[i].Type == 1) {
+                $("#qestion_btn_lianxi").show();
+                if (_type == 0) {
+                    _type = 1;
+                    _epid = examData[i].EPID;
+                }
+            }
+            if (examData[i].Type == 2) {
+                $("#qestion_btn_zuoye").show();
+                if (_type == 0) {
+                    _type = 2;
+                    _epid = examData[i].EPID;
+                }
+
+            }
+            if (examData[i].Type == 3) {
+                $("#qestion_btn_suitang").show();
+                drphtml = drphtml + "<li data-value='" + _setp + "' data-epid='" + examData[i].EPID + "'>随堂练习" + (_setp + 1) + "</li>";
+                _setp = _setp + 1;
+
+                if (_type == 0) {
+                    _type = 3;
+                    _epid = examData[i].EPID;
+                }
+            }
+        }
+        $("#qestion_btn_suitang").find("ul").html(drphtml);
+        $("#qestion_btn_suitang").find("li").unbind("click");
+        $("#qestion_btn_suitang").find("li").bind("click", function () {
+            showChartQuestion(3, $(this).attr("data-epid"));
+        });
+        showChartQuestion(_type, _epid);
+    }
+    //作业按钮点击事件
+    function showChartQuestion(type,epid){
+        var _legendTitle = ["课时", "首次正确率"];
+        var _para = ["PointName", "AccurateRate"];
+        var _exam = [];
+        $("#studentlistquestions").html("");
+        for (var i = 0; i < examData.length; i++)
+        {
+            if (type == 1 || type ==2) {
+                if ( examData[i].Type == type) {
+                    _exam = examData[i].Exam;
+                    $("#qestion_btn_suitang").find("div").html("随堂练习");
+                    $("#studentlistquestions").html(examData[i].SPTable)
+                    break;
+                }
+            }
+            else {
+                if (examData[i].EPID == epid && examData[i].Type == type) {
+                    _exam = examData[i].Exam;
+                    $("#studentlistquestions").html(examData[i].SPTable)
+                    break;
+                }
+            }
+
+        }
+        $("#qestion_btn_lianxi").removeClass("btn-success");
+        $("#qestion_btn_zuoye").removeClass("btn-success");
+        $("#qestion_btn_suitang").removeClass("dropdown-success");
+        if (type == 1)
+        {
+            $("#qestion_btn_lianxi").addClass("btn-success");
+            _legendTitle = ["课时", "练习题分析"];
+        }
+        if (type == 2)
+        {
+            $("#qestion_btn_zuoye").addClass("btn-success");
+            _legendTitle = ["课时", "作业题分析"];
+        }
+        if (type == 3)
+        {
+            $("#qestion_btn_suitang").addClass("dropdown-success");
+            var _index = $("#qestion_btn_suitang").find("li[data-epid='" + epid + "']").attr("data-value");
+            if (typeof _index == "undefined")
+            {
+                _index = 0;
+            }
+            _legendTitle = ["课时", "随堂练习" + (parseInt(_index,10)+1) + "题分析"];
+        }
+        var _title = "当前课时：<span style='color:red'>" + FiresPointName + "</span>";
+        EChartsLoad("chartquestions", "Line", _exam, _legendTitle, _para, _title, "PointID", false);
+    }
+</script>
+<!--班级个人选择-->
+<script>
+    document.getElementById('personDiv').onclick = function(){
+        hideWindow('personDiv');
+    };
+</script>
+
+<!--课时切换，切换图表页面-->
+<script>
+    var aLiInput = document.querySelectorAll('#lip p input');
+    var oLabelName = document.querySelector('#timeName');
+    var oDivName = document.querySelector('#mName');
+    for(var i=0; i<aLiInput.length; i++){
+        aLiInput[i].onclick = function(){
+            for(var i=0; i<aLiInput.length; i++){
+                aLiInput[i].className = '';
+            };
+            this.className = 'cur';
+            oLabelName.innerHTML = this.value;
+            oDivName.innerHTML = this.val

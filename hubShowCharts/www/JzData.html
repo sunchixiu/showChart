@@ -1,0 +1,325 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="description" content=" ">
+    <meta name="keywords" content=" ">
+
+    <!-- Load JS here -->
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/common.js"></script>
+
+    <title>我的空间_湖北省教育资源公共服务平台</title>
+    <script src="js/echarts/esl.js"></script>
+    <script src="js/echarts/echarts.js"></script>
+
+    <script src="js/WdatePicker.js"></script>
+
+    <script src="js/configure.js"></script>
+    <script src="js/Resource_analysis.js"></script>
+    <title></title>
+
+</head>
+<body>
+
+<div class="Wrap">
+    <div class="skinbutton" style="cursor:pointer">
+        <img id="btnChangeSkin" data-toggle="modal" src="/Public/images/space-home/change-button.jpg">
+        <!-- <a href="http://res.qingguo.me/qingguosoft/TheManualForQingguoFans-V2.0.zip" title="帮助" target="_blank">
+            <img src="/Public/images/icon/light.png"></a> -->
+    </div>
+    <div class="WrapLeft">
+        <h2 id="space"><a href="/Space/My/centerindex">管理中心</a></h2>
+
+        <div  id="new_WrapLeft" class="WrapLeftMenu">
+            <!--             <p><a  href="/Cms/ColumnAdmin/index">门户管理</a></p>             -->
+            <p><a  href="/Cms/ColumnAdmin/index"  >门户管理</a></p>
+        </div><div  id="new_WrapLeft" class="WrapLeftMenu">
+        <!--             <p><a  href="/Space/ManageUser/index">用户管理</a></p>             -->
+        <p><a  href="/Space/ManageUser/index"  >用户管理</a></p>
+    </div><div  id="new_WrapLeft" class="WrapLeftMenu">
+        <!--             <p><a href="javascript:;">权限管理</a><span>展开</span></p>             -->
+        <p><a href="javascript:;"  >权限管理</a><span>展开</span></p>
+        <!--                 <ul rule="leftnavchilder" style="display:none">
+                <li urlrule="/Space/System/administratorList">
+                        <a href="/Space/System/administratorList">管理员管理</a>
+                    </li><li urlrule="/Space/System/roleList">
+                        <a href="/Space/System/roleList">角色管理</a>
+                    </li><li urlrule="/Space/System/accessControlList">
+                        <a href="/Space/System/accessControlList">权限管理</a>
+                    </li>                </ul>                 -->
+        <ul rule="leftnavchilder" style="display:none">
+            <li urlrule="/Space/System/administratorList">
+                <a href="/Space/System/administratorList">管理员管理</a>
+            </li><li urlrule="/Space/System/roleList">
+            <a href="/Space/System/roleList">角色管理</a>
+        </li><li urlrule="/Space/System/accessControlList">
+            <a href="/Space/System/accessControlList">权限管理</a>
+        </li>                </ul>        </div><div  id="new_WrapLeft" class="WrapLeftMenu">
+        <!--             <p><a  href="http://182.48.115.253:8084/WebCWA.aspx?siteID=1004">统计分析</a></p>             -->
+        <p><a  href="http://182.48.115.253:8084/WebCWA.aspx?siteID=1004"  target='_blank'>统计分析</a></p>
+    </div><div  id="new_WrapLeft" class="WrapLeftMenu">
+        <!--             <p><a  href="/Space/Statisti/total_resource">学情分析</a></p>             -->
+        <p><a  href="/Space/Statisti/total_resource"  >学情分析</a></p>
+    </div><div  id="new_WrapLeft" class="WrapLeftMenu">
+        <!--             <p><a  href="/Space/Institu">机构学校管理</a></p>             -->
+        <p><a  href="/Space/Institu"  >机构学校管理</a></p>
+    </div><div  id="new_WrapLeft" class="WrapLeftMenu">
+        <!--             <p><a  href="/Space/Statisti/Nomarch_StatistiData">教育统计</a></p>             -->
+        <p><a  href="/Space/Statisti/Nomarch_StatistiData"  >教育统计</a></p>
+    </div><div  id="new_WrapLeft" class="WrapLeftMenu">
+        <!--             <p><a  href="/Space/My/logManage">日志管理</a></p>             -->
+        <p><a  href="/Space/My/logManage"  >日志管理</a></p>
+    </div><div  id="new_WrapLeft" class="WrapLeftMenu">
+        <!--             <p><a  href="/Space/Teachertrain/manageindex">教师培训</a></p>             -->
+        <p><a  href="/Space/Teachertrain/manageindex"  >教师培训</a></p>
+    </div><div  id="new_WrapLeft" class="WrapLeftMenu">
+        <!--             <p><a  href="/Space/Managepoint/index">积分管理</a></p>             -->
+        <p><a  href="/Space/Managepoint/index"  >积分管理</a></p>
+    </div><div  id="new_WrapLeft" class="WrapLeftMenu">
+        <!--             <p><a  href="/Space/SmManage/index">短信管理</a></p>             -->
+        <p><a  href="/Space/SmManage/index"  >短信管理</a></p>
+    </div><div  id="new_WrapLeft" class="WrapLeftMenu">
+        <!--             <p><a  href="/Space/Appstore/appManage">应用管理</a><span>展开</span></p>             -->
+        <p><a  href="/Space/Appstore/appManage"  >应用管理</a><span>展开</span></p>
+        <!--                 <ul rule="leftnavchilder" style="display:none">
+                <li urlrule="/Space/Appstore/examineDeveloperList">
+                        <a href="/Space/Appstore/examineDeveloperList">开发者管理</a>
+                    </li><li urlrule="/Space/Appstore/manageApps">
+                        <a href="/Space/Appstore/manageApps">应用列表</a>
+                    </li><li urlrule="/Space/Appstore/appPaid">
+                        <a href="/Space/Appstore/appPaid">计费管理</a>
+                    </li>                </ul>                 -->
+        <ul rule="leftnavchilder" style="display:none">
+            <li urlrule="/Space/Appstore/examineDeveloperList">
+                <a href="/Space/Appstore/examineDeveloperList">开发者管理</a>
+            </li><li urlrule="/Space/Appstore/manageApps">
+            <a href="/Space/Appstore/manageApps">应用列表</a>
+        </li><li urlrule="/Space/Appstore/appPaid">
+            <a href="/Space/Appstore/appPaid">计费管理</a>
+        </li>                </ul>        </div><div  id="new_WrapLeft" class="WrapLeftMenu">
+        <!--             <p><a  href="/Space/Filter/index">过滤关键字管理</a></p>             -->
+        <p><a  href="/Space/Filter/index"  >过滤关键字管理</a></p>
+    </div><div  id="new_WrapLeft" class="WrapLeftMenu">
+        <!--             <p><a  href="/Space/Friendlink/linklist">链接管理</a></p>             -->
+        <p><a  href="/Space/Friendlink/linklist"  >链接管理</a></p>
+    </div><div  id="new_WrapLeft" class="WrapLeftMenu">
+        <!--             <p><a  href="http://182.48.115.248:3000">大数据墙</a></p>             -->
+        <p><a  href="http://182.48.115.248:3000"  target='_blank'>大数据墙</a></p>
+    </div><div  id="new_WrapLeft" class="WrapLeftMenu">
+        <!--             <p><a href="javascript:;">运营管理</a><span>展开</span></p>             -->
+        <p><a href="javascript:;"  >运营管理</a><span>展开</span></p>
+        <!--                 <ul rule="leftnavchilder" style="display:none">
+                <li urlrule="/Space/Bookroom/manage">
+                        <a href="/Space/Bookroom/manage">推送管理</a>
+                    </li><li urlrule="/Space/KnowledgeTree/index">
+                        <a href="/Space/KnowledgeTree/index">微课分类管理</a>
+                    </li><li urlrule="/Space/ManageUser/index">
+                        <a href="/Space/ManageUser/index">用户管理</a>
+                    </li><li urlrule="/Space/Institu">
+                        <a href="/Space/Institu">机构学校管理</a>
+                    </li><li urlrule="/Space/FTSchool/FTSchManage">
+                        <a href="/Space/FTSchool/FTSchManage">名师学校管理</a>
+                    </li><li urlrule="/Space/Microclass/manage">
+                        <a href="/Space/Microclass/manage">微课管理</a>
+                    </li><li urlrule="/Space/InterestGroup/groupManage">
+                        <a href="/Space/InterestGroup/groupManage">学习小组管理</a>
+                    </li><li urlrule="/Space/Group/groupManage">
+                        <a href="/Space/Group/groupManage">社团管理</a>
+                    </li><li urlrule="/Space/Tribe/index">
+                        <a href="/Space/Tribe/index">活动部落管理</a>
+                    </li><li urlrule="/Space/TribeResult/index">
+                        <a href="/Space/TribeResult/index">活动成果管理</a>
+                    </li><li urlrule="/Space/QandA/manage">
+                        <a href="/Space/QandA/manage">互动问答管理</a>
+                    </li><li urlrule="/Space/ClassicsExperiment/manage">
+                        <a href="/Space/ClassicsExperiment/manage">经典实验管理</a>
+                    </li><li urlrule="/Space/IndepExperiment/manage">
+                        <a href="/Space/IndepExperiment/manage">自主实验管理</a>
+                    </li><li urlrule="/Space/Intelligent/index">
+                        <a href="/Space/Intelligent/index">智动课堂授权管理</a>
+                    </li>                </ul>                 -->
+        <ul rule="leftnavchilder" style="display:none">
+            <li urlrule="/Space/Bookroom/manage">
+                <a href="/Space/Bookroom/manage">推送管理</a>
+            </li><li urlrule="/Space/KnowledgeTree/index">
+            <a href="/Space/KnowledgeTree/index">微课分类管理</a>
+        </li><li urlrule="/Space/ManageUser/index">
+            <a href="/Space/ManageUser/index">用户管理</a>
+        </li><li urlrule="/Space/Institu">
+            <a href="/Space/Institu">机构学校管理</a>
+        </li><li urlrule="/Space/FTSchool/FTSchManage">
+            <a href="/Space/FTSchool/FTSchManage">名师学校管理</a>
+        </li><li urlrule="/Space/Microclass/manage">
+            <a href="/Space/Microclass/manage">微课管理</a>
+        </li><li urlrule="/Space/InterestGroup/groupManage">
+            <a href="/Space/InterestGroup/groupManage">学习小组管理</a>
+        </li><li urlrule="/Space/Group/groupManage">
+            <a href="/Space/Group/groupManage">社团管理</a>
+        </li><li urlrule="/Space/Tribe/index">
+            <a href="/Space/Tribe/index">活动部落管理</a>
+        </li><li urlrule="/Space/TribeResult/index">
+            <a href="/Space/TribeResult/index">活动成果管理</a>
+        </li><li urlrule="/Space/QandA/manage">
+            <a href="/Space/QandA/manage">互动问答管理</a>
+        </li><li urlrule="/Space/ClassicsExperiment/manage">
+            <a href="/Space/ClassicsExperiment/manage">经典实验管理</a>
+        </li><li urlrule="/Space/IndepExperiment/manage">
+            <a href="/Space/IndepExperiment/manage">自主实验管理</a>
+        </li><li urlrule="/Space/Intelligent/index">
+            <a href="/Space/Intelligent/index">智动课堂授权管理</a>
+        </li>                </ul>        </div><div  id="new_WrapLeft" class="WrapLeftMenu">
+        <!--             <p><a  href="http://182.48.115.249/nagios/">运维监控</a></p>             -->
+        <p><a  href="http://182.48.115.249/nagios/"  target='_blank'>运维监控</a></p>
+    </div><div  id="new_WrapLeft" class="WrapLeftMenu">
+        <!--             <p><a  href="http://182.48.115.252:90/login.aspx?AutoName=100023452&amp;AutoUrl=menu/main.aspx">资源管理</a></p>             -->
+        <p><a  href="http://182.48.115.252:90/login.aspx?AutoName=100023452&amp;AutoUrl=menu/main.aspx"  target='_blank'>资源管理</a></p>
+    </div>    <!--
+        <div class="WrapLeftMenu">
+        <p>我的青果巷</p>
+        <ul>
+            <li>
+                <img src="/Public/images/group-space.png">
+                                    <a href="/Space/Group/myGroup/groupid/8c134166842a4618955debac2bf0da56" title="中国节日大全">中国节日大全</a>
+                </li>        </ul>
+    </div>
+    -->
+        <!--
+            <div class="WrapLeftMenu">
+            <p><a href="/Space/Bookroom/teabookroom">我的书房</a></p>
+        </div>
+    -->
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            //读取菜单
+            $(".WrapLeftMenu").find("p").each(function() {
+                $(this).bind("click", function() {
+                    if ($(this).find("span").html() == "展开") {
+                        $(this).next().slideDown("fast");
+                        $(this).find("span").html("收起");
+                    }
+                    else if ($(this).find("span").html() == "收起") {
+                        $(this).find("span").html("展开");
+                        $(this).next().slideUp("fast");
+                    }
+                })
+            });
+            function leftnavautoOpen() {
+                var url = location.href.toLowerCase();
+                var ischecked = false;
+                $(".WrapLeftMenu").find("li").each(function() {
+                    var urlrule = $(this).find("a").attr("href");
+                    if (typeof urlrule == "undefined")
+                        urlrule = "";
+                    urlrule = urlrule.toLowerCase();
+                    if (url.indexOf(urlrule) >= 0 && ischecked == false && urlrule != "") {
+                        $(this).parent().prev().click();
+                        ischecked = true;
+                    }
+                });
+            }
+            leftnavautoOpen();
+            if (!document.getElementById("linkSkin")) {
+                $("head").append(" <link rel=\"stylesheet\" type=\"text/css\" href=\"/Public/style/space/newskin/01.css\" id=\"linkSkin\">")
+            }
+        });
+    </script>
+    <div class="WrapRight">
+        <div class="divTitle">
+            教育数据统计
+        </div>
+
+        <ul class="nav_tabs" role="tablist">
+            <li class=""><a href="/Space/Statisti/Nomarch_StatistiData" role="tab">教育统计</a></li>
+            <li><a href="/Space/Statisti/Nomarch_sysvisitor" role="tab">系统访问统计</a></li>
+            <li class=""><a href="/Space/Statisti/Nomarch_LearningAnalysis" role="tab">学生学习统计</a></li>
+            <li class="active"><a href="/Space/Statisti/resource_type_analysis" role="tab">资源应用统计</a></li>
+        </ul>
+        <div style='padding-top:10px;'></div>
+        <div class="divMenu">
+            <ul>
+                <li class="li_select" onclick="SetTag(this)" style="cursor:pointer">学科分析</li>
+                <li onclick="SetTag(this)" style="cursor:pointer">学段分析</li>
+                <li onclick="SetTag(this)" style="cursor:pointer">资源种类分析</li>
+                <li style="width: 446px;">&nbsp;</li>
+            </ul>
+        </div>
+        <div class="divDatatECTop">
+            <p style="color: #00D8D8">总资源使用量: <span id="s_count"></span></p>
+            <p style="color: #C11F30" >日均使用量: <span id="s_avg"></span></p>
+        </div>
+        <div class="WrapContent" style="float: left;">
+
+            <div style="float: left;">
+                <input type="text" readonly="" onfocus="beginfocus()" style="width: 100px;" id="txtbegin" class="date">
+                至
+
+                <input type="text" readonly="" onfocus="endfocus()" style="width: 100px;" id="txtend" class="date">
+                <button onclick="postseacher()" class="btn btn-default">查询</button>
+            </div>
+
+            <div style="float: left; line-height: 35px; margin-left: 30px;">
+                <a href="#" style="margin-right:10px" onclick="Get_A(this)">最近一周</a>
+                <a href="#" style="margin-right: 10px" onclick="Get_A(this)">最近一月</a>
+                <a href="#" style="margin-right: 10px" onclick="Get_A(this)">最近一季度</a>
+            </div>
+        </div>
+
+
+        <div class="divDatatECList">
+            <div id="chartResourcetype" style="height: 360px; float: left; margin-top:14px; width: 100%">
+            </div>
+
+        </div>
+        <div class="divDataTitle">
+        </div>
+        <div class="divDataList">
+        </div>
+
+    </div>
+</div>
+<script>
+    var Id = "0";
+    var Postion = "学科分析";
+    $(function () {
+
+
+        url = apiAddress + "api/ra_base/Get_D_AppAnalysis?callback=?";
+        webapi_ajax(Id, url, $("#txtbegin").val(), $("#txtend").val(), Postion, "",siteID);
+    });
+    function beginfocus() {
+        WdatePicker({ dateFmt: "yyyy-MM-dd", maxDate: "%y-%M-%d}}" });
+    }
+    function endfocus() {
+        WdatePicker({ dateFmt: "yyyy-MM-dd", minDate: "#F", maxDate: "%y-%M-%d}}" });
+    }
+    function postseacher() {
+        webapi_ajax(Id, url, $("#txtbegin").val(), $("#txtend").val(), Postion, "",siteID);
+    }
+    function Get_A(obj) {
+        webapi_ajax(Id, url, $("#txtbegin").val(), $("#txtend").val(),Postion, $(obj).html(),siteID);
+
+    }
+    function SetTag(obj) {
+        $(".divMenu ul li").each(function () {
+            $(this).removeClass("li_select");
+
+        });
+        $(obj).attr("class", "li_select");
+        Postion = $(obj).html();
+        $("#txtbegin").val(new Date().dateAdd("d", -30).format("yyyy-MM-dd"));
+        $("#txtend").val(new Date().dateAdd("d", -1).format("yyyy-MM-dd"));
+        webapi_ajax(Id, url, $("#txtbegin").val(), $("#txtend").val(), Postion, "",siteID);
+    }
+    $("#txtbegin").val(new Date().dateAdd("d", -30).format("yyyy-MM-dd"));
+    $("#txtend").val(new Date().dateAdd("d", -1).format("yyyy-MM-dd"));
+
+
+</script>
+</body>
+</html>

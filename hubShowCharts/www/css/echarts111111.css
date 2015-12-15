@@ -1,0 +1,14 @@
+.echart_h1{font-size:14px;font-weight:400;color:#098c3b;text-align:left;line-height: 40px;height: 30px;
+overflow: hidden;clear: both;}
+.state_span{display: inline-block;width:40px;height: 14px;border-radius: 4px; margin:0 20px 0 3px; }
+.state span.red{background: #FF0F00;}
+.state span.green{background: #47FF00;}
+.state span.blue{background: #2CC9C9;}
+.prompt{line-height: 30px;color: red;margin-top: 20px;background: #F4F4F4;border: 1px solid #DDD;}
+.nopadd thead tr th,.nopadd tbody tr td{padding:8px 0;border-right: 1px solid #DDD;text-align: center;}
+.nopadd{border: 1px solid #ddd;border-right:0; }
+.more_h1{line-height: 30px;margin-top: 20px;}
+.f_l{float: left;}
+.class_num a{font-size: 14px;color: green;}
+/* .mar_r15{margin-right: 15px;} */
+.Speed{display: inline-block;width: 110px;height: 28px;background: url(../images/speed.jpg) no-repeat 0 5px;text-indent: 60px;}

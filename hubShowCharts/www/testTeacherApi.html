@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta http-equiv="content-type" content="application/json; charset=UTF-8" />
+    <!--<meta http-equiv="Access-Control-Allow-Origin" content="*">-->
+    <title></title>
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <!--<script>
+        var json = {"teacherid":"e9d6acbf023e4a55a2b301a4490345ba"};
+        $.ajax({
+            url:"http://182.48.115.253:70/TSB_ISCHOOL_LCS_SERVER/tchmyroom/getgradecourseunitlist",
+//            data:{teacherid:1100465551},
+            type: "POST",
+            dataType: "json",
+            processData:false,
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({"teacherid":"e9d6acbf023e4a55a2b301a4490345ba"}),
+            async:false,
+            success: function(data){
+                alert(JSON.stringify(data));
+            },
+            error: function(data){
+                console.log(data);
+                alert(JSON.stringify(data));
+            }
+        });
+
+        function GetJsonData() {
+            var json = {
+                "teacherid":"e9d6acbf023e4a55a2b301a4490345ba"
+            };
+            return json;
+        }
+    </script>-->
+</head>
+<body>
+</body>
+<script>
+    $.ajax({
+        url:'postJson.php',
+        type:'post',
+        dataType:'json',
+        contentType:'application/json',
+        data:JSON.stringify({'teacherid':'1234567890'}),
+        processData:false,
+        async:false,
+        success: function(data){
+            alert(JSON.stringify(data));
+        },
+        error:function(data){
+            alert(JSON.stringify(data));
+        }
+    });
+</script>
+</html>

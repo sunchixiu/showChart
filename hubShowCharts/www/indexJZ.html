@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=9">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <title>局长首页</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" href="css/mobilebone.css">
+    <!--<link href="css/global.css" rel="stylesheet">-->
+
+    <script src="js/every.js"></script>
+    <script src="js/iscroll.js"></script>
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/WdatePicker.js"></script>
+    <script>
+        var timer = null;
+    </script>
+    <script>
+        setTimeout(function(){
+            var oScript = document.createElement('script');
+            oScript.src = 'js/echarts/esl.js';
+            document.getElementsByTagName('head')[0].appendChild(oScript);
+        },200);
+    </script>
+    <script src="js/statis/EChartsInfo.js"></script>
+    <script src="js/jquery.CustomHeader.js"></script>
+    <script>
+        setTimeout(function(){
+            var oScript = document.createElement('script');
+            oScript.src = 'js/echarts/echarts.js';
+            document.getElementsByTagName('head')[0].appendChild(oScript);
+        },200);
+    </script>
+
+    <!--资源应用统计-->
+    <script src="js/configure.js"></script>
+    <script src="js/Resource_analysis.js"></script>
+    <script>
+        function closeWebview(){
+
+        };
+    </script>
+</head>
+<body>
+<div class="main page out" id="pageHome">
+    <div class="header"><div class="l"><a href="javascript:closeWebview();">&laquo;返回</a></div><div class="m">局长首页</div><div class="r"></div></div>
+    <div class="section">
+        <div class="block_vertical" id="block_vertical">
+            <ul>
+                <li onclick="showSecondDiv(0);">
+                    <span class="pic"><img src="img/chart/chart_1.png"></span>
+                    <span class="text">教育统计<em class="right">&gt;</em></span>
+                </li>
+                <li onclick="showSecondDiv(1)">
+                    <span class="pic"><img src="img/chart/chart_2.png"></span>
+                    <span class="text">系统访问统计<em class="right">&gt;</em></span>
+                </li>
+                <li onclick="showSecondDiv(2)">
+                    <span class="pic"><img src="img/chart/chart_3.png"></span>
+                    <span class="text">学生学习统计<em class="right">&gt;</em></span>
+                </li>
+                <li onclick="showSecondDiv(3)">
+                    <span class="pic"><img src="img/chart/chart_4.png"></span>
+                    <span class="text">资源应用统计<em class="right">&gt;</em></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!--二级页面-->
+<div class="main page out" id="page1">
+    <div class="iheader"><div class="l"><a href="#&pageHome" data-rel="back">&laquo;返回</a></div><div class="m">教育统计</div><div class="r"></div></div>
+    <div class="isection">
+        <div class="list_book">
+            <ul>
+                <li onclick="showThirdDiv(0,'学校');">
+                    <p class="up">学校</p>
+                    <p class="down">学校总数:48 其他:58 小学:4 初中:4</p>
+                    <em class="right">&gt;</em>
+                </li>
+                <li onclick="showThirdDiv(1,'班级');">
+                    <p class="up">班级</p>
+                    <p class="down">班级总数:34 其他:6 小学:13 初中:15</p>
+                    <em class="right">&gt;</em>
+                </li>
+                <li onclick="showThirdDiv(2,'老师');">
+                    <p class="up">老师</p>
+                    <p class="down">老师总数:7 其他:9</p>
+                    <em class="right">&gt;</em>
+                </li>
+                <li onclick="showThirdDiv(3,'学生');">
+                    <p class="up">学生</p>
+                    <p class="down">学生总数:257 其他:14 小学:71 初中:172</p>
+                    <em class="right">&gt;</em>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!--二级页面系统统计-->
+<div class="main page out" id="page1_2">
+    <div class="iheader"><div class="l"><a href="#&pageHome" data-rel="back">&laquo;返回</a></div><div class="m">系统访问统计</div><div class="r"></div></div>
+    <div class="isection">
+        <div class="list_book">
+            <ul>
+                <li onclick="showThirdSysDiv(0,'总体访问');">
+                    <p class="up">总体访问</p>
+                    <p class="down">历史访问量：4  历史上线人数：6</p>
+                    <em class="right">&gt;</em>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!--二级页面日统计信息-->
+<div class="main page out" id="page1_3">
+    <div class="iheader"><div class="l"><a href="#&pageHome" data-rel="back">&laquo;返回</a></div><div class="m">学生学习统计</div><div class="r"></div></div>
+    <div class="isection">
+        <div class="list_book">
+            <ul>
+                <li onclick="showThirdDayDiv(0,'每日学习分析');">
+                    <p class="up">每日学习分析</p>
+                    <p class="down">在线学习分布</p>
+                    <em class="right">&gt;</em>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!--二级页面资源应用统计-->
+<div class="main page out" id="page1_4">
+    <div class="iheader"><div class="l"><a href="#&pageHome" data-rel="back">&laquo;返回</a></div><div class="m">资源应用统计</div><div class="r"></div></div>
+    <div class="isection">
+        <div class="list_book">
+            <ul>
+                <li onclick="showThirdResourceDiv(0,'学科分析');">
+                    <p class="up">学科分析</p>
+                    <p class="down">总资源使用量</p>
+                    <em class="right">&gt;</em>
+                </li>
+                <li onclick="showThirdResourceDiv(0,'学段分析');">
+                    <p class="up">学段分析</p>
+                    <p class="down">总资源使用量</p>
+                    <em class="right">&gt;</em>
+                </li>
+                <li onclick="showThirdResourceDiv(0,'资源种类分析');">
+                    <p class="up">资源种类分析</p>
+                    <p class="down">总资源使用量</p>
+                    <em class="right">&gt;</em>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!--三级教育统计页面-->
+<div class="main page out" id="page2">
+    <div class="iiheader"><div class="l"><a href="#&page1" data-rel="back">&laquo;返回</a></div><div class="m" id="page2title">学校</div><div class="r"></div></div>
+    <div class="iisection">
+        <div class="title_top">
+            <span class="divDatatECTop"></span>
+            <div class="dropdown" id="divcity">
+                <div>全市</div>
+                <ul class="dropdown-menu" role="menu"></ul>
+            </div>
+        </div>
+        <div class="chart_k">
+
+            <div id="DataLoadContainer">
+                <div id="tempLoading" class="tempLoading" aria-invalid="tempLoading"></div>
+                <div id="chartunitcon">
+                    <div style="display: none;">
+                        <h1 class="echart_h1 more_h1"></h1>
+                        <div id="chart" style="width: 100%; height:13rem; margin-top: -2.6rem;"></div>
+                    </div>
+                    <div style="display: none;">
+                        <h1 class="echart_h1 more_h1"></h1>
+                        <div id="chart1" style="width: 100%; height:13rem; margin-top: -2.6rem;"></div>
+                    </div>
+                    <div style="display: none;">
+                        <h1 class="echart_h1 more_h1"></h1>
+                        <div id="chart2" style="width: 100%; height:13rem; margin-top: -2.6rem;"></div>
+                    </div>
+                    <div style="display: none;">
+                        <h1 class="echart_h1 more_h1"></h1>
+                        <div id="chart3" style="width: 100%; height:13rem; margin-top: -2.6rem;"></div>
+                    </div>
+                    <div style="display: none;">
+                        <h1 class="echart_h1 more_h1"></h1>
+                        <div id="chart4" style="width: 100%; height:13rem; margin-top: -2.6rem;"></div>
+                    </div>
+                    <div style="display: none;">
+                        <h1 class="echart_h1 more_h1"></h1>
+                        <div id="chart5" style="width: 100%; height:13rem; margin-top: -2.6rem;"></div>
+                    </div>
+                </div>
+
+            </div>
+            <div style="overflow: hidden; padding: 10px; display: none;" class="alert alert-warning" id="dataerror">
+                暂无数据
+            </div>
+
+        </div>
+        <div style="height: 2.6rem; z-index: 0;"></div>
+    </div>
+</div>
+<!--三级系统访问统计页面-->
+<div class="main page out" id="page2_2">
+    <div class="iiheader"><div class="l"><a href="#&page1_2" data-rel="back">&laquo;返回</a></div><div class="m" id="page2systitle">总体访问</div><div class="r"></div></div>
+    <div class="iisection">
+        <div class="date">
+            <input type="text" id="txtbegin" onfocus="beginfocus()" readonly> 至
+            <input type="text" id="txtend" onfocus="endfocus()" readonly>
+            <input type="button" class="btn" onclick="postseacher()" value="查询">
+        </div>
+        <div id="tempLoading" class="tempLoading"></div>
+        <div style=" overflow:hidden; padding: 10px; " id="chartcontainer">
+            <!--<div id="ChartMain" style="width:100%; height: 12.8rem;"></div>-->
+            <!--<div id="ChartMain1" style="width:100%; height: 12.8rem;"></div>-->
+            <!--<div id="ChartMain2" style="width:100%; height: 12.8rem;"></div>-->
+        </div>
+        <div style="height: 2.6rem; z-index: 0;"></div>
+    </div>
+</div>
+<!--三级学生学习统计页面-->
+<div class="main page out" id="page2_3">
+    <div class="iiheader"><div class="l"><a href="#&page1_3" data-rel="back">&laquo;返回</a></div><div class="m" id="page2daytitle">每日学习分析</div><div class="r"></div></div>
+    <div class="iisection">
+        <div class="date">
+            <input type="text" id="txtbeginStudent" onfocus="beginfocus()" readonly> 至
+            <input type="text" id="txtendStudent" onfocus="endfocus()" readonly>
+            <input type="button" class="btn" onclick="postseacherStudent()" value="查询">
+        </div>
+        <div id="tempLoading" class="tempLoading"></div>
+        <div class="chart_k">
+
+            <div id="DataLoadContainerDay">
+                <div id="chartunitconDay">
+                    <div style="display: none;">
+                        <h1 class="echart_h1 more_h1"></h1>
+                        <div id="chartlearningtype" style="width: 100%; margin-top: -2.4rem;"></div>
+                    </div>
+                    <div style="display: none;">
+                        <h1 class="echart_h1 more_h1"></h1>
+                        <div id="chartlearningsubject" style="width: 100%; margin-top: -2.4rem;"></div>
+                    </div>
+                    <div style="display: none;">
+                        <h1 class="echart_h1 more_h1"></h1>
+                        <div id="chartlearninggrade" style="width: 100%; margin-top: -2.4rem;"></div>
+                    </div>
+                    <div style="display: none;">
+                        <h1 class="echart_h1 more_h1"></h1>
+                        <div id="chartlearningclass" style="width: 100%; margin-top: -2.4rem;"></div>
+                    </div>
+                    <div style="display: none;">
+                        <h1 class="echart_h1 more_h1"></h1>
+                        <div id="chartstudytotal" style="width: 100%; height:13rem; margin-top: -2.4rem;"></div>
+                    </div>
+                    <div style="display: none;">
+                        <h1 class="echart_h1 more_h1"></h1>
+                        <div id="chartstudytotaldetailed" style="width: 100%; height:13rem; margin-top: -2.4rem;"></div>
+                    </div>
+                    <div style="display: none;">
+                        <h1 class="echart_h1 more_h1"></h1>
+                        <div id="charttimes" style="width: 100%; height:14rem;"></div>
+                    </div>
+                    <div style="display: none; margin-top: 2.4rem; margin-bottom: 2.4rem;">
+                        <h1 class="echart_h1 more_h1"></h1>
+                        <div id="chartvisit" style="width: 100%; height:14rem;"></div>
+                    </div>
+                </div>
+
+            </div>
+            <div style="overflow: hidden; padding: 10px; display: none;" class="alert alert-warning" id="dataerror">
+                暂无数据
+            </div>
+
+        </div>
+        <div class="bottomHeight"></div>
+    </div>
+</div>
+<!--三级资源统计统计页面-->
+<div class="main page out" id="page2_4">
+    <div class="iiheader"><div class="l"><a href="#&page1_4" data-rel="back">&laquo;返回</a></div><div class="m" id="page2resourcetitle">学科分析</div><div class="r"></div></div>
+    <div class="iisection">
+        <div class="date">
+            <input type="text" id="txtbeginResource" onfocus="beginfocus()" readonly> 至
+            <input type="text" id="txtendResource" onfocus="endfocus()" readonly>
+            <input type="button" id="resourceSearch" class="btn" data-str="" onclick="postseacherResource($(this).attr('data-str'))" value="查询">
+        </div>
+        <div class="tempLoading"></div>
+        <div class="chart_k">
+
+            <div id="DataLoadContainerResource">
+                <div id="chartunitconResource">
+                    <h1 class="echart_h1 more_h1"></h1>
+                    <div id="chartResourcetype" style="width: 17.3rem; height: 14rem;"></div>
+                </div>
+
+            </div>
+            <div class="dataerror" style="margin-top: -5rem; display: none;">
+                暂无数据
+            </div>
+
+        </div>
+        <div class="bottomHeight"></div>
+    </div>
+</div>
+
+</body>
+<script src="js/mobilebone.js"></script>
+<script type="text/javascript" src="js/statis/ApiConfig.js?v={$nowtime}"></script>
+<!--教育统计-->
+<script type="text/javascript">
+    var province = '湖北省';
+    var city = '';
+    var area = ''
+    var _jsondata = [];
+    var _totalcount = 0;
+    var _allcityname = "全市";
+    if (city != "")
+    {
+        _allcityname = "全区/县";
+    }
+    if (area != "")
+    {
+        $("#divcity").hide();
+    }
+
+    function InitSchool() {
+        $('#chart').parent().show();
+        $('#chart1').parent().show();
+        $.ajax({
+            url: apiurl + '/api/AreaAPI.ashx?type=GetAreaSchool&siteid=' + apisiteid + '&province=' + province+"&city="+city,
+            dataType: "jsonp",
+            jsonp: "callback",
+            async: false,
+            success: function (data) {
+                $('.tempLoading').hide();
+                _jsondata = data;
+                EChartsLoad("chart", "Pie", _jsondata.City, ["学校密度"], null, "学校密度", "", true);
+                EChartsLoad("chart1", "Pie", _jsondata.StudySection, ["学校种类"], null, "学校种类", "", true);
+                var html = "<li data-value=''>" + _allcityname + "</li>";
+                for (var i = 0; i < _jsondata.List.length; i++)
+                {
+                    if (html.indexOf(_jsondata.List[i].City) < 0)
+                    {
+                        html = html + "<li data-value='" + _jsondata.List[i].City + "'>" + _jsondata.List[i].City + "</li>"
+                    }
+                }
+                _totalcount = parseInt( _jsondata.TotalCount,10);
+                setStudySection("学校总数",_jsondata.StudySection);
+                $("#divcity").find("ul").html(html);
+                $("#divcity").find("div").html(_allcityname);
+                $("#divcity").find("li").bind("click", function () {
+                    var _ajaxurl = apiurl + '/api/AreaAPI.ashx?type=GetAreaSchool&siteid=' + apisiteid + '&province=' + province + "&city=" + $(this).html();
+                    if (city != "") {
+                        _ajaxurl = apiurl + '/api/AreaAPI.ashx?type=GetAreaSchool&siteid=' + apisiteid + '&province=' + province + "&city=" + city + "&area=" + $(this).html();
+                    }
+                    $.ajax({
+                        url: _ajaxurl,
+                        dataType: "jsonp",
+                        jsonp: "callback",
+                        async: false,
+                        success: function (data) {
+                            _jsondata = data;
+                            EChartsLoad("chart", "Pie", _jsondata.City, ["学校密度"], null, "学校密度", "", true);
+                            EChartsLoad("chart1", "Pie", _jsondata.StudySection, ["学校种类"], null, "学校种类", "", true);
+                            _totalcount = parseInt(_jsondata.TotalCount, 10);
+                            setStudySection("学校总数", _jsondata.StudySection);
+                        }
+                    });
+                })
+            }
+        });
+    }
+    function InitClass() {
+        $('#chart').parent().show();
+        $('#chart1').parent().show();
+        $.ajax({
+            url: apiurl + '/api/AreaAPI.ashx?type=GetAreaClass&siteid=' + apisiteid + '&province=' + province + "&city=" + city,
+            dataType: "jsonp",
+            jsonp: "callback",
+            async: false,
+            success: function (data) {
+                $('.tempLoading').hide();
+                _jsondata = data;
+                EChartsLoad("chart", "Pie", _jsondata.City, ["班级密度"], null, "班级密度", "", true);
+                EChartsLoad("chart1", "Pie", _jsondata.StudySection, ["学校种类"], null, "学校种类", "", true);
+                var html = "<li data-value=''>" + _allcityname + "</li>";
+                for (var i = 0; i < _jsondata.List.length; i++) {
+                    if (html.indexOf(_jsondata.List[i].City) < 0) {
+                        html = html + "<li data-value='" + _jsondata.List[i].City + "'>" + _jsondata.List[i].City + "</li>"
+                    }
+                }
+                _totalcount = parseInt(_jsondata.TotalCount, 10);
+                setStudySection("班级总数", _jsondata.StudySection);
+                $("#divcity").find("ul").html(html);
+                $("#divcity").find("div").html(_allcityname);
+                $("#divcity").find("li").bind("click", function () {
+                    var _ajaxurl = apiurl + '/api/AreaAPI.ashx?type=GetAreaClass&siteid=' + apisiteid + '&province=' + province + "&city=" + $(this).html();
+                    if (city != "")
+                    {
+                        _ajaxurl = apiurl + '/api/AreaAPI.ashx?type=GetAreaClass&siteid=' + apisiteid + '&province=' + province + "&city=" + city+"&area="+$(this).html();
+                    }
+                    $.ajax({
+                        url: _ajaxurl,
+                        dataType: "jsonp",
+                        jsonp: "callback",
+                        async: false,
+                        success: function (data) {
+                            _jsondata = data;
+                            EChartsLoad("chart", "Pie", _jsondata.City, ["班级密度"], null, "班级密度", "", true);
+                            EChartsLoad("chart1", "Pie", _jsondata.StudySection, ["学校种类"], null, "学校种类", "", true);
+                            _totalcount = parseInt(_jsondata.TotalCount, 10);
+                            setStudySection("班级总数", _jsondata.StudySection);
+                        }
+                    });
+                })
+            }
+        });
+    }
+    function InitTeacher() {
+        $('#chart').parent().show();
+        $('#chart1').parent().show();
+        $('#chart2').parent().show();
+        $('#chart3').parent().show();
+        $('#chart4').parent().show();
+        $('#chart5').parent().show();
+        $.ajax({
+            url: apiurl + '/api/AreaAPI.ashx?type=GetAreaTeacher&siteid=' + apisiteid + '&province=' + province+"&city="+city,
+            dataType: "jsonp",
+            jsonp: "callback",
+            async: false,
+            success: function (data) {
+                $('.tempLoading').hide();
+                _jsondata = data;
+                EChartsLoad("chart", "Pie", _jsondata.City, ["密度分类"], null, "密度分类", "", true);
+                EChartsLoad("chart1", "Pie", _jsondata.StudySection, ["种类分布"], null, "种类分布", "", true);
+                EChartsLoad("chart2", "Pie", _jsondata.Subject, ["学科分布"], null, "学科分布", "", true);
+                EChartsLoad("chart3", "Pie", _jsondata.Grade, ["年级分布"], null, "年级分布", "", true);
+                EChartsLoad("chart4", "Pie", _jsondata.Age, ["年龄分布"], null, "年龄分布", "", true);
+                EChartsLoad("chart5", "Pie", _jsondata.Sex, ["性别比例"], null, "性别比例", "", true);
+                var html = "<li data-value=''>" + _allcityname + "</li>";
+
+                for (var i = 0; i < _jsondata.List.length; i++) {
+                    if (html.indexOf(_jsondata.List[i].City) < 0) {
+                        html = html + "<li data-value='" + _jsondata.List[i].City + "'>" + _jsondata.List[i].City + "</li>"
+                    }
+                }
+
+                _totalcount = parseInt(_jsondata.TotalCount, 10);
+                setStudySection("老师总数", _jsondata.StudySection);
+                $("#divcity").find("ul").html(html);
+                $("#divcity").find("div").html(_allcityname);
+                $("#divcity").find("li").bind("click", function () {
+                    var _ajaxurl = apiurl + '/api/AreaAPI.ashx?type=GetAreaTeacher&siteid=' + apisiteid + '&province=' + province + "&city=" + $(this).html();
+                    if (city != "") {
+                        _ajaxurl = apiurl + '/api/AreaAPI.ashx?type=GetAreaTeacher&siteid=' + apisiteid + '&province=' + province + "&city=" + city + "&area=" + $(this).html();
+                    }
+                    $.ajax({
+                        url: _ajaxurl,
+                        dataType: "jsonp",
+                        jsonp: "callback",
+                        async: false,
+                        success: function (data) {
+                            _jsondata = data;
+                            EChartsLoad("chart", "Pie", _jsondata.City, ["密度分类"], null, "密度分类", "", true);
+                            EChartsLoad("chart1", "Pie", _jsondata.StudySection, ["种类分布"], null, "种类分布", "", true);
+                            EChartsLoad("chart2", "Pie", _jsondata.Subject, ["学科分布"], null, "学科分布", "", true);
+                            EChartsLoad("chart3", "Pie", _jsondata.Grade, ["年级分布"], null, "年级分布", "", true);
+                            EChartsLoad("chart4", "Pie", _jsondata.Age, ["年龄分布"], null, "年龄分布", "", true);
+                            EChartsLoad("chart5", "Pie", _jsondata.Sex, ["性别比例"], null, "性别比例", "", true);
+                            _totalcount = parseInt(_jsondata.TotalCount, 10);
+                            setStudySection("老师总数", _jsondata.StudySection);
+                        }
+                    });
+                })
+            }
+        });
+    }
+    function InitStudent() {
+        $('#chart').parent().show();
+        $('#chart1').parent().show();
+        $('#chart2').parent().show();
+        $('#chart3').parent().show();
+        $.ajax({
+            url: apiurl + '/api/AreaAPI.ashx?type=GetAreaStudent&siteid=' + apisiteid + '&province=' + province + "&city=" + city,
+            dataType: "jsonp",
+            jsonp: "callback",
+            async: false,
+            success: function (data) {
+                $('.tempLoading').hide();
+                _jsondata = data;
+                EChartsLoad("chart", "Pie", _jsondata.City, ["密度分类"], null, "密度分类", "", true);
+                EChartsLoad("chart1", "Pie", _jsondata.StudySection, ["种类分布"], null, "种类分布", "", true);
+                EChartsLoad("chart2", "Pie", _jsondata.Grade, ["年级分布"], null, "年级分布", "", true);
+                EChartsLoad("chart3", "Pie", _jsondata.Sex, ["性别比例"], null, "性别比例", "", true);
+                var html = "<li data-value=''>" + _allcityname + "</li>";
+
+                for (var i = 0; i < _jsondata.List.length; i++) {
+                    if (html.indexOf(_jsondata.List[i].City) < 0) {
+                        html = html + "<li data-value='" + _jsondata.List[i].City + "'>" + _jsondata.List[i].City + "</li>"
+                    }
+                }
+                _totalcount = parseInt(_jsondata.TotalCount, 10);
+                setStudySection("学生总数", _jsondata.StudySection);
+                $("#divcity").find("ul").html(html);
+                $("#divcity").find("div").html(_allcityname);
+                $("#divcity").find("li").bind("click", function () {
+                    var _ajaxurl = apiurl + '/api/AreaAPI.ashx?type=GetAreaStudent&siteid=' + apisiteid + '&province=' + province + "&city=" + $(this).html();
+                    if (city != "") {
+                        _ajaxurl = apiurl + '/api/AreaAPI.ashx?type=GetAreaStudent&siteid=' + apisiteid + '&province=' + province + "&city=" + city + "&area=" + $(this).html();
+                    }
+                    $.ajax({
+                        url: _ajaxurl,
+                        dataType: "jsonp",
+                        jsonp: "callback",
+                        async: false,
+                        success: function (data) {
+                            _jsondata = data;
+                            EChartsLoad("chart", "Pie", _jsondata.City, ["密度分类"], null, "密度分类", "", true);
+                            EChartsLoad("chart1", "Pie", _jsondata.StudySection, ["种类分布"], null, "种类分布", "", true);
+                            EChartsLoad("chart2", "Pie", _jsondata.Grade, ["年级分布"], null, "年级分布", "", true);
+                            EChartsLoad("chart3", "Pie", _jsondata.Sex, ["性别比例"], null, "性别比例", "", true);
+                            _totalcount = parseInt(_jsondata.TotalCount, 10);
+                            setStudySection("学生总数", _jsondata.StudySection);
+                        }
+                    });
+                })
+            }
+        });
+    }
+
+    function setStudySection(type,json)
+    {
+        var arr = "03A3A4,9C80CC,C11F30,E97B39,6699cc";
+        var _temphtml = "";
+        for (var y = 0; y < json.length; y++) {
+            _temphtml = _temphtml + "<p style='color:#" + arr.split(',')[y]+ "'>" + json[y].Key+":"+ + json[y].Value + "</p>";
+        }
+        _temphtml = "<p style='color: #00D8D8'>" + type + ":" + _totalcount + "</p>" + _temphtml;
+        $(".divDatatECTop").html(_temphtml);
+    }
+    function EChartsLoad(objId, chartType, data, LegendTitle, para, title, key, bclick) {
+
+        if (title != "") {
+            $("#" + objId).parent().find("h1").html(title);
+        }
+        EChartsInit(objId, chartType, data, LegendTitle, para, key, bclick);
+    }
+</script>
+<!--系统访问统计-->
+<script>
+    function beginfocus()
+    {
+        WdatePicker({dateFmt:"yyyy-MM-dd",maxDate:"%y-%M-%d}}"});
+    }
+    function endfocus()
+    {
+        WdatePicker({dateFmt:"yyyy-MM-dd",maxDate:"%y-%M-%d}}"});
+    }
+    $("#txtbegin").val(new Date().dateAdd("d",-30).format("yyyy-MM-dd"));
+    $("#txtend").val(new Date().dateAdd("d",-1).format("yyyy-MM-dd"));
+
+    var _timemax=0;
+    var _timemin=0;
+    var _learntimemax=0;
+    var _learntimemin=0;
+    var _learntime="";
+    var _onlinetime="";
+    var _date="";
+    var _pageviews="";
+    var _usercount="";
+    var count = 0
+
+
+    var _siteID=apisiteid;
+    var api=apiurl +"/api/api2.ashx?type=sysvistor&siteid="+_siteID;
+
+    function totalinit()
+    {
+        //totalsysvistor
+        $.ajax({
+            url: apiurl +"/api/api2.ashx?type=totalsysvistor&siteid="+_siteID,
+            dataType: "jsonp",
+            jsonp: "callback",
+            async: false,
+            success: function (data) {
+                $("#WrapContent_Title").append("<span style='color:#00d8d8'>历史在线时长："+data[0].ResidenceTime+"(时)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;历史学习时长："+data[0].learnResidenceTime+"(时)</span>");
+                $("#WrapContent_Title").append("<span style='color:#3FE267;margin-left:20px;'>历史访问量："+data[0].PageViews+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;历史上线人数："+data[0].uvid+"</span>")
+            }
+        });
+    }
+
+    totalinit();
+    function random()
+    {
+        return parseInt( Math.random()*100000,10)
+    }
+    function init3(begin,endate) {
+        _date="";
+        _learntime="";
+        _onlinetime="";
+        _pageviews="";
+        _usercount="";
+        var c1=random();
+        var c2=random();
+        var c3=random();
+        $("#chartcontainer").html("");
+        $("#chartcontainer").append("<div id='ChartMain"+c1+"' style='width:100%; height: 14.8rem;'></div>");
+        $("#chartcontainer").append("<div id='ChartMain"+c2+"' style='width:100%; height: 14.8rem;'></div>");;
+        $("#chartcontainer").append("<div id='ChartMain"+c3+"' style='width:100%; height: 14.8rem;'</div>");
+
+        var apiurl=api+"&begindate="+begin+"&enddate="+endate;
+        $.ajax({
+            url: apiurl,
+            dataType: "jsonp",
+            jsonp: "callback",
+            async: false,
+            success: function (data) {
+                $('.tempLoading').hide();
+                //console.log(data.ds)
+                for (var i = 0; i < data.length; i++) {
+                    if (_timemax <parseInt(data[i].ResidenceTime,10)) {
+                        _timemax = parseInt(data[i].ResidenceTime,10);
+                    }
+                    if (_learntimemax < parseInt(data[i].LearnResidenceTime,10)) {
+                        _learntimemax = parseInt(data[i].LearnResidenceTime,10);
+                    }
+                    if(_timemin==0)
+                    {
+                        _timemin = parseInt(data[i].ResidenceTime,10);
+                    }
+                    if (_timemin > parseInt(data[i].ResidenceTime,10)) {
+                        _timemin = parseInt(data[i].ResidenceTime,10);
+                    }
+                    if(_learntimemin==0)
+                    {
+                        _learntimemin = parseInt(data[i].LearnResidenceTime,10);
+                    }
+                    if (_learntimemin > parseInt(data[i].LearnResidenceTime,10)) {
+                        _learntimemin = parseInt(data[i].LearnResidenceTime,10);
+                    }
+                    if (_learntime != "") {
+                        _learntime = _learntime + ",";
+                    }
+                    _learntime = _learntime + data[i].LearnResidenceTime;
+                    ;
+                    if (_onlinetime != "") {
+                        _onlinetime = _onlinetime + ",";
+                    }
+                    _onlinetime = _onlinetime + data[i].ResidenceTime;
+                    ;
+                    if (_date != "") {
+                        _date = _date + ",";
+                    }
+                    _date = _date + data[i].strdate;
+                    ;
+                    if (_pageviews != "") {
+                        _pageviews = _pageviews + ",";
+                    }
+                    _pageviews = _pageviews + data[i].pageviews;
+                    ;
+                    if (_usercount != "") {
+                        _usercount = _usercount + ",";
+                    }
+                    _usercount = _usercount + data[i].usercount;
+                    ;
+
+                }
+
+
+                var options0="{tooltip:{trigger:'axis'},legend:{x:'left',data:['学习时长','在线时长']},toolbox:{show:true,feature:{mark:{show:false},magicType:{show:true,type:['line','bar']},restore:{show:true},saveAsImage:{show:false}}},xAxis:[{type:'category',data:['"+_date.replace(/,/g,"','")+"']}],yAxis:[{type:'value',name:'时长（分）'}],series:[{name:'在线时长',type:'bar',data:["+_onlinetime+"],markPoint:{data:[{type:'max',name:'在线最大值'},{type:'min',name:'在线最小值'}]},markLine:{data:[{type:'average',name:'平均值'}]}},{name:'学习时长',type:'bar',data:["+_learntime+"],markPoint:{data:[{type:'max',name:'学习最大值'},{type:'min',name:'学习最小值'}]},markLine:{data:[{type:'average',name:'平均值'}]}}],grid:{x:36,y:36,x2:12,y2:54}}";
+                var options1="{tooltip:{trigger:'axis'},toolbox:{show:true,feature:{mark:{show:false},magicType:{show:true,type:['line','bar']},restore:{show:true},saveAsImage:{show:false}}},xAxis:[{type:'category',boundaryGap:false,data:['"+_date.replace(/,/g,"','")+"']}],yAxis:[{type:'value',name:'访问量'}],series:[{name:'访问量',type:'line',data:["+_pageviews+"],markLine:{data:[{type:'average',name:'平均值'}]}}],grid:{x:36,y:36,x2:12,y2:54}}"
+                var options2="{tooltip:{trigger:'axis'},toolbox:{show:true,feature:{mark:{show:false},magicType:{show:true,type:['line','bar']},restore:{show:true},saveAsImage:{show:false}}},xAxis:[{type:'category',data:['"+_date.replace(/,/g,"','")+"']}],yAxis:[{type:'value',name:'上线人数'}],series:[{name:'上线人数',type:'bar',data:["+_usercount+"],markLine:{data:[{type:'average',name:'平均值'}]}}],grid:{x:36,y:36,x2:12,y2:54}}"
+                require(
+                        [
+                            'echarts',
+                            'echarts/chart/pie'
+
+                        ],
+                        function (ec) {
+                            var myChart = ec.init(document.getElementById('ChartMain'+c1), "macarons");
+                            var myChart1 = ec.init(document.getElementById('ChartMain'+c2), "macarons");
+                            var  myChart2 = ec.init(document.getElementById('ChartMain'+c3), "macarons");
+                            // myChart.showLoading()
+                            myChart.setOption(eval("("+options0+")"),true);
+                            //myChart1.showLoading()
+                            myChart1.setOption(eval("("+options1+")"),true);
+                            // myChart2.showLoading()
+                            myChart2.setOption(eval("("+options2+")"),true);
+
+                        });
+            }
+        });
+    }
+
+    function postseacher()
+    {
+        clearDivSysContent();
+        init3($("#txtbegin").val(),$("#txtend").val());
+    };
+</script>
+<!--每日学习分析-->
+<script>
+    $("#txtbeginStudent").val(new Date().dateAdd("d",-30).format("yyyy-MM-dd"));
+    $("#txtendStudent").val(new Date().dateAdd("d",-1).format("yyyy-MM-dd"));
+    function InitDay() {
+        var _province = "湖北省";
+        var _city = "";
+        var _DayLearningtableHeader = [
+            { "Name": "日期", "Code": "Date" },
+            { "Name": "学习总次数", "Code": "StudyTotal" },
+            { "Name": "微课次数", "Code": "MircroTotal" },
+            { "Name": "练习次数", "Code": "ExerciseTotal" },
+            { "Name": "作业次数", "Code": "WorkTotal" },
+            { "Name": "预习单次数", "Code": "PrepareTotal" },
+            { "Name": "智动课堂次数", "Code": "ClassRoomTotal" }
+        ];
+        $.ajax({
+            url: apiurl + "/api/areaAPI.ashx?type=GetDayLearn&siteid=" + _siteID + "&province=" + _province + "&city=" + _city + "&begindate=" + $("#txtbeginStudent").val() + "&enddate=" + $("#txtendStudent").val(),
+            dataType: "jsonp",
+            jsonp: "callback",
+            async: false,
+            success: function (data) {
+                $('.tempLoading').hide();
+                if (data != null || data != undefined) {
+                    original_data_D = data;
+
+                    $("#dataerror").hide();
+                    $("#DataLoadContainer").show();
+
+                    //在线学习类型-饼图
+                    if (original_data_D.Distribute.length > 0) {
+                        $('#chartlearningtype').parent().show();
+                        _legendTitle = ["在线学习类型"];
+                        $("#chartlearningtype").parent().parent().find("div").css("height", "14.8rem");
+                        EChartsLoad("chartlearningtype", "Pie", original_data_D.Distribute, _legendTitle, null, "在线学习类型分布", "", false);
+                    } else {
+                        $("#chartlearningtype").parent().find("div").css("height", "0");
+                    }
+
+                    //在线学习学科-饼图
+                    if (original_data_D.OnlineSubject.length > 0) {
+                        $("#chartlearningsubject").parent().show();
+                        _legendTitle = ["在线学习学科"];
+                        $("#chartlearningsubject").parent().parent().find("div").css("height", "14.8rem");
+                        EChartsLoad("chartlearningsubject", "Pie", original_data_D.OnlineSubject, _legendTitle, null, "在线学习学科分布", "", false);
+                    } else {
+                        $("#chartlearningsubject").parent().find("div").css("height", "0");
+                    }
+
+//                    //在线学习年级-饼图
+                    if (original_data_D.OnlineGrade.length > 0) {
+                        $("#chartlearninggrade").parent().show();
+                        _legendTitle = ["在线学习年级"];
+                        $("#chartlearninggrade").parent().parent().find("div").css("height", "14.8rem");
+                        EChartsLoad("chartlearninggrade", "Pie", original_data_D.OnlineGrade, _legendTitle, null, "在线学习年级分布", "", false);
+                    } else {
+                        $("#chartlearninggrade").parent().find("div").css("height", "0");
+                    }
+
+                    //课堂学习年级-饼图
+                    if (original_data_D.ClassRoomSubject.length > 0) {
+                        $("#chartlearningclass").parent().show();
+                        _legendTitle = ["课堂学习年级"];
+                        $("#chartlearningclass").parent().parent().find("div").css("height", "14.8rem");
+                        EChartsLoad("chartlearningclass", "Pie", original_data_D.ClassRoomSubject, _legendTitle, null, "课堂学习学科分布", "", false);
+                    } else {
+                        $("#chartlearningclass").parent().find("div").css("height", "0");
+                    }
+
+                    //列表
+                    if (original_data_D.List.length > 0) {
+                        var data_StudyTotal = [];//日学习次数数据源
+                        var data_StudyTotalDetailed = [];//日学习次数详情数据源
+                        for (var i = 0; i < original_data_D.List.length; i++) {
+                            data_StudyTotal.push({ Date: original_data_D.List[i].Date, StudyTotal: original_data_D.List[i].StudyTotal });
+                            data_StudyTotalDetailed.push({ Date: original_data_D.List[i].Date, MircroTotal: original_data_D.List[i].MircroTotal, WorkTotal: original_data_D.List[i].WorkTotal, ExerciseTotal: original_data_D.List[i].ExerciseTotal, PrepareTotal: original_data_D.List[i].PrepareTotal, ClassRoomTotal: original_data_D.List[i].ClassRoomTotal });
+
+
+                        }
+                        if (data_StudyTotal.length > 0) {
+                            _legendTitle = ["日期", "日学习次数"];
+                            _para = ["Date", "StudyTotal"];
+                            $("#chartstudytotal").parent().parent().find("div").css("height", "14.8rem");
+                            EChartsLoad("chartstudytotal", "Line2", data_StudyTotal, _legendTitle, _para, "日学习次数", "", false);
+                        } else {
+                            $("#chartstudytotal").parent().find("div").css("height", "0");
+                        }
+                        if (data_StudyTotalDetailed.length > 0) {
+                            _legendTitle = ["日期", "日微课次数", "日练习次数", "日作业次数", "日预习单次数", "日智动课堂次数"];
+                            _para = ["Date", "MircroTotal", "ExerciseTotal", "WorkTotal", "PrepareTotal", "ClassRoomTotal"];
+                            $("#chartstudytotaldetailed").parent().parent().find("div").css("height", "14.8rem");
+                            EChartsLoad("chartstudytotaldetailed", "Line2", data_StudyTotalDetailed, _legendTitle, _para, "日学习次数-详情", "", false);
+                        } else {
+                            $("#chartstudytotaldetailed").parent().find("div").css("height", "0");
+                        }
+
+                        $("#showtable").CustomHeader({ tableHeader: _DayLearningtableHeader, tableSource: original_data_D.List });
+                    }
+                    //学习时长and日访问人数
+                    if (original_data_D.SysVistor.length > 0) {
+                        $("#charttimes").parent().show();
+                        _legendTitle = ["日期", "在线学习时长","在线访问时长"];
+                        _para = ["strdate", "ResidenceTime", "LearnResidenceTime"];
+                        $("#charttimes").parent().parent().find("div").css("height", "14.8rem");
+                        EChartsLoad("charttimes", "Line2", original_data_D.SysVistor, _legendTitle, _para, "", "", false);
+
+
+                        $("#chartvisit").parent().show();
+                        _legendTitle = ["日期", "日访问人数"];
+                        _para = ["strdate", "usercount"];
+                        $("#chartvisit").parent().parent().find("div").css("height", "14.8rem");
+                        EChartsLoad("chartvisit", "Borkenline", original_data_D.SysVistor, _legendTitle, _para, "", "", false);
+                    } else {
+                        $("#charttimes").parent().find("div").css("height", "0");
+                        $("#chartvisit").parent().find("div").css("height", "0");
+                    }
+                } else {
+
+                    $("#DataLoadContainer").hide();
+                    $("#dataerror").show();
+                }
+
+            }
+        });
+    }
+    function EChartsLoad(objId, chartType, data, LegendTitle, para, title, key, bclick) {
+
+        if (title != "") {
+            $("#" + objId).parent().parent().find("h1").html(title);
+        }
+        EChartsInit(objId, chartType, data, LegendTitle, para, key, bclick);
+    }
+
+    function postseacherStudent()
+    {
+        clearDivDayContent();
+        InitDay($("#txtbeginStudent").val(),$("#txtendStudent").val());
+    }
+</script>
+<!--资源应用统计-->
+<script>
+    $("#txtbeginResource").val(new Date().dateAdd("d",-30).format("yyyy-MM-dd"));
+    $("#txtendResource").val(new Date().dateAdd("d",-1).format("yyyy-MM-dd"));
+    function InitResource(str) {
+        var Id = "0";
+        var Postion = str;
+
+        url = apiAddress + "api/ra_base/Get_D_AppAnalysis?callback=?";
+        webapi_ajax(Id, url, $("#txtbeginResource").val(), $("#txtendResource").val(), Postion, "",siteID);
+    }
+
+    function postseacherResource(str)
+    {
+        clearDivResourceContent();
+        $('.dataerror').hide();
+        InitResource(str);
+    }
+</script>
+
+<script>
+    function showSecondDiv(index){
+        if(index == 0){
+            window.location.href = '#&page1';
+        }else if(index == 1){
+            window.location.href = '#&page1_2';
+        }else if(index == 2){
+            window.location.href = '#&page1_3';
+        }else if(index == 3){
+            window.location.href = '#&page1_4';
+        };
+
+        scrollLoad();
+    };
+
+    function showThirdDiv(index,str){
+        window.location.href = '#&page2';
+        if(index == 0){
+            clearDivContent();
+            $('#page2title').html(str);
+            clearTimeout(timer);
+            timer = setTimeout(function(){
+                InitSchool();
+            },200);
+        }else if(index == 1){
+            clearDivContent();
+            $('#page2title').html(str);
+            clearTimeout(timer);
+            timer = setTimeout(function(){
+                InitClass();
+            },200);
+        }else if(index == 2){
+            clearDivContent();
+            $('#page2title').html(str);
+            clearTimeout(timer);
+            timer = setTimeout(function(){
+                InitTeacher();
+            },200);
+        }else if(index == 3){
+            clearDivContent();
+            clearTimeout(timer);
+            timer = $('#page2title').html(str);
+            setTimeout(function(){
+                InitStudent();
+            },200);
+        };
+    };
+    function showThirdSysDiv(index,str){
+        window.location.href = '#&page2_2';
+        if(index == 0){
+            clearDivSysContent();
+            $('#page2systitle').html(str);
+            clearTimeout(timer);
+            timer = setTimeout(function(){
+                init3($("#txtbeginStudent").val(),$("#txtendStudent").val());
+            },200);
+        };
+    };
+    function showThirdDayDiv(index,str){
+        window.location.href = '#&page2_3';
+        if(index == 0){
+            clearDivDayContent();
+            $('#page2daytitle').html(str);
+            clearTimeout(timer);
+            timer = setTimeout(function(){
+                InitDay();
+            },200);
+        };
+    };
+    function showThirdResourceDiv(index,str){
+        window.location.href = '#&page2_4';
+        if(index == 0){
+            clearDivResourceContent();
+            $('#page2resourcetitle').html(str);
+            $('#resourceSearch').attr('data-str',str);
+            $("#txtbeginResource").val(new Date().dateAdd("d",-30).format("yyyy-MM-dd"));
+            $("#txtendResource").val(new Date().dateAdd("d",-1).format("yyyy-MM-dd"));
+            clearTimeout(timer);
+            timer = setTimeout(function(){
+                InitResource(str);
+            },200);
+        };
+    };
+
+    function clearDivContent(){
+        $('.tempLoading').show();
+        $('#chartunitcon > div').each(function(i){
+            $(this).children('h1').html('');
+            $(this).children('div').html('');
+            $(this).hide();
+        });
+    };
+    function clearDivSysContent(){
+        $('.tempLoading').show();
+        $('#chartcontainer > div').each(function(i){
+            $(this).children('div').html('');
+            $(this).hide();
+        });
+    };
+    function clearDivDayContent(){
+        $('.tempLoading').show();
+        $('#chartunitconDay > div').each(function(i){
+            $(this).children('div').html('');
+            $(this).hide();
+        });
+    };
+    function clearDivResourceContent(){
+        $('.tempLoading').show();
+        $('#chartunitconResource > div').each(function(i){
+            $(this).html('');
+        });
+    };
+    function scrollLoad(){
+        var myScroll = new IScroll('.isection', { mouseWheel: true, click: true, preventDefaultException: {tagName: /^(INPUT|TEXTAREA|BUTTON|SELECT|LI)$/}});
+    };
+
+    //首页高度
+    $('#block_vertical').css('height',($(window).height()/(document.documentElement.clientWidth/18)-2.6)+'rem');
+</script>
+</html>

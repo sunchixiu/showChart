@@ -1,0 +1,257 @@
+﻿/**ECharts 图标信息**/
+$(function () {
+    jQuery.support.cors = true;
+
+});
+var myChart;
+function EChartsInit(objId, EChartsType, data, legendTitle, para, key, bclick) {
+    require.config({
+        paths: {
+
+            'echarts': '/js',
+        }
+    });
+    require(
+           [
+               'echarts',
+               'echarts/chart/bar', // 柱状图
+               'echarts/chart/line' // 折线图
+           ], function (ec, defaultTheme) {
+               curTheme = "macarons";
+               echarts = ec;
+               switch (EChartsType) {
+                   case "Borkenline":
+                       BrokenLineLoad(objId, data, legendTitle, para, key, bclick);
+                       break;
+                   case "Line":
+                       LineLoad(objId, data, legendTitle, para, key, bclick);
+                       break;
+               }
+
+               window.onresize = myChart.resize;
+           }
+
+       );
+}
+function BrokenLineLoad(objId, data, legendTitle, para, key, bclick) {
+    myChart = echarts.init(document.getElementById(objId))
+    option = {
+        tooltip: {
+            trigger: 'axis'
+          
+        },
+        toolbox: {
+            show: true,
+            feature: {
+              
+             
+                magicType: { show: true, type: ['line', 'bar'] },
+               
+                saveAsImage: { show: true }
+            }
+        },
+        legend: {
+            data: function () {
+                var dataTitle = [];
+                for (var i = 1; i < legendTitle.length; i++) {
+                    dataTitle.push(legendTitle[i]);
+                }
+                return dataTitle;
+            }()
+        },
+        calculable: true,
+        xAxis: [
+            {
+                type: 'category',
+                boundaryGap: false,
+                axisLabel: {
+                    number: "0",
+                    rotate:-30,
+                },
+                data: function () {
+                    var dataX = [];
+                    for (var i = 0; i < data.length; i++) {
+                        dataX.push(data[i][para[0]]);
+                    }
+                    return dataX;
+                }()
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value',
+                
+                max:100,
+                axisLabel: {
+                    formatter: '{value} %'
+                }
+            }
+        ],
+        series: function () {
+            var serie = [];
+            for (var i = 1; i < para.length; i++) {
+                var item = {
+                    name: legendTitle[i],
+                    type: "line",
+                    //stack: '总量',
+                    //key: function () {
+                    //    var dataKey = [];
+                    //    for (var j = 0; j < data.length; j++) {
+                    //        dataKey.push(data[j][key]);
+                    //    }
+                    //    return dataKey;
+                    //}(),
+                    data: function () {
+                        var dataS = [];
+                        for (var j = 0; j < data.length; j++) {
+                            //dataS.push(data[j][para[i]].toString().replace("%", ""));
+                            var _temp = data[j][para[i]].toString();
+                            if (_temp != "") {
+                                if (_temp.indexOf("/") > 0) {
+                                    var _tempcount = 0;
+                                    for (var t = 0; t < _temp.split("/").length; t++) {
+                                        _tempcount = _tempcount + parseInt($.trim(_temp.split("/")[t].replace("%", "")), 10);
+                                    }
+                                    _temp = (_tempcount / _temp.split("/").length)+""
+                                }
+                                else {
+                                    _temp = _temp.replace("%", "")
+                                }
+
+                                _temp = _temp.replace("--", "'-'");
+                            }
+                            else { _temp="0"}
+                            dataS.push(_temp);
+                        }
+                        
+                        return dataS;
+                    }()
+
+                }
+
+                serie.push(item);
+            } 
+    
+            return serie;
+
+        }()
+    };
+
+    myChart.setOption(option,true);
+    myChart.setTheme(curTheme);
+    if (bclick) {
+        echartsOnClick(myChart);
+    }
+}
+
+function LineLoad(objId, data, legendTitle, para) {
+    myChart = echarts.init(document.getElementById(objId))
+    option = {
+        
+        tooltip: {
+            trigger: 'axis'
+        },
+        toolbox: {
+            show: true,
+            feature: {
+               
+                
+                magicType: { show: true, type: ['line', 'bar'] },
+                
+                saveAsImage: { show: true }
+            }
+        },
+        legend: {
+            data: function () {
+                var dataTitle = [];
+                for (var i = 1; i < legendTitle.length; i++) {
+                    dataTitle.push(legendTitle[i]);
+                }
+                return dataTitle;
+            }()
+        },
+      
+        calculable: true,
+        xAxis: [
+            {
+                type: 'category',
+                axisLabel: {
+                    number: "0",
+                    rotate: -30,
+                },
+                data: function () {
+                    var dataX = [];
+                    for (var i = 0; i < data.length; i++) {
+                        dataX.push("题"+data[i].QuestionNum);
+                    }
+                    return dataX;
+                }()
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value',
+                max: 100,
+                splitArea: { show: true }
+            }
+        ],
+        series: function () {
+            var serie = [];
+            for (var i = 1; i < para.length; i++) {
+                var item = {
+                    name: legendTitle[i],
+                    type: "bar", 
+                    data: function () {
+                        var dataS = [];
+                        for (var j = 0; j < data.length; j++) {
+                            var _temp = data[j][para[i]].toString();
+                            if (_temp != "")
+                            { 
+                            if (_temp.indexOf("/") > 0) {
+                                var _tempcount = 0;
+                                for (var t = 0; t < _temp.split("/").length; t++) {
+                                    _tempcount = _tempcount + parseInt($.trim(_temp.split("/")[t].replace("%", "")), 10);
+                                }
+                                _temp = (_tempcount / _temp.split("/").length)+""
+                            }
+                            else {
+                                _temp = _temp.replace("%", "")
+                            }
+                           
+                            _temp = _temp.replace("--", "null");//'-'
+                            }
+                            else { _temp = "0" }
+                            dataS.push(_temp);
+                        }
+                        return dataS;
+                    }()
+
+                }
+
+                serie.push(item);
+            }
+
+            return serie;
+
+        }()
+    };
+
+    myChart.setOption(option,true);
+    myChart.setTheme(curTheme);
+}
+
+function echartsOnClick(ethis) {
+    ethis.on('click', function (param) {
+         
+        for (var i = 0; i < Data_Source.length; i++) {
+            if (i == param.dataIndex) {
+                FiresPointId = Data_Source[i]["PointID"];
+                FiresPointName = Data_Source[i]["PointName"];
+                FiresChapterID = Data_Source[i]["ChapterID"];
+                FiresChapterName = Data_Source[i]["ChapterName"];
+                GetWork_Practice();
+            }
+        }
+        
+    });
+}

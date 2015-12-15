@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=9">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <title>我的书桌</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+
+    <script src="js/every.js"></script>
+    <script src="js/turnpage.js"></script>
+
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/echarts/esl.js"></script>
+    <script>
+        setTimeout(function(){
+            var oScript = document.createElement('script');
+            oScript.src = 'js/echarts/echarts.js';
+            document.getElementsByTagName('head')[0].appendChild(oScript);
+        },200);
+    </script>
+    <script src="js/statis/EChartsInfo.js"></script>
+</head>
+<body style="background: #fff;">
+<div class="main">
+    <div class="header"><div class="l" onclick="returnIframe();">返回</div><div class="m">章节名称课时统计表</div><div class="r"></div></div>
+    <div class="section">
+        <div class="list_book">
+            <ul>
+                <li><span>课时学习统计表(当前章节：数据收集整理)</span></li>
+                <li style="margin-top: 0.8rem;">
+                    <div class="Wrap">
+                        <div class="WrapContent" style="display: none;">
+                            <div style="float: left;">
+                                <div class="divDatatECTop" id="WrapContent_Title">
+                                </div>
+                            </div>
+                            <div style="float: right;">
+                                <input type="text" class="date" id="txtbegin" style="width: 100px;" onfocus="beginfocus()" readonly>
+                                至
+                                <input type="text" class="date" id="txtend" style="width: 100px;" onfocus="endfocus()" readonly>
+                                <button class="btn btn-default" onclick="postseacher()">查询</button>
+                            </div>
+                        </div>
+                        <div class="WrapContent" style="clear: both;">
+                            <div style="overflow: hidden;" id="DataLoadContainer">
+                                <div style="overflow: hidden;">
+                                    <h1 class="echart_h1 more_h1 "></h1>
+                                    <div style="height: 14rem; overflow: hidden;">
+                                        <div id="charttimes" style="height: 17rem; width: 100%; text-align: center;"><img src="img/loading.gif" style="margin-top: 5rem;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="overflow: hidden; padding: 10px; display: none;" class="alert alert-warning" id="dataerror">
+                                暂无数据
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li><span>详细课时选择</span></li>
+            </ul>
+            <div class="lip">
+                <p>
+                    <input type="button" value="课时1：平均分" onclick="popIframe('block_listchart3.html')">
+                    <input type="button" value="课时2：练习二" onclick="popIframe('block_listchart3.html')">
+                    <input type="button" value="课时3：除法" onclick="popIframe('block_listchart3.html')">
+                    <input type="button" value="课时4：练习三" onclick="popIframe('block_listchart3.html')">
+                    <input type="button" value="课时5：用2～6的乘法口诀求商" onclick="popIframe('block_listchart3.html')">
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<script type="text/javascript" src="js/statis/ApiConfig.js"></script>
+
+<script type="text/javascript">
+    var _province = "湖北省";
+    var _city = "";
+    var _area = "";
+    var _siteID = apisiteid;
+    var original_data_D = [];//每日学习数据源
+    var _para = [];//参数
+    var _legendTitle = [];
+    var _DayLearningtableHeader = [
+        { "Name": "日期", "Code": "Date" },
+        { "Name": "学习总次数", "Code": "StudyTotal" },
+        { "Name": "微课次数", "Code": "MircroTotal" },
+        { "Name": "练习次数", "Code": "ExerciseTotal" },
+        { "Name": "作业次数", "Code": "WorkTotal" },
+        { "Name": "预习单次数", "Code": "PrepareTotal" },
+        { "Name": "智动课堂次数", "Code": "ClassRoomTotal" }
+    ];
+    function beginfocus() {
+        WdatePicker({ dateFmt: "yyyy-MM-dd"});
+    }
+
+    function endfocus() {
+        WdatePicker({ dateFmt: "yyyy-MM-dd"});
+
+    }
+    $("#txtbegin").val(new Date().dateAdd("d", -30).format("yyyy-MM-dd"));
+    $("#txtend").val(new Date().dateAdd("d", -1).format("yyyy-MM-dd"));
+
+    Init();
+    function postseacher() {
+        Init();
+    }
+    function Init() {
+        $.ajax({
+            url: apiurl + "/api/areaAPI.ashx?type=GetDayLearn&siteid=" + _siteID + "&province=" + _province + "&city=" + _city + "&begindate=" + $("#txtbegin").val() + "&enddate=" + $("#txtend").val(),
+            dataType: "jsonp",
+            jsonp: "callback",
+            async: false,
+            success: function (data) {
+                if (data != null || data != undefined) {
+                    original_data_D = data;
+
+                    $("#dataerror").hide();
+//                    $("#DataLoadContainer").show();
+                    //在线学习类型-饼图
+
+
+
+                    //学习时长and日访问人数
+                    console.log(JSON.stringify(original_data_D));
+                    if (original_data_D.SysVistor.length > 0) {
+
+                        _legendTitle = ["日期", "在线学习时长","在线访问时长"];
+                        _para = ["strdate", "ResidenceTime", "LearnResidenceTime"];
+                        $("#charttimes").parent().parent().find("div").css("height", "14rem");
+                        EChartsLoad("charttimes", "Line2", original_data_D.SysVistor, _legendTitle, _para, "", "", false);
+
+                    } else {
+                        $("#charttimes").parent().parent().find("div").css("height", "0");
+                        $("#chartvisit").parent().parent().find("div").css("height", "0");
+                    }
+                } else {
+
+                    $("#DataLoadContainer").hide();
+                    $("#dataerror").show();
+                }
+
+            }
+        });
+    }
+    function EChartsLoad(objId, chartType, data, LegendTitle, para, title, key, bclick) {
+
+        if (title != "") {
+            $("#" + objId).parent().parent().find("h1").html(title);
+        }
+        EChartsInit(objId, chartType, data, LegendTitle, para, key, bclick);
+    }
+    JSON.stringify()
+</script>
+</html>

@@ -1,0 +1,50 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content=" ">
+    <meta name="keywords" content=" ">
+    <!-- Loading Bootstrap -->
+    <link href="http://hubei.iischool.com//Public/style/global.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="http://hubei.iischool.com//Public/style/common.css">
+    <!-- Load JS here -->
+    <script src="http://hubei.iischool.com//Public/js/jquery/jquery-1.11.1.min.js"></script>
+    <script src="http://hubei.iischool.com//Public/js/common.js"></script>
+
+    <title>组织架构_湖北省教育资源公共服务平台</title>
+
+    <script type="text/javascript" src="http://hubei.iischool.com//Public/js/My97DatePicker/WdatePicker.js"></script>
+</head>
+<body>
+
+    <div style="float:right;">
+        <input type="text" class="date" id="txtbegin" style="width: 100px;" onfocus="beginfocus()" readonly> 至
+        <input type="text" class="date" id="txtend" style="width: 100px;" onfocus="endfocus()" readonly>
+        <button class="btn btn-default" onclick="postseacher()">查询</button>
+
+    </div>
+
+<script type="text/javascript">
+
+    function beginfocus()
+    {
+        WdatePicker({dateFmt:"yyyy-MM-dd",maxDate:"%y-%M-%d}}"});
+    }
+    function endfocus()
+    {
+        WdatePicker({dateFmt:"yyyy-MM-dd",maxDate:"%y-%M-%d}}"});
+    }
+
+    $("#txtbegin").val(new Date().dateAdd("d",-30).format("yyyy-MM-dd"));
+    $("#txtend").val(new Date().dateAdd("d",-1).format("yyyy-MM-dd"));
+
+
+
+
+
+</script>
+</body>
+</html>

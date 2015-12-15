@@ -1,0 +1,86 @@
+.dl-menu{overflow-y: auto; max-height:14.6rem;}
+.bc_header { padding-top: 0.5rem; height: 1.2rem; padding-bottom: 0.5rem;}
+.wordheader {padding-top: 0.5rem; height: 1.2rem; padding-bottom: 0.5rem; text-align: center;}
+.wordheader a {cursor: pointer; width: 1.3rem; height: 1.3rem; margin: 0.15rem; display: inline-block; background-image: url(../img/audio/wordheader.png); background-size: 1.2rem 1.2rem; background-repeat: no-repeat; color: #000; text-align: center; font-size: 0.8rem; line-height: 1.3rem;}
+.wordheader a.active { background-image: url(../img/audio/wordheader_hover.png); background-size: 1.2rem 1.2rem; color: #fff;}
+.clockprogress {width: 16rem; height: 1.5rem; margin: 1.5rem auto; margin-bottom: 0; background: url(../img/audio/clock.png) no-repeat left center;}
+.clockprogress .wholeTime {width: 14.5rem; height: 0.5rem; background: #FFFFFD; border-radius: 0.5rem; margin-left: 1.5rem; position: relative; top: 0.5rem;}
+.clockprogress .nowTime {width: 0; height: 0.5rem; position: absolute; left: 0px; top: 0px; background: #7BCA5D; border-radius: 0.5rem;}
+.bc_content {height: 14.5rem; clear: both; overflow-y: auto; margin-bottom: 0.4rem;}
+.bc_content p {font-family: 'Microsoft Yahei'; text-align: center; color: white; line-height: 3rem;}
+.alertcontainer {position: absolute; width: 16rem; height: 20rem; left: 1rem; top: 5rem; display: none; z-index: 100;}
+.alertcontainer .alertcontainer_bg {left: 0; top: 0; filter: alpha(opacity=70); opacity: 0.7; background: #000; position: fixed; width: 100%; height: 100%; z-index: 101;}
+.write input.writeText {display: block; width: 15rem; height: 1.8rem; margin: 0 auto; background: white; border: none; border-radius: 0.2rem; margin-top: 1.2rem; font-size: 0.9rem; padding-left: 0.3rem;}
+.write input.writeButton {display: block; width: 4rem; height: 1.6rem; margin: 0 auto; background: white; border: none; border-radius: 0.2rem; margin-top: 1.2rem; font-size: 0.8rem; line-height: 1.6rem; text-align: center;}
+.alertcontainer .alert {position: absolute; width: 16rem; color: #666; height: 13rem; left: 0rem; top: 2rem; z-index: 102; background-image: url(../img/audio/alert_bg.png); background-size: 16rem 13rem;}
+.alert .alerttitle {position: relative; height: 1.5rem;}
+.alert .alerttitle span {cursor: pointer; position: absolute; background: url(../img/audio/alert_close.png); background-size: 1.3rem 1.3rem; display: inline-block; width: 1.3rem; height: 1.3rem; top: -0.3rem; right: -0.4rem;}
+.alert .alertcontent {margin: 1rem 1rem; height:7rem; margin-bottom:0;}
+.alert .alertbutton {text-align:center; height:1.8rem;}
+.alert .alertbutton a {width:3.6rem; height:1.3rem; display:inline-block; margin-right:0.9rem; background-image:url(../img/audio/alert_btn.png); background-size: 3.6rem 1.3rem; text-align:center; font-size: 0.8rem; line-height: 1.3rem;}
+.alert .alertbutton a:hover {background:url(../img/audio/alert_btn_hover.png); background-size: 3.6rem 1.3rem; color:#fff;}
+.alert .alertcontent table{width: 14rem;}
+.alert .alertcontent table tr td {font-size: 0.7rem; padding: 0.1rem; text-align: center;}
+
+.alert .alertcontent div {line-height: 1.5rem; font-size: 1rem}
+.alert .alertcontent div span {color: #7AC960; font-weight: bold; font-size: 1rem;}
+
+.alert .alertcontent i{ color:#f00; font-style:normal; cursor:pointer;}
+/*句子页面*/
+.blackboard_container{position: relative;}
+.blackboard_container .bc_header.textheader{position: relative;}
+.blackboard_container .bc_header.textheader a{width: 1.6rem; height: 1.6rem; margin-left: 0.3rem; display: inline-block; color: #000; text-align: center; font-size: 0.6rem; line-height: 1.6rem; border-radius: 50%; -webkit-border-radius: 50%; background: #fff;}
+.blackboard_container .bc_header.textheader a.active,.blackboard_container .bc_header.textheader a:hover{color: #fff; background: #7aca60;}
+.clockprogress {width: 16rem; height: 1.5rem; margin: 1.5rem auto; margin-bottom: 0; background: url(../img/audio/clock.png) no-repeat left center;}
+.sentWholeTime {width: 12.5rem; height: 0.5rem; background: #FFFFFD; border-radius: 0.5rem; margin-left: 1.5rem; position: relative; top: 0.5rem; float: left; position: absolute; margin: 0.6rem 0 0 4.4rem;}
+.sentNowTime {width: 0; height: 0.5rem; position: absolute; left: 0px; top: 0px; background: #7BCA5D; border-radius: 0.5rem;}
+.blackboard_container .bc_content {height: 24rem; margin-top: 1.2rem; padding:0 0.5rem; clear: both; overflow-y: auto; color: #fff; font-size: 0.7rem;}
+.blackboard_container .bc_content dl{overflow: hidden; padding-top: 0.5rem; padding-bottom: 0.5rem;}
+.blackboard_container .bc_content dl dt {width: 17rem; font-size: 0.7rem;}
+.blackboard_container .bc_content dl dt i {color: #f00; font-style: normal;}
+.blackboard_container .bc_content dl dt input {border: 0; height: 1.6rem; width: 14rem; background: white; border: none; border-radius: 0.2rem; -webkit-border-radius: 0.2rem; font-size: 0.7rem; padding-left: 0.3rem; float: left;}
+.blackboard_container .bc_content dl dt input.btn {width: 2.4rem; float: right; text-align: center; color: #666;}
+.blackboard_container .bc_content dl dt input.btn:active{background: #e5e5e5;}
+.blackboard_container .bc_content dl dt span {margin-right: 0.3rem;}
+.blackboard_container .bc_content dl dd {width: 8rem; margin-top: 0.2rem; text-align: right; float: right;}
+.blackboard_container .bc_content dd a {display: inline-block; width: 1.4rem; height: 1.26rem; margin:0.4rem 0.8rem 0.4rem 0;}
+.blackboard_container .bc_content dd a.minaudio {background-image: url(../img/audio/min_audio.png); background-size: 1.4rem 1.26rem;}
+.blackboard_container .bc_content dd a.minkey {background-image: url(../img/audio/min_key.png); background-size: 1.4rem 1.26rem;}
+.blackboard_container .bc_content dd a.minread {background-image: url(../img/audio/min_read.png); background-size: 1.4rem 1.26rem;}
+.blackboard_container .bc_content dd a.minaudio.active {background-image: url(../img/audio/min_audio_hover.png); background-size: 1.4rem 1.26rem;}
+.blackboard_container .bc_content dd a.minkey.active {background-image: url(../img/audio/min_key_hover.png); background-size: 1.4rem 1.26rem;}
+.blackboard_container .bc_content dd a.minread.active {background-image: url(../img/audio/min_read_hover.png); background-size: 1.4rem 1.26rem;}
+.blackboard_container .bc_content .audioread dt {color: #7CC961; font-size: 0.8rem;}
+.blackboard_container .bc_content .audioread dt span{color: #fff;}
+
+.alertSent {position: absolute; width: 16rem; color: #666; height: 20rem; left: 0rem; top: 0rem; z-index: 102; background-image: url(../img/audio/alert_bg.png); background-size: 16rem 20rem;}
+.alertSent .alerttitle {position: relative; height: 1.5rem;}
+.alertSent .alerttitle span {cursor: pointer; position: absolute; background: url(../img/audio/alert_close.png); background-size: 1.3rem 1.3rem; display: inline-block; width: 1.3rem; height: 1.3rem; top: -0.3rem; right: -0.4rem;}
+.alertSent .alertcontent {margin: 1rem 1rem; height:13rem; margin-bottom:0; overflow-y: scroll;}
+.alertSent .alertbutton {text-align:center; height:1.8rem; margin-top: 0.6rem;}
+.alertSent .alertbutton a {width:3.6rem; height:1.3rem; display:inline-block; margin-right:0.9rem; background-image:url(../img/audio/alert_btn.png); background-size: 3.6rem 1.3rem; text-align:center; font-size: 0.8rem; line-height: 1.3rem;}
+.alertSent .alertbutton a:hover {background:url(../img/audio/alert_btn_hover.png); background-size: 3.6rem 1.3rem; color:#fff;}
+.alertSent .alertcontent table{width: 14rem;}
+.alert .alertcontent table tr td {font-size: 0.7rem; padding: 0.1rem; text-align: center;}
+
+.alertSent .alertcontent div {line-height: 1.5rem; font-size: 1rem}
+.alertSent .alertcontent div span {color: #7AC960; font-weight: bold; font-size: 1rem;}
+
+.alertSent .alertcontent i{ color:#f00; font-style:normal; cursor:pointer;}
+
+
+/*对接*/
+.div-dl{width: 100%; height: 6rem; padding: 1rem 4%; border-top: 1px solid #e5e5e5;}
+.div-dl:active{background: #eee;}
+.div-dl img{width: 3rem; height: 4rem;}
+.div-dl span{display: inline-block; float: left;}
+.div-dl span.right{margin-left: 0.6rem; font-size: 14px; color: #999;}
+.div-dl span.right p.up{font-size: 0.9rem; color: #333; margin-top: 0.3rem;}
+.div-dl span.right p.down{margin-top: 0.9rem;}
+
+.menu_li li{height: 2rem; color: #fff; font-size: 0.8rem; text-indent: 1rem; line-height: 3rem;}
+
+.dl-menu{width: 100%; overflow-y: auto; background: #999; display: none;}
+.dl-menu li{width: 100%; padding: 0 0.6rem; font-size: 0.8rem; color: #fff; height: 2rem; line-height: 2rem;}
+.dl-menu li:active{background: #666;}
+.dl-menu li a{width: 100%; display: block; color: #fff;}

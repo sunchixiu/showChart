@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script>
+        $.ajax({
+            url:"http://182.48.115.253:8082/services/studyroomList.ashx",
+            type: "post",
+            dataType: "json",
+            data:{
+                "Siteid":1005,
+                "type":"student",
+                "gradeid":"1",
+                "uniteID":"1",
+                "versionID":"3",
+                "termid":"10",
+                "userID":"e8405a66260c4f2e8c6f74134f43dc5d"
+            },
+            async:false,
+            success:function(data){
+                alert(JSON.stringify(data));
+            },
+            error:function(data){
+                alert('error:'+JSON.stringify(data));
+            }
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=9">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <title>我的书桌</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+
+    <script src="js/every.js"></script>
+    <script src="js/turnpage.js"></script>
+
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/echarts/esl.js"></script>
+    <!--<script src="js/echarts/echarts.js"></script>-->
+    <script>
+        setTimeout(function(){
+            var oScript = document.createElement('script');
+            oScript.src = 'js/echarts/echarts.js';
+            document.getElementsByTagName('head')[0].appendChild(oScript);
+        },200);
+    </script>
+    <script src="js/statis/EChartsInfo.js"></script>
+    <style>
+        .personDiv{width: 82%; height: 82%; position: fixed; padding: 4%; overflow-y: scroll; overflow-x: hidden; background: #fff; border-radius: 0.2rem; -webkit-border-radius: 0.2rem; z-index: -1; top: 5%; left: 5%; -webkit-transition: .3s all ease; transition: .3s all ease; opacity: 0;}
+        .personDiv ul li{height: 1.2rem; line-height: 1rem; font-size: 0.6rem; color: #666; margin: 0.6rem 0; border-bottom: 1px solid #33ccff; margin-top: 0.4rem;}
+    </style>
+</head>
+<body style="background: #fff;">
+<div class="main">
+    <div class="header"><div class="l" onclick="returnIframe();">返回</div><div class="m">书本名称</div><div class="r"></div></div>
+    <div class="section">
+        <div class="list_book">
+            <ul>
+                <li><span>章节学习统计表</span></li>
+            </ul>
+            <div class="lip">
+                <p>
+                    <input type="button" value="全体班级">
+                    <input type="button" value="个人" id="person" onclick="showWindow('personDiv');">
+                </p>
+            </div>
+            <div class="Wrap">
+                <div class="WrapContent" style="display: none;">
+                    <div style="float: left;">
+                        <div class="divDatatECTop" id="WrapContent_Title">
+                        </div>
+                    </div>
+                    <div style="float: right;">
+                        <input type="text" class="date" id="txtbegin" style="width: 100px;" onfocus="beginfocus()" readonly>
+                        至
+                        <input type="text" class="date" id="txtend" style="width: 100px;" onfocus="endfocus()" readonly>
+                        <button class="btn btn-default" onclick="postseacher()">查询</button>
+                    </div>
+                </div>
+                <div class="WrapContent" style="clear: both;">
+                    <div style="overflow: hidden;" id="DataLoadContainer">
+                        <div style="overflow: hidden;">
+                            <h1 class="echart_h1 more_h1 "></h1>
+                            <div style="height: 14rem; overflow: hidden;">
+                                <div id="charttimes" style="height: 17rem; width: 100%; text-align: center; vertical-align: middle;"><img src="img/loading.gif" style="margin-top: 5rem;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="overflow: hidden; padding: 10px; display: none;" class="alert alert-warning" id="dataerror">
+                        暂无数据
+                    </div>
+                </div>
+            </div>
+            <ul>
+                <li><span>章节选择</span></li>
+            </ul>
+            <div class="lip">
+                <p>
+                    <em onclick="popIframe('block_listchart2.html');">1</em><em onclick="popIframe('block_listchart2.html');">2</em><em onclick="popIframe('block_listchart2.html');">3</em><em onclick="popIframe('block_listchart2.html');">4</em><em onclick="popIframe('block_listchart2.html');">5</em>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="personDiv" id="personDiv">
+    <ul>
+        <li onclick="getValue(this.innerHTML);">张三</li>
+        <li onclick="getValue(this.innerHTML);">李四</li>
+        <li onclick="getValue(this.innerHTML);">张龙</li>
+        <li onclick="getValue(this.innerHTML);">赵虎</li>
+        <li onclick="getValue(this.innerHTML);">王朝</li>
+        <li onclick="getValue(this.innerHTML);">马汉</li>
+        <li onclick="getValue(this.innerHTML);">张翼德</li>
+        <li onclick="getValue(this.innerHTML);">诸葛孔明</li>
+        <li onclick="getValue(this.innerHTML);">凤雏</li>
+        <li onclick="getValue(this.innerHTML);">白玛扎西</li>
+        <li onclick="getValue(this.innerHTML);">张三</li>
+        <li onclick="getValue(this.innerHTML);">李四</li>
+        <li onclick="getValue(this.innerHTML);">张龙</li>
+        <li onclick="getValue(this.innerHTML);">赵虎</li>
+        <li onclick="getValue(this.innerHTML);">王朝</li>
+        <li onclick="getValue(this.innerHTML);">马汉</li>
+        <li onclick="getValue(this.innerHTML);">张翼德</li>
+        <li onclick="getValue(this.innerHTML);">诸葛孔明</li>
+        <li onclick="getValue(this.innerHTML);">凤雏</li>
+        <li onclick="getValue(this.innerHTML);">白玛扎西</li>
+    </ul>
+</div>
+</body>
+<script>
+    function getValue(sValue){
+        var oPerson = document.getElementById('person');
+        oPerson.value = sValue;
+        hideWindow('personDiv');
+    };
+</script>
+
+<script type="text/javascript" src="js/statis/ApiConfig.js"></script>
+
+<script type="text/javascript">
+    var _province = "湖北省";
+    var _city = "";
+    var _area = "";
+    var _siteID = apisiteid;
+    var original_data_D = [];//每日学习数据源
+    var _para = [];//参数
+    var _legendTitle = [];
+    var _DayLearningtableHeader = [
+        { "Name": "日期", "Code": "Date" },
+        { "Name": "学习总次数", "Code": "StudyTotal" },
+        { "Name": "微课次数", "Code": "MircroTotal" },
+        { "Name": "练习次数", "Code": "ExerciseTotal" },
+        { "Name": "作业次数", "Code": "WorkTotal" },
+        { "Name": "预习单次数", "Code": "PrepareTotal" },
+        { "Name": "智动课堂次数", "Code": "ClassRoomTotal" }
+    ];
+    function beginfocus() {
+        WdatePicker({ dateFmt: "yyyy-MM-dd"});
+    }
+
+    function endfocus() {
+        WdatePicker({ dateFmt: "yyyy-MM-dd"});
+
+    }
+    $("#txtbegin").val(new Date().dateAdd("d", -30).format("yyyy-MM-dd"));
+    $("#txtend").val(new Date().dateAdd("d", -1).format("yyyy-MM-dd"));
+
+    Init();
+    function postseacher() {
+        Init();
+    }
+    function Init() {
+        $.ajax({
+            url: apiurl + "/api/areaAPI.ashx?type=GetDayLearn&siteid=" + _siteID + "&province=" + _province + "&city=" + _city + "&begindate=" + $("#txtbegin").val() + "&enddate=" + $("#txtend").val(),
+            dataType: "jsonp",
+            jsonp: "callback",
+            async: false,
+            success: function (data) {
+                if (data != null || data != undefined) {
+                    original_data_D = data;
+
+                    $("#dataerror").hide();
+//                    $("#DataLoadContainer").show();
+                    //在线学习类型-饼图
+
+
+
+                    //学习时长and日访问人数
+                    console.log(JSON.stringify(original_data_D));
+                    if (original_data_D.SysVistor.length > 0) {
+
+                        _legendTitle = ["日期", "在线学习时长","在线访问时长"];
+                        _para = ["strdate", "ResidenceTime", "LearnResidenceTime"];
+                        $("#charttimes").parent().parent().find("div").css("height", "14rem");
+                        EChartsLoad("charttimes", "Line2", original_data_D.SysVistor, _legendTitle, _para, "", "", false);
+
+                    } else {
+                        $("#charttimes").parent().parent().find("div").css("height", "0");
+                        $("#chartvisit").parent().parent().find("div").css("height", "0");
+                    }
+                } else {
+
+                    $("#DataLoadContainer").hide();
+                    $("#dataerror").show();
+                }
+
+            }
+        });
+    }
+    function EChartsLoad(objId, chartType, data, LegendTitle, para, title, key, bclick) {
+
+        if (title != "") {
+            $("#" + objId).parent().parent().find("h1").html(title);
+        }
+        EChartsInit(objId, chartType, data, LegendTitle, para, key, bclick);
+    }
+</script>
+</html>
