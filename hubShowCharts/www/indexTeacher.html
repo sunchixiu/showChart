@@ -580,6 +580,7 @@
                     popDiv(3,'abc');
                 });
                 $('#lipPointContent > p').find('input').bind('click',function(){
+                    $('#chartquestionscon').html('<div id="chartquestions" style="height: 14rem; width: 17.3rem; text-align: center;"><div class="tempLoading" style="margin-top: -6rem;"></div></div>');
                     GetWork_Practice($(this).attr('data-name'),$(this).attr('data-value'));
                     $(this).addClass('cur').siblings().removeClass('cur');
                 });
@@ -966,4 +967,9 @@
             };
             this.className = 'cur';
             oLabelName.innerHTML = this.value;
-            oDivName.innerHTML = this.val
+            oDivName.innerHTML = this.value;
+        };
+    };
+</script>
+</body>
+</html>
