@@ -41,7 +41,7 @@ function EChartsInit(objId, EChartsType, data, legendTitle, para, key, bclick,Fu
        );
 }
 function BorkenlineLoad(objId, data, legendTitle, para, key, bclick) {
-    myChart = echarts.init(document.getElementById(objId)) 
+    myChart = echarts.init(document.getElementById(objId));
     option = {
         grid:{
             x:46,
