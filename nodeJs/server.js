@@ -11,10 +11,7 @@ function start(route,handle){
             var query = url.parse(request.url).query;
             console.log('request recieved');
             console.log("Request for "+ pathname + "," + query +" received.");
-            var content = route(handle,pathname);
-            response.writeHead(200,{'Content-Type':'text/plain'});
-            response.write(content);
-            response.end();
+            route(handle,pathname,response);
         };
 
     };
