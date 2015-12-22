@@ -1,0 +1,1471 @@
+
+
+
+
+
+
+
+
+
+
+
+
+<!doctype html>
+<html>
+<head>
+    <title>云极塾</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="http://10.0.10.204:8080/TSBDevMagCenter/css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="http://10.0.10.204:8080/TSBDevMagCenter/css/bootstrap-responsive.css" rel="stylesheet" media="screen">
+    <link href="http://10.0.10.204:8080/TSBDevMagCenter/css/style.css" rel="stylesheet" media="screen">
+
+    <SCRIPT language="javascript" type="text/javascript" >
+        function reloop(){
+            var time = new Date( ); //获得当前时间
+            //获得年、月、日，Date()函数中的月份是从0－11计算
+            var year = time.getFullYear();
+            var month = time.getMonth()+1;
+            var date = time.getDate();
+            //获得小时、分钟、秒
+            var hour = time.getHours();
+            var minute = time.getMinutes();
+            var second = time.getSeconds();
+            //获得一个星期中的第几天,西方的星期是从星期日开始，星期六结束
+            var day = time.getDay();
+            if (minute < 10) //如果分钟只有1位，补0显示
+                minute="0"+minute;
+            if (second < 10) //如果秒数只有1位，补0显示
+                second="0"+second;
+
+            var apm="AM"; //默认显示上午: AM
+            if (hour>12) //按12小时制显示
+            {
+                hour=hour-12;
+                apm="PM"  ;
+            }
+            var weekday = 0;
+            switch(time.getDay()){
+                case 0:
+                    weekday = "星期日";
+                    break;
+                case 1:
+                    weekday = "星期一";
+                    break;
+                case 2:
+                    weekday = "星期二";
+                    break;
+                case 3:
+                    weekday = "星期三";
+                    break;
+                case 4:
+                    weekday = "星期四";
+                    break;
+                case 5:
+                    weekday = "星期五";
+                    break;
+                case 6:
+                    weekday = "星期六";
+                    break;
+            }
+            //alert("year="+year);
+            document.getElementById("nav_date1").innerHTML="今天是:"+year+"年"+month+"月"+date+"日"+weekday;
+            setTimeout("reloop()",3600*1000);
+        }
+
+    </SCRIPT>
+
+</head>
+<body onload="reloop()" >
+
+
+
+<div class="nav_bar">
+    <div class="container clearfix">
+        <a class="logo" href="index.jsp">
+            <img class="logo_img" src="http://10.0.10.204:8080/TSBDevMagCenter/images/logo.png" alt=""/>
+        </a>
+        <h1 class="inline">我的云空间</h1>
+        <span class="nav_date" id="nav_date1"></span>
+        <!--
+         <form class="form-inline inline top_search" action="eq_queryWebEquCountAreaPage.action">
+             <div class="input-append">
+                 <input class="span2" id="appendedInputButton" type="text" name="searchkey">
+                 <button class="top_search_btn" type="submit"></button>
+             </div>
+             <input type="hidden" name="province" value="" id="province"/>
+             <input type="hidden" name="city" value="" id="city"/>
+             <input type="hidden" name="area" value="" id="area"/>
+         </form>
+          -->
+    </div>
+</div>
+
+<script type="text/javascript" src="http://10.0.10.204:8080/TSBDevMagCenter/js/jquery-1.10.2.min.js" ></script>
+<script type="text/javascript" src="http://10.0.10.204:8080/TSBDevMagCenter/js/equip/bootstrap.min.js"></script>
+<script type="text/javascript" src="http://10.0.10.204:8080/TSBDevMagCenter/js/equip/main.js"></script>
+<script type="text/javascript" src="http://10.0.10.204:8080/TSBDevMagCenter/js/highcharts/highcharts.js"></script>
+<script type="text/javascript" src="http://10.0.10.204:8080/TSBDevMagCenter/js/highcharts/highcharts-more.js"></script>
+<script type="text/javascript" src="http://10.0.10.204:8080/TSBDevMagCenter/js/equcontrl.js"></script>
+
+<style>
+    .device_list_control .device_info_box p.device_name{
+        width: 140px;
+        line-height: 27px;
+    }
+    .device_list_control .device_info_box p.device_name a{
+        color: #7eb909;
+    }
+</style>
+<div class="container main clearfix">
+
+
+    <div class="sidebar">
+        <ul>
+            <li>
+                <a href="">
+                    <img src="http://10.0.10.204:8080/TSBDevMagCenter/images/nav_user.png" alt=""/>
+                    <p>用户中心</p>
+                </a>
+            </li>
+            <li>
+                <a href="settings.php">
+                    <img src="http://10.0.10.204:8080/TSBDevMagCenter/images/nav_settings.png" alt=""/>
+                    <p>应用中心</p>
+                </a>
+            </li>
+            <li>
+                <a href="settings.php">
+                    <img src="http://10.0.10.204:8080/TSBDevMagCenter/images/nav_settings.png" alt=""/>
+                    <p>学情中心</p>
+                </a>
+            </li>
+            <li>
+                <a href="device.php">
+                    <img src="http://10.0.10.204:8080/TSBDevMagCenter/images/nav_apps.png" alt=""/>
+                    <p>我的学生</p>
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    <img src="http://10.0.10.204:8080/TSBDevMagCenter/images/nav_apps.png" alt=""/>
+                    <p>我的表扬</p>
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    <img src="http://10.0.10.204:8080/TSBDevMagCenter/images/nav_apps.png" alt=""/>
+                    <p>即时问答</p>
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    <img src="http://10.0.10.204:8080/TSBDevMagCenter/images/nav_apps.png" alt=""/>
+                    <p>我的探究</p>
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    <img src="http://10.0.10.204:8080/TSBDevMagCenter/images/nav_apps.png" alt=""/>
+                    <p>我的笔记</p>
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    <img src="http://10.0.10.204:8080/TSBDevMagCenter/images/nav_apps.png" alt=""/>
+                    <p>我的资源</p>
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    <img src="http://10.0.10.204:8080/TSBDevMagCenter/images/nav_apps.png" alt=""/>
+                    <p>资源审核</p>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+
+    <div class="content">
+        <div class="clearfix device_page">
+            <div class="dv_nav">
+                河北省 > 石家庄市 > 市辖区 > 第一中学 > 一年级一班设备列表
+            </div>
+
+
+
+
+            <div class="action_for_dv" style="top:20px">
+                <a href="#add_device_modal" role="button" data-toggle="modal">
+                    <img src="images/add_dv_btn.png" alt="">
+                </a>
+            </div>
+
+            <div class="device_list_control clearfix">
+
+                <div class="device_main clearfix">
+                    <div class="device_icon_box pull-left">
+                        <img src="images/white_pc.png" alt=""/>
+                    </div>
+                    <div class="pull-left device_info_box">
+                        <p class="device_name"><a href="eq_showEquConfPC.action?equid=13&equtypeid=1&role=0" >一年级一班计算机</a></p>
+
+                        <p class="info">运行状态：
+
+
+                            故障
+                        </p>
+                        <p class="info">设备编号：2000-1-01-B</p>
+                        <p class="info">IP地址：10.0.0.167</p>
+                        <p class="info">管理用户： 张老师</p>
+
+                    </div>
+                </div>
+
+                <div class="device_sub_info">
+                    <p class="info" id="cpuinfor" >处理器:</p>
+                    <p class="info" id="raminfor">内存信息：</p>
+                    <p class="info"  id="pcdev"> 硬盘容量:</p>
+                    <p class="info">显卡信息:集成显卡 </p>
+                    <p class="info" id="netinfor">网络:</p>
+
+
+                </div>
+
+                <div class="device_chart">
+                    <div id="chart_1_13" style="width: 260px;height: 90px;overflow: hidden;float: left"></div>
+                    <div id="chart_2_13" style="width: 260px;height: 90px;overflow: hidden;float: left"></div>
+                    <div id="chart_3_13" style="width: 260px;height: 90px;overflow: hidden;float: left"></div>
+                    <div id="chart_4_13" style="width: 260px;height: 90px;overflow: hidden;float: left"></div>
+                </div>
+                <div class="device_actions">
+
+                    <button class="button" onclick="equstart('13')">启动</button>
+
+                    <!--
+                     <button class="button warning" onclick="equupdate('eq_showUpdateEquConfPage.action?equid=13&equtypeid=1')">配置</button>
+                      -->
+                    <a class="button warning"  href="#update_device_modal" role="button" data-toggle="modal" onclick="sethidden(13,1)">配置</a>
+                    <a class="button warning"  href="#scrap_device_modal" role="button" data-toggle="modal" onclick="sethidden(13,1)">报废</a>
+                    <!-- <button class="button error" onclick="equreport('equre_showAddEquRepair1.action?equid=13')">报废</button> -->
+                    <button class="button error" onclick="equdel('eq_deleteEquConfPage.action?equid=13&equtypeid=1')">删除</button>
+                </div>
+            </div>
+
+
+
+            <div class="device_list_control clearfix">
+
+                <div class="device_main clearfix">
+                    <div class="device_icon_box pull-left">
+                        <img src="images/white_baiban.png" alt=""/>
+                    </div>
+                    <div class="pull-left device_info_box">
+                        <p class="device_name"><a href="eq_showEquConfBoard.action?equid=14&equtypeid=3&role=0" >一年级一班电子白板 </a></p>
+
+                        <p class="info">运行状态：
+
+
+                            故障
+                        </p>
+                        <p class="info">设备编号：2000-1-01-C</p>
+                        <p class="info">白板类型： 电磁
+
+
+                        </p>
+
+
+                    </div>
+                </div>
+                <div class="device_sub_info">
+                    <p class="info">重量：10kg</p>
+                    <p class="info">长度： 2m</p>
+                    <p class="info">宽度： 5cm, </p>
+                    <p class="info">高度： 1.5m</p>
+                    <p class="info">有效尺寸:100 100</p>
+                    <p class="info">产品尺寸:10 10</p>
+                    <p class="info">接口尺寸:10 10</p>
+                </div>
+                <div class="device_chart">
+                    <div id="chart_5_14" style="width: 520px;height: 180px;overflow: hidden"></div>
+                </div>
+                <div class="device_actions">
+
+                    <button class="button" onclick="equstart('14')" >启动</button>
+
+                    <!--
+                    <button class="button warning" onclick="equupdate('eq_showUpdateEquConfPage.action?equid=14&equtypeid=3')" >配置</button>
+                                                -->
+                    <a class="button warning"  href="#update_device_modal" role="button" data-toggle="modal" onclick="sethidden(14,3)">配置</a>
+                    <a class="button warning"  href="#scrap_device_modal" role="button" data-toggle="modal" onclick="sethidden(14,3)">报废</a>
+                    <!-- <button class="button error" onclick="equreport('equre_showAddEquRepair1.action?equid=14')">报废</button> -->
+                    <button class="button error" onclick="equdel('eq_deleteEquConfPage.action?equid=14&equtypeid=3')">删除</button>
+                </div>
+
+            </div>
+
+
+            <div class="device_list_control clearfix">
+
+                <div class="device_main clearfix">
+                    <div class="device_icon_box pull-left">
+                        <img src="images/white_tyy.png" alt=""/>
+                    </div>
+                    <div class="pull-left device_info_box">
+                        <p class="device_name"> <a href="eq_showEquConfProjector.action?equid=15&equtypeid=4&role=0" >一年级一班投影仪 </a></p>
+
+                        <p class="info">运行状态：
+                            关机
+
+
+                        </p>
+                        <p class="info">设备编号：2000-1-01-D</p>
+                        <p class="info">投影技术：短焦距投影技术</p>
+
+
+                    </div>
+                </div>
+                <div class="device_sub_info">
+                    <p class="info">亮度： </p>
+                    <p class="info">对比度： </p>
+                    <p class="info">最高分辨率： </p>
+                    <p class="info">灯泡设计寿命： 5万小时</p>
+                    <p class="info">工作温度： </p>
+                    <p class="info">工作湿度： </p>
+
+                </div>
+                <div class="device_chart">
+                    <div id="chart_6_15" style="width: 260px;height: 190px;overflow: hidden;float:left"></div>
+                    <div class="pull-right used_till_now">
+                        <p class="used_text">已经使用</p>
+                        <h2 id="projectlighttime"></h2>
+                        <p class="key_comp">投影仪关键组件: 灯泡使用时长</p>
+                    </div>
+                </div>
+                <div class="device_actions">
+
+                    <button class="button" onclick="equstart('15')">启动</button>
+
+                    <!--
+                    <button class="button warning" onclick="equupdate('eq_showUpdateEquConfPage.action?equid=15&equtypeid=4')">配置</button>
+
+                    -->
+                    <a class="button warning"  href="#update_device_modal" role="button" data-toggle="modal" onclick="sethidden(15,4)">配置</a>
+                    <a class="button warning"  href="#scrap_device_modal" role="button" data-toggle="modal" onclick="sethidden(15,4)">报废</a>
+                    <!-- <button class="button error"  onclick="equreport('equre_showAddEquRepair1.action?equid=15')">报废</button> -->
+                    <button class="button error" onclick="equdel('eq_deleteEquConfPage.action?equid=15&equtypeid=4')" >删除</button>
+                </div>
+
+            </div>
+
+
+
+
+            <div class="device_list_control clearfix">
+
+                <div class="device_main clearfix">
+                    <div class="device_icon_box pull-left">
+                        <img src="images/white_pc.png" alt=""/>
+                    </div>
+                    <div class="pull-left device_info_box">
+
+                        <p class="device_name"> <a href="eq_showEquConfNetBox.action?equid=12&equtypeid=5&role=0" >一年级一班网络盒子 </a></p>
+
+
+
+
+                        <p class="info">运行状态：
+
+
+                            故障
+                        </p>
+                        <p class="info">设备编号：2000-1-01-A</p>
+                        <p class="info">IP地址：10.0.0.26</p>
+
+                    </div>
+                </div>
+                <div class="device_sub_info">
+                    <p class="info"> </p>
+                </div>
+                <div class="device_chart">
+                    <div id="chart_8_12" style="width: 520px;height: 180px;overflow: hidden"></div>
+                </div>
+                <div class="device_actions">
+
+                    <button class="button" onclick="equstart('12')">启动</button>
+
+
+                    <!-- <button class="button warning"onclick="equupdate('eq_showUpdateEquConfPage.action?equid=12&equtypeid=5')">配置</button> -->
+                    <a class="button warning"  href="#update_device_modal" role="button" data-toggle="modal" onclick="sethidden(12,5)">配置</a>
+                    <a class="button warning"  href="#scrap_device_modal" role="button" data-toggle="modal" onclick="sethidden(12,1)">报废</a>
+                    <!-- <button class="button error" onclick="equreport('equre_showAddEquRepair1.action?equid=12')">报废</button> -->
+                    <button class="button error" onclick="equdel('eq_deleteEquConfPage.action?equid=12&equtypeid=5')">删除</button>
+                </div>
+
+            </div>
+
+            <div class="dv_title clearfix">
+                <!-- <div class="pull-right">
+                    <div class="sub_gray">
+                       <span class="num"  id="equuserate"></span> 统计时长: 2015年12月15日 -2015年12月21日
+                    </div>
+                </div> -->
+                <p class="pull-left">设备使用率统计信息&nbsp&nbsp&nbsp&nbsp</p>
+                <div class="select pull-right">
+                    <div class="selected" id="selectedTimeArea">最近一周</div>
+                    <div class="toggle_down"></div>
+                    <div class="options" id="selectedTimeAreaOptions">
+
+                        <div  href="eq_queryWebEquInfoClassPage.action?classroom=一年级一班&role=0&pager.stattype=2" onclick="selectToGo(this)" class="option">最近一周</div>
+                        <div  href="eq_queryWebEquInfoClassPage.action?classroom=一年级一班&role=0&pager.stattype=3" onclick="selectToGo(this)" class="option">最近一个月</div>
+                        <div  href="eq_queryWebEquInfoClassPage.action?classroom=一年级一班&role=0&pager.stattype=4" onclick="selectToGo(this)" class="option">最近一年</div>
+                    </div>
+                </div>
+                <p class="sub_gray">
+                    统计时长: 2015年12月15日 -2015年12月21日
+                </p>
+
+            </div>
+            <div class="lines_chart" id="chart_7">
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<input type="hidden" id="hidden1" value=""/>
+<input type="hidden" id="hidden2" value=""/>
+
+
+<div id="add_device_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3>添加设备</h3>
+    </div>
+    <div class="modal-body">
+
+    </div>
+</div>
+<div id="update_device_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3>配置设备信息</h3>
+    </div>
+    <div class="modal-body">
+
+    </div>
+</div>
+<div id="scrap_device_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3>配置设备信息</h3>
+    </div>
+    <div class="modal-body">
+
+    </div>
+</div>
+<script type="text/javascript">
+    $("#add_device_modal").on("show",function(){
+
+        $.ajax({
+            url: 'eq_showAddEquConfPage.action?equsf.queryparm.province=130000&'+
+            'equsf.queryparm.city=130100&equsf.queryparm.area=130101&equsf.queryparm.school=第一中学&equsf.queryparm.classroom=一年级一班',
+            dataType: "html",
+            type:"get",
+            success: function(e){
+                $("#add_device_modal").find(".modal-body").html($(e));
+
+            },
+            error: function(){
+                $("#add_device_modal").find(".modal-body").html("网络错误， 请稍候重试。");
+            }
+        })
+    });
+
+</script>
+
+<script>
+    $("#update_device_modal").on("show",function(){
+        var equid=$("#hidden1").val();
+        var equtypeid=$("#hidden2").val();
+        $.ajax({
+            url: 'eq_showUpdateEquConfPage.action?equid='+equid+'&equtypeid='+equtypeid,
+            dataType: "html",
+            type:"get",
+            success: function(e){
+                $("#update_device_modal").find(".modal-body").html($(e));
+            },
+            error: function(){
+                $("#update_device_modal").find(".modal-body").html("网络错误， 请稍候重试。");
+            }
+        })
+    });
+    $("#scrap_device_modal").on("show",function(){
+        var equid=$("#hidden1").val();
+        var equtypeid=$("#hidden2").val();
+        $.ajax({
+            url: 'equre_showAddEquRepair1.action?equid='+equid+'&equtypeid='+equtypeid,
+            dataType: "html",
+            type:"get",
+            success: function(e){
+                $("#scrap_device_modal").find(".modal-body").html($(e));
+            },
+            error: function(){
+                $("#scrap_device_modal").find(".modal-body").html("网络错误， 请稍候重试。");
+            }
+        })
+    });
+
+</script>
+
+<script>
+
+    //alert(13);
+
+    $(function () {
+        $('#chart_1_13').highcharts({
+
+                    chart: {
+                        type: 'gauge',
+                        plotBorderWidth: 1,
+                        plotBackgroundColor: "#fff",
+                        plotBackgroundImage: null,
+                        height: 90
+                    },
+
+                    title: {
+                        floating: true,
+                        align: 'right',
+                        text: 'CPU使用率(%)'
+                    },
+
+                    pane: [{
+                        startAngle: -45,
+                        endAngle: 45,
+                        background: null,
+                        center: ["50%","210%"],
+                        size: 200
+                    }],
+
+                    yAxis: [{
+                        min: 0,
+                        max: 100,
+                        minorTickPosition: 'outside',
+                        tickPosition: 'outside',
+                        labels: {
+                            rotation: 'auto',
+                            distance: 20
+                        },
+                        plotBands: [{
+                            from: 0,
+                            to: 6,
+                            color: 'transparent',
+                            innerRadius: '100%',
+                            outerRadius: '105%'
+                        }],
+                        pane: 0,
+                        title: {
+                            text: '',
+                            y: -40
+                        }
+                    }],
+
+                    plotOptions: {
+                        gauge: {
+                            dataLabels: {
+                                enabled: false
+                            },
+                            dial: {
+                                radius: '100%'
+                            }
+                        }
+                    },
+                    series: [{
+                        name:'CPU使用率(%)',
+                        data: [0],
+                        yAxis: 0
+                    }]
+                },
+                // Let the music play
+                function(chart) {
+                    setInterval(function() {
+                        var left = chart.series[0].points[0];
+
+                        $.getJSON("equnature_getBanPCCPU1.action",
+                                { equid: "13"},
+                                function(json){
+                                    var infor=json.cpustatstr;
+                                    if(null!=infor&&""!=infor){
+                                        $("#cpuinfor").html("处理器:"+infor);
+                                    }
+
+
+                                });
+
+                        $.getJSON("equnature_getBanPCCPU.action",
+                                { equid: "13"},
+                                function(json){
+                                    var rate=json.cpustatstr;
+                                    var ratestr=rate+"%";
+                                    if(null!=rate&&""!=rate){
+                                        left.update(+Highcharts.numberFormat(rate, 2), true);
+                                    }
+
+
+                                });
+                        chart.redraw();
+
+                    },5*1000);
+
+                });
+    });
+    $(function () {
+        $('#chart_2_13').highcharts({
+
+                    chart: {
+                        type: 'gauge',
+                        plotBorderWidth: 1,
+                        plotBackgroundColor: "#fff",
+                        plotBackgroundImage: null,
+                        height: 90
+                    },
+
+                    title: {
+                        floating: true,
+                        align: 'right',
+                        text: '内存使用率(%)'
+                    },
+
+                    pane: [{
+                        startAngle: -45,
+                        endAngle: 45,
+                        background: null,
+                        center: ["50%","210%"],
+                        size: 200
+                    }],
+
+                    yAxis: [{
+                        min: 0,
+                        max: 100,
+                        minorTickPosition: 'outside',
+                        tickPosition: 'outside',
+                        labels: {
+                            rotation: 'auto',
+                            distance: 20
+                        },
+                        plotBands: [{
+                            from: 0,
+                            to: 6,
+                            color: 'transparent',
+                            innerRadius: '100%',
+                            outerRadius: '105%'
+                        }],
+                        pane: 0,
+                        title: {
+                            text: '',
+                            y: -40
+                        }
+                    }],
+
+                    plotOptions: {
+                        gauge: {
+                            dataLabels: {
+                                enabled: false
+                            },
+                            dial: {
+                                radius: '100%'
+                            }
+                        }
+                    },
+                    series: [{
+                        name:'内存使用率(%)',
+                        data: [0],
+                        yAxis: 0
+                    }]
+                },
+                // Let the music play
+                function(chart) {
+                    setInterval(function() {
+                        var left = chart.series[0].points[0];
+
+                        $.getJSON("equnature_getBanPCRAM1.action",
+                                { equid: "13"},
+                                function(json){
+                                    var rate=json.ramstatstr;
+                                    if(null!=rate&&""!=rate){
+                                        $("#raminfor").html("内存信息:"+rate);
+                                    }
+
+
+                                });
+
+                        $.getJSON("equnature_getBanPCRAM.action",
+                                { equid: "13"},
+                                function(json){
+                                    var rate=json.ramstatstr;
+                                    var ratestr=rate+"%";
+
+                                    if(null!=rate&&""!=rate){
+                                        left.update(+Highcharts.numberFormat(rate, 2), true);
+                                    }
+
+                                });
+                        chart.redraw();
+
+                    },5*1000);
+
+                });
+    });
+    $(function () {
+        $('#chart_3_13').highcharts({
+            chart: {
+                plotBackgroundColor: null,
+                borderWidth: 1,
+                plotBorderWidth: 0,
+                plotShadow: false,
+                height:90,
+                borderRadius:0,
+                borderColor: '#ccc',
+                width: 242,
+                spacing:[0,5,0,0],
+                style:{
+                    marginLeft: '10px'
+                },
+                events: {
+                    load: function() {
+
+                        var series = this.series[0];
+
+                        setInterval(function() {
+                            $.getJSON("equnature_getBanPCDisk.action",
+                                    { equid: "13"},
+                                    function(json){
+                                        if(null!=json.diskstatstr){
+                                            var datas=json.diskstatstr.split(",");
+                                            var data=[];
+                                            if(null!=datas){
+                                                if(undefined!=datas[1]&&null!=datas[1]&&null!=datas[0]){
+                                                    $("#pcdev").html("硬盘容量:已经使用的磁盘空间  "+datas[0]+" GB 未使用的磁盘空间:"+datas[1]+" GB");
+
+                                                    data.push(['已使用', +datas[0]]);
+                                                    data.push(['未使用', +datas[1]]);
+                                                    series.setData(data);
+                                                }
+
+                                            }
+
+
+
+                                        }
+
+                                    });
+
+                        }, 3000);
+                    }
+                }
+            },
+            title: {
+                floating: true,
+                align: 'right',
+                text: "磁盘使用情况"
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: false,
+                        color: '#000000',
+                        connectorColor: '#000000',
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                    },
+                    center: ['50%', '50%'],
+                    showInLegend: true
+                }
+
+            },
+            legend: {
+                align: 'right',
+                verticalAlign: 'middle',
+                layout: 'vertical',
+                radius: 0,
+                borderWidth:0
+
+            },
+            series: [{
+                type: 'pie',
+                name: '磁盘使用情况',
+                data: [['已使用', 0],['未使用', 0]]
+            }]
+        });
+    });
+    $(function () {
+        $(document).ready(function() {
+            Highcharts.setOptions({
+                global: {
+                    useUTC: false
+                }
+            });
+
+            var chart;
+            $('#chart_4_13').highcharts({
+                chart: {
+                    plotBorderWidth: 1,
+                    type: 'spline',
+                    animation: Highcharts.svg,
+                    marginRight: 10,
+                    events: {
+                        load: function() {
+
+                            var series = this.series[0];
+
+                            setInterval(function() {
+
+
+                                $.getJSON("equnature_getBanPCNET1.action",
+                                        { equid: "13"},
+                                        function(json){
+                                            if(null!=json.netstatstr){
+                                                var datas=json.netstatstr;
+                                                if(null!=datas&&""!=datas){
+                                                    $("#netinfor").html("网络:"+datas);
+                                                }
+
+                                            }
+                                        });
+
+
+                                $.getJSON("equnature_getBanPCNET.action",
+                                        { equid: "13"},
+                                        function(json){
+
+                                            if(null!=json.netstatstr){
+
+                                                //var datas=json.netstatstr.split(",");
+                                                var time1=(new Date()).getTime();
+                                                var data1=json.netstatstr;
+                                                //alert(time1 + ":" + data1);
+                                                series.addPoint([+time1, +data1], true, true);
+                                            }
+                                        });
+
+                            }, 3000);
+                        }
+                    },
+                    height:100
+                },
+                title: {
+                    floating: true,
+                    align: 'right',
+                    text: '网络使用率(%)'
+                },
+                xAxis: {
+                    type: 'datetime'
+                },
+                yAxis: {
+                    //min:0,
+                    //max:1,
+                    title: {
+                        text: ''
+                    },
+                    plotLines: [{
+                        value: 0,
+                        width: 1,
+                        color: '#808080'
+                    }]
+                },
+                tooltip: {
+                    formatter: function() {
+                        return '<b>'+ this.series.name +'</b><br/>'+
+                                Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) +'<br/>'+
+                                Highcharts.numberFormat(this.y, 2);
+                    }
+                },
+                legend: {
+                    enabled: false
+                },
+                exporting: {
+                    enabled: false
+                },
+                series: [{
+                    name: "网络使用率(%)",
+                    data:(function() {
+                        // generate an array of random data
+                        var data = [],
+                                time = (new Date()).getTime(),
+                                i;
+
+                        for (i = -19; i <= 0; i++) {
+                            data.push({
+                                x: time + i * 3000,
+                                y: Math.random()*0.1
+                            });
+                        }
+                        return data;
+                    })()}]
+            });
+        });
+    });
+
+
+
+    $(function () {
+        $('#chart_5_14').highcharts({
+
+                    chart: {
+                        type: 'gauge',
+                        plotBorderWidth: 1,
+                        plotBackgroundColor: "#fff",
+                        plotBackgroundImage: null,
+                        height: 180
+                    },
+
+                    title: {
+                        floating: true,
+                        align: 'right',
+                        text: '电子白板使用率(%)'
+                    },
+
+                    pane: [{
+                        startAngle: -45,
+                        endAngle: 45,
+                        background: null,
+                        center: ["50%","200%"],
+                        size: 500
+                    }],
+
+                    yAxis: [{
+                        min: 0,
+                        max: 100,
+                        minorTickPosition: 'outside',
+                        tickPosition: 'outside',
+                        labels: {
+                            rotation: 'auto',
+                            distance: 20
+                        },
+                        plotBands: [{
+                            from: 0,
+                            to: 6,
+                            color: 'transparent',
+                            innerRadius: '100%',
+                            outerRadius: '105%'
+                        }],
+                        pane: 0,
+                        title: {
+                            text: '',
+                            y: -40
+                        }
+                    }],
+
+                    plotOptions: {
+                        gauge: {
+                            dataLabels: {
+                                enabled: false
+                            },
+                            dial: {
+                                radius: '100%'
+                            }
+                        }
+                    },
+                    series: [{
+                        name:'电子白板使用率(%)',
+                        data: [0],
+                        yAxis: 0
+                    }]
+                },
+                // Let the music play
+                function(chart) {
+                    setInterval(function() {
+                        var left = chart.series[0].points[0];
+
+                        $.getJSON("equreport_getBanBoardUseRate.action",
+                                { equid: "14",
+                                    equtypeid:"3"},
+                                function(json){
+                                    var rate=json.chartstr;
+                                    var ratestr=rate+"%";
+                                    left.update(+Highcharts.numberFormat(rate, 2), true);
+
+                                });
+                        chart.redraw();
+
+                    },5*1000);
+
+
+                });
+    });
+
+
+
+
+    $(function () {
+        $('#chart_6_15').highcharts({
+
+                    chart: {
+                        type: 'gauge',
+                        plotBorderWidth: 1,
+                        plotBackgroundColor: "#fff",
+                        plotBackgroundImage: null,
+                        height: 190
+                    },
+
+                    title: {
+                        floating: true,
+                        align: 'right',
+                        text: '投影仪使用率(%)'
+                    },
+
+                    pane: [{
+                        startAngle: -45,
+                        endAngle: 45,
+                        background: null,
+                        center: ["50%","130%"],
+                        size: 300
+                    }],
+
+                    yAxis: [{
+                        min: 0,
+                        max: 100,
+                        minorTickPosition: 'outside',
+                        tickPosition: 'outside',
+                        labels: {
+                            rotation: 'auto',
+                            distance: 20
+                        },
+                        plotBands: [{
+                            from: 0,
+                            to: 6,
+                            color: 'transparent',
+                            innerRadius: '100%',
+                            outerRadius: '100%'
+                        }],
+                        pane: 0,
+                        title: {
+                            text: '',
+                            y: -40
+                        }
+                    }],
+
+                    plotOptions: {
+                        gauge: {
+                            dataLabels: {
+                                enabled: false
+                            },
+                            dial: {
+                                radius: '100%'
+                            }
+                        }
+                    },
+                    series: [{
+                        name:'投影仪使用率(%)',
+                        data: [0],
+                        yAxis: 0
+                    }]
+                },
+                // Let the music play
+                function(chart) {
+                    setInterval(function() {
+                        var left = chart.series[0].points[0];
+
+                        $.getJSON("equreport_getBanProjectUseRate.action",
+                                { equid: "15",
+                                    equtypeid:"4"},
+                                function(json){
+                                    var rate=json.chartstr;
+                                    var ratestr=rate+"%";
+                                    left.update(+Highcharts.numberFormat(rate, 2), true);
+
+                                });
+                        $.getJSON("equreport_getbanProjectUseTime.action",
+                                { equid: "15",
+                                    equtypeid:"4"},
+                                function(json){
+                                    var rate=json.chartstr;
+
+                                    $("#projectlighttime").html(rate);
+
+                                });
+                        chart.redraw();
+
+                    },5*1000);
+
+                });
+    });
+
+
+
+    $(function () {
+        $('#chart_8_12').highcharts({
+
+                    chart: {
+                        type: 'gauge',
+                        plotBorderWidth: 1,
+                        plotBackgroundColor: "#fff",
+                        plotBackgroundImage: null,
+                        height: 180
+                    },
+
+                    title: {
+                        floating: true,
+                        align: 'right',
+                        text: '网络盒子使用率(%)'
+                    },
+
+                    pane: [{
+                        startAngle: -45,
+                        endAngle: 45,
+                        background: null,
+                        center: ["50%","200%"],
+                        size: 500
+                    }],
+
+                    yAxis: [{
+                        min: 0,
+                        max: 100,
+                        minorTickPosition: 'outside',
+                        tickPosition: 'outside',
+                        labels: {
+                            rotation: 'auto',
+                            distance: 20
+                        },
+                        plotBands: [{
+                            from: 0,
+                            to: 6,
+                            color: 'transparent',
+                            innerRadius: '100%',
+                            outerRadius: '105%'
+                        }],
+                        pane: 0,
+                        title: {
+                            text: '',
+                            y: -40
+                        }
+                    }],
+
+                    plotOptions: {
+                        gauge: {
+                            dataLabels: {
+                                enabled: false
+                            },
+                            dial: {
+                                radius: '100%'
+                            }
+                        }
+                    },
+                    series: [{
+                        name:'网络盒子使用率(%)',
+                        data: [0],
+                        yAxis: 0
+                    }]
+                },
+                // Let the music play
+                function(chart) {
+                    setInterval(function() {
+                        var left = chart.series[0].points[0];
+
+                        $.getJSON("equreport_getbanNetBoxUseRate.action",
+                                { equid: "12",
+                                    equtypeid:"5"},
+                                function(json){
+                                    var rate=json.chartstr;
+                                    var ratestr=rate+"%";
+                                    left.update(+Highcharts.numberFormat(rate, 2), true);
+
+                                });
+                        chart.redraw();
+
+                    },5*1000);
+
+                });
+    });
+
+
+    //-------------------
+
+    $(function () {
+        $('#chart_7').highcharts({
+            title: {
+                text: '',
+                x: -20
+            },
+            xAxis: {
+                type: 'datetime',
+                dateTimeLabelFormats:{
+                    day : '%m-%e',
+                    month: '%Y-%m',
+                    year: '%Y'
+                },
+
+                title: {
+                    text: null
+                }
+            },
+            yAxis: {
+                min: 0,
+                max: 100,
+                title: {
+                    text: '设备使用率(%)'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                valueSuffix: '%'
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'top',
+                borderWidth: 1
+            },
+            series: [
+                {
+                    name: '计算机',
+                    data: [
+
+
+
+                        [ Date.UTC(2015,11,15),100.00],
+
+
+
+
+                        [ Date.UTC(2015,11,16),100.00],
+
+
+
+
+                        [ Date.UTC(2015,11,17),100.00],
+
+
+
+
+                        [ Date.UTC(2015,11,18),100.00],
+
+
+
+
+                        [ Date.UTC(2015,11,19),100.00],
+
+
+
+
+                        [ Date.UTC(2015,11,20),100.00],
+
+
+
+                        [ Date.UTC(2015,11,21),100.00]
+
+
+                    ]
+                },{
+                    name: '电子白板',
+                    data: [
+
+
+                        [ Date.UTC(2015,11,15),100.00],
+
+
+
+
+
+                        [ Date.UTC(2015,11,16),100.00],
+
+
+
+
+
+                        [ Date.UTC(2015,11,17),100.00],
+
+
+
+
+
+                        [ Date.UTC(2015,11,18),100.00],
+
+
+
+
+
+                        [ Date.UTC(2015,11,19),100.00],
+
+
+
+
+
+                        [ Date.UTC(2015,11,20),100.00],
+
+
+
+
+                        [ Date.UTC(2015,11,21),100.00]
+
+
+
+                    ]
+                }, {
+                    name: '投影仪',
+                    data: [
+
+
+                        [ Date.UTC(2015,11,15),0.00],
+
+
+
+
+
+                        [ Date.UTC(2015,11,16),0.00],
+
+
+
+
+
+                        [ Date.UTC(2015,11,17),0.00],
+
+
+
+
+
+                        [ Date.UTC(2015,11,18),0.00],
+
+
+
+
+
+                        [ Date.UTC(2015,11,19),0.00],
+
+
+
+
+
+                        [ Date.UTC(2015,11,20),0.00],
+
+
+
+
+                        [ Date.UTC(2015,11,21),0.00]
+
+
+
+                    ]
+                }, {
+                    name: '网络盒子',
+                    data: [
+
+
+                        [ Date.UTC(2015,11,15),100.00],
+
+
+
+
+
+                        [ Date.UTC(2015,11,16),100.00],
+
+
+
+
+
+                        [ Date.UTC(2015,11,17),100.00],
+
+
+
+
+
+                        [ Date.UTC(2015,11,18),100.00],
+
+
+
+
+
+                        [ Date.UTC(2015,11,19),100.00],
+
+
+
+
+
+                        [ Date.UTC(2015,11,20),100.00],
+
+
+
+
+                        [ Date.UTC(2015,11,21),100.00]
+
+
+
+                    ]
+                }]
+        });
+    });
+
+
+    function equstart(equid)
+    {
+        if(confirm("确定要 启动机器吗？"))
+        {
+            remotePowerOn(equid);
+        }
+    }
+
+    function equstop(equid)
+    {
+        if(confirm("确定要 关闭机器吗？"))
+        {
+            remotePowerOff(equid);
+        }
+    }
+
+    function equdel(url)
+    {
+        if(confirm("确定要 删除机器配置信息吗？"))
+        {
+            window.location.href=url;
+        }
+    }
+    function sethidden(equid,equtypeid){
+        $("#hidden1").val(equid);
+        $("#hidden2").val(equtypeid);
+
+    }
+
+
+    function equupdate(url)
+    {
+        if(confirm("确定要 修改机器配置信息吗？"))
+        {
+            //$("#add_device_modal").show();
+            // $("#add_device_modal").href("#add_device_modal");
+            //document.getElementById('add_device_modal').style.display = 'block';
+            //$("#add_device_modal").style.visibility="block";
+        }
+    }
+    function equreport(url)
+    {
+        if(confirm("确定要报废机器吗？"))
+        {
+            window.location.href=url;
+        }
+    }
+
+    $(function () {
+
+        $("#selectedTimeArea").text($("#selectedTimeAreaOptions").children().eq(0).text());
+        $("#selectedTimeAreaOptions").children().eq(0).removeClass().addClass("option active");
+
+
+
+    });
+
+</script>
+
+
+
+
+
+<body>ox</body>
+</html>
+
