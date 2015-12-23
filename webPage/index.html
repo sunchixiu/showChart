@@ -17,7 +17,196 @@
 <script type="text/javascript" src="js/highcharts/highcharts.js"></script>
 <script type="text/javascript" src="js/highcharts/highcharts-more.js"></script>
 <script type="text/javascript" src="js/equcontrl.js"></script>
-
+<script src="js/dataSchool.js"></script>
+<script>
+//    var data = {
+//        "code": 1,
+//        "errorCode": 0,
+//        "data": [
+//            {
+//                "updatorid": null,
+//                "updatortime": null,
+//                "optip": null,
+//                "province": "",
+//                "city": "beijing",
+//                "area": "",
+//                "county": "",
+//                "school": "",
+//                "grade": "",
+//                "classc": "",
+//                "type": "3",
+//                "isreal": null,
+//                "memory": "",
+//                "cpu": "",
+//                "disk": "",
+//                "displaycard": "",
+//                "model": "俄官方热天",
+//                "buytime": "",
+//                "size": "",
+//                "weight": "",
+//                "factory": "",
+//                "brightness": "ertfrefgr",
+//                "resolution": "电饭锅太热",
+//                "realprocessor": null,
+//                "realcpu": null,
+//                "realdisk": null,
+//                "realnetwork": null,
+//                "realstate": "1"
+//            },
+//            {
+//                "updatorid": null,
+//                "updatortime": null,
+//                "optip": null,
+//                "province": "",
+//                "city": "beijing",
+//                "area": "",
+//                "county": "",
+//                "school": "",
+//                "grade": "",
+//                "classc": "",
+//                "type": "2",
+//                "isreal": null,
+//                "memory": "",
+//                "cpu": "",
+//                "disk": "",
+//                "displaycard": "",
+//                "model": "",
+//                "buytime": "",
+//                "size": "",
+//                "weight": "富i额晚饭",
+//                "factory": "",
+//                "brightness": "",
+//                "resolution": "",
+//                "realprocessor": null,
+//                "realcpu": null,
+//                "realdisk": null,
+//                "realnetwork": null,
+//                "realstate": "1"
+//            },
+//            {
+//                "updatorid": null,
+//                "updatortime": null,
+//                "optip": null,
+//                "province": "",
+//                "city": "beijing",
+//                "area": "",
+//                "county": "",
+//                "school": "",
+//                "grade": "一年级",
+//                "classc": "一班",
+//                "type": "1",
+//                "isreal": null,
+//                "memory": "8",
+//                "cpu": "intel",
+//                "disk": "",
+//                "displaycard": "eee",
+//                "model": "",
+//                "buytime": "",
+//                "size": "",
+//                "weight": "",
+//                "factory": "",
+//                "brightness": "",
+//                "resolution": "",
+//                "realprocessor": null,
+//                "realcpu": null,
+//                "realdisk": null,
+//                "realnetwork": (Math.random()*0.1).toFixed(3),
+//                "realstate": "1"
+//            },
+//            {
+//                "updatorid": null,
+//                "updatortime": null,
+//                "optip": null,
+//                "province": "",
+//                "city": "beijing",
+//                "area": "",
+//                "county": "",
+//                "school": "",
+//                "grade": "",
+//                "classc": "",
+//                "type": "3",
+//                "isreal": null,
+//                "memory": "",
+//                "cpu": "",
+//                "disk": "",
+//                "displaycard": "",
+//                "model": "俄官方热天",
+//                "buytime": "",
+//                "size": "",
+//                "weight": "",
+//                "factory": "",
+//                "brightness": "ertfrefgr",
+//                "resolution": "电饭锅太热",
+//                "realprocessor": null,
+//                "realcpu": null,
+//                "realdisk": null,
+//                "realnetwork": null,
+//                "realstate": "1"
+//            },
+//            {
+//                "updatorid": null,
+//                "updatortime": null,
+//                "optip": null,
+//                "province": "",
+//                "city": "beijing",
+//                "area": "",
+//                "county": "",
+//                "school": "",
+//                "grade": "",
+//                "classc": "",
+//                "type": "2",
+//                "isreal": null,
+//                "memory": "",
+//                "cpu": "",
+//                "disk": "",
+//                "displaycard": "",
+//                "model": "",
+//                "buytime": "",
+//                "size": "",
+//                "weight": "富i额晚饭",
+//                "factory": "",
+//                "brightness": "",
+//                "resolution": "",
+//                "realprocessor": null,
+//                "realcpu": null,
+//                "realdisk": null,
+//                "realnetwork": null,
+//                "realstate": "1"
+//            },
+//            {
+//                "updatorid": null,
+//                "updatortime": null,
+//                "optip": null,
+//                "province": "",
+//                "city": "beijing",
+//                "area": "",
+//                "county": "",
+//                "school": "",
+//                "grade": "一年级",
+//                "classc": "一班",
+//                "type": "1",
+//                "isreal": null,
+//                "memory": "8",
+//                "cpu": "intel",
+//                "disk": "",
+//                "displaycard": "eee",
+//                "model": "",
+//                "buytime": "",
+//                "size": "",
+//                "weight": "",
+//                "factory": "",
+//                "brightness": "",
+//                "resolution": "",
+//                "realprocessor": null,
+//                "realcpu": null,
+//                "realdisk": null,
+//                "realnetwork": null,
+//                "realstate": "1"
+//            }
+//        ],
+//        "errorMessage": ""
+//    };
+</script>
 <style>
     .device_list_control .device_info_box p.device_name{
         width: 140px;
@@ -42,208 +231,341 @@
                         <li role="presentation"><a role="menuitem" tabindex="-1" href="#">湖北省</a></li>
                     </ul>
                 </div>
-                <div class="dropdown" style="float: left; margin-right: 6px;">
+                <div class="dropdown" style="float: left; margin-right: 6px;" id="cityDiv">
                     <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-expanded="true">
-                        武汉市
+
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">武汉市</a></li>
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">襄樊市</a></li>
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">十堰市</a></li>
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">黄冈市</a></li>
+
                     </ul>
                 </div>
-                <div class="dropdown" style="float: left; margin-right: 6px;">
+                <div class="dropdown" style="float: left; margin-right: 6px;" id="areaDiv">
                     <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu3" data-toggle="dropdown" aria-expanded="true">
-                        武昌区
+
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu3">
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">青山区</a></li>
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">洪山区</a></li>
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">武昌区</a></li>
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">江岸区</a></li>
                     </ul>
                 </div>
-                <div class="dropdown" style="float: left; margin-right: 6px;">
+                <div class="dropdown" style="float: left; margin-right: 6px;" id="schoolDiv">
                     <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu4" data-toggle="dropdown" aria-expanded="true">
-                        第一中学
+
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu4">
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">六十六中学</a></li>
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">十八中学</a></li>
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">第四中学</a></li>
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">第二中学</a></li>
                     </ul>
                 </div>
             </div>
-            <div class="device_list_control clearfix">
-                <div class="grades">
-                    <h4>一年级一班</h4>
-                    <div class="device_line" style="border-top: 1px solid #ddd; clear: both;">
-                        <div class="device_main clearfix">
-                            <div class="device_icon_box pull-left">
-                                <img src="images/white_pc.png" alt=""/>
+            <div class="k_content">
+                <div class="device_list_control clearfix">
+                    <div class="grades">
+                        <h4>一年级一班</h4>
+                        <div class="device_line" style="border-top: 1px solid #ddd; clear: both;">
+                            <div class="device_main clearfix">
+                                <div class="device_icon_box pull-left">
+                                    <img src="images/white_pc.png" alt=""/>
+                                </div>
+                                <div class="pull-left device_info_box">
+                                    <p class="info"><a href="eq_showEquConfPC.action?equid=13&equtypeid=1&role=0">计算机</a></p>
+                                    <p class="info">运行状态：运行</p>
+                                    <p class="info">IP地址：10.0.10.204</p>
+                                </div>
+                                <div class="pc_div">
+                                    <p><span id="cpuinfor" style="width: 118px;">处理器：</span><span id="raminfor">内存信息：</span></p>
+                                    <p><span id="pcdev" style="height: 34px; vertical-align: top;">硬盘容量：</span></p>
+                                    <p><span id="netinfor">网络：</span></p>
+                                    <input type="button" class="btn btn-info" value="开机">
+                                    <input type="button" class="btn btn-info" value="注销">
+                                    <input type="button" class="btn btn-info" value="重启">
+                                    <input type="button" class="btn btn-info" value="关机">
+                                </div>
                             </div>
-                            <div class="pull-left device_info_box">
-                                <p class="info"><a href="eq_showEquConfPC.action?equid=13&equtypeid=1&role=0">计算机</a></p>
-                                <p class="info">运行状态：运行</p>
-                                <p class="info">IP地址：10.0.10.204</p>
-                            </div>
-                            <div class="pc_div">
-                                <p><span id="cpuinfor" style="width: 118px;">处理器：</span><span id="raminfor">内存信息：</span></p>
-                                <p><span id="pcdev" style="height: 34px; vertical-align: top;">硬盘容量：</span></p>
-                                <p><span id="netinfor">网络：</span></p>
-                                <input type="button" class="btn btn-info" value="开机">
-                                <input type="button" class="btn btn-info" value="注销">
-                                <input type="button" class="btn btn-info" value="重启">
-                                <input type="button" class="btn btn-info" value="关机">
-                            </div>
-                        </div>
 
-                        <div class="device_sub_info">
-                            <p class="info">型号：2000-1-01-B</p>
-                            <p class="info">处理器：Intel(R) Core(TM) i7-4840 CPU</p>
-                            <p class="info"> 内存：8.00 GB</p>
-                            <p class="info">硬盘：2T </p>
-                            <p class="info">显卡：集成显卡</p>
-                            <p class="info">购买时间：2015-12-22</p>
-                        </div>
+                            <div class="device_sub_info">
+                                <p class="info">型号：2000-1-01-B</p>
+                                <p class="info">处理器：Intel(R) Core(TM) i7-4840 CPU</p>
+                                <p class="info"> 内存：8.00 GB</p>
+                                <p class="info">硬盘：2T </p>
+                                <p class="info">显卡：集成显卡</p>
+                                <p class="info">购买时间：2015-12-22</p>
+                            </div>
 
-                        <div class="device_chart">
-                            <div class="chart_1_13" style="width: 260px;height: 90px;overflow: hidden;float: left; margin-left: 20px;"></div>
-                            <div class="chart_2_13" style="width: 260px;height: 90px;overflow: hidden;float: left; margin-left: 24px;"></div>
-                            <div class="chart_3_13" style="width: 260px;height: 90px;overflow: hidden;float: left; margin-left: 20px;"></div>
-                            <div class="chart_4_13" style="width: 260px;height: 90px;overflow: hidden;float: left; margin-left: 24px;"></div>
-                        </div>
-                    </div>
-                    <div class="device_line" style="border-top: 1px solid #ddd; clear: both;">
-                        <div class="device_main clearfix" style="height: 90px;">
-                            <div class="device_icon_box pull-left">
-                                <img src="images/white_baiban.png" alt=""/>
-                            </div>
-                            <div class="pull-left device_info_box">
-                                <p class="info"><a href="eq_showEquConfBoard.action?equid=14&equtypeid=3&role=0" >电子白板 </a></p>
-                                <p class="info">运行状态：故障</p>
-                                <p class="info">白板类型： 电磁</p>
+                            <div class="device_chart">
+                                <div class="chart_1_13" style="width: 260px;height: 90px;overflow: hidden;float: left; margin-left: 20px;"></div>
+                                <div class="chart_2_13" style="width: 260px;height: 90px;overflow: hidden;float: left; margin-left: 24px;"></div>
+                                <div class="chart_3_13" style="width: 260px;height: 90px;overflow: hidden;float: left; margin-left: 20px;"></div>
+                                <div class="chart_4_13" style="width: 260px;height: 90px;overflow: hidden;float: left; margin-left: 24px;"></div>
                             </div>
                         </div>
-                        <div class="device_sub_info" style="width: 800px; height: 90px; border-right: none;">
-                            <span class="info">厂家：XXXX有限公司</span>
-                            <span class="info">尺寸：100cm*100cm*5cm</span>
-                            <span class="info">重量：10kg</span>
-                            <span class="info">型号：2000-1-01-C</span>
-                            <span class="info">购买时间：2015-12-22</span>
-                        </div>
-                    </div>
-                    <div class="device_line" style="border-top: 1px solid #ddd; clear: both;">
-                        <div class="device_main clearfix" style="height: 90px;">
-                            <div class="device_icon_box pull-left">
-                                <img src="images/white_tyy.png" alt=""/>
+                        <div class="device_line" style="border-top: 1px solid #ddd; clear: both;">
+                            <div class="device_main clearfix" style="height: 90px;">
+                                <div class="device_icon_box pull-left">
+                                    <img src="images/white_baiban.png" alt=""/>
+                                </div>
+                                <div class="pull-left device_info_box">
+                                    <p class="info"><a href="eq_showEquConfBoard.action?equid=14&equtypeid=3&role=0" >电子白板 </a></p>
+                                    <p class="info">运行状态：故障</p>
+                                    <p class="info">白板类型： 电磁</p>
+                                </div>
                             </div>
-                            <div class="pull-left device_info_box">
-                                <p class="info"><a href="eq_showEquConfBoard.action?equid=14&equtypeid=3&role=0" >投影仪</a></p>
-                                <p class="info">运行状态：关机</p>
-                                <p class="info">投影技术：短焦距投影技术</p>
-                            </div>
-                        </div>
-                        <div class="device_sub_info" style="width: 800px; height: 90px; border-right: none;">
-                            <span class="info">型号：2000-1-01-D</span>
-                            <span class="info">亮度：80%</span>
-                            <span class="info">最高分辨率：1920*1080</span>
-                            <span class="info">购买时间：2015-12-22</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="device_list_control clearfix">
-                <div class="grades">
-                    <h4>一年级二班</h4>
-                    <div class="device_line" style="border-top: 1px solid #ddd; clear: both;">
-                        <div class="device_main clearfix">
-                            <div class="device_icon_box pull-left">
-                                <img src="images/white_pc.png" alt=""/>
-                            </div>
-                            <div class="pull-left device_info_box">
-                                <p class="info"><a href="eq_showEquConfPC.action?equid=13&equtypeid=1&role=0">计算机</a></p>
-                                <p class="info">运行状态：运行</p>
-                                <p class="info">IP地址：10.0.10.204</p>
-                            </div>
-                            <div class="pc_div">
-                                <p><span id="cpuinfor" style="width: 118px;">处理器：</span><span id="raminfor">内存信息：</span></p>
-                                <p><span id="pcdev" style="height: 34px; vertical-align: top;">硬盘容量：</span></p>
-                                <p><span id="netinfor">网络：</span></p>
-                                <input type="button" class="btn btn-info" value="开机">
-                                <input type="button" class="btn btn-info" value="注销">
-                                <input type="button" class="btn btn-info" value="重启">
-                                <input type="button" class="btn btn-info" value="关机">
+                            <div class="device_sub_info" style="width: 800px; height: 90px; border-right: none;">
+                                <span class="info">厂家：XXXX有限公司</span>
+                                <span class="info">尺寸：100cm*100cm*5cm</span>
+                                <span class="info">重量：10kg</span>
+                                <span class="info">型号：2000-1-01-C</span>
+                                <span class="info">购买时间：2015-12-22</span>
                             </div>
                         </div>
-
-                        <div class="device_sub_info">
-                            <p class="info">型号：2000-1-01-B</p>
-                            <p class="info">处理器：Intel(R) Core(TM) i7-4840 CPU</p>
-                            <p class="info"> 内存：8.00 GB</p>
-                            <p class="info">硬盘：2T </p>
-                            <p class="info">显卡：集成显卡</p>
-                            <p class="info">购买时间：2015-12-22</p>
-                        </div>
-
-                        <div class="device_chart">
-                            <div class="chart_1_13" style="width: 260px;height: 90px;overflow: hidden;float: left; margin-left: 20px;"></div>
-                            <div class="chart_2_13" style="width: 260px;height: 90px;overflow: hidden;float: left; margin-left: 24px;"></div>
-                            <div class="chart_3_13" style="width: 260px;height: 90px;overflow: hidden;float: left; margin-left: 20px;"></div>
-                            <div class="chart_4_13" style="width: 260px;height: 90px;overflow: hidden;float: left; margin-left: 24px;"></div>
-                        </div>
-                    </div>
-                    <div class="device_line" style="border-top: 1px solid #ddd; clear: both;">
-                        <div class="device_main clearfix" style="height: 90px;">
-                            <div class="device_icon_box pull-left">
-                                <img src="images/white_baiban.png" alt=""/>
+                        <div class="device_line" style="border-top: 1px solid #ddd; clear: both;">
+                            <div class="device_main clearfix" style="height: 90px;">
+                                <div class="device_icon_box pull-left">
+                                    <img src="images/white_tyy.png" alt=""/>
+                                </div>
+                                <div class="pull-left device_info_box">
+                                    <p class="info"><a href="eq_showEquConfBoard.action?equid=14&equtypeid=3&role=0" >投影仪</a></p>
+                                    <p class="info">运行状态：关机</p>
+                                    <p class="info">投影技术：短焦距投影技术</p>
+                                </div>
                             </div>
-                            <div class="pull-left device_info_box">
-                                <p class="info"><a href="eq_showEquConfBoard.action?equid=14&equtypeid=3&role=0" >电子白板 </a></p>
-                                <p class="info">运行状态：故障</p>
-                                <p class="info">白板类型： 电磁</p>
+                            <div class="device_sub_info" style="width: 800px; height: 90px; border-right: none;">
+                                <span class="info">型号：2000-1-01-D</span>
+                                <span class="info">亮度：80%</span>
+                                <span class="info">最高分辨率：1920*1080</span>
+                                <span class="info">购买时间：2015-12-22</span>
                             </div>
-                        </div>
-                        <div class="device_sub_info" style="width: 800px; height: 90px; border-right: none;">
-                            <span class="info">厂家：XXXX有限公司</span>
-                            <span class="info">尺寸：100cm*100cm*5cm</span>
-                            <span class="info">重量：10kg</span>
-                            <span class="info">型号：2000-1-01-C</span>
-                            <span class="info">购买时间：2015-12-22</span>
-                        </div>
-                    </div>
-                    <div class="device_line" style="border-top: 1px solid #ddd; clear: both;">
-                        <div class="device_main clearfix" style="height: 90px;">
-                            <div class="device_icon_box pull-left">
-                                <img src="images/white_tyy.png" alt=""/>
-                            </div>
-                            <div class="pull-left device_info_box">
-                                <p class="info"><a href="eq_showEquConfBoard.action?equid=14&equtypeid=3&role=0" >投影仪</a></p>
-                                <p class="info">运行状态：关机</p>
-                                <p class="info">投影技术：短焦距投影技术</p>
-                            </div>
-                        </div>
-                        <div class="device_sub_info" style="width: 800px; height: 90px; border-right: none;">
-                            <span class="info">型号：2000-1-01-D</span>
-                            <span class="info">亮度：80%</span>
-                            <span class="info">最高分辨率：1920*1080</span>
-                            <span class="info">购买时间：2015-12-22</span>
                         </div>
                     </div>
                 </div>
             </div>
-
 
         </div>
     </div>
 
 </div>
+
+<!--多级联动-->
+<script>
+    var provinceId = '420000';
+    var cityId;
+    var areaId;
+    var schoolId;
+    var json;
+    var jsonArr = [];
+    var jsonTimer = null;
+    for(var o in dataCity[0]){
+        cityId = o;
+        $('#cityDiv > button').html(dataCity[0][o]+' <span class="caret"></span>');
+    };
+    for(var i=0; i<dataCity.length; i++){
+        for(var o in dataCity[i]){
+            $('#cityDiv > ul').append('<li role="presentation"><a role="menuitem" tabindex="-1" href="#" data-value="'+o+'" onclick=changeCity("'+dataCity[i][o]+'",'+o+')>'+dataCity[i][o]+'</a></li>');
+        };
+    };
+
+    for(var o in dataArea[0]){
+        areaId = dataArea[0][o][0];
+        $('#areaDiv > button').html(dataArea[0][o][1]+' <span class="caret"></span>');
+    };
+    areaList(cityId);
+    function areaList(cityId){
+        $('#areaDiv > ul').html('');
+        for(var i=0; i<dataArea.length; i++){
+            for(var o in dataArea[i]){
+                if(o == cityId){
+                    $('#areaDiv > ul').append('<li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick=changeArea("'+dataArea[i][o][1]+'",'+dataArea[i][o][0]+')>'+dataArea[i][o][1]+'</a></li>');
+                };
+            };
+        };
+    };
+
+    for(var i=0; i<dataSchool.data.length; i++){
+        if(dataSchool.data[i].C_AREAID == areaId){
+            $('#schoolDiv > button').html(dataSchool.data[i].C_NAME+' <span class="caret"></span>');
+            break;
+        };
+    };
+    schoolList(areaId);
+    function schoolList(areaId){
+        $('#schoolDiv > ul').html('');
+        for(var i=0; i<dataSchool.data.length; i++){
+            if(dataSchool.data[i].C_AREAID == areaId){
+                schoolId = dataSchool.data[0].C_SID;
+                $('#schoolDiv > ul').append('<li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick=getData("'+provinceId+'","'+cityId+'","'+areaId+'","'+areaId+'","'+dataSchool.data[i].C_SID+'")>'+dataSchool.data[i].C_NAME+'</a></li>');
+            };
+        };
+    };
+
+    function changeCity(name,value){
+        cityId = value;
+        $('#cityDiv > button').html(name+' <span class="caret"></span>');
+        areaList(cityId);
+        $('#areaDiv > button').html($('#areaDiv > ul > li > a').eq(0).html()+' <span class="caret"></span>');
+    };
+    function changeArea(name,value){
+        areaId = value;
+        $('#areaDiv > button').html(name+' <span class="caret"></span>');
+        schoolList(areaId);
+        $('#schoolDiv > button').html($('#schoolDiv > ul > li > a').eq(0).html()+' <span class="caret"></span>');
+    };
+
+    getData(provinceId,cityId,areaId,areaId,schoolId);
+    function getData(province,city,area,county,school){
+        alert(province+','+city+','+area+','+county+','+school);
+        $.ajax({
+            url:'device/getdevices',
+            type:'post',
+//            dataType:'text',
+            contentType: 'application/json',
+            data:'{"province":"'+province+'","city":"'+city+'","area":"'+area+'","county":"'+county+'","school":"'+school+'"}',
+//            data:'{"province":"420000","city":"420500","area":"420582","county":"420582","school":"25b4a33bdd1444548f3a0a2208523578"}',
+//            processData:false,
+            success:function(data){
+//                alert(JSON.stringify(data));
+                console.log(JSON.stringify(data));
+                showData(data);
+            },
+            error:function(data){
+                alert('失败');
+            }
+        });
+    };
+    function changeStatus(province,city,area,county,school,grade,classc,type,realstate){
+        $.ajax({
+            url:'device/closedevice',
+            type:'post',
+            contentType: 'application/json',
+            data:'{"province":"'+province+'","city":"'+city+'","area":"'+area+'","county":"'+county+'","school":"'+school+'","grade":"'+grade+'","classc":"'+classc+'","type":"'+type+'","realstate":"'+realstate+'"}',
+            success:function(data){
+                alert(JSON.stringify(data));
+            },
+            error:function(data){
+                alert('失败');
+            }
+        });
+    };
+
+//    showData(data);
+    function showData(data){
+        console.log(JSON.stringify(data));
+        var html = '';
+        var picSrc = '';
+        var deviceInfo = '';
+        for(var i=data.data.length-2; i>=0; i--){
+            var deviceName;
+            switch (data.data[i].type){
+                case "1": deviceName = '计算机';
+                    picSrc = 'images/white_pc.png';
+                    break;
+                case "2": deviceName = '电子白板';
+                    picSrc = 'images/white_baiban.png';
+                    deviceInfo = '<span class="info">厂家：'+data.data[i].factory+'</span>' +
+                    '<span class="info">尺寸：'+data.data[i].size+'</span>' +
+                    '<span class="info">重量：'+data.data[i].weight+'</span>' +
+                    '<span class="info">型号：'+data.data[i].model+'</span>' +
+                    '<span class="info">购买时间：'+data.data[i].buytime+'</span>';
+                    break;
+                case "3": deviceName = '投影仪';
+                    picSrc = 'images/white_tyy.png';
+                    deviceInfo = '<span class="info">型号：'+data.data[i].model+'</span>' +
+                    '<span class="info">亮度：'+data.data[i].brightness+'</span>' +
+                    '<span class="info">分辨率：'+data.data[i].resolution+'</span>' +
+                    '<span class="info">购买时间：'+data.data[i].buytime+'</span>';
+                    break;
+                default : deviceName = '计算机';
+                    picSrc = 'images/white_pc.png';
+                    break;
+            };
+            if((i+1)%3 == 0){
+                html += '<div class="device_list_control clearfix"><div class="grades"><h4>'+(data.data[i].grade+data.data[i].classc)+'</h4>' +
+                '<div class="device_line" style="border-top: 1px solid #ddd; clear: both;">' +
+                '<div class="device_main clearfix">' +
+                '<div class="device_icon_box pull-left">' +
+                '<img src="'+picSrc+'" alt=""/>' +
+                '</div>' +
+                '<div class="pull-left device_info_box">' +
+                '<p class="info"><a href="#">'+deviceName+'</a></p>' +
+                '<p class="info">运行状态：运行</p>' +
+                '<p class="info">IP地址：10.0.10.204</p>' +
+                '</div>' +
+                '<div class="pc_div">' +
+                '<p><span id="cpuinfor" style="width: 118px;">处理器：</span><span id="raminfor">内存信息：</span></p>' +
+                '<p><span id="pcdev" style="height: 34px; vertical-align: top;">硬盘容量：</span></p>' +
+                '<p><span id="netinfor">网络：</span></p>' +
+                '<input type="button" class="btn btn-info" value="开机" onclick=changeStatus("'+provinceId+'","'+cityId+'","'+areaId+'","'+areaId+'","'+schoolId+'","'+data.data[i].grade+'","'+data.data[i].classc+'","'+data.data[i].type+'","1")> ' +
+                '<input type="button" class="btn btn-info" value="注销" onclick=changeStatus("'+provinceId+'","'+cityId+'","'+areaId+'","'+areaId+'","'+schoolId+'","'+data.data[i].grade+'","'+data.data[i].classc+'","'+data.data[i].type+'","2")> ' +
+                '<input type="button" class="btn btn-info" value="重启" onclick=changeStatus("'+provinceId+'","'+cityId+'","'+areaId+'","'+areaId+'","'+schoolId+'","'+data.data[i].grade+'","'+data.data[i].classc+'","'+data.data[i].type+'","3")> ' +
+                '<input type="button" class="btn btn-info" value="关机" onclick=changeStatus("'+provinceId+'","'+cityId+'","'+areaId+'","'+areaId+'","'+schoolId+'","'+data.data[i].grade+'","'+data.data[i].classc+'","'+data.data[i].type+'","4")>' +
+                '</div>' +
+                '</div>' +
+
+                '<div class="device_sub_info">' +
+                '<p class="info">型号：'+data.data[i].model+'</p>' +
+                '<p class="info">处理器：'+data.data[i].cpu+'</p>' +
+                '<p class="info"> 内存：'+data.data[i].memory+' GB</p>' +
+                '<p class="info">硬盘：'+data.data[i].disk+' </p>' +
+                '<p class="info">显卡：'+data.data[i].displaycard+'</p>' +
+                '<p class="info">购买时间：'+data.data[i].buytime+'</p>' +
+                '</div>' +
+
+                '<div class="device_chart">' +
+                '<div class="chart_1_13" style="width: 260px;height: 90px;overflow: hidden;float: left; margin-left: 20px;"></div>' +
+                '<div class="chart_2_13" style="width: 260px;height: 90px;overflow: hidden;float: left; margin-left: 24px;"></div>' +
+                '<div class="chart_3_13" style="width: 260px;height: 90px;overflow: hidden;float: left; margin-left: 20px;"></div>' +
+                '<div class="chart_4_13" style="width: 260px;height: 90px;overflow: hidden;float: left; margin-left: 24px;"></div>' +
+                '</div>' +
+                '</div>';
+            }else{
+                html += '<div class="device_line" style="border-top: 1px solid #ddd; clear: both;">' +
+                '<div class="device_main clearfix" style="height: 90px;">' +
+                '<div class="device_icon_box pull-left">' +
+                '<img src="'+picSrc+'" alt=""/>' +
+                '</div>' +
+                '<div class="pull-left device_info_box">' +
+                '<p class="info"><a href="#">'+deviceName+' </a></p>' +
+                '<p class="info">运行状态：故障</p>' +
+                '<p class="info">白板类型： 电磁</p>' +
+                '</div>' +
+                '</div>' +
+                '<div class="device_sub_info" style="width: 800px; height: 90px; border-right: none;">' +
+                deviceInfo +
+                '</div>' +
+                '</div>' +
+                '</div>';
+                if((i)%3 == 0) html += '</div>';
+            };
+
+        };
+        $('.k_content').html(html);
+    };
+
+    getRealJson(provinceId,cityId,areaId,areaId,schoolId);
+    jsonTimer = setInterval(function(){
+        getRealJson(provinceId,cityId,areaId,areaId,schoolId);
+    },5000);
+    function getRealJson(province,city,area,county,school){
+        $.ajax({
+            url:'device/getdevices',
+            type:'post',
+            contentType: 'application/json',
+            data:'{"province":"'+province+'","city":"'+city+'","area":"'+area+'","county":"'+county+'","school":"'+school+'"}',
+            success:function(data){
+                jsonArr = [];
+                for(var i=data.data.length-2; i>=0; i--){
+                    if((i+1)%3 == 0){
+                        json = {"cpustatstr":data.data[i].realcpu,"diskstatstr":data.data[i].realdisk,"netstatstr":data.data[i].realnetwork,"ramstatstr":data.data[i].realprocessor};
+                        jsonArr.push(json);
+                    };
+                };
+
+            },
+            error:function(data){
+                //alert('失败');
+            }
+        });
+    };
+</script>
+
 
 <script type="text/javascript">
     $("#add_device_modal").on("show",function(){
@@ -300,409 +622,389 @@
 </script>
 
 <script>
-    $(function () {
-        for(var i=0; i<$('.chart_1_13').length; i++){
-            $('.chart_1_13').eq(i).highcharts({
-                        chart: {
-                            type: 'gauge',
-                            plotBorderWidth: 1,
-                            plotBackgroundColor: "#fff",
-                            plotBackgroundImage: null,
-                            height: 90
-                        },
-
-                        title: {
-                            floating: true,
-                            align: 'right',
-                            text: 'CPU使用率(%)'
-                        },
-
-                        pane: [{
-                            startAngle: -45,
-                            endAngle: 45,
-                            background: null,
-                            center: ["50%","210%"],
-                            size: 200
-                        }],
-
-                        yAxis: [{
-                            min: 0,
-                            max: 100,
-                            minorTickPosition: 'outside',
-                            tickPosition: 'outside',
-                            labels: {
-                                rotation: 'auto',
-                                distance: 20
-                            },
-                            plotBands: [{
-                                from: 0,
-                                to: 6,
-                                color: 'transparent',
-                                innerRadius: '100%',
-                                outerRadius: '105%'
-                            }],
-                            pane: 0,
-                            title: {
-                                text: '',
-                                y: -40
-                            }
-                        }],
-
-                        plotOptions: {
-                            gauge: {
-                                dataLabels: {
-                                    enabled: false
+    showCharts();
+    function showCharts(){
+        $(function () {
+            for(var i=0; i<$('.chart_1_13').length; i++){
+                (function(index){
+                    $('.chart_1_13').eq(i).highcharts({
+                                chart: {
+                                    type: 'gauge',
+                                    plotBorderWidth: 1,
+                                    plotBackgroundColor: "#fff",
+                                    plotBackgroundImage: null,
+                                    height: 90
                                 },
-                                dial: {
-                                    radius: '100%'
-                                }
-                            }
-                        },
-                        series: [{
-                            name:'CPU使用率(%)',
-                            data: [80],
-                            yAxis: 0
-                        }]
-                    },
-                    function(chart) {
-                        clearInterval(this.timer);
-                        this.timer = setInterval(function() {
-                            var left = chart.series[0].points[0];
-                            var json = {"cpustatstr":(Math.random()*100).toFixed(1),"diskstatstr":(Math.random()*100).toFixed(1),"netstatstr":(Math.random()*0.1).toFixed(3),"ramstatstr":(Math.random()*100).toFixed(1)};
-//                        $.getJSON("equnature_getBanPCCPU1.action",
-//                                { equid: "13"},
-//                                function(json){
-                            var infor=json.cpustatstr;
-                            if(null!=infor&&""!=infor){
-                                $("#cpuinfor").html("处理器："+infor);
-                            }
 
-
-//                                });
-
-//                        $.getJSON("equnature_getBanPCCPU.action",
-//                                { equid: "13"},
-//                                function(json){
-                            var rate=json.cpustatstr;
-                            var ratestr=rate+"%";
-                            if(null!=rate&&""!=rate){
-                                left.update(+Highcharts.numberFormat(rate, 2), true);
-                            }
-
-
-//                                });
-                            chart.redraw();
-
-                        },5*1000);
-
-                    });
-        };
-    });
-    $(function () {
-        for(var i=0; i<$('.chart_2_13').length; i++){
-            $('.chart_2_13').eq(i).highcharts({
-
-                        chart: {
-                            type: 'gauge',
-                            plotBorderWidth: 1,
-                            plotBackgroundColor: "#fff",
-                            plotBackgroundImage: null,
-                            height: 90
-                        },
-
-                        title: {
-                            floating: true,
-                            align: 'right',
-                            text: '内存使用率(%)'
-                        },
-
-                        pane: [{
-                            startAngle: -45,
-                            endAngle: 45,
-                            background: null,
-                            center: ["50%","210%"],
-                            size: 200
-                        }],
-
-                        yAxis: [{
-                            min: 0,
-                            max: 100,
-                            minorTickPosition: 'outside',
-                            tickPosition: 'outside',
-                            labels: {
-                                rotation: 'auto',
-                                distance: 20
-                            },
-                            plotBands: [{
-                                from: 0,
-                                to: 6,
-                                color: 'transparent',
-                                innerRadius: '100%',
-                                outerRadius: '105%'
-                            }],
-                            pane: 0,
-                            title: {
-                                text: '',
-                                y: -40
-                            }
-                        }],
-
-                        plotOptions: {
-                            gauge: {
-                                dataLabels: {
-                                    enabled: false
+                                title: {
+                                    floating: true,
+                                    align: 'right',
+                                    text: 'CPU使用率(%)'
                                 },
-                                dial: {
-                                    radius: '100%'
-                                }
-                            }
-                        },
-                        series: [{
-                            name:'内存使用率(%)',
-                            data: [60],
-                            yAxis: 0
-                        }]
-                    },
-                    // Let the music play
-                    function(chart) {
-                        clearInterval(this.timer);
-                        this.timer = setInterval(function() {
-                            var left = chart.series[0].points[0];
-                            var json = {"cpustatstr":(Math.random()*100).toFixed(1),"diskstatstr":(Math.random()*100).toFixed(1),"netstatstr":(Math.random()*0.1).toFixed(3),"ramstatstr":(Math.random()*100).toFixed(1)};
-//                        $.getJSON("equnature_getBanPCRAM1.action",
-//                                { equid: "13"},
-//                                function(json){
-                            var rate=json.ramstatstr;
-                            if(null!=rate&&""!=rate){
-                                $("#raminfor").html("内存信息："+rate);
-                            }
 
+                                pane: [{
+                                    startAngle: -45,
+                                    endAngle: 45,
+                                    background: null,
+                                    center: ["50%","210%"],
+                                    size: 200
+                                }],
 
-//                                });
-
-//                        $.getJSON("equnature_getBanPCRAM.action",
-//                                { equid: "13"},
-//                                function(json){
-                            var rate=json.ramstatstr;
-                            var ratestr=rate+"%";
-
-                            if(null!=rate&&""!=rate){
-                                left.update(+Highcharts.numberFormat(rate, 2), true);
-                            }
-
-//                                });
-                            chart.redraw();
-
-                        },5*1000);
-
-                    });
-        }
-
-    });
-    $(function () {
-        for(var i=0; i<$('.chart_3_13').length; i++){
-            $('.chart_3_13').eq(i).highcharts({
-                chart: {
-                    plotBackgroundColor: null,
-                    borderWidth: 1,
-                    plotBorderWidth: 0,
-                    plotShadow: false,
-                    height:90,
-                    borderRadius:0,
-                    borderColor: '#ccc',
-                    width: 242,
-                    spacing:[0,5,0,0],
-                    style:{
-                        marginLeft: '10px'
-                    },
-                    events: {
-                        load: function() {
-
-                            var series = this.series[0];
-
-                            clearInterval(this.timer);
-                            this.timer = setInterval(function() {
-                                var alreadyData = (Math.random()*50).toFixed(0);
-                                var json = {"cpustatstr":(Math.random()*100).toFixed(1),"diskstatstr":""+alreadyData+","+(100-alreadyData)+"","netstatstr":(Math.random()*0.1).toFixed(3),"ramstatstr":(Math.random()*100).toFixed(1)};
-//                            $.getJSON("equnature_getBanPCDisk.action",
-//                                    { equid: "13"},
-//                                    function(json){
-                                if(null!=json.diskstatstr){
-                                    var datas=json.diskstatstr.split(",");
-                                    var data=[];
-                                    if(null!=datas){
-                                        if(undefined!=datas[1]&&null!=datas[1]&&null!=datas[0]){
-                                            $("#pcdev").html("硬盘容量：已经使用的磁盘空间  "+datas[0]+" GB<br>　　　　　未使用的磁盘空间"+datas[1]+" GB");
-
-                                            data.push(['已使用', +datas[0]]);
-                                            data.push(['未使用', +datas[1]]);
-                                            series.setData(data);
-                                        }
-
+                                yAxis: [{
+                                    min: 0,
+                                    max: 100,
+                                    minorTickPosition: 'outside',
+                                    tickPosition: 'outside',
+                                    labels: {
+                                        rotation: 'auto',
+                                        distance: 20
+                                    },
+                                    plotBands: [{
+                                        from: 0,
+                                        to: 6,
+                                        color: 'transparent',
+                                        innerRadius: '100%',
+                                        outerRadius: '105%'
+                                    }],
+                                    pane: 0,
+                                    title: {
+                                        text: '',
+                                        y: -40
                                     }
+                                }],
 
-
-
-                                }
-
-//                                    });
-
-                            }, 3000);
-                        }
-                    }
-                },
-                title: {
-                    floating: true,
-                    align: 'right',
-                    text: "磁盘使用情况"
-                },
-                tooltip: {
-                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-                },
-                plotOptions: {
-                    pie: {
-                        allowPointSelect: true,
-                        cursor: 'pointer',
-                        dataLabels: {
-                            enabled: false,
-                            color: '#000000',
-                            connectorColor: '#000000',
-                            format: '<b>{point.name}</b>: {point.percentage:.1f} %'
-                        },
-                        center: ['50%', '50%'],
-                        showInLegend: true
-                    }
-
-                },
-                legend: {
-                    align: 'right',
-                    verticalAlign: 'middle',
-                    layout: 'vertical',
-                    radius: 0,
-                    borderWidth:0
-
-                },
-                series: [{
-                    type: 'pie',
-                    name: '磁盘使用情况',
-                    data: [['已使用', 40],['未使用', 60]]
-                }]
-            });
-        };
-
-    });
-    $(function () {
-        $(document).ready(function() {
-            Highcharts.setOptions({
-                global: {
-                    useUTC: false
-                }
-            });
-
-            var chart;
-            for(var i=0; i<$('.chart_4_13').length; i++){
-                $('.chart_4_13').eq(i).highcharts({
-                    chart: {
-                        plotBorderWidth: 1,
-                        type: 'spline',
-                        animation: Highcharts.svg,
-                        marginRight: 10,
-                        events: {
-                            load: function() {
-
-                                var series = this.series[0];
-
+                                plotOptions: {
+                                    gauge: {
+                                        dataLabels: {
+                                            enabled: false
+                                        },
+                                        dial: {
+                                            radius: '100%'
+                                        }
+                                    }
+                                },
+                                series: [{
+                                    name:'CPU使用率(%)',
+                                    data: [80],
+                                    yAxis: 0
+                                }]
+                            },
+                            function(chart) {
                                 clearInterval(this.timer);
                                 this.timer = setInterval(function() {
-                                    var json = {"cpustatstr":null,"diskstatstr":"","netstatstr":(Math.random()*0.1).toFixed(3),"ramstatstr":null};
-//                                $.getJSON("equnature_getBanPCNET1.action",
-//                                        { equid: "13"},
-//                                        function(json){
-                                    if(null!=json.netstatstr){
-                                        var datas=json.netstatstr;
-                                        if(null!=datas&&""!=datas){
-                                            $("#netinfor").html("网络："+datas);
+                                    var left = chart.series[0].points[0];
+//                            var json = {"cpustatstr":(Math.random()*100).toFixed(1),"diskstatstr":(Math.random()*100).toFixed(1),"netstatstr":(Math.random()*0.1).toFixed(3),"ramstatstr":(Math.random()*100).toFixed(1)};
+
+                                    var infor=jsonArr[index].cpustatstr;
+                                    if(null!=infor&&""!=infor){
+                                        $("#cpuinfor").html("处理器："+infor);
+                                    }
+
+
+                                    var rate=json.cpustatstr;
+                                    var ratestr=rate+"%";
+                                    if(null!=rate&&""!=rate){
+                                        left.update(+Highcharts.numberFormat(rate, 2), true);
+                                    }
+
+                                    chart.redraw();
+
+                                },5000);
+
+                            })
+                })(i);
+            };
+        });
+        $(function () {
+            for(var i=0; i<$('.chart_2_13').length; i++){
+                (function(index){
+                    $('.chart_2_13').eq(i).highcharts({
+
+                                chart: {
+                                    type: 'gauge',
+                                    plotBorderWidth: 1,
+                                    plotBackgroundColor: "#fff",
+                                    plotBackgroundImage: null,
+                                    height: 90
+                                },
+
+                                title: {
+                                    floating: true,
+                                    align: 'right',
+                                    text: '内存使用率(%)'
+                                },
+
+                                pane: [{
+                                    startAngle: -45,
+                                    endAngle: 45,
+                                    background: null,
+                                    center: ["50%","210%"],
+                                    size: 200
+                                }],
+
+                                yAxis: [{
+                                    min: 0,
+                                    max: 100,
+                                    minorTickPosition: 'outside',
+                                    tickPosition: 'outside',
+                                    labels: {
+                                        rotation: 'auto',
+                                        distance: 20
+                                    },
+                                    plotBands: [{
+                                        from: 0,
+                                        to: 6,
+                                        color: 'transparent',
+                                        innerRadius: '100%',
+                                        outerRadius: '105%'
+                                    }],
+                                    pane: 0,
+                                    title: {
+                                        text: '',
+                                        y: -40
+                                    }
+                                }],
+
+                                plotOptions: {
+                                    gauge: {
+                                        dataLabels: {
+                                            enabled: false
+                                        },
+                                        dial: {
+                                            radius: '100%'
+                                        }
+                                    }
+                                },
+                                series: [{
+                                    name:'内存使用率(%)',
+                                    data: [60],
+                                    yAxis: 0
+                                }]
+                            },
+                            // Let the music play
+                            function(chart) {
+                                clearInterval(this.timer);
+                                this.timer = setInterval(function() {
+                                    var left = chart.series[0].points[0];
+//                            var json = {"cpustatstr":(Math.random()*100).toFixed(1),"diskstatstr":(Math.random()*100).toFixed(1),"netstatstr":(Math.random()*0.1).toFixed(3),"ramstatstr":(Math.random()*100).toFixed(1)};
+                                    var rate=jsonArr[index].ramstatstr;
+                                    if(null!=rate&&""!=rate){
+                                        $("#raminfor").html("内存信息："+rate);
+                                    }
+
+
+                                    var rate=json.ramstatstr;
+                                    var ratestr=rate+"%";
+
+                                    if(null!=rate&&""!=rate){
+                                        left.update(+Highcharts.numberFormat(rate, 2), true);
+                                    }
+
+                                    chart.redraw();
+
+                                },5000);
+
+                            });
+                })(i)
+            }
+
+        });
+        $(function () {
+            for(var i=0; i<$('.chart_3_13').length; i++){
+                (function(index){
+                    $('.chart_3_13').eq(i).highcharts({
+                        chart: {
+                            plotBackgroundColor: null,
+                            borderWidth: 1,
+                            plotBorderWidth: 0,
+                            plotShadow: false,
+                            height:90,
+                            borderRadius:0,
+                            borderColor: '#ccc',
+                            width: 242,
+                            spacing:[0,5,0,0],
+                            style:{
+                                marginLeft: '10px'
+                            },
+                            events: {
+                                load: function() {
+
+                                    var series = this.series[0];
+
+                                    clearInterval(this.timer);
+                                    this.timer = setInterval(function() {
+                                        var alreadyData = (Math.random()*50).toFixed(0);
+//                                var json = {"cpustatstr":(Math.random()*100).toFixed(1),"diskstatstr":""+alreadyData+","+(100-alreadyData)+"","netstatstr":(Math.random()*0.1).toFixed(3),"ramstatstr":(Math.random()*100).toFixed(1)};
+
+                                        if(null!=jsonArr[index].diskstatstr){
+                                            var datas=jsonArr[index].diskstatstr.split(",");
+                                            var data=[];
+                                            if(null!=datas){
+                                                if(undefined!=datas[1]&&null!=datas[1]&&null!=datas[0]){
+                                                    $("#pcdev").html("硬盘容量：已经使用的磁盘空间  "+datas[0]+" GB<br>　　　　　未使用的磁盘空间"+datas[1]+" GB");
+
+                                                    data.push(['已使用', +datas[0]]);
+                                                    data.push(['未使用', +datas[1]]);
+                                                    series.setData(data);
+                                                }
+
+                                            }
+
+
+
                                         }
 
-                                    }
-//                                        });
-//
-//
-//                                $.getJSON("equnature_getBanPCNET.action",
-//                                        { equid: "13"},
-//                                        function(json){
-                                    if(null!=json.netstatstr){
 
-                                        //var datas=json.netstatstr.split(",");
-                                        var time1=(new Date()).getTime();
-                                        var data1=json.netstatstr;
-                                        //alert(time1 + ":" + data1);
-                                        series.addPoint([+time1, +data1], true, true);
-                                    }
-//                                        });
-
-
-                                }, 3000);
+                                    }, 5000);
+                                }
                             }
                         },
-                        height:100
-                    },
-                    title: {
-                        floating: true,
-                        align: 'right',
-                        text: '网络使用率(%)'
-                    },
-                    xAxis: {
-                        type: 'datetime'
-                    },
-                    yAxis: {
-                        //min:0,
-                        //max:1,
                         title: {
-                            text: ''
+                            floating: true,
+                            align: 'right',
+                            text: "磁盘使用情况"
                         },
-                        plotLines: [{
-                            value: 0,
-                            width: 1,
-                            color: '#808080'
-                        }]
-                    },
-                    tooltip: {
-                        formatter: function() {
-                            return '<b>'+ this.series.name +'</b><br/>'+
-                                    Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) +'<br/>'+
-                                    Highcharts.numberFormat(this.y, 2);
-                        }
-                    },
-                    legend: {
-                        enabled: false
-                    },
-                    exporting: {
-                        enabled: false
-                    },
-                    series: [{
-                        name: "网络使用率(%)",
-                        data:(function() {
-                            // generate an array of random data
-                            var data = [],
-                                    time = (new Date()).getTime(),
-                                    i;
-
-                            for (i = -19; i <= 0; i++) {
-                                data.push({
-                                    x: time + i * 3000,
-                                    y: Math.random()*0.1
-                                });
+                        tooltip: {
+                            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                        },
+                        plotOptions: {
+                            pie: {
+                                allowPointSelect: true,
+                                cursor: 'pointer',
+                                dataLabels: {
+                                    enabled: false,
+                                    color: '#000000',
+                                    connectorColor: '#000000',
+                                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                                },
+                                center: ['50%', '50%'],
+                                showInLegend: true
                             }
-                            return data;
-                        })()}]
-                });
+
+                        },
+                        legend: {
+                            align: 'right',
+                            verticalAlign: 'middle',
+                            layout: 'vertical',
+                            radius: 0,
+                            borderWidth:0
+
+                        },
+                        series: [{
+                            type: 'pie',
+                            name: '磁盘使用情况',
+                            data: [['已使用', 40],['未使用', 60]]
+                        }]
+                    });
+                })(i)
             };
 
         });
-    });
+        $(function () {
+            $(document).ready(function() {
+                Highcharts.setOptions({
+                    global: {
+                        useUTC: false
+                    }
+                });
+
+                var chart;
+                for(var i=0; i<$('.chart_4_13').length; i++){
+                    (function(index){
+                        $('.chart_4_13').eq(i).highcharts({
+                            chart: {
+                                plotBorderWidth: 1,
+                                type: 'spline',
+                                animation: Highcharts.svg,
+                                marginRight: 10,
+                                events: {
+                                    load: function() {
+
+                                        var series = this.series[0];
+
+                                        clearInterval(this.timer);
+                                        this.timer = setInterval(function() {
+//                                    var json = {"cpustatstr":null,"diskstatstr":"","netstatstr":(Math.random()*0.1).toFixed(3),"ramstatstr":null};
+
+                                            if(null!=jsonArr[index].netstatstr){
+                                                var datas=jsonArr[index].netstatstr;
+                                                if(null!=datas&&""!=datas){
+                                                    $("#netinfor").html("网络："+datas);
+                                                }
+
+                                            }
+
+                                            if(null!=json.netstatstr){
+
+                                                //var datas=json.netstatstr.split(",");
+                                                var time1=(new Date()).getTime();
+                                                var data1=json.netstatstr;
+                                                //alert(time1 + ":" + data1);
+                                                series.addPoint([+time1, +data1], true, true);
+                                            }
 
 
+                                        }, 5000);
+                                    }
+                                },
+                                height:100
+                            },
+                            title: {
+                                floating: true,
+                                align: 'right',
+                                text: '网络使用率(%)'
+                            },
+                            xAxis: {
+                                type: 'datetime'
+                            },
+                            yAxis: {
+                                //min:0,
+                                //max:1,
+                                title: {
+                                    text: ''
+                                },
+                                plotLines: [{
+                                    value: 0,
+                                    width: 1,
+                                    color: '#808080'
+                                }]
+                            },
+                            tooltip: {
+                                formatter: function() {
+                                    return '<b>'+ this.series.name +'</b><br/>'+
+                                            Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) +'<br/>'+
+                                            Highcharts.numberFormat(this.y, 2);
+                                }
+                            },
+                            legend: {
+                                enabled: false
+                            },
+                            exporting: {
+                                enabled: false
+                            },
+                            series: [{
+                                name: "网络使用率(%)",
+                                data:(function() {
+                                    // generate an array of random data
+                                    var data = [],
+                                            time = (new Date()).getTime(),
+                                            i;
+
+                                    for (i = -19; i <= 0; i++) {
+                                        data.push({
+                                            x: time + i * 3000,
+                                            y: Math.random()*0.1
+                                        });
+                                    }
+                                    return data;
+                                })()}]
+                        });
+                    })(i)
+                };
+
+            });
+        });
+    };
 
 
 
@@ -764,8 +1066,6 @@
         $("#selectedTimeArea").text($("#selectedTimeAreaOptions").children().eq(0).text());
         $("#selectedTimeAreaOptions").children().eq(0).removeClass().addClass("option active");
 
-
-
     });
 
 </script>
@@ -773,5 +1073,5 @@
 
 
 
-<body>ox</body>
+<body></body>
 </html>
