@@ -9,3 +9,9 @@ http://182.48.115.253:70/TSB_ISCHOOL_SMS_SERVER/dic/getlowerareas
 t_s_school
 
 select t_d_area.C_CODE,t_d_area.C_NAME,t_d_area.C_ALLNAME,t_s_school.C_NAME from t_d_area LEFT JOIN t_s_school ON t_d_area.C_CODE = t_s_school.C_AREAID where t_d_area.c_allname like '%ºþ±±Ê¡%'
+
+C_SID,C_AREAID,C_AREANAME,C_CITYID,C_CITYNAME,C_NAME
+
+
+
+C:\Users\Wilson\Desktop>pscp.exe F:\sunchi\github\showChart\webPage\index.html root@10.0.10.21:/usr/local/tomcat-ischool-qingguo/webapps/TSB_ISCHOOL_STORE_SERVER/

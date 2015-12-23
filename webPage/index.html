@@ -7,6 +7,9 @@
     <link href="css/bootstrap.css" rel="stylesheet" media="screen">
     <link href="css/bootstrap-responsive.css" rel="stylesheet" media="screen">
     <link href="css/style.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" type="text/css" href="css/reset.css">
+    <link rel="stylesheet" type="text/css" href="css/function.css">
+    <link rel="stylesheet" type="text/css" href="css/common.css">
 
 </head>
 <body>
@@ -216,6 +219,151 @@
         color: #7eb909;
     }
 </style>
+<div class="m-nav-wrap  f-cb">
+    <div class="m-nav-c">
+        <div class="f-fl  js-nav-c">
+            <ul>
+                <li  class="current"><a class="nav-index" href="http://www.fiberhomeedu.com/Home/Index/newindex">首页</a></li>
+                <li><a class="nav-space" href="http://www.fiberhomeedu.com/Home/Space/index">空间</a></li>
+                <li><a class="nav-action" href="http://www.fiberhomeedu.com/Home/Index/event">活动</a></li>
+                <li><a class="nav-res" href="http://221.232.132.146/jspui/topFoot/index.jsp">资源</a></li>
+                <li><a class="nav-forum" href="http://bbs.fiberhomeedu.com/forum.php">论坛</a></li>
+                <li><a class="nav-app" href="http://www.fiberhomeedu.com/Home/AppStore/index">应用</a></li>
+                <li><a class="nav-area" href="http://www.fiberhomeedu.com/Home/Index/getarea">区域</a></li>
+            </ul>
+        </div>
+        <div class="f-fr">
+            <div class="homeico-d">
+
+				<span class="homeico-u"><i></i><a href="javascript:;" title="{$userinfo['lgnname']}"> </a><i class="homei-i1"></i>
+					<em></em>
+					<ul>
+                        <li><a href="/Space/Childrenlink/index">我的空间</a></li>
+                        <li><a href="/Space/My/index">我的空间</a></li>
+                        <li><a href="<php>echo RESOURCE_ADDR</php>/jspui/mydspace">我的资源</a></li>
+                        <li><a href="/Space/My/centerindex">管理中心</a></li>
+                        <li><a href="/Space/Appstore/developerAppList">应用管理</a></li>
+                    </ul>
+				</span>
+
+				<span class="homeico-e"><i></i>
+					<em></em>
+					<ul>
+                        <li><a href="/Space/Notice/index">系统消息</a></li>
+                        <li><a href="/Space/My/notice">通知公告</a></li>
+                    </ul>
+				</span>
+				<span class="homeico-i"><i></i>
+					<em></em>
+					<ul>
+                        <li><a href="/">i币：2</a></li>
+                        <li><a href="/">积分：3</a></li>
+
+                        <li><a href="/">学分：4</a></li>
+
+
+                    </ul>
+				</span>
+				<span class="homeico-s"><i></i>
+					<em></em>
+					<ul>
+                        <li><a href="/Space/Personalset/info">个人设置</a></li>
+                        <li><a href="/Space/Personalset/safe">账号安全</a></li>
+                        <li><a href="/Home/Home/listpage/id/11eaf354f2354e91828cb0a06049e7b1/homeid/<php>echo SCHOOLID;</php>">帮助中心</a></li>
+                        <li style="border-top:1px solid #ddd;"><a href="/Home/Index/logout">退出登录</a></li>
+                    </ul>
+				</span>
+
+                <p style="text-align:right">欢迎您，请&nbsp;<a href=" "><font >登录</font></a> 或 <a href="/Home/Register/index"> <font  >注册</font></a></p>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="m-headWrap">
+    <div class="m-logo  f-fl">
+        <h1><a href="/">湖北省教育资源公共服务平台</a></h1>
+        <h2>WWW.FIBERHOMEEDU.COM</h2>
+    </div>
+    <div class="m-search  f-fr" style="width:400px;padding-top:20px;">
+
+        <input type="hidden" id="searchType" value="1">
+        <input type="hidden" id="isThisHtml" value="0">
+        <input class="u-txt" type="text" placeholder="" id="SearchText" style="width:320px;" value="">
+        <input class="u-btn  f-csp" type="button" value="搜索" onclick="search();">
+        <div class="searchSub">
+            <!-- 选定当前添加class selected -->
+            <span><a class="selected" href="javascript:void(0);" scope='1'>文章</a></span>
+            <span><a href="javascript:void(0);" scope='2'>资讯</a></span>
+            <span><a href="javascript:void(0);" scope='5'>资源</a></span>
+            <span><a href="javascript:void(0);" scope='7'>应用</a></span>
+
+        </div>
+        <script type="text/javascript">
+            function search(){
+                var searchtext = $("#SearchText").val();
+                var searchType = $("#searchType").val() * 1;
+                var isThisHtml = $("#isThisHtml").val() * 1;
+                switch(searchType){
+                    case 1:
+                        if(isThisHtml == 1){
+                            window.location.href = 'http://www.fiberhomeedu.com/Home/Search/article/sub/'+searchtext;
+                        }else{
+                            window.open('http://www.fiberhomeedu.com/Home/Search/article/sub/'+searchtext);
+                        }
+                        break;
+                    case 2:
+                        if(isThisHtml == 1){
+                            window.location.href = 'http://www.fiberhomeedu.com/Home/Search/information/sub/'+searchtext;
+                        }else{
+                            window.open('http://www.fiberhomeedu.com/Home/Search/information/sub/'+searchtext, '_blank');
+                        }
+                        break;
+                    case 3:
+                        if(isThisHtml == 1){
+                            window.location.href = 'http://www.fiberhomeedu.com/Home/Search/schoolOrOrganization/type/school/sub/'+searchtext;
+                        }else{
+                            window.open('http://www.fiberhomeedu.com/Home/Search/schoolOrOrganization/type/school/sub/'+searchtext, '_blank');
+                        }
+                        break;
+                    case 4:
+                        if(isThisHtml == 1){
+                            window.location.href = 'http://www.fiberhomeedu.com/Home/Search/schoolOrOrganization/type/org/sub/'+searchtext;
+                        }else{
+                            window.open('http://www.fiberhomeedu.com/Home/Search/schoolOrOrganization/type/org/sub/'+searchtext, '_blank');
+                        }
+                        break;
+                    case 5:
+                        window.open('http://221.232.132.146/jspui/home/searchlist.jsp?query='+searchtext, '_blank');
+                        break;
+                    case 6:
+                        if(isThisHtml == 1){
+                            window.location.href = 'http://www.fiberhomeedu.com/Home/Search/user/sub/'+searchtext;
+                        }else{
+                            window.open('http://www.fiberhomeedu.com/Home/Search/user/sub/'+searchtext, '_blank');
+                        }
+                        break;
+                    case 7:
+                        if(isThisHtml == 1){
+                            window.location.href = 'http://www.fiberhomeedu.com/Home/Search/app/sub/'+searchtext;
+                        }else{
+                            window.open('http://www.fiberhomeedu.com/Home/Search/app/sub/'+searchtext, '_blank');
+                        }
+                        break;
+                    default:
+                        if(isThisHtml == 1){
+                            window.location.href = 'http://www.fiberhomeedu.com/Home/Search/errorDefault/sub/'+searchtext;
+                        }else{
+                            window.open('http://www.fiberhomeedu.com/Home/Search/errorDefault/sub/'+searchtext, '_blank');
+                        }
+                        break;
+                }
+            }
+        </script>
+    </div>
+</div>
+
 <div class="container main clearfix">
 
     <div class="content">
@@ -344,6 +492,18 @@
 
 </div>
 
+
+<div class="l-copyright">
+
+    <a href="/Home/Home/page/id/cf413a8e0a6e4660aa9d2eb46da09de1/homeid/1101000003" target="_blank">关于我们</a>
+
+    <a href="/Home/Home/listpage/id/11eaf354f2354e91828cb0a06049e7b1/homeid/1101000003" target="_blank">帮助中心</a>
+    <p>湖北省教育厅&nbsp&nbsp主办&nbsp&nbsp湖北省教育信息化发展中心&nbsp&nbsp承办</p>
+
+
+    <p>地址：湖北省武汉市武昌区洪山路2号 邮编：430071</p>
+
+</div>
 <!--多级联动-->
 <script>
     var provinceId = '420000';

@@ -1,0 +1,91 @@
+
+/*header*/
+.clear{zoom:1;}
+.clear:after{content: '';display: block;clear: both;}
+.l-wrap {font-size:14px; line-height:1.5; width:980px; margin:0 auto; color:#333;}
+.m-nav-wrap {font-size:14px; line-height:1.5; height:41px;background-color:#006699;}
+.m-nav-wrap a {display:inline-block; margin-right:16px; padding-left:34px; font:14px/1.5 'Microsoft Yahei'; color:#fff;}
+.m-nav-c {width:980px; margin:0 auto;height: 41px;background:#006699;}
+.m-nav-c li {float:left; text-align:center; padding:10px 0;}
+.m-nav-c li.current {background-color:#004F75;}
+
+.m-info {padding:10px;}
+
+.m-info a {margin-right:0; padding-left:10px;}
+.m-info p,.m-info span,.m-info p a {color:#fff;}
+
+.nav-index {background:url(../images/navicon1.png) no-repeat 24% 40%;}
+.nav-space {background:url(../images/navicon2.png) no-repeat 24% 40%;}
+.nav-action {background:url(../images/navicon3.png) no-repeat 24% 40%;}
+.nav-res {background:url(../images/navicon4.png) no-repeat 24% 40%;}
+.nav-forum {background:url(../images/navicon5.png) no-repeat 24% 40%;}
+.nav-app {background:url(../images/navicon6.png) no-repeat 24% 40%;}
+.nav-area {background:url(../images/navicon7.png) no-repeat 24% 40%;}
+
+.m-logo {padding:26px 0 10px;float:left;}
+.m-logo h1 {font-weight:normal; font-size:24px; color:#333;}
+.m-logo h2 {font-size:16px; font-weight:normal; color:#999;}
+.m-search {padding-top:50px;float:right;}
+.u-txt {padding-left:10px; width:202px; height:30px; color:#999; border:1px solid #C1C1C1; vertical-align:top; background-color:#EEF6FB;vertical-align:middle; font-family:'Microsoft Yahei'; font-size:14px;}
+.u-btn {padding:4px 10px; border:none; font:18px 'Microsoft Yahei'; color:#fff; background-color:#006699;vertical-align:middle;}
+
+.m-headWrap {font-size:14px; line-height:1.5; width:980px; height:100px;margin:0 auto;}
+
+
+.m-headWrap {
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0 auto;
+    overflow: hidden;
+    width: 980px;
+    clear: both;
+}
+.searchSub {
+    height: 40px;
+}
+.searchSub span a {
+    color: #80796c;
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    text-align: center;
+    width: 45px;
+}
+.searchSub span a:hover {
+    color: #000;
+}
+.selected {
+    border-bottom: 2px solid #38f;
+    font-weight: 700;
+}
+
+/*footer*/
+.l-copyright {
+	clear:both;
+    padding:20px;
+    text-align:center;
+    color:#666;
+    line-height: 20px;
+    font-size: 14px;
+}
+
+/*20151210头部右侧菜单*/
+.homeico-d{ height: auto; font-size: 12px; color: #fff;}
+.homeico-d p{ line-height: 41px; font-size: 14px !important;}
+.homeico-d p a{ padding: 0px 5px; margin: 0px;}
+.homeico-d span{ position: relative; cursor: pointer; height: 20px; padding: 11px 6px 10px 6px; display: inline-block;float:left; margin-right: 0px !important;}.homeico-d span i{ background-image: url(../images/homeico.png); background-repeat: no-repeat; width: 20px; height: 20px; display: inline-block;}
+.homeico-u a{ margin: 0px !important; padding: 0px !important; line-height: 20px;display: inline-block;height: 20px;float:left;}
+.homeico-u i{ background-position: 0px 2px;float:left;}
+.homeico-u .homei-i1{ background-position: 6px -19px; padding-right: 10px; border-right:1px solid #fff;}
+.homeico-e i{ background-position: -77px 2px}
+.homeico-i i{ background-position: -24px 0px}
+.homeico-s i{ background-position: -49px 1px}
+.homeico-d span ul{ display:none; background: #fff; position:absolute; right: 0; top: 41px; border: 1px solid #ddd; padding: 2px; box-shadow: 0px 0px 6px #999; border-radius: 1px; z-index: 7887;}
+.homeico-d span em {display:none; position: absolute; top:35px; right: 8px; z-index: 7888; /*border-bottom: 8px solid #fff; border-left: 8px solid transparent; border-right: 8px solid transparent;*/ height: 7px; width: 13px;background: url(../images/homeico1.png) no-repeat; }
+.homeico-d .homeico-u em {display:none; position: absolute; top:35px; right: 17px; z-index: 7888; /*border-bottom: 8px solid #fff; border-left: 8px solid transparent; border-right: 8px solid transparent;*/ height: 7px; width: 13px;background: url(../images/homeico1.png) no-repeat; }
+.homeico-d span ul li{float:none; padding:0; text-align: center;}
+.homeico-d span ul li a{ font-size: 12px; color: #333; margin: 0px; padding: 0px; width: 94px; height: 30px; display:block; line-height: 30px;}
+.homeico-d span ul li a:hover{color: #004f75; background:#f2f2f5; }
+
