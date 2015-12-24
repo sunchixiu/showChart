@@ -548,39 +548,7 @@
         var duration = 1000;
     };
 
-    function getWordData(){
-        clearInterval(intTimer);
-        //获取张总word数据
-//        cordova.plugins.traceclass.stopRecord(
-//            function success(result){
-//                var data = result;
-                $('.nowTime').css({ "width":  "0" });
-                var s1 = data.result.overall;   //评分
-                $('.bc_big_read').removeClass("active");
-//                $('.nowTime').css({ "width":  "100%" });
-                var html = htmlA = htmlB = '';
-                html += '<table border="0" cellpadding="0" cellspacing="0">';
 
-                for (var i = 0; i < data.result.details.length; i++) {
-                    for (var j = 0; j < data.result.details[i].phone.length; j++) {
-                        htmlA += '<td>' + toword(data.result.details[i].phone[j].char) + '</td>';
-                        htmlB += '<td>' + data.result.details[i].phone[j].score + '</td>';
-                    }
-                }
-
-                html += '<tr><td>/</td>' + htmlA + '<td>/</td></tr>';
-                html += '<tr><td>&nbsp;</td>' + htmlB + '<td>&nbsp;</td></tr>';
-                html += '</table>';
-                html+="<div  style='padding-top:10px;'>发音得分：<span>"+s1+"分</span></div>"
-                $('.alertcontent').html(html);
-                $(".alertcontainer").show();
-//            }, function error(result){
-//
-//                $('.bc_big_read').removeClass("active");
-//                alert(result);
-//            }, ""
-//        );
-    };
     function backClear(){
         wordplayclear();
         wordplayclearSent();
@@ -750,7 +718,7 @@
             $('.alertcontent').html("");
             $(".alertcontainer").hide();
             //调用张总的函数
-            //cordovaSentAudio(url,textType,refText);
+            cordovaSentAudio(url,textType,refText);
 
 
 //          data = result;
@@ -917,26 +885,6 @@
             {}
 
         })
-    };
-
-    //发送声音，调用mic函数
-    function cordovaSentAudio(url,textType,refText){
-        cordova.plugins.traceclass.startRecord(
-                function success(result){
-
-                }, function error(result){
-
-                },
-                {
-                    audioUrl: url,
-                    serverParams: {
-                        coreType: textType,
-                        refText: refText,
-                        rank: 100,
-                        userId: "guest"
-                    }
-                }
-        );
     };
 
 
@@ -1130,7 +1078,7 @@
             var url = siteUrl+"services/audio.ashx?type=teacher&lang="+getVoinceName(guid)+"&guid=" + guid + "&speed="+speed+"&pitch=0";
 
             //调用张总的函数
-            //cordovaSentAudio(url,textType,refText);
+            cordovaSentAudio(url,textType,refText);
 
             data = result;
             clearInterval(intTimer);
@@ -1159,87 +1107,7 @@
             _obj.css('marginTop','0');
         };
     };
-    function getResultData(){
-        clearInterval(intTimer);
 
-        //获取张总sentence数据
-//        cordova.plugins.traceclass.stopRecord(
-//            function success(result){
-//                var data = result;
-                var s1 = data.result.overall;   //评分
-                var s2 = data.result.fluency.overall;
-                $('.bc_big_read_sent').removeClass("active");
-//                $('.nowTime').css({ "width":  "100%" });
-
-                $(".audioread").each(function () {
-                    $(this).removeClass("audioread");
-                });
-                var index=parseInt( $(".minread.active").parent().parent().attr("data-index"),10);
-                $(".minread.active").removeClass("active");
-                //                addlog(json.List[index].ID,"",s1);
-                var html ='';
-                var htmlread="";
-                htmlread= '<p class="alertread">';
-                for (var i = 0; i < data.result.details.length; i++) {
-                    if(data.result.details[i].score>=80)
-                    {
-                        htmlread += data.result.details[i].char+" "
-                    }
-                    else
-                    {
-                        htmlread +="<i title=\"读音打分"+data.result.details[i].score+"分\" onmouseover=\"scoreStatus=1\" onmouseout=\"scoreStatus=0\" onclick='showScore($(this),\"读音"+data.result.details[i].score+"分\");'>"+data.result.details[i].char+"</i> ";
-                    }
-
-                }
-                htmlread+="</p>";
-                html+="<div class=\"alertreadcontent\">"+htmlread+"</div>"
-                html+="<div>发音得分：<span>"+s1+"分</span></div>";
-                html+="<div>流利度得分：<span>"+s2+"分</span></div>";
-                if(globalstatus==2)
-                {
-                    readjhtml=readjhtml+htmlread;
-                    readscore=readscore+parseInt(s1,10);
-                    readfscore=readfscore+parseInt(s2,10);
-
-                }
-                else
-                {
-                    $(".alertcontainer").show();
-                    $('.alertcontent').html(html);
-                    $(".alertbtn_reread").show();
-                    $(".alertbtn_nextread").show();
-                    _minglobalstatus=0;
-                }
-
-                if(globalstatus==2)
-                {
-                    hidealertbtn();
-                    if($("dl").length-1==index)
-                    {
-                        $(".alertcontainer").show();
-                        readjhtml="<div class=\"alertreadcontent\">"+readjhtml+"</div>"
-                        readjhtml+="<div  style='padding-top:10px;'>总发音得分：<span>"+(readscore)/$("dl").length+"分</span></div>";
-                        readjhtml+="<div  style='padding-top:10px;'>总流利度得分：<span>"+(readfscore)/$("dl").length+"分</span></div>";
-                        $('.alertcontent').html(readjhtml);
-                        readjhtml="";
-                        readscore=0;
-                        readfscore=0;
-                        globalstatus=0;
-                        _minglobalstatus=0;
-                        $("dd").css("visibility","visible");
-                        $(".bc_big_read_sent").removeClass("active");
-                    }
-                    else
-                    {
-                        $("dl").eq(index+1).find(".minread").click();
-                    }
-                }
-//            }, function error(result){
-//                $('.bc_big_read').removeClass("active");
-//                alert(result);
-//            }, ""
-//        );
-    };
     function showScore(_this,score){
         $('#showscoreId').remove();
         $(document.body).append('<div id=showscoreId style="position:absolute; width:auto; height:auto; padding:0.2rem 0.3rem; border-radius:0.2rem; -webkit-border-radius:0.2rem; border:1px solid #666; background: #fff; font-size:0.6rem; z-index:9000; left:'+_this.offset().left+'px; top:'+_this.offset().top+'px; margin-top:-1.2rem;">'+score+'</div>');
@@ -1526,6 +1394,140 @@
 
 
     });
+</script>
+<!--释放张总获取数据程序-->
+<script>
+    function getWordData(){
+        clearInterval(intTimer);
+        //获取张总word数据
+//        cordova.plugins.traceclass.stopRecord(
+//            function success(result){
+//                var data = result;
+        $('.nowTime').css({ "width":  "0" });
+        var s1 = data.result.overall;   //评分
+        $('.bc_big_read').removeClass("active");
+        var html = htmlA = htmlB = '';
+        html += '<table border="0" cellpadding="0" cellspacing="0">';
+
+        for (var i = 0; i < data.result.details.length; i++) {
+            for (var j = 0; j < data.result.details[i].phone.length; j++) {
+                htmlA += '<td>' + toword(data.result.details[i].phone[j].char) + '</td>';
+                htmlB += '<td>' + data.result.details[i].phone[j].score + '</td>';
+            }
+        }
+
+        html += '<tr><td>/</td>' + htmlA + '<td>/</td></tr>';
+        html += '<tr><td>&nbsp;</td>' + htmlB + '<td>&nbsp;</td></tr>';
+        html += '</table>';
+        html+="<div  style='padding-top:10px;'>发音得分：<span>"+s1+"分</span></div>"
+        $('.alertcontent').html(html);
+        $(".alertcontainer").show();
+//            }, function error(result){
+//
+//                $('.bc_big_read').removeClass("active");
+//                alert(result);
+//            }, ""
+//        );
+    };
+    function getResultData(){
+        clearInterval(intTimer);
+
+        //获取张总sentence数据
+//        cordova.plugins.traceclass.stopRecord(
+//            function success(result){
+//                var data = result;
+        var s1 = data.result.overall;   //评分
+        var s2 = data.result.fluency.overall;
+        $('.bc_big_read_sent').removeClass("active");
+
+        $(".audioread").each(function () {
+            $(this).removeClass("audioread");
+        });
+        var index=parseInt( $(".minread.active").parent().parent().attr("data-index"),10);
+        $(".minread.active").removeClass("active");
+        //                addlog(json.List[index].ID,"",s1);
+        var html ='';
+        var htmlread="";
+        htmlread= '<p class="alertread">';
+        for (var i = 0; i < data.result.details.length; i++) {
+            if(data.result.details[i].score>=80)
+            {
+                htmlread += data.result.details[i].char+" "
+            }
+            else
+            {
+                htmlread +="<i title=\"读音打分"+data.result.details[i].score+"分\" onmouseover=\"scoreStatus=1\" onmouseout=\"scoreStatus=0\" onclick='showScore($(this),\"读音"+data.result.details[i].score+"分\");'>"+data.result.details[i].char+"</i> ";
+            }
+
+        }
+        htmlread+="</p>";
+        html+="<div class=\"alertreadcontent\">"+htmlread+"</div>"
+        html+="<div>发音得分：<span>"+s1+"分</span></div>";
+        html+="<div>流利度得分：<span>"+s2+"分</span></div>";
+        if(globalstatus==2)
+        {
+            readjhtml=readjhtml+htmlread;
+            readscore=readscore+parseInt(s1,10);
+            readfscore=readfscore+parseInt(s2,10);
+
+        }
+        else
+        {
+            $(".alertcontainer").show();
+            $('.alertcontent').html(html);
+            $(".alertbtn_reread").show();
+            $(".alertbtn_nextread").show();
+            _minglobalstatus=0;
+        }
+
+        if(globalstatus==2)
+        {
+            hidealertbtn();
+            if($("dl").length-1==index)
+            {
+                $(".alertcontainer").show();
+                readjhtml="<div class=\"alertreadcontent\">"+readjhtml+"</div>"
+                readjhtml+="<div  style='padding-top:10px;'>总发音得分：<span>"+(readscore)/$("dl").length+"分</span></div>";
+                readjhtml+="<div  style='padding-top:10px;'>总流利度得分：<span>"+(readfscore)/$("dl").length+"分</span></div>";
+                $('.alertcontent').html(readjhtml);
+                readjhtml="";
+                readscore=0;
+                readfscore=0;
+                globalstatus=0;
+                _minglobalstatus=0;
+                $("dd").css("visibility","visible");
+                $(".bc_big_read_sent").removeClass("active");
+            }
+            else
+            {
+                $("dl").eq(index+1).find(".minread").click();
+            }
+        }
+//            }, function error(result){
+//                $('.bc_big_read').removeClass("active");
+//                alert(result);
+//            }, ""
+//        );
+    };
+    //发送声音，调用mic函数
+    function cordovaSentAudio(url,textType,refText){
+//        cordova.plugins.traceclass.startRecord(
+//                function success(result){
+//
+//                }, function error(result){
+//
+//                },
+//                {
+//                    audioUrl: url,
+//                    serverParams: {
+//                        coreType: textType,
+//                        refText: refText,
+//                        rank: 100,
+//                        userId: "guest"
+//                    }
+//                }
+//        );
+    };
 </script>
 
 <div id="jplayMP3"></div>

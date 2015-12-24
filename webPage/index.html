@@ -607,14 +607,18 @@
             }
         });
     };
-    function changeStatus(province,city,area,school,grade,classc,type,realstate){
+    function changeStatus(province,city,area,school,grade,classc,type,realstate,_this){
         $.ajax({
             url:'device/closedevice',
             type:'post',
             contentType: 'application/json',
             data:'{"province":"'+province+'","city":"'+city+'","area":"'+area+'","school":"'+school+'","grade":"'+grade+'","classc":"'+classc+'","type":"'+type+'","realstate":"'+realstate+'"}',
             success:function(data){
-                alert(JSON.stringify(data));
+//                alert(JSON.stringify(data));
+                _this.parent().children('input').each(function(i){
+                    $(this).removeAttr('disabled');
+                });
+                _this.attr('disabled','diabled');
             },
             error:function(data){
                 alert('失败');
@@ -630,6 +634,27 @@
         var deviceInfo = '';
         for(var i=0; i<data.data.length; i++){
             var deviceName;
+            var realstate;
+            var ifDisabledRun = '';
+            var ifDisabledLogout = '';
+            var ifDisabledReset = '';
+            var ifDisabledClose = '';
+            if(data.data[i].realstate == 1){
+                realstate = '运行';
+                ifDisabledRun = 'disabled="disabled"';
+            }else if(data.data[i].realstate == 2){
+                ifDisabledLogout = 'disabled="disabled"';
+                realstate = '注销';
+            }else if(data.data[i].realstate == 3){
+                ifDisabledReset = 'disabled="disabled"';
+                realstate = '重启';
+            }else if(data.data[i].realstate == 4){
+                ifDisabledClose = 'disabled="disabled"';
+                realstate = '关机';
+            }else{
+//                ifDisabledClose = 'disabled="disabled"';
+//                realstate = '关机';
+            };
             switch (data.data[i].type){
                 case "1": deviceName = '计算机';
                     picSrc = 'images/white_pc.png';
@@ -662,24 +687,24 @@
                 '</div>' +
                 '<div class="pull-left device_info_box">' +
                 '<p class="info"><a href="#">'+deviceName+'</a></p>' +
-                '<p class="info">运行状态：运行</p>' +
+                '<p class="info" data-runStatus="'+i+'">运行状态：'+realstate+'</p>' +
                 '<p class="info">IP地址：10.0.10.204</p>' +
                 '</div>' +
                 '<div class="pc_div">' +
-                '<p><span id="cpuinfor" style="width: 118px;">处理器：</span><span id="raminfor">内存信息：</span></p>' +
-                '<p><span id="pcdev" style="height: 34px; vertical-align: top;">硬盘容量：</span></p>' +
-                '<p><span id="netinfor">网络：</span></p>' +
-                '<input type="button" class="btn btn-info" value="开机" onclick=changeStatus("'+provinceName+'","'+cityName+'","'+areaName+'","'+schoolName+'","'+data.data[i].grade+'","'+data.data[i].classc+'","'+data.data[i].type+'","1")> ' +
-                '<input type="button" class="btn btn-info" value="注销" onclick=changeStatus("'+provinceName+'","'+cityName+'","'+areaName+'","'+schoolName+'","'+data.data[i].grade+'","'+data.data[i].classc+'","'+data.data[i].type+'","2")> ' +
-                '<input type="button" class="btn btn-info" value="重启" onclick=changeStatus("'+provinceName+'","'+cityName+'","'+areaName+'","'+schoolName+'","'+data.data[i].grade+'","'+data.data[i].classc+'","'+data.data[i].type+'","3")> ' +
-                '<input type="button" class="btn btn-info" value="关机" onclick=changeStatus("'+provinceName+'","'+cityName+'","'+areaName+'","'+schoolName+'","'+data.data[i].grade+'","'+data.data[i].classc+'","'+data.data[i].type+'","4")>' +
+                '<p><span class="cpuinfor" style="width: 118px;">处理器：</span><span class="raminfor">内存信息：</span></p>' +
+                '<p><span class="pcdev" style="height: 34px; vertical-align: top;">硬盘容量：</span></p>' +
+                '<p><span class="netinfor">网络：</span></p>' +
+                '<input type="button" class="btn btn-info" value="开机" data-run="'+i+'" '+ifDisabledRun+' onclick=changeStatus("'+provinceName+'","'+cityName+'","'+areaName+'","'+schoolName+'","'+data.data[i].grade+'","'+data.data[i].classc+'","'+data.data[i].type+'","1",$(this))> ' +
+                '<input type="button" class="btn btn-info" value="注销" data-logout="'+i+'" '+ifDisabledLogout+' onclick=changeStatus("'+provinceName+'","'+cityName+'","'+areaName+'","'+schoolName+'","'+data.data[i].grade+'","'+data.data[i].classc+'","'+data.data[i].type+'","2",$(this))> ' +
+                '<input type="button" class="btn btn-info" value="重启" data-reset="'+i+'" '+ifDisabledReset+' onclick=changeStatus("'+provinceName+'","'+cityName+'","'+areaName+'","'+schoolName+'","'+data.data[i].grade+'","'+data.data[i].classc+'","'+data.data[i].type+'","3",$(this))> ' +
+                '<input type="button" class="btn btn-info" value="关机" data-close="'+i+'" '+ifDisabledClose+' onclick=changeStatus("'+provinceName+'","'+cityName+'","'+areaName+'","'+schoolName+'","'+data.data[i].grade+'","'+data.data[i].classc+'","'+data.data[i].type+'","4",$(this))>' +
                 '</div>' +
                 '</div>' +
 
                 '<div class="device_sub_info">' +
                 '<p class="info">型号：'+data.data[i].model+'</p>' +
                 '<p class="info">处理器：'+data.data[i].cpu+'</p>' +
-                '<p class="info"> 内存：'+data.data[i].memory+' GB</p>' +
+                '<p class="info"> 内存：'+data.data[i].memory+'</p>' +
                 '<p class="info">硬盘：'+data.data[i].disk+' </p>' +
                 '<p class="info">显卡：'+data.data[i].displaycard+'</p>' +
                 '<p class="info">购买时间：'+data.data[i].buytime+'</p>' +
@@ -700,8 +725,8 @@
                 '</div>' +
                 '<div class="pull-left device_info_box">' +
                 '<p class="info"><a href="#">'+deviceName+' </a></p>' +
-                '<p class="info">运行状态：故障</p>' +
-                '<p class="info">白板类型： 电磁</p>' +
+                '<p class="info">　</p>' +
+                '<p class="info">运行状态：'+realstate+'</p>' +
                 '</div>' +
                 '</div>' +
                 '<div class="device_sub_info" style="width: 800px; height: 90px; border-right: none;">' +
@@ -779,7 +804,7 @@
                                     },
                                     series: [{
                                         name:'CPU使用率(%)',
-                                        data: [80],
+                                        data: [0],
                                         yAxis: 0
                                     }]
                                 },
@@ -790,7 +815,7 @@
 //                            var json = {"cpustatstr":(Math.random()*100).toFixed(1),"diskstatstr":(Math.random()*100).toFixed(1),"netstatstr":(Math.random()*0.1).toFixed(3),"ramstatstr":(Math.random()*100).toFixed(1)};
                                         var infor=jsonArr[index].cpustatstr;
                                         if(null!=infor&&""!=infor){
-                                            $("#cpuinfor").html("处理器："+infor);
+                                            $(".cpuinfor").eq(index).html("处理器："+infor);
                                         }
 
 
@@ -882,7 +907,7 @@
 //                            var json = {"cpustatstr":(Math.random()*100).toFixed(1),"diskstatstr":(Math.random()*100).toFixed(1),"netstatstr":(Math.random()*0.1).toFixed(3),"ramstatstr":(Math.random()*100).toFixed(1)};
                                         var rate=jsonArr[index].ramstatstr;
                                         if(null!=rate&&""!=rate){
-                                            $("#raminfor").html("内存信息："+rate);
+                                            $(".raminfor").eq(index).html("内存信息："+rate);
                                         }
 
 
@@ -926,7 +951,7 @@
 
                                         clearInterval(this.timer);
                                         this.timer = setInterval(function() {
-                                            var alreadyData = (Math.random()*50).toFixed(0);
+                                            //var alreadyData = (Math.random()*50).toFixed(0);
 //                                var json = {"cpustatstr":(Math.random()*100).toFixed(1),"diskstatstr":""+alreadyData+","+(100-alreadyData)+"","netstatstr":(Math.random()*0.1).toFixed(3),"ramstatstr":(Math.random()*100).toFixed(1)};
 
                                             if(null!=jsonArr[index].diskstatstr){
@@ -934,7 +959,7 @@
                                                 var data=[];
                                                 if(null!=datas){
                                                     if(undefined!=datas[1]&&null!=datas[1]&&null!=datas[0]){
-                                                        $("#pcdev").html("硬盘容量：已经使用的磁盘空间  "+datas[0]+" GB<br>　　　　　未使用的磁盘空间"+datas[1]+" GB");
+                                                        $(".pcdev").eq(index).html("硬盘容量：已经使用的磁盘空间  "+datas[0]+" GB<br>　　　　　未使用的磁盘空间"+datas[1]+" GB");
 
                                                         data.push(['已使用', +datas[0]]);
                                                         data.push(['未使用', +datas[1]]);
@@ -1022,7 +1047,7 @@
                                                 if(null!=jsonArr[index].netstatstr){
                                                     var datas=jsonArr[index].netstatstr;
                                                     if(null!=datas&&""!=datas){
-                                                        $("#netinfor").html("网络："+datas);
+                                                        $(".netinfor").eq(index).html("网络："+datas);
                                                     }
 
                                                 }
@@ -1031,7 +1056,7 @@
 
                                                     //var datas=json.netstatstr.split(",");
                                                     var time1=(new Date()).getTime();
-                                                    var data1=json.netstatstr;
+                                                    var data1=jsonArr[index].netstatstr;
                                                     //alert(time1 + ":" + data1);
                                                     series.addPoint([+time1, +data1], true, true);
                                                 }
@@ -1115,8 +1140,41 @@
                 jsonArr = [];
                 for(var i=0; i<data.data.length; i++){
                     if(i%3 == 0){
-                        json = {"cpustatstr":data.data[i].realcpu,"diskstatstr":data.data[i].realdisk,"netstatstr":data.data[i].realnetwork,"ramstatstr":data.data[i].realprocessor};
+                        json = {"cpustatstr":data.data[i].realcpu,"diskstatstr":""+data.data[i].realdisk+","+(100-data.data[i].realdisk).toFixed(3)+"","netstatstr":data.data[i].realnetwork,"ramstatstr":data.data[i].realprocessor};
                         jsonArr.push(json);
+
+                        var realstate;
+                        var ifDisabledRun = '';
+                        var ifDisabledLogout = '';
+                        var ifDisabledReset = '';
+                        var ifDisabledClose = '';
+                        if(data.data[i].realstate == 1){
+                            realstate = '运行';
+                            ifDisabledRun = 'disabled="disabled"';
+                            changeStatus();
+                        }else if(data.data[i].realstate == 2){
+                            ifDisabledLogout = 'disabled="disabled"';
+                            realstate = '注销';
+                            changeStatus();
+                        }else if(data.data[i].realstate == 3){
+                            ifDisabledReset = 'disabled="disabled"';
+                            realstate = '重启';
+                            changeStatus();
+                        }else if(data.data[i].realstate == 4){
+                            ifDisabledClose = 'disabled="disabled"';
+                            realstate = '关机';
+                            changeStatus();
+                        }else{
+
+                        };
+                        function changeStatus(){
+                            $('.device_info_box > p.info').each(function(){
+                                if($(this).attr('data-runStatus') == i){
+                                    $(this).html('运行状态：'+realstate);
+                                };
+                            });
+                        };
+
                     };
                 };
 
@@ -1248,6 +1306,44 @@
 
 </script>
 
+
+<script>
+    //top changeNav
+    var oNOwLi= $('.js-nav-c').find('.current');
+    $('.js-nav-c li').hover(function(){
+
+        $('.js-nav-c li').not($(oNOwLi)).removeClass('current');
+        $(this).addClass('current');
+    },function(){
+
+        $('.js-nav-c li').not($(oNOwLi)).removeClass('current');
+
+    });
+
+    $(function(){
+        $('.searchSub span a').bind('click', function(){
+            $(".searchSub span a").removeClass();
+            $(".searchSub span a").removeAttr('style');
+            $(this).addClass('selected');
+            $(this).attr('style','color:#000;');
+
+            var type = $(this).attr('scope');
+            $("#searchType").val(type);
+        });
+    })
+
+    //首页右侧菜单
+    $(document).ready(function() {
+        $(".homeico-d span").on('mouseenter', function() {
+            $(this).find("em").show();
+            $(this).find("ul").show();
+        });
+        $(".homeico-d span").on('mouseleave', function() {
+            $(this).find("em").hide();
+            $(this).find("ul").hide();
+        });
+    });
+</script>
 
 
 

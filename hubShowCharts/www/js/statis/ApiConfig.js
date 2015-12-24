@@ -1,3 +1,3 @@
 ﻿// JavaScript source code
-var apiurl = "http://182.48.115.253:8084"
+var apiurl = "http://221.232.132.150:8080"
 var apisiteid = 1004;
