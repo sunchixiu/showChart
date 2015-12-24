@@ -507,14 +507,16 @@
 <!--多级联动-->
 <script>
     var provinceId = '420000';
-    var cityId;
-    var areaId;
-    var schoolId;
+    var provinceName = '湖北省';
+    var cityId,cityName;
+    var areaId,areaName;
+    var schoolId,schoolName;
     var json;
     var jsonArr = [];
     var jsonTimer = null;
     for(var o in dataCity[0]){
         cityId = o;
+        cityName = dataCity[0][o];
         $('#cityDiv > button').html(dataCity[0][o]+' <span class="caret"></span>');
     };
     for(var i=0; i<dataCity.length; i++){
@@ -525,6 +527,7 @@
 
     for(var o in dataArea[0]){
         areaId = dataArea[0][o][0];
+        areaName = dataArea[0][o][1];
         $('#areaDiv > button').html(dataArea[0][o][1]+' <span class="caret"></span>');
     };
     areaList(cityId);
@@ -533,7 +536,7 @@
         for(var i=0; i<dataArea.length; i++){
             for(var o in dataArea[i]){
                 if(o == cityId){
-                    $('#areaDiv > ul').append('<li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick=changeArea("'+dataArea[i][o][1]+'",'+dataArea[i][o][0]+')>'+dataArea[i][o][1]+'</a></li>');
+                    $('#areaDiv > ul').append('<li role="presentation"><a role="menuitem" tabindex="-1" href="#" data-value="'+dataArea[i][o][0]+'" onclick=changeArea("'+dataArea[i][o][1]+'",'+dataArea[i][o][0]+')>'+dataArea[i][o][1]+'</a></li>');
                 };
             };
         };
@@ -551,33 +554,47 @@
         for(var i=0; i<dataSchool.data.length; i++){
             if(dataSchool.data[i].C_AREAID == areaId){
                 schoolId = dataSchool.data[0].C_SID;
-                $('#schoolDiv > ul').append('<li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick=getData("'+provinceId+'","'+cityId+'","'+areaId+'","'+areaId+'","'+dataSchool.data[i].C_SID+'")>'+dataSchool.data[i].C_NAME+'</a></li>');
+                schoolName = dataSchool.data[0].C_NAME;
+                $('#schoolDiv > ul').append('<li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick=changeSchool("'+provinceName+'","'+cityName+'","'+areaName+'","'+dataSchool.data[i].C_NAME+'","'+dataSchool.data[i].C_NAME+'")>'+dataSchool.data[i].C_NAME+'</a></li>');
             };
         };
     };
 
     function changeCity(name,value){
         cityId = value;
+        cityName = name;
         $('#cityDiv > button').html(name+' <span class="caret"></span>');
         areaList(cityId);
         $('#areaDiv > button').html($('#areaDiv > ul > li > a').eq(0).html()+' <span class="caret"></span>');
+        areaId = $('#areaDiv > ul > li > a').eq(0).attr('data-value');
+        areaName = $('#areaDiv > ul > li > a').eq(0).html();
+        schoolList(areaId);
+        $('#schoolDiv > button').html($('#schoolDiv > ul > li > a').eq(0).html()+' <span class="caret"></span>');
     };
     function changeArea(name,value){
         areaId = value;
+        areaName = name;
         $('#areaDiv > button').html(name+' <span class="caret"></span>');
         schoolList(areaId);
         $('#schoolDiv > button').html($('#schoolDiv > ul > li > a').eq(0).html()+' <span class="caret"></span>');
     };
+    function changeSchool(provinceId,cityId,areaId,dataSchoolId,name){
+        provinceName = provinceId;
+        cityName = cityId;
+        areaName = areaId;
+        schoolName = dataSchoolId;
+        getData(provinceId,cityId,areaId,dataSchoolId);
+        $('#schoolDiv > button').html(name);
+    };
 
-    getData(provinceId,cityId,areaId,areaId,schoolId);
-    function getData(province,city,area,county,school){
-        alert(province+','+city+','+area+','+county+','+school);
+    getData(provinceName,cityName,areaName,schoolName);
+    function getData(province,city,area,school){
         $.ajax({
             url:'device/getdevices',
             type:'post',
 //            dataType:'text',
             contentType: 'application/json',
-            data:'{"province":"'+province+'","city":"'+city+'","area":"'+area+'","county":"'+county+'","school":"'+school+'"}',
+            data:'{"province":"'+province+'","city":"'+city+'","area":"'+area+'","school":"'+school+'"}',
 //            data:'{"province":"420000","city":"420500","area":"420582","county":"420582","school":"25b4a33bdd1444548f3a0a2208523578"}',
 //            processData:false,
             success:function(data){
@@ -590,12 +607,12 @@
             }
         });
     };
-    function changeStatus(province,city,area,county,school,grade,classc,type,realstate){
+    function changeStatus(province,city,area,school,grade,classc,type,realstate){
         $.ajax({
             url:'device/closedevice',
             type:'post',
             contentType: 'application/json',
-            data:'{"province":"'+province+'","city":"'+city+'","area":"'+area+'","county":"'+county+'","school":"'+school+'","grade":"'+grade+'","classc":"'+classc+'","type":"'+type+'","realstate":"'+realstate+'"}',
+            data:'{"province":"'+province+'","city":"'+city+'","area":"'+area+'","school":"'+school+'","grade":"'+grade+'","classc":"'+classc+'","type":"'+type+'","realstate":"'+realstate+'"}',
             success:function(data){
                 alert(JSON.stringify(data));
             },
@@ -611,7 +628,7 @@
         var html = '';
         var picSrc = '';
         var deviceInfo = '';
-        for(var i=data.data.length-2; i>=0; i--){
+        for(var i=0; i<data.data.length; i++){
             var deviceName;
             switch (data.data[i].type){
                 case "1": deviceName = '计算机';
@@ -636,7 +653,7 @@
                     picSrc = 'images/white_pc.png';
                     break;
             };
-            if((i+1)%3 == 0){
+            if(i%3 == 0){
                 html += '<div class="device_list_control clearfix"><div class="grades"><h4>'+(data.data[i].grade+data.data[i].classc)+'</h4>' +
                 '<div class="device_line" style="border-top: 1px solid #ddd; clear: both;">' +
                 '<div class="device_main clearfix">' +
@@ -652,10 +669,10 @@
                 '<p><span id="cpuinfor" style="width: 118px;">处理器：</span><span id="raminfor">内存信息：</span></p>' +
                 '<p><span id="pcdev" style="height: 34px; vertical-align: top;">硬盘容量：</span></p>' +
                 '<p><span id="netinfor">网络：</span></p>' +
-                '<input type="button" class="btn btn-info" value="开机" onclick=changeStatus("'+provinceId+'","'+cityId+'","'+areaId+'","'+areaId+'","'+schoolId+'","'+data.data[i].grade+'","'+data.data[i].classc+'","'+data.data[i].type+'","1")> ' +
-                '<input type="button" class="btn btn-info" value="注销" onclick=changeStatus("'+provinceId+'","'+cityId+'","'+areaId+'","'+areaId+'","'+schoolId+'","'+data.data[i].grade+'","'+data.data[i].classc+'","'+data.data[i].type+'","2")> ' +
-                '<input type="button" class="btn btn-info" value="重启" onclick=changeStatus("'+provinceId+'","'+cityId+'","'+areaId+'","'+areaId+'","'+schoolId+'","'+data.data[i].grade+'","'+data.data[i].classc+'","'+data.data[i].type+'","3")> ' +
-                '<input type="button" class="btn btn-info" value="关机" onclick=changeStatus("'+provinceId+'","'+cityId+'","'+areaId+'","'+areaId+'","'+schoolId+'","'+data.data[i].grade+'","'+data.data[i].classc+'","'+data.data[i].type+'","4")>' +
+                '<input type="button" class="btn btn-info" value="开机" onclick=changeStatus("'+provinceName+'","'+cityName+'","'+areaName+'","'+schoolName+'","'+data.data[i].grade+'","'+data.data[i].classc+'","'+data.data[i].type+'","1")> ' +
+                '<input type="button" class="btn btn-info" value="注销" onclick=changeStatus("'+provinceName+'","'+cityName+'","'+areaName+'","'+schoolName+'","'+data.data[i].grade+'","'+data.data[i].classc+'","'+data.data[i].type+'","2")> ' +
+                '<input type="button" class="btn btn-info" value="重启" onclick=changeStatus("'+provinceName+'","'+cityName+'","'+areaName+'","'+schoolName+'","'+data.data[i].grade+'","'+data.data[i].classc+'","'+data.data[i].type+'","3")> ' +
+                '<input type="button" class="btn btn-info" value="关机" onclick=changeStatus("'+provinceName+'","'+cityName+'","'+areaName+'","'+schoolName+'","'+data.data[i].grade+'","'+data.data[i].classc+'","'+data.data[i].type+'","4")>' +
                 '</div>' +
                 '</div>' +
 
@@ -692,27 +709,412 @@
                 '</div>' +
                 '</div>' +
                 '</div>';
-                if((i)%3 == 0) html += '</div>';
+                if((i+1)%3 == 0) html += '</div>';
             };
 
         };
         $('.k_content').html(html);
+
+        //图表
+        showCharts();
+        function showCharts(){
+            $(function () {
+                for(var i=0; i<$('.chart_1_13').length; i++){
+                    (function(index){
+                        $('.chart_1_13').eq(index).highcharts({
+                                    chart: {
+                                        type: 'gauge',
+                                        plotBorderWidth: 1,
+                                        plotBackgroundColor: "#fff",
+                                        plotBackgroundImage: null,
+                                        height: 90
+                                    },
+
+                                    title: {
+                                        floating: true,
+                                        align: 'right',
+                                        text: 'CPU使用率(%)'
+                                    },
+
+                                    pane: [{
+                                        startAngle: -45,
+                                        endAngle: 45,
+                                        background: null,
+                                        center: ["50%","210%"],
+                                        size: 200
+                                    }],
+
+                                    yAxis: [{
+                                        min: 0,
+                                        max: 100,
+                                        minorTickPosition: 'outside',
+                                        tickPosition: 'outside',
+                                        labels: {
+                                            rotation: 'auto',
+                                            distance: 20
+                                        },
+                                        plotBands: [{
+                                            from: 0,
+                                            to: 6,
+                                            color: 'transparent',
+                                            innerRadius: '100%',
+                                            outerRadius: '105%'
+                                        }],
+                                        pane: 0,
+                                        title: {
+                                            text: '',
+                                            y: -40
+                                        }
+                                    }],
+
+                                    plotOptions: {
+                                        gauge: {
+                                            dataLabels: {
+                                                enabled: false
+                                            },
+                                            dial: {
+                                                radius: '100%'
+                                            }
+                                        }
+                                    },
+                                    series: [{
+                                        name:'CPU使用率(%)',
+                                        data: [80],
+                                        yAxis: 0
+                                    }]
+                                },
+                                function(chart) {
+                                    clearInterval(this.timer);
+                                    this.timer = setInterval(function() {
+                                        var left = chart.series[0].points[0];
+//                            var json = {"cpustatstr":(Math.random()*100).toFixed(1),"diskstatstr":(Math.random()*100).toFixed(1),"netstatstr":(Math.random()*0.1).toFixed(3),"ramstatstr":(Math.random()*100).toFixed(1)};
+                                        var infor=jsonArr[index].cpustatstr;
+                                        if(null!=infor&&""!=infor){
+                                            $("#cpuinfor").html("处理器："+infor);
+                                        }
+
+
+                                        var rate=jsonArr[index].cpustatstr;
+                                        var ratestr=rate+"%";
+                                        if(null!=rate&&""!=rate){
+                                            left.update(+Highcharts.numberFormat(rate, 2), true);
+                                        }
+
+                                        chart.redraw();
+
+                                    },5000);
+
+                                })
+                    })(i);
+                };
+            });
+            $(function () {
+                for(var i=0; i<$('.chart_2_13').length; i++){
+                    (function(index){
+                        $('.chart_2_13').eq(index).highcharts({
+
+                                    chart: {
+                                        type: 'gauge',
+                                        plotBorderWidth: 1,
+                                        plotBackgroundColor: "#fff",
+                                        plotBackgroundImage: null,
+                                        height: 90
+                                    },
+
+                                    title: {
+                                        floating: true,
+                                        align: 'right',
+                                        text: '内存使用率(%)'
+                                    },
+
+                                    pane: [{
+                                        startAngle: -45,
+                                        endAngle: 45,
+                                        background: null,
+                                        center: ["50%","210%"],
+                                        size: 200
+                                    }],
+
+                                    yAxis: [{
+                                        min: 0,
+                                        max: 100,
+                                        minorTickPosition: 'outside',
+                                        tickPosition: 'outside',
+                                        labels: {
+                                            rotation: 'auto',
+                                            distance: 20
+                                        },
+                                        plotBands: [{
+                                            from: 0,
+                                            to: 6,
+                                            color: 'transparent',
+                                            innerRadius: '100%',
+                                            outerRadius: '105%'
+                                        }],
+                                        pane: 0,
+                                        title: {
+                                            text: '',
+                                            y: -40
+                                        }
+                                    }],
+
+                                    plotOptions: {
+                                        gauge: {
+                                            dataLabels: {
+                                                enabled: false
+                                            },
+                                            dial: {
+                                                radius: '100%'
+                                            }
+                                        }
+                                    },
+                                    series: [{
+                                        name:'内存使用率(%)',
+                                        data: [60],
+                                        yAxis: 0
+                                    }]
+                                },
+                                // Let the music play
+                                function(chart) {
+                                    clearInterval(this.timer);
+                                    this.timer = setInterval(function() {
+                                        var left = chart.series[0].points[0];
+//                            var json = {"cpustatstr":(Math.random()*100).toFixed(1),"diskstatstr":(Math.random()*100).toFixed(1),"netstatstr":(Math.random()*0.1).toFixed(3),"ramstatstr":(Math.random()*100).toFixed(1)};
+                                        var rate=jsonArr[index].ramstatstr;
+                                        if(null!=rate&&""!=rate){
+                                            $("#raminfor").html("内存信息："+rate);
+                                        }
+
+
+                                        var rate=jsonArr[index].ramstatstr;
+                                        var ratestr=rate+"%";
+
+                                        if(null!=rate&&""!=rate){
+                                            left.update(+Highcharts.numberFormat(rate, 2), true);
+                                        }
+
+                                        chart.redraw();
+
+                                    },5000);
+
+                                });
+                    })(i)
+                }
+
+            });
+            $(function () {
+                for(var i=0; i<$('.chart_3_13').length; i++){
+                    (function(index){
+                        $('.chart_3_13').eq(index).highcharts({
+                            chart: {
+                                plotBackgroundColor: null,
+                                borderWidth: 1,
+                                plotBorderWidth: 0,
+                                plotShadow: false,
+                                height:90,
+                                borderRadius:0,
+                                borderColor: '#ccc',
+                                width: 242,
+                                spacing:[0,5,0,0],
+                                style:{
+                                    marginLeft: '10px'
+                                },
+                                events: {
+                                    load: function() {
+
+                                        var series = this.series[0];
+
+                                        clearInterval(this.timer);
+                                        this.timer = setInterval(function() {
+                                            var alreadyData = (Math.random()*50).toFixed(0);
+//                                var json = {"cpustatstr":(Math.random()*100).toFixed(1),"diskstatstr":""+alreadyData+","+(100-alreadyData)+"","netstatstr":(Math.random()*0.1).toFixed(3),"ramstatstr":(Math.random()*100).toFixed(1)};
+
+                                            if(null!=jsonArr[index].diskstatstr){
+                                                var datas=jsonArr[index].diskstatstr.split(",");
+                                                var data=[];
+                                                if(null!=datas){
+                                                    if(undefined!=datas[1]&&null!=datas[1]&&null!=datas[0]){
+                                                        $("#pcdev").html("硬盘容量：已经使用的磁盘空间  "+datas[0]+" GB<br>　　　　　未使用的磁盘空间"+datas[1]+" GB");
+
+                                                        data.push(['已使用', +datas[0]]);
+                                                        data.push(['未使用', +datas[1]]);
+                                                        series.setData(data);
+                                                    }
+
+                                                }
+
+
+
+                                            }
+
+
+                                        }, 5000);
+                                    }
+                                }
+                            },
+                            title: {
+                                floating: true,
+                                align: 'right',
+                                text: "磁盘使用情况"
+                            },
+                            tooltip: {
+                                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                            },
+                            plotOptions: {
+                                pie: {
+                                    allowPointSelect: true,
+                                    cursor: 'pointer',
+                                    dataLabels: {
+                                        enabled: false,
+                                        color: '#000000',
+                                        connectorColor: '#000000',
+                                        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                                    },
+                                    center: ['50%', '50%'],
+                                    showInLegend: true
+                                }
+
+                            },
+                            legend: {
+                                align: 'right',
+                                verticalAlign: 'middle',
+                                layout: 'vertical',
+                                radius: 0,
+                                borderWidth:0
+
+                            },
+                            series: [{
+                                type: 'pie',
+                                name: '磁盘使用情况',
+                                data: [['已使用', 40],['未使用', 60]]
+                            }]
+                        });
+                    })(i)
+                };
+
+            });
+            $(function () {
+                $(document).ready(function() {
+                    Highcharts.setOptions({
+                        global: {
+                            useUTC: false
+                        }
+                    });
+
+                    var chart;
+                    for(var i=0; i<$('.chart_4_13').length; i++){
+                        (function(index){
+                            $('.chart_4_13').eq(index).highcharts({
+                                chart: {
+                                    plotBorderWidth: 1,
+                                    type: 'spline',
+                                    animation: Highcharts.svg,
+                                    marginRight: 10,
+                                    events: {
+                                        load: function() {
+
+                                            var series = this.series[0];
+
+                                            clearInterval(this.timer);
+                                            this.timer = setInterval(function() {
+//                                    var json = {"cpustatstr":null,"diskstatstr":"","netstatstr":(Math.random()*0.1).toFixed(3),"ramstatstr":null};
+
+                                                if(null!=jsonArr[index].netstatstr){
+                                                    var datas=jsonArr[index].netstatstr;
+                                                    if(null!=datas&&""!=datas){
+                                                        $("#netinfor").html("网络："+datas);
+                                                    }
+
+                                                }
+
+                                                if(null!=jsonArr[index].netstatstr){
+
+                                                    //var datas=json.netstatstr.split(",");
+                                                    var time1=(new Date()).getTime();
+                                                    var data1=json.netstatstr;
+                                                    //alert(time1 + ":" + data1);
+                                                    series.addPoint([+time1, +data1], true, true);
+                                                }
+
+
+                                            }, 5000);
+                                        }
+                                    },
+                                    height:100
+                                },
+                                title: {
+                                    floating: true,
+                                    align: 'right',
+                                    text: '网络使用率(%)'
+                                },
+                                xAxis: {
+                                    type: 'datetime'
+                                },
+                                yAxis: {
+                                    //min:0,
+                                    //max:1,
+                                    title: {
+                                        text: ''
+                                    },
+                                    plotLines: [{
+                                        value: 0,
+                                        width: 1,
+                                        color: '#808080'
+                                    }]
+                                },
+                                tooltip: {
+                                    formatter: function() {
+                                        return '<b>'+ this.series.name +'</b><br/>'+
+                                                Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) +'<br/>'+
+                                                Highcharts.numberFormat(this.y, 2);
+                                    }
+                                },
+                                legend: {
+                                    enabled: false
+                                },
+                                exporting: {
+                                    enabled: false
+                                },
+                                series: [{
+                                    name: "网络使用率(%)",
+                                    data:(function() {
+                                        // generate an array of random data
+                                        var data = [],
+                                                time = (new Date()).getTime(),
+                                                i;
+
+                                        for (i = -19; i <= 0; i++) {
+                                            data.push({
+                                                x: time + i * 3000,
+                                                y: Math.random()*0.1
+                                            });
+                                        }
+                                        return data;
+                                    })()}]
+                            });
+                        })(i)
+                    };
+
+                });
+            });
+        };
     };
 
-    getRealJson(provinceId,cityId,areaId,areaId,schoolId);
+    getRealJson(provinceName,cityName,areaName,schoolName);
     jsonTimer = setInterval(function(){
-        getRealJson(provinceId,cityId,areaId,areaId,schoolId);
+        getRealJson(provinceName,cityName,areaName,schoolName);
     },5000);
-    function getRealJson(province,city,area,county,school){
+    function getRealJson(province,city,area,school){
+//        alert(province+','+city+','+area+','+school);
         $.ajax({
             url:'device/getdevices',
             type:'post',
             contentType: 'application/json',
-            data:'{"province":"'+province+'","city":"'+city+'","area":"'+area+'","county":"'+county+'","school":"'+school+'"}',
+            data:'{"province":"'+province+'","city":"'+city+'","area":"'+area+'","school":"'+school+'"}',
             success:function(data){
                 jsonArr = [];
-                for(var i=data.data.length-2; i>=0; i--){
-                    if((i+1)%3 == 0){
+                for(var i=0; i<data.data.length; i++){
+                    if(i%3 == 0){
                         json = {"cpustatstr":data.data[i].realcpu,"diskstatstr":data.data[i].realdisk,"netstatstr":data.data[i].realnetwork,"ramstatstr":data.data[i].realprocessor};
                         jsonArr.push(json);
                     };
@@ -782,390 +1184,6 @@
 </script>
 
 <script>
-    showCharts();
-    function showCharts(){
-        $(function () {
-            for(var i=0; i<$('.chart_1_13').length; i++){
-                (function(index){
-                    $('.chart_1_13').eq(i).highcharts({
-                                chart: {
-                                    type: 'gauge',
-                                    plotBorderWidth: 1,
-                                    plotBackgroundColor: "#fff",
-                                    plotBackgroundImage: null,
-                                    height: 90
-                                },
-
-                                title: {
-                                    floating: true,
-                                    align: 'right',
-                                    text: 'CPU使用率(%)'
-                                },
-
-                                pane: [{
-                                    startAngle: -45,
-                                    endAngle: 45,
-                                    background: null,
-                                    center: ["50%","210%"],
-                                    size: 200
-                                }],
-
-                                yAxis: [{
-                                    min: 0,
-                                    max: 100,
-                                    minorTickPosition: 'outside',
-                                    tickPosition: 'outside',
-                                    labels: {
-                                        rotation: 'auto',
-                                        distance: 20
-                                    },
-                                    plotBands: [{
-                                        from: 0,
-                                        to: 6,
-                                        color: 'transparent',
-                                        innerRadius: '100%',
-                                        outerRadius: '105%'
-                                    }],
-                                    pane: 0,
-                                    title: {
-                                        text: '',
-                                        y: -40
-                                    }
-                                }],
-
-                                plotOptions: {
-                                    gauge: {
-                                        dataLabels: {
-                                            enabled: false
-                                        },
-                                        dial: {
-                                            radius: '100%'
-                                        }
-                                    }
-                                },
-                                series: [{
-                                    name:'CPU使用率(%)',
-                                    data: [80],
-                                    yAxis: 0
-                                }]
-                            },
-                            function(chart) {
-                                clearInterval(this.timer);
-                                this.timer = setInterval(function() {
-                                    var left = chart.series[0].points[0];
-//                            var json = {"cpustatstr":(Math.random()*100).toFixed(1),"diskstatstr":(Math.random()*100).toFixed(1),"netstatstr":(Math.random()*0.1).toFixed(3),"ramstatstr":(Math.random()*100).toFixed(1)};
-
-                                    var infor=jsonArr[index].cpustatstr;
-                                    if(null!=infor&&""!=infor){
-                                        $("#cpuinfor").html("处理器："+infor);
-                                    }
-
-
-                                    var rate=json.cpustatstr;
-                                    var ratestr=rate+"%";
-                                    if(null!=rate&&""!=rate){
-                                        left.update(+Highcharts.numberFormat(rate, 2), true);
-                                    }
-
-                                    chart.redraw();
-
-                                },5000);
-
-                            })
-                })(i);
-            };
-        });
-        $(function () {
-            for(var i=0; i<$('.chart_2_13').length; i++){
-                (function(index){
-                    $('.chart_2_13').eq(i).highcharts({
-
-                                chart: {
-                                    type: 'gauge',
-                                    plotBorderWidth: 1,
-                                    plotBackgroundColor: "#fff",
-                                    plotBackgroundImage: null,
-                                    height: 90
-                                },
-
-                                title: {
-                                    floating: true,
-                                    align: 'right',
-                                    text: '内存使用率(%)'
-                                },
-
-                                pane: [{
-                                    startAngle: -45,
-                                    endAngle: 45,
-                                    background: null,
-                                    center: ["50%","210%"],
-                                    size: 200
-                                }],
-
-                                yAxis: [{
-                                    min: 0,
-                                    max: 100,
-                                    minorTickPosition: 'outside',
-                                    tickPosition: 'outside',
-                                    labels: {
-                                        rotation: 'auto',
-                                        distance: 20
-                                    },
-                                    plotBands: [{
-                                        from: 0,
-                                        to: 6,
-                                        color: 'transparent',
-                                        innerRadius: '100%',
-                                        outerRadius: '105%'
-                                    }],
-                                    pane: 0,
-                                    title: {
-                                        text: '',
-                                        y: -40
-                                    }
-                                }],
-
-                                plotOptions: {
-                                    gauge: {
-                                        dataLabels: {
-                                            enabled: false
-                                        },
-                                        dial: {
-                                            radius: '100%'
-                                        }
-                                    }
-                                },
-                                series: [{
-                                    name:'内存使用率(%)',
-                                    data: [60],
-                                    yAxis: 0
-                                }]
-                            },
-                            // Let the music play
-                            function(chart) {
-                                clearInterval(this.timer);
-                                this.timer = setInterval(function() {
-                                    var left = chart.series[0].points[0];
-//                            var json = {"cpustatstr":(Math.random()*100).toFixed(1),"diskstatstr":(Math.random()*100).toFixed(1),"netstatstr":(Math.random()*0.1).toFixed(3),"ramstatstr":(Math.random()*100).toFixed(1)};
-                                    var rate=jsonArr[index].ramstatstr;
-                                    if(null!=rate&&""!=rate){
-                                        $("#raminfor").html("内存信息："+rate);
-                                    }
-
-
-                                    var rate=json.ramstatstr;
-                                    var ratestr=rate+"%";
-
-                                    if(null!=rate&&""!=rate){
-                                        left.update(+Highcharts.numberFormat(rate, 2), true);
-                                    }
-
-                                    chart.redraw();
-
-                                },5000);
-
-                            });
-                })(i)
-            }
-
-        });
-        $(function () {
-            for(var i=0; i<$('.chart_3_13').length; i++){
-                (function(index){
-                    $('.chart_3_13').eq(i).highcharts({
-                        chart: {
-                            plotBackgroundColor: null,
-                            borderWidth: 1,
-                            plotBorderWidth: 0,
-                            plotShadow: false,
-                            height:90,
-                            borderRadius:0,
-                            borderColor: '#ccc',
-                            width: 242,
-                            spacing:[0,5,0,0],
-                            style:{
-                                marginLeft: '10px'
-                            },
-                            events: {
-                                load: function() {
-
-                                    var series = this.series[0];
-
-                                    clearInterval(this.timer);
-                                    this.timer = setInterval(function() {
-                                        var alreadyData = (Math.random()*50).toFixed(0);
-//                                var json = {"cpustatstr":(Math.random()*100).toFixed(1),"diskstatstr":""+alreadyData+","+(100-alreadyData)+"","netstatstr":(Math.random()*0.1).toFixed(3),"ramstatstr":(Math.random()*100).toFixed(1)};
-
-                                        if(null!=jsonArr[index].diskstatstr){
-                                            var datas=jsonArr[index].diskstatstr.split(",");
-                                            var data=[];
-                                            if(null!=datas){
-                                                if(undefined!=datas[1]&&null!=datas[1]&&null!=datas[0]){
-                                                    $("#pcdev").html("硬盘容量：已经使用的磁盘空间  "+datas[0]+" GB<br>　　　　　未使用的磁盘空间"+datas[1]+" GB");
-
-                                                    data.push(['已使用', +datas[0]]);
-                                                    data.push(['未使用', +datas[1]]);
-                                                    series.setData(data);
-                                                }
-
-                                            }
-
-
-
-                                        }
-
-
-                                    }, 5000);
-                                }
-                            }
-                        },
-                        title: {
-                            floating: true,
-                            align: 'right',
-                            text: "磁盘使用情况"
-                        },
-                        tooltip: {
-                            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-                        },
-                        plotOptions: {
-                            pie: {
-                                allowPointSelect: true,
-                                cursor: 'pointer',
-                                dataLabels: {
-                                    enabled: false,
-                                    color: '#000000',
-                                    connectorColor: '#000000',
-                                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
-                                },
-                                center: ['50%', '50%'],
-                                showInLegend: true
-                            }
-
-                        },
-                        legend: {
-                            align: 'right',
-                            verticalAlign: 'middle',
-                            layout: 'vertical',
-                            radius: 0,
-                            borderWidth:0
-
-                        },
-                        series: [{
-                            type: 'pie',
-                            name: '磁盘使用情况',
-                            data: [['已使用', 40],['未使用', 60]]
-                        }]
-                    });
-                })(i)
-            };
-
-        });
-        $(function () {
-            $(document).ready(function() {
-                Highcharts.setOptions({
-                    global: {
-                        useUTC: false
-                    }
-                });
-
-                var chart;
-                for(var i=0; i<$('.chart_4_13').length; i++){
-                    (function(index){
-                        $('.chart_4_13').eq(i).highcharts({
-                            chart: {
-                                plotBorderWidth: 1,
-                                type: 'spline',
-                                animation: Highcharts.svg,
-                                marginRight: 10,
-                                events: {
-                                    load: function() {
-
-                                        var series = this.series[0];
-
-                                        clearInterval(this.timer);
-                                        this.timer = setInterval(function() {
-//                                    var json = {"cpustatstr":null,"diskstatstr":"","netstatstr":(Math.random()*0.1).toFixed(3),"ramstatstr":null};
-
-                                            if(null!=jsonArr[index].netstatstr){
-                                                var datas=jsonArr[index].netstatstr;
-                                                if(null!=datas&&""!=datas){
-                                                    $("#netinfor").html("网络："+datas);
-                                                }
-
-                                            }
-
-                                            if(null!=json.netstatstr){
-
-                                                //var datas=json.netstatstr.split(",");
-                                                var time1=(new Date()).getTime();
-                                                var data1=json.netstatstr;
-                                                //alert(time1 + ":" + data1);
-                                                series.addPoint([+time1, +data1], true, true);
-                                            }
-
-
-                                        }, 5000);
-                                    }
-                                },
-                                height:100
-                            },
-                            title: {
-                                floating: true,
-                                align: 'right',
-                                text: '网络使用率(%)'
-                            },
-                            xAxis: {
-                                type: 'datetime'
-                            },
-                            yAxis: {
-                                //min:0,
-                                //max:1,
-                                title: {
-                                    text: ''
-                                },
-                                plotLines: [{
-                                    value: 0,
-                                    width: 1,
-                                    color: '#808080'
-                                }]
-                            },
-                            tooltip: {
-                                formatter: function() {
-                                    return '<b>'+ this.series.name +'</b><br/>'+
-                                            Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) +'<br/>'+
-                                            Highcharts.numberFormat(this.y, 2);
-                                }
-                            },
-                            legend: {
-                                enabled: false
-                            },
-                            exporting: {
-                                enabled: false
-                            },
-                            series: [{
-                                name: "网络使用率(%)",
-                                data:(function() {
-                                    // generate an array of random data
-                                    var data = [],
-                                            time = (new Date()).getTime(),
-                                            i;
-
-                                    for (i = -19; i <= 0; i++) {
-                                        data.push({
-                                            x: time + i * 3000,
-                                            y: Math.random()*0.1
-                                        });
-                                    }
-                                    return data;
-                                })()}]
-                        });
-                    })(i)
-                };
-
-            });
-        });
-    };
-
 
 
 

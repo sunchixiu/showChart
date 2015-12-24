@@ -65,16 +65,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="newTeacherApi.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/newTeacherApi.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.29558325" vertical-offset="12537" max-vertical-offset="16902">
-              <caret line="474" column="62" selection-start-line="474" selection-start-column="38" selection-end-line="474" selection-end-column="62" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="indexJZ.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/indexJZ.html">
           <provider selected="true" editor-type-id="text-editor">
@@ -99,12 +89,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="indexTeacher.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="indexTeacher.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/indexTeacher.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="19197" max-vertical-offset="24327">
-              <caret line="787" column="24" selection-start-line="787" selection-start-column="24" selection-end-line="787" selection-end-column="24" />
+            <state vertical-scroll-proportion="1.2976191" vertical-offset="6902" max-vertical-offset="21951">
+              <caret line="471" column="115" selection-start-line="471" selection-start-column="109" selection-end-line="471" selection-end-column="115" />
               <folding>
+                <element signature="e#2538#7164#0" expanded="false" />
                 <element signature="n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
                 <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#div#2;n#body#0;n#html#0;n#!!top" expanded="false" />
@@ -291,13 +282,8 @@
       <recent name="F:\sunchi\statisticApp\showCharts\www" />
     </key>
   </component>
-  <component name="RunManager" selected="JavaScript Debug.index.html">
+  <component name="RunManager" selected="PHPUnit.www">
     <configuration default="false" name="indexJZ.html" type="JavascriptDebugType" factoryName="JavaScript Debug" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/www/indexJZ.html">
-      <RunnerSettings RunnerId="JavascriptDebugRunner" />
-      <ConfigurationWrapper RunnerId="JavascriptDebugRunner" />
-      <method />
-    </configuration>
-    <configuration default="false" name="indexTeacher.html" type="JavascriptDebugType" factoryName="JavaScript Debug" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/www/indexTeacher.html">
       <RunnerSettings RunnerId="JavascriptDebugRunner" />
       <ConfigurationWrapper RunnerId="JavascriptDebugRunner" />
       <method />
@@ -317,6 +303,12 @@
       <ConfigurationWrapper RunnerId="JavascriptDebugRunner" />
       <method />
     </configuration>
+    <configuration default="false" name="www" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner directory="$PROJECT_DIR$" />
+      <RunnerSettings RunnerId="PhpRunner" />
+      <ConfigurationWrapper RunnerId="PhpRunner" />
+      <method />
+    </configuration>
     <configuration default="true" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner />
       <method />
@@ -331,6 +323,9 @@
       <BehatRunner />
       <method />
     </configuration>
+    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
+      <method />
+    </configuration>
     <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
       <node-options />
       <gulpfile />
@@ -339,23 +334,20 @@
       <envs />
       <method />
     </configuration>
-    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
-      <method />
-    </configuration>
     <list size="5">
       <item index="0" class="java.lang.String" itemvalue="JavaScript Debug.indexJZ.html" />
-      <item index="1" class="java.lang.String" itemvalue="JavaScript Debug.indexTeacher.html" />
-      <item index="2" class="java.lang.String" itemvalue="JavaScript Debug.index_sx.html" />
-      <item index="3" class="java.lang.String" itemvalue="JavaScript Debug.index_sx.html (1)" />
-      <item index="4" class="java.lang.String" itemvalue="JavaScript Debug.index.html" />
+      <item index="1" class="java.lang.String" itemvalue="JavaScript Debug.index_sx.html" />
+      <item index="2" class="java.lang.String" itemvalue="JavaScript Debug.index_sx.html (1)" />
+      <item index="3" class="java.lang.String" itemvalue="JavaScript Debug.index.html" />
+      <item index="4" class="java.lang.String" itemvalue="PHPUnit.www" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="JavaScript Debug.index.html" />
-        <item index="1" class="java.lang.String" itemvalue="JavaScript Debug.index_sx.html (1)" />
-        <item index="2" class="java.lang.String" itemvalue="JavaScript Debug.index_sx.html" />
-        <item index="3" class="java.lang.String" itemvalue="JavaScript Debug.indexJZ.html" />
-        <item index="4" class="java.lang.String" itemvalue="JavaScript Debug.indexTeacher.html" />
+        <item index="0" class="java.lang.String" itemvalue="PHPUnit.www" />
+        <item index="1" class="java.lang.String" itemvalue="JavaScript Debug.index.html" />
+        <item index="2" class="java.lang.String" itemvalue="JavaScript Debug.index_sx.html (1)" />
+        <item index="3" class="java.lang.String" itemvalue="JavaScript Debug.index_sx.html" />
+        <item index="4" class="java.lang.String" itemvalue="JavaScript Debug.indexJZ.html" />
       </list>
     </recent_temporary>
   </component>
@@ -388,13 +380,13 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -482,6 +474,7 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="18387" max-vertical-offset="23571">
           <caret line="782" column="43" selection-start-line="782" selection-start-column="43" selection-end-line="782" selection-end-column="43" />
           <folding>
+            <element signature="e#2538#7164#0" expanded="false" />
             <element signature="n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
             <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#div#2;n#body#0;n#html#0;n#!!top" expanded="false" />
@@ -699,13 +692,13 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/statis/EChartsInfo.js.bak">
-      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.18881118" vertical-offset="0" max-vertical-offset="7074">
           <caret line="6" column="23" selection-start-line="6" selection-start-column="22" selection-end-line="6" selection-end-column="23" />
         </state>
+      </provider>
+      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/css/component.css">
@@ -804,29 +797,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/indexTeacher.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="19197" max-vertical-offset="24327">
-          <caret line="787" column="24" selection-start-line="787" selection-start-column="24" selection-end-line="787" selection-end-column="24" />
-          <folding>
-            <element signature="n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#div#2;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#div#1;n#div#3;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#script#4;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <marker date="1450257556519" expanded="true" signature="17482:17532" placeholder="..." />
-            <marker date="1450257556519" expanded="true" signature="17566:17584" placeholder="..." />
-            <marker date="1450257556519" expanded="true" signature="24366:24416" placeholder="..." />
-            <marker date="1450257556519" expanded="true" signature="24450:24468" placeholder="..." />
-            <marker date="1450257556519" expanded="true" signature="26355:26364" placeholder="..." />
-            <marker date="1450257556519" expanded="true" signature="30150:30159" placeholder="..." />
-            <marker date="1450257556519" expanded="true" signature="32356:32424" placeholder="..." />
-            <marker date="1450257556519" expanded="true" signature="36577:36586" placeholder="..." />
-            <marker date="1450257556519" expanded="true" signature="40106:40115" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/css/style.css">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4401">
@@ -843,6 +813,16 @@
             <marker date="1450158064508" expanded="true" signature="26013:26027" placeholder="..." />
             <marker date="1450158064508" expanded="true" signature="27445:27458" placeholder="..." />
             <marker date="1450158064508" expanded="true" signature="27643:27674" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/newTeacherApi.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.58437145" vertical-offset="975" max-vertical-offset="12906">
+          <caret line="17" column="51" selection-start-line="17" selection-start-column="51" selection-end-line="17" selection-end-column="51" />
+          <folding>
+            <element signature="n#style#0;n#head#0;n#html#0;n#!!top" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -882,11 +862,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/newTeacherApi.html">
+    <entry file="file://$PROJECT_DIR$/indexTeacher.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.29558325" vertical-offset="12537" max-vertical-offset="16902">
-          <caret line="474" column="62" selection-start-line="474" selection-start-column="38" selection-end-line="474" selection-end-column="62" />
-          <folding />
+        <state vertical-scroll-proportion="1.2976191" vertical-offset="6902" max-vertical-offset="21951">
+          <caret line="471" column="115" selection-start-line="471" selection-start-column="109" selection-end-line="471" selection-end-column="115" />
+          <folding>
+            <element signature="e#2538#7164#0" expanded="false" />
+            <element signature="n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#div#2;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#div#1;n#div#3;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#script#4;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <marker date="1450257556519" expanded="true" signature="17482:17532" placeholder="..." />
+            <marker date="1450257556519" expanded="true" signature="17566:17584" placeholder="..." />
+            <marker date="1450257556519" expanded="true" signature="24366:24416" placeholder="..." />
+            <marker date="1450257556519" expanded="true" signature="24450:24468" placeholder="..." />
+            <marker date="1450257556519" expanded="true" signature="26355:26364" placeholder="..." />
+            <marker date="1450257556519" expanded="true" signature="30150:30159" placeholder="..." />
+            <marker date="1450257556519" expanded="true" signature="32356:32424" placeholder="..." />
+            <marker date="1450257556519" expanded="true" signature="36577:36586" placeholder="..." />
+            <marker date="1450257556519" expanded="true" signature="40106:40115" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
