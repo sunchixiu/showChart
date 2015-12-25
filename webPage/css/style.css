@@ -2299,7 +2299,8 @@ a.xq_box:hover img {
   color: #7eb909;
   margin-bottom: 30px;
 }
-.device_list_control h4{color: #333; padding-left: 10px;}
+.device_list_control h4{color: #333; margin-left: 10px; height: 42px; line-height: 42px;}
+.device_list_control h4 input{margin-right: 8px; float: right; margin-top: 6px;}
 .device_list_control .device_info_box p.info {
   font-size: 12px;
   color: #999;
@@ -2780,3 +2781,5 @@ span.required {
 .pc_div p{margin-bottom: 2px;}
 .pc_div p span{color: #333; font-size: 12px; line-height: 18px; display: inline-block;}
 .grades{display: block; clear: both; margin-bottom: 12px;}
+.delpop{border-radius: 6px; -webkit-border-radius: 6px; -moz-border-radius: 6px; -ms-border-radius: 6px; overflow: hidden;}
+.delpop .modal-header{background: #fff; border-bottom: 1px solid #ccc; height: 20px;}

@@ -408,7 +408,7 @@
             <div class="k_content">
                 <div class="device_list_control clearfix">
                     <div class="grades">
-                        <h4>一年级一班</h4>
+                        <h4>一年级一班<!--<input type="button" value="删除" class="btn btn-default" onclick="deleteClass();">--></h4>
                         <div class="device_line" style="border-top: 1px solid #ddd; clear: both;">
                             <div class="device_main clearfix">
                                 <div class="device_icon_box pull-left">
@@ -504,6 +504,26 @@
     <p>地址：湖北省武汉市武昌区洪山路2号 邮编：430071</p>
 
 </div>
+
+<!--删除弹出窗口-->
+<div class="modal hide fade delpop" id="delModal" tabindex="-1" role="dialog">
+    <div class="modal-header"><button class="close" type="button" data-dismiss="modal">×</button>
+        <h4>删除 <em class="className">三年级二班</em></h4>
+    </div>
+    <div class="modal-body" style="height: 80px; line-height: 80px; text-align: center;">
+        <div>确实要删除 <em class="className">三年级二班</em> 吗？</div>
+    </div>
+    <div class="modal-footer" style="text-align: center; height: 30px; padding: 6px;">
+        <input type="button" class="btn btn-default" value="确定"> <input type="button" class="btn btn-default" data-dismiss="modal" value="取消">
+    </div>
+</div>
+<script>
+    function deleteClass(name){
+        $('#delModal').find('em.className').html(name);
+        $('#delModal').modal('show');
+    };
+</script>
+
 <!--多级联动-->
 <script>
     var provinceId = '420000';
@@ -584,7 +604,7 @@
         areaName = areaId;
         schoolName = dataSchoolId;
         getData(provinceId,cityId,areaId,dataSchoolId);
-        $('#schoolDiv > button').html(name);
+        $('#schoolDiv > button').html(name+' <span class="caret"></span>');
     };
 
     getData(provinceName,cityName,areaName,schoolName);
@@ -599,7 +619,6 @@
 //            processData:false,
             success:function(data){
 //                alert(JSON.stringify(data));
-                console.log(JSON.stringify(data));
                 showData(data);
             },
             error:function(data){
@@ -628,7 +647,6 @@
 
 //    showData(data);
     function showData(data){
-        console.log(JSON.stringify(data));
         var html = '';
         var picSrc = '';
         var deviceInfo = '';
@@ -679,7 +697,8 @@
                     break;
             };
             if(i%3 == 0){
-                html += '<div class="device_list_control clearfix"><div class="grades"><h4>'+(data.data[i].grade+data.data[i].classc)+'</h4>' +
+                html += '<div class="device_list_control clearfix"><div class="grades"><h4>'+(data.data[i].grade+data.data[i].classc)+'<input type="button" value="删除" class="btn btn-default" onclick=deleteClass("'+(data.data[i].grade+data.data[i].classc)+'")></h4>' +
+//                html += '<div class="device_list_control clearfix"><div class="grades"><h4>'+(data.data[i].grade+data.data[i].classc)+'</h4>' +
                 '<div class="device_line" style="border-top: 1px solid #ddd; clear: both;">' +
                 '<div class="device_main clearfix">' +
                 '<div class="device_icon_box pull-left">' +
@@ -687,8 +706,8 @@
                 '</div>' +
                 '<div class="pull-left device_info_box">' +
                 '<p class="info"><a href="#">'+deviceName+'</a></p>' +
+                '<p class="info">　</p>' +
                 '<p class="info" data-runStatus="'+i+'">运行状态：'+realstate+'</p>' +
-                '<p class="info">IP地址：10.0.10.204</p>' +
                 '</div>' +
                 '<div class="pc_div">' +
                 '<p><span class="cpuinfor" style="width: 118px;">处理器：</span><span class="raminfor">内存信息：</span></p>' +
@@ -765,7 +784,7 @@
                                         startAngle: -45,
                                         endAngle: 45,
                                         background: null,
-                                        center: ["50%","210%"],
+                                        center: ["50%","204%"],
                                         size: 200
                                     }],
 
@@ -856,7 +875,7 @@
                                         startAngle: -45,
                                         endAngle: 45,
                                         background: null,
-                                        center: ["50%","210%"],
+                                        center: ["50%","204%"],
                                         size: 200
                                     }],
 
@@ -1151,23 +1170,23 @@
                         if(data.data[i].realstate == 1){
                             realstate = '运行';
                             ifDisabledRun = 'disabled="disabled"';
-                            changeStatus();
+                            changeStatus(i);
                         }else if(data.data[i].realstate == 2){
                             ifDisabledLogout = 'disabled="disabled"';
                             realstate = '注销';
-                            changeStatus();
+                            changeStatus(i);
                         }else if(data.data[i].realstate == 3){
                             ifDisabledReset = 'disabled="disabled"';
                             realstate = '重启';
-                            changeStatus();
+                            changeStatus(i);
                         }else if(data.data[i].realstate == 4){
                             ifDisabledClose = 'disabled="disabled"';
                             realstate = '关机';
-                            changeStatus();
+                            changeStatus(i);
                         }else{
 
                         };
-                        function changeStatus(){
+                        function changeStatus(i){
                             $('.device_info_box > p.info').each(function(){
                                 if($(this).attr('data-runStatus') == i){
                                     $(this).html('运行状态：'+realstate);
@@ -1177,7 +1196,6 @@
 
                     };
                 };
-
             },
             error:function(data){
                 //alert('失败');
