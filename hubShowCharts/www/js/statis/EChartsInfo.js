@@ -45,9 +45,9 @@ function BorkenlineLoad(objId, data, legendTitle, para, key, bclick) {
     option = {
         grid:{
             x:46,
-            y:36,
+            y:46,
             x2:12,
-            y2:54
+            y2:110
         },
         tooltip: {
             trigger: 'axis'
@@ -80,7 +80,7 @@ function BorkenlineLoad(objId, data, legendTitle, para, key, bclick) {
                 boundaryGap: false,
                 axisLabel: {
                     number: "0",
-                    rotate:-90,
+                    rotate:90
                 },
                 data: function () {
                     var dataX = [];
@@ -297,7 +297,7 @@ function LineLoad2(objId, data, legendTitle, para, key, bclick,Func) {
                 type: 'category',
                 axisLabel: {
                     number: "0",
-                    rotate: -90,
+                    rotate: -90
                 },
                 data: function () {
                     var dataX = [];
