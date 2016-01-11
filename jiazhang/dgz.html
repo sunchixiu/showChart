@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <style>
+        div,ul,li{margin:0; padding:0;}
+        ol,ul {list-style:none;}
+        span{display: inline-block; width: 18px; height: 18px; line-height: 18px; text-align: center; background: #fff; border: 1px solid #333; border-radius: 50%; -webkit-border-radius: 50%; position: relative; z-index: 2;}
+        .origin ul{display: block; width: 100%; float: left;}
+        .origin ul li{float: left; width: 120px; height: 120px; font-size: 14px;}
+        .origin ul li.show{border-left: 1px solid #333; border-top: 1px solid #333; position: relative; z-index: 1;}
+        .origin ul li span.up{float: right;}
+        .origin ul li span.down{margin: 100px 0 0 -10px;}
+    </style>
+</head>
+<body>
+    <span>+</span>
+    <div class="origin">
+        <ul>
+            <li class="show"><span class="up">+</span><span class="down">+</span></li>
+            <li class="show"><span class="up">+</span><span class="down">+</span></li>
+        </ul>
+        <ul>
+            <li class="show"><span class="up">+</span><span class="down">+</span></li>
+            <li class="show"><span class="up">+</span><span class="down">+</span></li>
+        </ul>
+    </div>
+</body>
+</html>

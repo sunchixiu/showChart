@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" href="css/mobilebone.css">
 
-    <!--<script src="cordova.js"></script>-->
+    <script src="cordova.js"></script>
     <script src="js/every.js"></script>
     <script src="js/turnpage.js"></script>
     <script src="js/iscroll.js"></script>
@@ -36,36 +36,38 @@
     </script>
 
     <!--Android交互-->
-    <!--<script>-->
-        <!--var json = {};-->
-        <!--setTimeout(function(){-->
-            <!--var output = "";-->
-
-            <!--for(var i in document.UserInfo){-->
-                <!--var property=document.UserInfo[i];-->
-                <!--output+=i+" = "+property+"\n";-->
-            <!--}-->
-            <!--alert(output);-->
-
-            <!--alert(cordova.plugins.traceclass.httpPost);-->
-
-            <!--var server = new Object, arg = new Object;-->
-            <!--server.Server = "http://182.48.115.253:70/TSB_ISCHOOL_LCS_SERVER/tchmyroom/getgradecourseunitlist";-->
-            <!--arg.teacherid = "4bb6a1cc784943708e24714bc7e99287";-->
-<!--//            arg.teacherid = document.UserInfo.UserID;-->
-
-            <!--var args =  [server, arg];-->
-
-            <!--cordova.plugins.traceclass.httpPost(-->
-                <!--function success(result){-->
-                    <!--json = JSON.parse(result.Result);-->
-                    <!--getUserInfo();-->
-                <!--}, function error(result) {-->
-
-                <!--}, args);-->
-
-        <!--},1000);-->
-    <!--</script>-->
+    <script>
+//        var json = {};
+//        var UserID;
+//        setTimeout(function(){
+//            var output = "";
+//
+//            for(var i in document.UserInfo){
+//                var property=document.UserInfo[i];
+//                output+=i+" = "+property+"\n";
+//            }
+////            alert(output);
+////
+////            alert(cordova.plugins.traceclass.httpPost);
+//
+//            var server = new Object, arg = new Object;
+//            server.Server = "http://182.48.115.253:70/TSB_ISCHOOL_LCS_SERVER/tchmyroom/getgradecourseunitlist";
+////            arg.teacherid = "4bb6a1cc784943708e24714bc7e99287";
+//            arg.teacherid = document.UserInfo.UserID;
+//            UserID = document.UserInfo.UserID;
+//
+//            var args =  [server, arg];
+//
+//            cordova.plugins.traceclass.httpPost(
+//                function success(result){
+//                    json = JSON.parse(result.Result);
+//                    getUserInfo();
+//                }, function error(result) {
+//
+//                }, args);
+//
+//        },1000);
+    </script>
 
     <script>
         var json = {
@@ -414,7 +416,7 @@
 
 <!--真实老师数据-->
 <script>
-    var UserId, htmlLi, gradeid, classid, subjectid, termtype, versionid;
+    var htmlLi, gradeid, classid, subjectid, termtype, versionid;
 
     function getUserInfo(){
     	UserId = '684b356a9560466887266e4800ea0776';//c4519e53ddb842e4bb817fd7b2b9163b

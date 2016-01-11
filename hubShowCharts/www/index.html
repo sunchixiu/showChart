@@ -5,184 +5,56 @@
     <meta http-equiv="X-UA-Compatible" content="IE=9">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
     <title>我的书桌</title>
+    <link rel="stylesheet" type="text/css" href="css/default.css" />
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" href="css/mobilebone.css">
+    <link rel="stylesheet" type="text/css" href="css/english.css">
 
-    <script src="cordova.js"></script>
-    <script src="js/every.js"></script>
-    <script src="js/turnpage.js"></script>
-    <script src="js/iscroll.js"></script>
-    <script src="js/jquery-1.11.1.min.js"></script>
-    <script src="js/common.js"></script>
-    <!--<script src="js/echarts/esl.js"></script>-->
+    <!--<script src="cordova.js"></script>-->
     <script>
         var timer = null;
+        var intTimer = null;
+        var timeLength = 0;
     </script>
-    <script>
-        setTimeout(function(){
-            var oScript = document.createElement('script');
-            oScript.src = 'js/echarts/esl.js';
-            document.getElementsByTagName('head')[0].appendChild(oScript);
-        },200);
-    </script>
-    <script src="js/statis/EChartsInfo.js"></script>
-    <!--<script src="js/echarts/echarts.js"></script>-->
-    <script>
-        setTimeout(function(){
-            var oScript = document.createElement('script');
-            oScript.src = 'js/echarts/echarts.js';
-            document.getElementsByTagName('head')[0].appendChild(oScript);
-        },200);
-    </script>
+    <script src="js/every.js"></script>
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/modernizr.custom.js"></script>
+    <script type="text/javascript" src="js/audio/jquery.jplayer.min.js"></script>
+
+    <script src="js/audio/toword.js"></script>
 
     <!--Android交互-->
-    <script>
-//        var json = {};
-//        var UserID;
-//        setTimeout(function(){
-//            var output = "";
-//
-//            for(var i in document.UserInfo){
-//                var property=document.UserInfo[i];
-//                output+=i+" = "+property+"\n";
-//            }
-////            alert(output);
-////
-////            alert(cordova.plugins.traceclass.httpPost);
-//
-//            var server = new Object, arg = new Object;
-//            server.Server = "http://182.48.115.253:70/TSB_ISCHOOL_LCS_SERVER/tchmyroom/getgradecourseunitlist";
-////            arg.teacherid = "4bb6a1cc784943708e24714bc7e99287";
-//            arg.teacherid = document.UserInfo.UserID;
-//            UserID = document.UserInfo.UserID;
-//
-//            var args =  [server, arg];
-//
-//            cordova.plugins.traceclass.httpPost(
-//                function success(result){
-//                    json = JSON.parse(result.Result);
-//                    getUserInfo();
-//                }, function error(result) {
-//
-//                }, args);
-//
-//        },1000);
-    </script>
+    <!--<script>-->
+        <!--var json = {};-->
+        <!--setTimeout(function(){-->
+            <!--var output = "";-->
 
-    <script>
-        var json = {
-            "code": 1,
-            "errorCode": 0,
-            "data": {
-                "schoolid": "799db0e2aa1e4a1e83bc20a34b17b3b6",
-                "schoolname": "湖北省武汉市第二中学",
-                "courselist": [
-                    {
-                        "schoolid": "799db0e2aa1e4a1e83bc20a34b17b3b6",
-                        "schoolname": "湖北省武汉市第二中学",
-                        "gradetype": 3,
-                        "gradeid": "c787ddeeedb04237aae89ac2e3375c8f",
-                        "gradenum": "2",
-                        "gradename": "一年级",
-                        "classid": "de17eff140514d7893d0dabe1a6ba1c1",
-                        "classname": "一年级一班",
-                        "subjectid": "13",
-                        "subjectname": "数学",
-                        "versionid": "2",
-                        "versionname": "人教版",
-                        "termtype": "20",
-                        "subjectthemeid": null,
-                        "scores": "0",
-                        "unitlist": [
-                            {
-                                "unitid": "1",
-                                "unitname": "第一章　有理数",
-                                "unitsort": "1"
-                            },
-                            {
-                                "unitid": "2",
-                                "unitname": "第二章　整式的加减",
-                                "unitsort": "1"
-                            },
-                            {
-                                "unitid": "3",
-                                "unitname": "第三章　一元一次方程",
-                                "unitsort": "1"
-                            },
-                            {
-                                "unitid": "4",
-                                "unitname": "第四章　几何图形初步",
-                                "unitsort": "1"
-                            }
-                        ]
-                    },
-                    {
-                        "schoolid": "799db0e2aa1e4a1e83bc20a34b17b3b6",
-                        "schoolname": "湖北省武汉市第二中学",
-                        "gradetype": 2,
-                        "gradeid": "c787ddeeedb04237aae89ac2e3375c8f",
-                        "gradenum": "7",
-                        "gradename": "一年级",
-                        "classid": "9d40d46753bb43eba50369b7995e7cc7",
-                        "classname": "数学班",
-                        "subjectid": "10",
-                        "subjectname": "英语",
-                        "versionid": "11",
-                        "versionname": "译林版",
-                        "termtype": "10",
-                        "subjectthemeid": null,
-                        "scores": "0",
-                        "unitlist": [
-                            {
-                                "unitid": "1",
-                                "unitname": "Unit1 This is me!",
-                                "unitsort": "1"
-                            },
-                            {
-                                "unitid": "2",
-                                "unitname": " Unit2 Let's play sports!",
-                                "unitsort": "2"
-                            },
-                            {
-                                "unitid": "3",
-                                "unitname": "Unit3 Welcome to our school!",
-                                "unitsort": "3"
-                            },
-                            {
-                                "unitid": "4",
-                                "unitname": "Unit4 My day ",
-                                "unitsort": "4"
-                            },
-                            {
-                                "unitid": "5",
-                                "unitname": "Unit5 Let's celebrate!",
-                                "unitsort": "5"
-                            },
-                            {
-                                "unitid": "6",
-                                "unitname": "Unit6 Food and lifestyle",
-                                "unitsort": "6"
-                            },
-                            {
-                                "unitid": "7",
-                                "unitname": "Unit7 Shopping",
-                                "unitsort": "7"
-                            },
-                            {
-                                "unitid": "8",
-                                "unitname": "Unit8 Fashion",
-                                "unitsort": "8"
-                            }
-                        ]
-                    }
-                ]
-            },
-            "errorMessage": ""
-        };
-        setTimeout(function(){
-            getUserInfo();
-        },1000);
-    </script>
+            <!--for(var i in document.UserInfo){-->
+                <!--var property=document.UserInfo[i];-->
+                <!--output+=i+" = "+property+"\n";-->
+            <!--}-->
+            <!--alert(output);-->
+
+            <!--alert(cordova.plugins.traceclass.httpPost);-->
+
+            <!--var server = new Object, arg = new Object;-->
+            <!--server.Server = "http://182.48.115.253:70/TSB_ISCHOOL_LCS_SERVER/tchmyroom/getgradecourseunitlist";-->
+            <!--arg.teacherid = "4bb6a1cc784943708e24714bc7e99287";-->
+<!--//            arg.teacherid = document.UserInfo.UserID;-->
+
+            <!--var args =  [server, arg];-->
+
+            <!--cordova.plugins.traceclass.httpPost(-->
+                <!--function success(result){-->
+                    <!--json = JSON.parse(result.Result);-->
+                    <!--getUserInfo();-->
+                <!--}, function error(result) {-->
+
+                <!--}, args);-->
+
+        <!--},1000);-->
+    <!--</script>-->
+
 
     <script>
         var pageIndex = 0;//goback参数
@@ -199,780 +71,1464 @@
 
         };
     </script>
-    <style>
-        .personFrame{width: 90%; height: 95%; position: absolute; display: table; margin: 5% 5% 0 5%; z-index: -1; -webkit-transition: .3s all ease; transition: .3s all ease; opacity: 0;}
-        .personDiv{display: table-cell; vertical-align: middle;}
-        .personDiv ul{width: 92%; max-height: 92%; position: relative; padding: 4%; overflow-y: auto; overflow-x: hidden; background: #fff; border-radius: 0.2rem; -webkit-border-radius: 0.2rem;}
-        .personDiv ul li{height: 1.2rem; line-height: 1rem; font-size: 0.6rem; color: #666; margin: 0.6rem 0; border-bottom: 1px solid #33ccff; margin-top: 0.4rem;}
-    </style>
 </head>
-<body onload="loaded('isection')">
+<body>
 <div class="main page out" id="pageHome">
-    <div class="iheader"><div class="l"><a href="javascript:closeWebview();">&laquo;返回</a></div><div class="m" id="schoolNameId">我的书桌</div><div class="r"></div></div>
-    <div class="isection">
-        <div class="block_book">
+    <div class="iiheader" style="z-index: 2;"><div class="l"><a href="javascript:closeWebview();">&laquo;返回</a></div><div class="m" id="schoolNameId">我的书桌</div><div class="r"></div></div>
+    <div class="iisection" style="z-index: 1;">
+        <div class="block_book" style="margin-bottom: 0.6rem;">
             <ul>
-                <li style="border-bottom: none; font-size: 0.8rem; height: 0.8rem; border-top: none;"><span>老师好，请选择您的课本。</span></li>
+                <!--<li style="border-bottom: none; font-size: 0.8rem; height: 0.8rem; border-top: none;"><span>同学好，请选择您的课本。</span></li>-->
             </ul>
-            <ul id="bookIndex">
-                <div class="tempLoading"></div>
-                <!--<li onclick="popDiv(1,'abc')">-->
-                    <!--<span><img src="img/book.jpg"></span>-->
-                    <!--<span class="right">-->
-                        <!--<p class="up">英语</p>-->
-                        <!--<p class="down">小学二年级(上)</p>-->
-                    <!--</span>-->
-                <!--</li>-->
-                <!--<li onclick="popDiv(1,'abc')">-->
-                    <!--<span><img src="img/book.jpg"></span>-->
-                    <!--<span class="right">-->
-                        <!--<p class="up">数学</p>-->
-                        <!--<p class="down">小学二年级(下)</p>-->
-                    <!--</span>-->
-                <!--</li>-->
-                <!--<li onclick="popDiv(1,'abc')">-->
-                    <!--<span><img src="img/book.jpg"></span>-->
-                    <!--<span class="right">-->
-                        <!--<p class="up">语文</p>-->
-                        <!--<p class="down">小学三年级(中)</p>-->
-                    <!--</span>-->
-                <!--</li>-->
-                <!--<li onclick="popDiv(1,'abc')">-->
-                    <!--<span><img src="img/book.jpg"></span>-->
-                    <!--<span class="right">-->
-                        <!--<p class="up">语文</p>-->
-                        <!--<p class="down">小学二年级(下)</p>-->
-                    <!--</span>-->
-                <!--</li>-->
-                <!--<li onclick="popDiv(1,'abc')">-->
-                    <!--<span><img src="img/book.jpg"></span>-->
-                    <!--<span class="right">-->
-                        <!--<p class="up">语文</p>-->
-                        <!--<p class="down">小学二年级(下)</p>-->
-                    <!--</span>-->
-                <!--</li>-->
-            </ul>
+        </div>
+        <!--<div class="tempLoading"></div>-->
+        <div id="pageHomeContent">
+            <div id="tempLoading" class="tempLoading" aria-invalid="tempLoading" style="margin-top: -8rem;"></div>
         </div>
     </div>
 </div>
 
 <!--二级页面-->
 <div class="main page out" id="page1">
-    <div class="header"><div class="l"><a href="#&pageHome" data-rel="back">&laquo;返回</a></div><div class="m" id="teacherBookName">书本名称</div><div class="r"></div></div>
-    <div class="section">
-        <div class="list_book">
-            <!--<ul>-->
-                <!--<li><span>章节学习统计表</span></li>-->
-            <!--</ul>-->
-            <div class="lip" style="margin-top: 0.4rem;">
-                <p>
-                    <input type="button" class="cur" value="全体班级" id="allClassId">
-                    <input type="button" value="个人" id="person" onclick="showWindow('personDiv');">
-                </p>
-            </div>
-            <div class="chart_k">
-                <div class="WrapContent" style="clear: both;">
-                    <div style="overflow: hidden;" id="DataLoadContainer">
-                        <div id="chartunitcon" style="overflow:hidden">
-                            <h1 class="echart_h1 more_h1" style="height: 1rem;"></h1>
-                            <div id="chartunit" data-status="0" style="width: 17.3rem; height:14rem; text-align: center;"><div class="tempLoading"></div></div>
-                        </div>
-                        <!--<div style="overflow: hidden;">-->
-                            <!--<h1 class="echart_h1 more_h1 "></h1>-->
-                            <!--<div style="height: 14rem; overflow: hidden;">-->
-                                <!--<div id="charttimes" style="height: 17rem; width: 18rem; text-align: center; vertical-align: middle;" data-status="0"><img src="img/loading.gif" style="margin-top: 5rem;"></div>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    </div>
-                    <div style="overflow: hidden; padding: 10px; display: none;" class="alert alert-warning" class="dataerror">
-                        暂无数据
-                    </div>
-                </div>
-            </div>
-            <ul>
-                <li><span>章节选择</span></li>
-            </ul>
-            <div id="divunit"><div style="display: none;"></div></div>
-            <div class="lip">
-                <p id="unitP"></p>
-            </div>
+    <div class="iiheader"><div class="l"><a href="#&pageHome" data-rel="back">&laquo;返回</a></div><div class="m" id="AudiounitName"></div><div class="r"></div></div>
+    <div class="iisection word">
+        <div class="list_book" id="pointListId">
+            <div id="tempLoading" class="tempLoading" aria-invalid="tempLoading" style="margin-top: -6rem;"></div>
         </div>
+        <div style="height: 3.2rem;"></div>
     </div>
 </div>
-<div  class="personFrame" id="personDiv">
-    <div class="personDiv" id="divstudent">
-        <ul></ul>
-        <input type="hidden" value="" />
-    </div>
-</div>
-
 
 <!--三级页面-->
 <div class="main page out" id="page2">
-    <div class="iiheader"><div class="l"><a href="#&page1" data-rel="back">&laquo;返回</a></div><div class="m">课时学习统计表</div><div class="r"></div></div>
-    <div class="iisection">
-        <div class="chart_k">
-            <h1 class="echart_h1 more_h1 "></h1>
-            <div>
-                <a class="btn btn-success btn-default lessonchartbtn" onclick="selectLessonRate(1)">正确率</a><a class="btn btn-default lessonchartbtn" onclick="selectLessonRate(2)">完成率</a>
+    <div class="iiheader"><div class="l"><a href="#&page1" onclick="backClear();" data-rel="back">&laquo;返回</a></div><div class="m" id="AudioclassName">课时名称</div><div class="r"></div></div>
+    <div class="iisection" style="background: #52691f;">
+        <div class="bc_header wordheader">
+            <div id="tempLoading" class="tempLoading" aria-invalid="tempLoading" style="margin-top: -8rem;"></div>
+        </div>
+        <div class="bc_content_word_k">
+            <div class="clockprogress">
+                <div class="wholeTime"><span class="nowTime"></span></div>
             </div>
-            <div id="chartlessons" style="width: 17.3rem; height:14rem;"><div class="tempLoading" style="margin-top: -5rem;"></div></div>
-            <div style="overflow: hidden; padding: 0.5rem; display: none;" class="alert alert-warning" class="dataerror">
-                暂无数据
+            <div class="bc_content bc_content_word write">
+            </div>
+            <div class="aiPanel" id="aiPanel">
+                <span class="record"></span>
             </div>
         </div>
 
-        <div class="list_book">
-            <ul>
-                <li><span>详细课时选择</span></li>
-            </ul>
-            <div class="lip" id="lipPoint">
-                <p>
-                    <input type="button" value="课时1：平均分" onclick="popIframe('block_listchart3.html');">
-                    <input type="button" value="课时2：练习二" onclick="popIframe('block_listchart3.html');">
-                    <input type="button" value="课时3：除法" onclick="popIframe('block_listchart3.html');">
-                    <input type="button" value="课时4：练习三" onclick="popIframe('block_listchart3.html');">
-                    <input type="button" value="课时5：用2～6的乘法口诀求商" onclick="popIframe('block_listchart3.html');">
-                </p>
-            </div>
-        </div>
-        <div class="bottomHeight"></div>
-    </div>
-</div>
-
-<!--四级页面-->
-<div class="main page out" id="page3">
-    <script src="js/yxMobileSlider.js"></script>
-    <div class="iiheader"><div class="l"><a href="#&page2" data-rel="back">关闭</a></div><div class="m" id="mName">课时统计表</div><div class="r"></div></div>
-
-    <div class="iisection">
-        <div class="chart_k">
-            <h1 class="echart_h1 more_h1 "></h1>
-            <div>
-                <a class="btn btn-default btn-success" onclick="showChartQuestion(1,'')" id="qestion_btn_lianxi">练习</a>
-                <div class="dropdown" id="qestion_btn_suitang" style="margin-top: -0.2rem;">
-                    <div>随堂练习</div>
-                    <ul class="dropdown-menu"></ul>
+        <div class="alertcontainer">
+            <div class="alertcontainer_bg"></div>
+            <div class="alert">
+                <div class="alerttitle"><span onclick="$('.alertcontainer').hide()" title="关闭"></span></div>
+                <div class="alertcontent">
                 </div>
-                <a class="btn btn-default btn-default" onclick="showChartQuestion(2,'')" id="qestion_btn_zuoye">作业</a>
-            </div>
-            <div id="chartquestionscon" style="height:14rem; overflow:hidden;">
-                <div id="chartquestions" style="height: 14rem; width: 17.3rem; text-align: center;"><div class="tempLoading" style="margin-top: -6rem;"></div></div>
+                <div class="alertbutton">
+
+                    <a onclick="$('.alertcontainer').hide();$('.alertcontent').html('');$('.bc_big_read').click()" class="alertre_readbtn">重读</a>
+                    <a class="alertre_nextquestionbtn">下一个</a>
+                    <a class="alertre_keybtn" style="display:none">重写</a>
+                    <a class="alertre_nextkeybtn" style="display:none">下一个</a>
+
+
+                </div>
             </div>
         </div>
-        <div class="lip" id="lipPointContent" style="margin-top: 0.5rem;">
-            <p>
-                <input class="cur" type="button" value="课时1：平均分">
-                <input type="button" value="课时2：练习二">
-                <input type="button" value="课时3：除法">
-                <input type="button" value="课时4：练习三">
-                <input type="button" value="课时5：用2～6的乘法口诀求商">
-            </p>
+    </div>
+    <div class="bc_footer">
+        <a class="bc_big_audio"></a>
+        <a class="bc_big_read"></a>
+        <a class="bc_big_key"></a>
+    </div>
+</div>
+<div class="main page out" id="page2_2">
+    <div class="iiheader"><div class="l"><a href="#&page1" onclick="backClear();" data-rel="back">&laquo;返回</a></div><div class="m" id="AudioclassName">课时名称</div><div class="r"></div></div>
+    <div class="iisection" style="background: #52691f;">
+        <div class="blackboard_container">
+            <div class="bc_header textheader">
+                <a data-value="-2">慢速</a>
+                <a class="active" data-value="0">正常</a>
+                <div class="sentWholeTime proccess">
+                    <span class="sentNowTime"></span>
+                </div>
+                <div class="bc_score"></div>
+            </div>
+            <div class="bc_content bc_content_sent">
+                <div id="tempLoading" class="tempLoading" aria-invalid="tempLoading" style="margin-top: 0rem;"></div>
+            </div>
+            <div id="player"></div>
+
+            <div class="aiPanel" id="aiPanelSent">
+                <span class="recordSent"></span>
+            </div>
+
         </div>
-        <div class="bottomHeight"></div>
+        <div class="alertcontainer" style="margin-top: -3rem;">
+            <div class="alertcontainer_bg"></div>
+            <div class="alertSent" onclick="hideScore();">
+                <div class="alerttitle"><span onclick="$('.alertcontainer').hide()"></span></div>
+                <div class="alertcontent">
+                </div>
+                <div class="alertbutton">
+                    <a  class="alertbtn_reread">重读</a>
+                    <a  class="alertbtn_nextread">下一句</a>
+                    <a  class="alertbtn_rekey">重写</a>
+                    <a  class="alertbtn_nextkey">下一句</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bc_footer">
+        <a class="bc_big_audio_sent"></a>
+        <a class="bc_big_read_sent"></a>
+        <a class="bc_big_key_sent"></a>
     </div>
 </div>
 
-<script src="js/mobilebone.js"></script>
-<script type="text/javascript" src="js/statis/ApiConfig.js"></script>
 <script>
-    function popDiv(index,str){
-        if(index == 1){
-            window.location.href = '#&page1';
-            if(str){
-                if($('#chartunit').attr('data-status') == 0){
-                    $('#teacherBookName').html(str);
-                    $('#chartunit').html('<div class="tempLoading"></div>');
-                    $('#unitP').html('');
-                    Init();
-                }else{
-//                $('#chartunit').html('<img src="img/loading.gif" style="margin-top: 5rem;">');
-//                Init();
+//    var data = {
+//        "code": 1,
+//        "errorCode": 0,
+//        "data": {
+//            "currentcredit": 0,
+//            "totalcredit": 2400,
+//            "subjectlist": [
+//                {
+//                    "gradeid": "7382528e985f45908cadbc117c8030eb",
+//                    "gradenum": 1,
+//                    "gradetype": 1,
+//                    "gradename": "一年级",
+//                    "classid": "9b6b68c62ad242d09d5fc46d88344944",
+//                    "classname": "1班",
+//                    "subjectid": 10,
+//                    "subjectname": "英语",
+//                    "versionid": 3,
+//                    "versionname": "苏教版",
+//                    "termtype": 10,
+//                    "subjectthemeid": 10,
+//                    "percent": "0",
+//                    "unitlist": [
+//                        {
+//                            "unitid": "1",
+//                            "unitname": "Unit 1 Hello",
+//                            "unitsort": 1
+//                        },
+//                        {
+//                            "unitid": "2",
+//                            "unitname": "Unit2 Good morning",
+//                            "unitsort": 1
+//                        },
+//                        {
+//                            "unitid": "3",
+//                            "unitname": "Unit3 This is my mum",
+//                            "unitsort": 1
+//                        },
+//                        {
+//                            "unitid": "4",
+//                            "unitname": "Unit4 My bag",
+//                            "unitsort": 1
+//                        },
+//                        {
+//                            "unitid": "5",
+//                            "unitname": "Unit5 Fruit",
+//                            "unitsort": 1
+//                        },
+//                        {
+//                            "unitid": "6",
+//                            "unitname": "Unit6 On a farm",
+//                            "unitsort": 1
+//                        },
+//                        {
+//                            "unitid": "7",
+//                            "unitname": "Unit7 Follow me",
+//                            "unitsort": 1
+//                        },
+//                        {
+//                            "unitid": "8",
+//                            "unitname": "Unit8 What can you do?",
+//                            "unitsort": 1
+//                        },
+//                        {
+//                            "unitid": "9",
+//                            "unitname": "Unit9 Happy New Year!",
+//                            "unitsort": 1
+//                        },
+//                        {
+//                            "unitid": "10",
+//                            "unitname": "Unit10 What colour?",
+//                            "unitsort": 1
+//                        }
+//                    ]
+//                }
+//            ]
+//        },
+//        "errorMessage": ""
+//    };
+//    var dataClassData = {
+//        "code": 1,
+//        "errorCode": 0,
+//        "data": {
+//            "unitcourselist": [
+//                {
+//                    "pointid": "8048b7ee755448ae900cd266be8fc0f6",
+//                    "pointname": "课时1：Learn to say",
+//                    "studyscore": 0,
+//                    "imageurl": "",
+//                    "pointcontentlist": []
+//                },
+//                {
+//                    "pointid": "f91ab9fc7ffe4205a3c06e32c4238c5b",
+//                    "pointname": "课时2：Look and learn",
+//                    "studyscore": 0,
+//                    "imageurl": "",
+//                    "pointcontentlist": []
+//                },
+//                {
+//                    "pointid": "e3e7b37c74354b2b925a1896afd7222b",
+//                    "pointname": "课时3：Sing a song & Play a game",
+//                    "studyscore": 0,
+//                    "imageurl": "",
+//                    "pointcontentlist": []
+//                }
+//            ]
+//        },
+//        "errorMessage": ""
+//    };
+
+    var studentId = 'e8405a66260c4f2e8c6f74134f43dc5d';
+    $.ajax({
+        url:"http://182.48.115.253:70/TSB_ISCHOOL_LCS_SERVER/stumyroom/getgradecourseunitlist",
+        type: "POST",
+        dataType: "json",
+        processData:false,
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({"studentid":studentId}),
+        async:false,
+        success: function(data){
+            var div='',ul='';
+            var dataDiv = data.data.subjectlist;
+            var divTerm;
+            var statusMenu = 0;
+
+            for(var i=0; i<dataDiv.length; i++){
+                if(dataDiv[i].termtype == 10){
+                    divTerm = '上';
+                }else if(dataDiv[i].termtype == 20){
+                    divTerm = '下';
                 };
+                var ulUnit='';
+                for(var j=0; j<dataDiv[i].unitlist.length; j++){
+                    var unitname = dataDiv[i].unitlist[j].unitname.replace(/\'/g,"\\\'").replace(/\"/g,"&quot;").replace(/\ /g,"&ensp;");
+                    ulUnit += '<li><a href="#" data-id="'+dataDiv[i].unitlist[j].unitid+'" onclick=getPointName("'+dataDiv[i].unitlist[j].unitid+'","'+unitname+'","'+dataDiv[i].termtype+'","'+dataDiv[i].versionid+'","'+dataDiv[i].gradenum+'","'+dataDiv[i].subjectid+'",$(this))>'+dataDiv[i].unitlist[j].unitname+'</a>';
+
+                };
+                ulUnit = '<ul class="dl-menu">'+ulUnit+'</ul>';
+                div += '<div class="dl-menuwrapper">'+
+                '<div class="dl-trigger div-dl" onclick="toggleMenu($(this));"><span><img src="img/book.jpg"></span><span class="right"><p class="up">'+dataDiv[i].subjectname+'（'+dataDiv[i].versionname+'）</p><p class="down">'+(dataDiv[i].gradename+dataDiv[i].classname)+'('+divTerm+')</p></span></div>' +
+                ulUnit +
+                '</div>';
             };
-            pageIndex = 0;
-        }else if(index == 2){
-            window.location.href = '#&page2';
-            if($('#charttimes2').attr('data-status') == 0){
-//                Init(2);
-            };
-            pageIndex = 1;
-        }else if(index == 3){
-            window.location.href = '#&page3';
-//            init3($("#txtbegin").val(),$("#txtend").val());
-            $('#chartquestionscon').html('<div id="chartquestions" style="height: 14rem; width: 17.3rem; text-align: center;"><div class="tempLoading" style="margin-top: -6rem;"></div></div>');
-            pageIndex = 2;
-        };
-    };
-
-//    $("#back").on("tap", function() {
-//        location.href = this.href;
-//    });
-</script>
-
-
-
-
-
-<!--真实老师数据-->
-<script>
-    var htmlLi, gradeid, classid, subjectid, termtype, versionid;
-
-    function getUserInfo(){
-    	UserId = '684b356a9560466887266e4800ea0776';//c4519e53ddb842e4bb817fd7b2b9163b
-	    htmlLi = '';
-	    gradeid = 2;
-	    classid = 'de17eff140514d7893d0dabe1a6ba1c1';
-	    subjectid = 13;
-	    termtype = 20;
-	    versionid = 2;
-
-//        $('#schoolNameId').html(json.data.schoolname);
-	    var JsonCourselist = json.data.courselist;
-	
-	//    var JsonCourselist = JSON.parse(json.data).courselist;
-	    for(var i=0; i<JsonCourselist.length; i++){
-	        var termtypeName;
-	        if(JsonCourselist[i].termtype == 10){
-	            termtypeName = '上';
-	        }else if(JsonCourselist[i].termtype == 20){
-	            termtypeName = '下';
-	        };
-	        htmlLi += '<li data-gradeid="'+JsonCourselist[i].gradenum+'" data-classid="'+JsonCourselist[i].classid+'" data-subjectid="'+JsonCourselist[i].subjectid+'" data-termtype="'+JsonCourselist[i].termtype+'" data-versionid="'+JsonCourselist[i].versionid+'" data-unitlist="'+JsonCourselist[i].unitlist+'"><span><img src="img/book.jpg"></span><span class="right"><p class="up">'+JsonCourselist[i].subjectname+'（'+JsonCourselist[i].versionname+'）</p><p class="down">'+JsonCourselist[i].gradename+JsonCourselist[i].classname+'（'+termtypeName+'）</p></span></li>';
-	    };
-	    $('#bookIndex').html(htmlLi);
-	    $('#bookIndex').find('li').bind('click',function(){
-	        gradeid = $(this).attr('data-gradeid');
-	        classid = $(this).attr('data-classid');
-	        subjectid = $(this).attr('data-subjectid');
-	        termtype = $(this).attr('data-termtype');
-	        versionid = $(this).attr('data-versionid');
-	
-	        popDiv(1,$(this).find('.up').html());
-	    });
-    };
-
-    var unitid = 0;
-//    var pointid = '45d757b406ea11e586103c77a0bfdb0b';//首次不能获得
-
-    var classjson = [];
-    var LegendTitle = ["课时", "作业正确率", "练习正确率", "随堂测试"];
-    var para = ["PointName", "Work", "Exercise", "Test"];
-    var Data_Source = [];
-    var data_Point = [];
-    var student_data = [];
-    var teacherdata_Unit = [];
-
-    var examData = [];
-    var FiresPointId = "";
-    var FiresPointName = "";
-    var FiresChapterID = "";
-    var FiresChapterName = "";
-
-    function Init() {
-        $.ajax({
-            url: apiurl + '/api/teacherapi.ashx?type=GetTeacherClass&&siteid=' + apisiteid + '&teacherid=' + UserId,
-            dataType: "jsonp",
-            jsonp: "callback",
-            async: false,
-            success: function (data) {
-//                classjson = data;
-                getdropdownclass(gradeid);
-            }
-        });
-    }
-
-
-    function getdropdownclass(id) {
-        onlineunit();
-        online();
-        getstudentlist();
-    }
-
-    //学生列表
-    function getstudentlist(){
-        $.ajax({
-            url: apiurl + '/api/teacherapi.ashx?type=GetStudentList&siteid=' + apisiteid + '&classid=' + classid,
-            dataType: "jsonp",
-            jsonp: "callback",
-            async: false,
-            success: function (data) {
-                var ghtml = "";
-                for (var i = 0; i < data.length; i++) {
-
-                    ghtml = ghtml + "<li data-value='" + data[i].userid + "'>" + data[i].username + "</li>";
-
-                }
-
-                $("#personDiv").find("ul").html(ghtml);
-                $("#personDiv").find("li").bind("click", function () {
-
-                    $('#person').val($(this).html()).addClass('cur');
-                    $('#allClassId').removeClass('cur');
-
-                    $(this).parent().parent().find("input").val($(this).attr("data-value"));
-                    $('#unitP').find('input').addClass('no').attr('disabled','disabled');
-                    onlineunit_student();
-
-                    //在线作业
-                    online_student();
-                });
-            }
-        });
-    }
-
-//    全班学生
-    $("#allClassId").bind("click", function(){
-//        var _legendTitle = ["章节", "作业首次正确率", "作业完成率", "练习首次平均确率", "练习完成率", "随堂平均正确率", "微课完成率", "预习完成率"];
-        $('#person').removeClass('cur');
-        $('#allClassId').addClass('cur');
-        $('#person').val('个人');
-        $("#divstudent").find("input").val('');
-        unitData('全部章节');
+            $('#pageHomeContent').html(div);
+        },
+        error: function(data){
+            alert(JSON.stringify(data));
+        }
     });
 
-    //全部章节图表
-    function unitData(unitname){
-        var _title = "全部章节";
-        if ($("#divstudent").find("input").val() == "") {
-            //$(".lessonchartbtn").show();
 
-            var teacherdata = SetData(data_Point, unitname);
-            Data_Source = teacherdata;
+    function getPointName(unitid,unitname,termid,versionid,gradeid,subjectid,_this){
+        popDiv(1,unitname);
+        $('#AudiounitName').html(unitname);
+        $.ajax({
+            url:"http://182.48.115.253:70/TSB_ISCHOOL_LCS_SERVER/stumyroom/getunitpointlist",
+            type: "POST",
+            dataType: "json",
+            processData:false,
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({"studentid":studentId,"subjectid":subjectid,"termtype":termid,"versionid":versionid,"unitid":unitid}),
+            async:false,
+            success: function(dataClassData){
+                var liContent = '';
+                var dataLi = dataClassData.data.unitcourselist;
+                for(var i=0; i<dataLi.length; i++){
+                    var pointname = dataLi[i].pointname.replace(/\'/g,"\\\'").replace(/\"/g,"&quot;").replace(/\ /g,"&ensp;");
+                    liContent += '<li><p class="up">'+pointname+'</p><p class="down" data-pointid="'+dataLi[i].pointid+'" data-unitid="'+unitid+'" data-termid="'+termid+'" data-versionid="'+versionid+'" data-gradeid="'+gradeid+'"><input type="button" class="ifNullWord" value="单词" onclick=popDiv(2,"'+pointname+'",$(this).parent())><input type="button" value="课本" class="ifNullSent" onclick=popDiv(3,"'+pointname+'",$(this).parent())></p></li>';
+                };
+                $('#pointListId').html('<ul>'+liContent+'</ul>');
+                //判断是否有音频数据///////////////////////////////////////////////////////////////////////////////////////////////////
+                $('#pointListId').css('display','none');
+                $('#pointListId').parent().append('<div id="tempLoading" class="tempLoading" aria-invalid="tempLoading" style="margin-top: -5rem;"></div>');
+                var nullIndex = 0;
+                for(var i=0; i<dataLi.length; i++){
+                    $.ajax({
+                        url:'http://182.48.115.253:8082/api/word.ashx',
+                        dataType:'jsonp',
+                        jsonp:'callback',
+                        data:{Siteid:apisiteid,pointid:dataLi[i].pointid,unitid:unitid,termid:termid,versionid:versionid,gradeid:gradeid,userid:studentId},
+                        success: function(data){
+                            nullIndex++;
+                            if(nullIndex == 2*dataLi.length){
+                                $('#pointListId').css('display','block');
+                                $('#tempLoading').remove();
+                            };
+                        },
+                        error: function(data){
+                            $('.ifNullWord').attr('disabled','disabled');
+                            $('.ifNullWord').addClass('disabled');
+                            nullIndex++;
+                            if(nullIndex == 2*dataLi.length){
+                                $('#pointListId').css('display','block');
+                                $('#tempLoading').remove();
+                            };
+                        }
+                    });
+                    $.ajax({
+                        url:'http://182.48.115.253:8082/api/text.ashx',
+                        dataType:'jsonp',
+                        jsonp:'callback',
+                        data:{Siteid:apisiteid,pointid:dataLi[i].pointid,unitid:unitid,termid:termid,versionid:versionid,gradeid:gradeid,userid:studentId},
+                        success: function(data){
+                            nullIndex++;
+                            if(nullIndex == 2*dataLi.length){
+                                $('#pointListId').css('display','block');
+                                $('#tempLoading').remove();
+                            };
+                        },
+                        error: function(data){
+                            $('.ifNullSent').attr('disabled','disabled');
+                            $('.ifNullSent').addClass('disabled');
+                            nullIndex++;
+                            if(nullIndex == 2*dataLi.length){
+                                $('#pointListId').css('display','block');
+                                $('#tempLoading').remove();
+                            };
+                        }
+                    });
+                };
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////
+            },
+            error: function(data){
+                alert(JSON.stringify(data));
+            }
+        });
+    };
 
-//            var _legendTitle = ["章节", "作业首次正确率", "作业完成率", "练习首次平均确率", "练习完成率", "随堂平均正确率", "微课完成率", "预习完成率"];
-            var _legendTitle = ["章节", "作业首次正确率", "作业完成率"];
-            var _para = ["ChapterName", "Work", "ClassWork", "Exercise", "ClassExercise", "Test", "Micro", "Preview"];
-            EChartsLoad("chartunit", "Borkenline", teacherdata_Unit, _legendTitle, _para, "章节学习统计表", "ChapterID", false);
-            $('#unitP').find('input').removeClass('no').removeAttr('disabled');
+    function toggleMenu(_this){
+//        $('ul.dl-menu').hide('fast');
+        _this.next('ul.dl-menu').toggle('fast');
+    };
+    $('.iisection').click(function(event){
+        if(statusMenu == 0){
+            event.stopPropagation();
+            $('ul.dl-menu').hide('fast');
+        };
+    });
+    $('.dl-menuwrapper').mouseover(function(){
+        statusMenu=1;
+//        $(this).css('z-index',101).sibling().css('z-index',100);
+    }).mouseout(function(){
+        statusMenu=0;
+    });
+</script>
+
+<script src="js/mobilebone.js"></script>
+<script type="text/javascript" src="js/statis/ApiEnglish.js"></script>
+
+<script>
+    //听读写
+    var json = {};
+    var json1_1;
+    var json1_2;
+    var json2_1;
+    var json3_1;
+    var json3_2;
+    var result = {"eof":1,"applicationId":"143219947200000b","recordId":"565e9ab6332793108f000001","result":{"version":"0.0.80.2015.5.12.14:10:37","res":"eng.snt.strap.0.12","wavetime":8180,"systime":2327,"delaytime":41,"pretime":0,"textmode":0,"useref":1,"forceout":0,"usehookw":0,"rank":100,"pron":100,"overall":100,"accuracy":100,"integrity":100,"fluency":{"overall":100,"pause":1,"speed":47},"rhythm":{"overall":100,"sense":100,"stress":100,"tone":100},"details":[{"char":"after","score":69,"start":3020,"end":3460,"dur":440,"fluency":100,"stressref":0,"stressscore":0,"toneref":0,"tonescore":0,"senseref":0,"sensescore":0},{"char":"school","score":62,"start":3460,"end":3920,"dur":460,"fluency":100,"stressref":0,"stressscore":0,"toneref":0,"tonescore":0,"senseref":1,"sensescore":1}],"statics":[{"char":"aa","count":1,"score":100},{"char":"f","count":1,"score":96},{"char":"t","count":1,"score":100},{"char":"ax","count":1,"score":100},{"char":"s","count":1,"score":100},{"char":"g","count":1,"score":100},{"char":"uw","count":1,"score":100},{"char":"l","count":1,"score":100}],"info":{"volume":1202,"clip":0,"snr":19.758633,"trunc":0,"tipId":0}}};
+
+    var resultWord = {"eof":1,"applicationId":"143219947200000b","recordId":"565ebb1d3327937320000001","result":{"version":"0.0.80.2015.5.12.14:10:37","res":"eng.wrd.strap.1.7","wavetime":2780,"systime":1043,"delaytime":41,"pretime":1,"textmode":0,"useref":1,"forceout":0,"usehookw":0,"rank":100,"pron":87,"overall":87,"details":[{"char":"after","score":81,"start":1380,"end":1780,"dur":400,"phone":[{"char":"aa","score":80},{"char":"f","score":65},{"char":"t","score":96},{"char":"ax","score":100}]},{"char":"school","score":93,"start":1780,"end":2280,"dur":500,"phone":[{"char":"s","score":100},{"char":"k","score":96},{"char":"uw","score":96},{"char":"l","score":80}]}],"info":{"volume":2034,"clip":0,"snr":6.563544,"trunc":0,"tipId":10006}}};
+
+    var data = {};
+
+    var textType = '';
+
+    var _pointid;
+    var _unitid;
+    var _termid;
+    var _versionid;
+    var _gradeid1;
+    var currentid="2f10fd8703214354a881da89d5070282";
+    var _prepareLessonID=1226;
+    var _userid="7cf33630c0ee41119afa591f3bf29081";
+    var SP = {};
+    SP.init = '';
+    SP.step = '';
+    SP.startpos = '';
+    var isnext=false;
+    var nextsettimeout=null;
+    var _minglobalstatus=0;
+    var readjhtml="";
+    var keyhtml="";
+    var readscore=0;
+    var readfscore=0;
+    var siteUrl = 'http://182.48.115.253:8082/';
+
+    touchSlideOpen();//触摸滑动
+    function popDiv(index,str,_this){
+        if(_this){
+            _pointid = _this.attr('data-pointid');
+            _unitid = _this.attr('data-unitid');
+            _termid = _this.attr('data-termid');
+            _versionid = _this.attr('data-versionid');
+            _gradeid = _this.attr('data-gradeid');
+        };
+
+        if(index == 1){
+            jPlayerFn();
+            jplayfn();//绑定声音
+            window.location.href = '#&page1';
+        }else if(index == 2){
+            window.location.href = '#&page2';
+//            $( '.dl-menuwrapper').find('ul.dl-menu').attr('class','dl-menu');
+            $('#AudioclassName').html(str);
+            textType = "en.word.score";
+            getInfoData('word',setNumber,showWordheaderClick,firstWord);
+//            listenLoadJson(0);
+//            showWordheaderClick();
+            $('.bc_footer').css('marginTop',($(window).height()/(document.documentElement.clientWidth/18)-2.6)+'rem');
+            window.location.href = '#&page3';
+//            init3($("#txtbegin").val(),$("#txtend").val());
+            pageIndex = 1;
+        }else if(index == 3){
+            window.location.href = '#&page2_2';
+            $('#AudioclassName2').html(str);
+            textType = "en.sent.score";
+            pageIndex = 1;
+            getInfoData('text',initSent);
+            $('.bc_content').css('height',($(window).height()/(document.documentElement.clientWidth/18)-7.8)+'rem')
+            $('.bc_footer').css('marginTop',($(window).height()/(document.documentElement.clientWidth/18)-2.6)+'rem');
+        };
+    };
+
+    function getInfoData(type,fn1,fn2,fn3){
+        $.ajax({
+            url: siteUrl+'api/'+type+'.ashx',
+            type: 'post',
+            data: {
+                'Siteid':apisiteid,
+                'pointid':_pointid,
+                'unitid':_unitid,
+                'termid':_termid,
+                'versionid':_versionid,
+                'gradeid':_gradeid,
+                'userid':_userid
+            },
+            dataType: 'jsonp',
+            jsonp: 'callback',
+            async: false,
+            success:function(data){
+                json = data.Data;
+                if(fn1) fn1();
+                if(fn2) fn2();
+                if(fn3) fn3();
+            },
+            error:function(data){
+                alert('error'+data);
+            }
+        });
+    };
+
+    function jplayfn(){
+        $("#jplayMP3").jPlayer({
+            swfPath: "/scripts/jplay",
+            wmode: "window",
+            supplied: "mp3",
+            preload: "none"
+        });
+        var refText = "work";
+        var refMp3 = 'Resources/sound/word/Amy/9b/9bc42de2b9334cdf976e894295bee5a6.mp3';
+        var duration = 1000;
+    };
+
+
+    function backClear(){
+        wordplayclear();
+        wordplayclearSent();
+        $('.bc_content').html('<div id="tempLoading" class="tempLoading" aria-invalid="tempLoading" style="margin-top: 0rem;"></div>');
+        $('.bc_footer').find('a').removeClass('active');
+        clearInterval(intTimer);
+        readjhtml="";
+        readscore=0;
+        readfscore=0;
+        globalstatus=0;
+        _minglobalstatus=0;
+    };
+    function process() {
+        SP.startpos = SP.startpos + SP.step;
+        $('.nowTime').css({ "width":  SP.startpos + "px" });
+        if($('.nowTime').width() >= $('.wholeTime').width()){
+            getWordData();
         };
     }
+    function wordplayclear(){
+        $("#jplayMP3").jPlayer("clearMedia");
+        $("#jplayMP3").jPlayer("stop");
+        $("#jplayMP3").unbind($.jPlayer.event.ended);
+        $("#jplayMP3").unbind($.jPlayer.event.progress);
+        $(".wholeTime").find("span.nowTime").width(0);
+    }
+    function wordplay(guid) {
+        wordplayclear();
+        var url = siteUrl+"services/audio.ashx?type=dict&lang=Eric&guid=" + guid + "&speed=0&pitch=0";
+        $("#jplayMP3").bind($.jPlayer.event.ended, function (event) {
+            wordplayclear();
+            if(isnext)
+            {
+                var index=parseInt( $('.wordheader a.active').attr("data-index"),10);
+                if($('.wordheader a').length-1>index)
+                {
+                    clearTimeout(nextsettimeout);
+                    nextsettimeout=setTimeout("$('.wordheader a').eq("+(index+1)+").click()",300);
+                }
+                else
+                {
+                    $('.wholeTime').find('.nowTime').width('0%');//为了Android显示bug
+                    $('.bc_big_audio').removeClass('active');
+                    isnext=false;
+                }
+            }
+            else
+            {
+                $('.bc_big_audio').removeClass('active');
+                isnext=false;
+            }
+            // setTimeout()
+            //
 
-    //具体章节图表
-    function unitDataSingle(unitname){
-        var _title = "全部章节";
-        if (unitname != "全部章节")
+        });
+        $("#jplayMP3").jPlayer("setMedia", { mp3: url }).jPlayer("play");
+    }
+
+    $(".alertre_nextquestionbtn").bind("click",function(){
+        $('.alertcontainer').hide();$('.alertcontent').html('');
+        var index=parseInt( $('.wordheader a.active').attr("data-index"),10);
+        if($('.wordheader a').length-1>index)
         {
-            _title = "当前章节：" + unitname;
+            $('.wordheader a').removeClass("active");
+            $('.wordheader a').eq(index+1).addClass("active")
+            listenLoadJson(index+1,false);
+            $('.bc_big_read').click();
         }
         else
         {
-            if(unitid!=0)
+            $('.bc_big_audio').removeClass('active');
+
+        }
+
+    });
+    $(".alertre_keybtn").bind("click",function(){
+        $('.alertcontainer').hide();$('.alertcontent').html('');
+        var index=parseInt( $('.wordheader a.active').attr("data-index"),10);
+        writeLoadJson(index);
+    });
+    $(".alertre_nextkeybtn").bind("click",function(){
+        $('.alertcontainer').hide();$('.alertcontent').html('');
+        var index=parseInt( $('.wordheader a.active').attr("data-index"),10);
+        if($('.wordheader a').length-1>index)
+        {
+            $('.wordheader a').removeClass("active");
+            $('.wordheader a').eq(index+1).addClass("active")
+            writeLoadJson(index+1);
+            //$('.bc_big_read').click();
+        }
+        else
+        {
+            $('.bc_big_audio').removeClass('active');
+
+        }
+
+    });
+    //wordheader单词切换
+//    $('.wordheader a').delegate('click',function () {
+    function showWordheaderClick(){
+        $('.wordheader a').click(function () {
+            var _this = $(this);
+            var i = _this.index();
+            $('.wordheader a').removeClass('active');
+            _this.addClass('active');
+            listenLoadJson(i);
+        });
+    };
+
+    function touchSlideOpen(){
+        var oWordDiv = document.querySelector('.bc_content.write');
+        var tX = 0;
+        oWordDiv.addEventListener('touchstart',function(ev){
+            var downX=ev.targetTouches[0].pageX;
+            var disX=downX-tX;
+            function fnMove(ev){
+                tX=ev.targetTouches[0].pageX-disX;
+            }
+            function fnEnd(ev){
+                if(tX < -100){
+                    var touchIndex = parseInt($('.wordheader a.active').attr("data-index")) + 1;
+                    if(touchIndex > (json.length-1)) touchIndex = 0;
+                    listenLoadJson(touchIndex);
+                }
+                if(tX > 100){
+                    var touchIndex = parseInt($('.wordheader a.active').attr("data-index")) - 1;
+                    if(touchIndex < 0) touchIndex = json.length-1;
+                    listenLoadJson(touchIndex);
+                }
+                oWordDiv.removeEventListener('touchmove',fnMove,false);
+                oWordDiv.removeEventListener('touchend',fnEnd,false);
+                tX = 0;
+            }
+            oWordDiv.addEventListener('touchmove',fnMove,false);
+            oWordDiv.addEventListener('touchend',fnEnd,false);
+            ev.preventDefault();
+        },false);
+    };
+
+    //听、读、写状态切换
+    $('.bc_big_audio').click(function () {//听
+        if(!$(this).hasClass("active"))
+        {
+            isnext=true;
+            $('.bc_footer a').removeClass("active");
+            $(this).addClass('active');
+            listenLoadJson(parseInt($('.wordheader a.active').attr("data-index"), 10));
+            wordplay(json[$('.wordheader a.active').attr("data-index")].guid);
+        }
+
+
+    })
+    $('.bc_big_read').click(function () {//读
+        $(".alertre_readbtn").show();
+        if(!$(this).hasClass("active"))
+        {
+            $('.bc_footer a').removeClass("active");
+            clearTimeout(nextsettimeout);
+            isnext=false;
+            $(this).addClass('active');
+            var index =parseInt( $('.wordheader a.active').attr("data-index"),10);
+            console.log(index);
+            listenLoadJson(index,false);
+            var guid = json[index].guid
+            var url = siteUrl+"services/audio.ashx?type=dict&lang=Eric&guid=" + guid + "&speed=0&pitch=0";
+            refText = json[index].DcName;
+            $('.alertcontent').html("");
+            $(".alertcontainer").hide();
+            //调用张总的函数
+            cordovaSentAudio(url,textType,refText);
+
+
+//          data = result;
+            data = resultWord;
+            var recordTime = 2500;
+            SP.step = 1.624;
+            SP.startpos = 0;
+            //init = setInterval("process()", 15);
+            clearInterval(intTimer);
+            intTimer = setInterval(function(){
+                process();
+            },16);
+        }
+
+    })
+    $('.bc_big_key').click(function () {//写
+        var index=parseInt($('.wordheader a.active').attr("data-index"),10);
+        $(".alertre_readbtn").hide();
+        if(!$(this).hasClass("active"))
+        {
+            clearTimeout(nextsettimeout);
+            isnext=false;
+            $('.bc_footer a').removeClass("active");
+            $(this).addClass('active');
+
+            writeLoadJson(index);
+        }
+        else
+        {
+            checkkeyword(index);
+        }
+    });
+    function checkkeyword(index){
+        add(json[index].DcID,$(".writeText").val(),0);
+        //console.log($(".writeText").val());
+        if ($.trim($(".writeText").val()).toLocaleLowerCase() == json[index].DcName.toLocaleLowerCase()) {
+            if (json.length - 1 == index) {
+                $('.alertcontent').html("恭喜您完成单词训练！继续练习点关闭");
+                $(".alertcontainer").show();
+                $('.bc_big_key').removeClass("active");
+                listenLoadJson(json.length - 1,false);
+                $(".alertre_readbtn").hide();
+                $(".alertre_nextquestionbtn").hide();
+                $(".alertre_keybtn").hide();
+                $(".alertre_nextkeybtn").hide();
+            }
+            else {
+                writeLoadJson(index + 1);
+            }
+        }
+        else {
+            $('.alertcontent').html("正确单词：<span style='color:#f00'>"+json[index].DcName+"</span>");
+            $(".alertcontainer").show();
+            $(".alertre_readbtn").hide();
+            $(".alertre_nextquestionbtn").hide();
+            $(".alertre_keybtn").show();
+            $(".alertre_nextkeybtn").show();
+            listenLoadJson(index,false);
+            $('.bc_big_key').removeClass("active");
+            //$(".DcName").css("visibility","visible");;
+        }
+    }
+    function firstWord(){
+        var html = " ";
+        html = '<p><span class="DcName">' + json[0].DcName + '</span> <span class="DcMark">' + json[0].DcMark + '</span> </p><p class="inChinese">' + json[0].DcExplainItem + '</p>'
+        $(".bc_content").removeClass('write').addClass('listen').html(' ').append(html);
+    };
+    function GOdefaultsetNumber() {
+        $('.wordheader a').removeClass('active');
+        $('.wordheader a').eq(0).addClass('active');
+
+    }
+    function setNumber() {
+        $('.wordheader').html("");
+        var html = '';
+        for (var i = 0; i < json.length; i++) {
+            html = html + '<a data-index=' + i + '>' + (i + 1) + '</a>';
+        }
+        $('.wordheader').append(html);
+        $('.wordheader a').eq(0).addClass('active');
+    }
+    function listenLoadJson(index,isplay) {
+        var html = " ";
+        $('.wordheader a').removeClass('active');
+        $('.wordheader a').eq(index).addClass('active');
+        html = '<p><span class="DcName">' + json[index].DcName + '</span> <span class="DcMark">' + json[index].DcMark + '</span> </p><p class="inChinese">' + json[index].DcExplainItem + '</p>'
+        $(".bc_content").removeClass('write').addClass('listen').html(' ').append(html);
+//        showWordheaderClick();
+        if(typeof isplay=="undefined")
+            isplay=true;
+        if(isplay)
+            wordplay(json[index].guid);
+    };
+    function writeLoadJson(index) {
+        var html = " ";
+        $('.wordheader a').removeClass('active');
+        $('.wordheader a').eq(index).addClass('active');
+        wordplay(json[index].guid);
+        html = '<div style="height:auto;"><div style="text-align:center"><span class="DcName" style="visibility:hidden;">' + json[index].DcName + '</span>  </div>';
+        var arr=[]
+        arr.push(json[index].DcExplainItem);
+        arr.push(json[index].DcMark);
+        //if(json[index].Img!="")
+        //{arr.push("<img src='"+json[index].Img+"' style='height:100px;'/>");}
+        var mindex=Math.round(Math.random()*arr.length);
+        if(mindex>arr.length-1)
+        {
+            mindex=arr.length-1;
+        }
+
+        html = html + '<div class="inChinese"  style="text-align:center">' + arr[mindex] + '</div></div>';
+        html = html +'<input class="writeText" type="text" value="" /><p><input class="writeButton" type="button" value="确定" id="confirmId"></p>';
+        $(".bc_content_word").removeClass('listen').addClass('write').html(' ').append(html);
+        $(".writeText").focus();
+
+        elementTop = $('#confirmId').offset().top;//弹出虚拟键盘是否遮挡
+        obj = $('.bc_content_word_k');
+        topValue = 5;
+
+        var oBtnConfirm = document.querySelector('#confirmId');
+        oBtnConfirm.addEventListener('touchstart',function(ev){
+            var tX=0;
+            var tY=0;
+            var downX=ev.targetTouches[0].pageX;
+            var downY=ev.targetTouches[0].pageY;
+            var disX=downX-tX;
+            var disY=downY-tY;
+            function fnMove(ev){
+                tX=ev.targetTouches[0].pageX-disX;
+                tY=ev.targetTouches[0].pageY-disY;
+            }
+            function fnEnd(ev){
+                if(Math.abs(tX) < 10 && Math.abs(tY) < 10){
+                    checkkeyword(index);
+                };
+                oBtnConfirm.removeEventListener('touchmove',fnMove,false);
+                oBtnConfirm.removeEventListener('touchend',fnEnd,false);
+                tX = 0;
+                tY = 0;
+            }
+            oBtnConfirm.addEventListener('touchmove',fnMove,false);
+            oBtnConfirm.addEventListener('touchend',fnEnd,false);
+            ev.preventDefault();
+        },false);
+        $('#confirmId').mousedown(function(){
+            checkkeyword(index);
+        });
+        $(".writeText").keyup(function (event) {
+            var keycode = event.which;
+            if (keycode == 13) {
+                checkkeyword(index);
+            }
+            return false;
+        });
+    }
+    function add(wordid,keycontent,score){
+        $.ajax({
+            url:"/services/studyroomlist.ashx",
+            type:"post",
+            dataType:"json",
+
+            data:{guid:currentid,gradeid:_gradeid,userid:_userid,type:"add",otype:1,versionid:_versionid,termid:_termid,pointid:_pointid,unitid:_unitid,id:wordid,prepareLessonID:_prepareLessonID,keycontent:keycontent,audiosore:score,siteid:apisiteid},
+            success:function(json)
+            {}
+
+        })
+    };
+
+
+    //句子页面
+    var scoreStatus = 0;
+    var elementTop;
+    var topValue;
+    var obj;
+    var wHeight;
+    function initSent(){
+        var html="";
+        for(var i=0;i<json.List.length;i++){
+            html=html+"<dl id=\""+json.List[i].GUID+"\" data-index=\""+i+"\">";
+            html=html+"<dt>"+json.List[i].English+"</dt>";
+            html=html+" <dd data-id=\""+json.List[i].GUID+"\">";
+            if(json.PrepareStatus==9)
             {
-//                _title = _title + "(当前章节：" + GetUnitName(unitid) + ")";
-            }
-        }
-        clearTimeout(timer);
-        timer = setTimeout(function(){
-            if ($("#divstudent").find("input").val() == "") { //是否选择学生个人，点击整个班级都执行
-                //$(".lessonchartbtn").show();
-
-                var teacherdata = SetData(data_Point, unitname);
-                Data_Source = teacherdata;
-
-                var htmlP = '';
-                for(var i=0; i<Data_Source.length; i++){
-                    htmlP += '<input type="button" value=\"'+Data_Source[i].PointName+'\" data-name=\"'+Data_Source[i].PointName+'\" data-value=\"'+Data_Source[i].PointID+'\">';
-                };
-                $('#lipPoint > p').html(htmlP);
-                $('#lipPointContent > p').html(htmlP);
-                $('#lipPoint > p').find('input').bind('click',function(){
-                    GetWork_Practice($(this).attr('data-name'),$(this).attr('data-value'));
-                    var name = $(this).attr('data-name');
-                    $('#lipPointContent > p').find("input[data-name='"+name+"']").addClass('cur').siblings().removeClass('cur');
-                    popDiv(3,'abc');
-                });
-                $('#lipPointContent > p').find('input').bind('click',function(){
-                    $('#chartquestionscon').html('<div id="chartquestions" style="height: 14rem; width: 17.3rem; text-align: center;"><div class="tempLoading" style="margin-top: -6rem;"></div></div>');
-                    GetWork_Practice($(this).attr('data-name'),$(this).attr('data-value'));
-                    $(this).addClass('cur').siblings().removeClass('cur');
-                });
-
-//            var _legendTitle = ["章节", "作业首次正确率", "作业完成率", "练习首次平均确率", "练习完成率", "随堂平均正确率", "微课完成率", "预习完成率"];
-                var _legendTitle = ["章节", "作业首次正确率", "作业完成率"];
-                var _para = ["ChapterName", "Work", "ClassWork", "Exercise", "ClassExercise", "Test", "Micro", "Preview"];
-                EChartsLoad("chartlessons", "Borkenline", Data_Source, LegendTitle, para, _title, "PointID", true);
-            }else{
-                var studentdata = SetData(student_data, unitname);
-                var htmlP = '';
-                for(var i=0; i<studentdata.length; i++){
-                    htmlP += '<input type="button" value="'+studentdata[i].PointName+'" data-name="'+studentdata[i].PointName+'" data-value="'+studentdata[i].PointID+'">';
-                };
-                $('#lipPoint > p').html(htmlP);
-                $('#lipPointContent > p').html(htmlP);
-                $('#lipPoint > p').find('input').bind('click',function(){
-                    GetWork_Practice($(this).attr('data-name'),$(this).attr('data-value'));
-                    var name = $(this).attr('data-name');
-                    $('#lipPointContent > p').find("input[data-name="+name+"]").addClass('cur').siblings().removeClass('cur');
-                    popDiv(3,'abc');
-                });
-                $('#lipPointContent > p').find('input').bind('click',function(){
-                    GetWork_Practice($(this).attr('data-name'),$(this).attr('data-value'));
-                    $(this).addClass('cur').siblings().removeClass('cur');
-                });
-//            $(".lessonchartbtn").hide();
-                Data_Source = studentdata;
-                _title="<span style='color:red'>" + $('#person').val() + "</span> - "+_title;
-//            var _legendTitle = ["课时", "作业首次正确率", "全班作业正确率", "练习首次正确率", "全班练习正确率", "随堂平均正确率", "全班随堂平均正确率"];
-                var _legendTitle = ["课时", "作业首次正确率", "全班作业正确率"];
-                var _para = ["PointName", "Work", "ClassWork", "Exercise", "ClassExercise", "Test", "ClassTest"];
-                EChartsLoad("chartlessons", "Borkenline", studentdata, _legendTitle, _para, _title, "PointID", true);
-            };
-        },300)
-
-        //当前课时
-        //GetWork_Practice();
-    }
-
-    //课堂章节数据
-    function online() {
-        if ($("#divstudent").find("input").val() == "") {
-            $.ajax({
-                url: apiurl + '/api/teacherapi.ashx?type=Get&&siteid=' + apisiteid + '&versionid=' + versionid + '&subjectid=' + subjectid + '&gradeid=' + gradeid + "&classid=" + classid+ "&termid=" + termtype,
-                dataType: "jsonp",
-                jsonp: "callback",
-                async: false,
-                success: function (data) {
-                    if (data.length > 0) {
-//                        $("#DataLoadContainer").show();
-                        //$(".dataerror").hide();
-                        data_Point = data;
-                        unitData($("#unitP").find("input").val());
-                    }
-                    else {
-//                        $("#DataLoadContainer").hide();
-//                        $(".dataerror").show();
-                    }
-                }
-            });
-        }
-        else {
-
-        }
-
-    }
-
-    //学生章节数据
-    function onlineunit_student() {
-        $.ajax({
-            url: apiurl + '/api/studentapi.ashx?type=GetUnit&siteid=' + apisiteid + '&versionid=' + versionid + '&subjectid=' + subjectid+ '&gradeid=' +gradeid + "&classid=" + classid + "&studentid=" + $("#divstudent").find("input").val() + "&termid=" + termtype,
-            dataType: "jsonp",
-            jsonp: "callback",
-            async: false,
-            success: function (data) {
-                if (data.length > 0) {
-//                    $("#DataLoadContainer").show();
-//                    $(".dataerror").hide();
-//                    var _legendTitle = ["章节", "作业首次正确率", "全班作业正确率", "练习首次平均正确率", "全班练习正确率"];
-                    var _legendTitle = ["章节", "作业首次正确率", "全班作业正确率"];
-                    var _para = ["ChapterName", "Work", "ClassWork", "Exercise", "ClassExercise"];
-                    $("#chartunit").css("height", "14rem");
-                    EChartsLoad("chartunit", "Borkenline", data, _legendTitle, _para,  "章节学习统计表", "ChapterID", false);
-                }
-            }
-        });
-    }
-
-    //在线作业数据
-    function online_student() {
-            $.ajax({
-                url: apiurl + '/api/studentapi.ashx?type=Get&&siteid=' + apisiteid + '&versionid=' + versionid + '&subjectid=' + subjectid+ '&gradeid=' + gradeid + "&classid=" + classid + "&studentid=" + $("#divstudent").find("input").val() + "&termid=" + termtype,
-                dataType: "jsonp",
-                jsonp: "callback",
-                async: false,
-                success: function (data) {
-                    if (data.length > 0) {
-//                        $("#DataLoadContainer").show();
-//                        $(".dataerror").hide();
-                        student_data = data;
-                        $('#unitP').find('input').removeClass('no').removeAttr('disabled');
-                        //unitData($("#divunit").find("div").html());//此处重复一次
-                    }
-                    else {
-//                        $("#DataLoadContainer").hide();
-//                        $(".dataerror").show();
-                    }
-                }
-            });
-    }
-
-    //当前课时
-    function GetWork_Practice(FiresPointName,FiresPointId){
-        var _title = "当前课时：<span style='color:red'>" + FiresPointName + "</span>";
-        $("#chartquestions").parent().parent().find("h1").html(_title);
-        if ($("#divstudent").find("input").val() == "") {
-            $.ajax({
-                url: apiurl + '/api/teacherapi.ashx?type=GetExam&siteid=' + apisiteid + '&versionid=' + versionid + '&subjectid=' + subjectid + '&gradeid=' + gradeid + "&classid=" + classid+ "&termid=" + termtype + "&pointid=" + FiresPointId,
-                dataType: "jsonp",
-                jsonp: "callback",
-                async: false,
-                success: function (data) {
-                    $("#qestion_btn_lianxi").hide();
-                    $("#qestion_btn_zuoye").hide();
-                    $("#qestion_btn_suitang").hide();
-//                    $("#chartquestionscon").css("height", "0");
-                    $("#studentlistquestions").html("");
-                    if (data.length > 0) {
-                        $("#chartquestionscon").css("height", "14rem");
-                        getExam(data);
-                    }else{
-                        $("#chartquestionscon").html('<div class="dataerror">暂无数据</div>');
-                    };
-
-                }
-            });
-        }
-        else {
-            $.ajax({
-                url: apiurl + '/api/studentapi.ashx?type=GetExam&siteid=' + apisiteid + '&versionid=' + versionid + '&subjectid=' + subjectid + '&gradeid=' + gradeid + "&classid=" + classid+ "&termid=" + termtype + "&pointid=" + FiresPointId+"&studentid=" + $("#divstudent").find("input").val(),
-                dataType: "jsonp",
-                jsonp: "callback",
-                async: false,
-                success: function (data) {
-                    $("#qestion_btn_lianxi").hide();
-                    $("#qestion_btn_zuoye").hide();
-                    $("#qestion_btn_suitang").hide();
-                    //$("#chartquestionscon").css("height", "0");
-                    $("#studentlistquestions").html("");
-                    if (data.length > 0) {
-                        $("#chartquestionscon").css("height", "14rem");
-                        getExam(data);
-                    }else{
-                        $("#chartquestionscon").html('<div style="overflow: hidden; width: 100%; text-align: center; margin-top: 5rem;" class="dataerror">暂无数据</div>');
-                    };
-                }
-            });
-
-
-        }
-    }
-
-    //获取章节列表
-    function onlineunit() {
-        $.ajax({
-            url: apiurl + '/api/teacherapi.ashx?type=GetUnit&siteid=' + apisiteid + '&versionid=' + versionid + '&subjectid=' + subjectid + '&gradeid=' + gradeid + "&classid=" + classid+ "&termid=" + termtype,
-            dataType: "jsonp",
-            jsonp: "callback",
-            async: false,
-            success: function (data) {
-                if (data.length > 0) {
-//                    $("#DataLoadContainer").show();
-//                    $(".dataerror").hide();
-                    teacherdata_Unit = data;
-                    var ghtml = "<input class='no' disabled='disabled' type='button' data-value='' value='全部章节'>";
-                    for (var i = 0; i < data.length; i++) {
-                        ghtml = ghtml + "<input class='no' disabled='disabled' type='button' data-value='" + data[i].ChapterID + "' value='"+data[i].ChapterName+"'>";
-                    }
-                    $("#unitP").html(ghtml);
-                    $("#unitP").find("input").bind("click", function () {
-                        $('#divunit').find("div").html($(this).val());
-                        unitid=$(this).attr('data-value');
-                        pointid="";
-                        unitDataSingle($(this).val());
-                        popDiv(2,'abc');
-                    });
-                }
-            }
-        });
-    }
-
-    function EChartsLoad(objId, chartType, data, LegendTitle, para, title, key, bclick) {
-
-        if (title != "") {
-            $("#" + objId).parent().find("h1").html(title);
-        }
-        EChartsInit(objId, chartType, data, LegendTitle, para, key, bclick);
-    }
-
-    function SetData(data, selectContent) {
-        if (data.length > 0) {
-            var _index=0;
-            var _setp=0;
-            var dataNew = [];
-            var _title="";
-            for (var i = 0; i < data.length; i++) {
-
-                if (data[i]["ChapterName"] == selectContent) {
-
-                    dataNew.push(data[i]);
-                }
-                else if (selectContent == "全部章节")
+                if(json.List[i].List.length>0)
                 {
-                    if(unitid==0)
+                    html=html+"<a class=\"minaudio\" data-id=\""+json.List[i].GUID+"\"></a><a class=\"minread\"></a>";
+                }
+            }
+            html=html+"<a class=\"minkey\"></a></dd>";
+            html=html+"</dl>";
+        };
+        $(".bc_content_sent").html(html);
+
+        $(".minaudio").bind("click",function(){
+
+
+            if(_minglobalstatus>4)
+            {
+                if(_minglobalstatus==5)
+                    alert("正在进行朗读");
+                if(_minglobalstatus==6)
+                    alert("正在进行听写");
+                return false;
+            }
+            _minglobalstatus=4;
+            $(this).addClass("active");
+            wordplaySent($(this).attr("data-id"));
+
+        });
+        $(".minkey").bind("click",function(){
+            elementTop = $(this).offset().top;
+            obj = $('.blackboard_container');
+            topValue = 2.6;
+            hidealertbtn();
+            if(_minglobalstatus>3&&_minglobalstatus!=6)
+            {
+                if(_minglobalstatus==5)
+                    alert("正在进行朗读");
+                if(_minglobalstatus==4)
+                    alert("正在进行听读");
+                return false;
+            }
+            _minglobalstatus=6;
+            var index=parseInt( $(this).parent().parent().attr("data-index"),10);
+            _optionid=index;
+            if($(this).hasClass("active"))
+            {
+                wordplayclearSent();
+                var english=$(this).parent().prev().find("input[type='text']").val();//.replace("!"," ").replace(","," ").replace(";"," ").replace("."," ");
+                addlog(json.List[index].ID,english,0);
+                if(globalstatus==3)
+                {
+                    if(keyhtml!="")
                     {
-                        dataNew.push(data[i]);
+                        keyhtml=keyhtml+"|";
+                    }
+                    keyhtml=keyhtml+index+"#@#"+english;
+                }
+                else
+                {
+                    keyhtml=index+"#@#"+english;
+                    $(".alertcontainer").show();
+                    $(".alertbtn_rekey").show();
+                    $(".alertbtn_nextkey").show();
+                    initSent();
+                }
+                _minglobalstatus=0;
+                // console.log(keyhtml);
+                var _temphtml="";
+                var _totalchar=0;
+                var _totalkeychar=0;
+                for(var k=0;k<keyhtml.split("|").length;k++)
+                {
+                    var _index=keyhtml.split("|")[k].split("#@#")[0];
+                    var _english=keyhtml.split("|")[k].split("#@#")[1]
+                    var scourse=json.List[_index].English;
+                    var _name="";
+                    if(scourse.indexOf("</span>")>0)
+                    {_name=scourse.substr(0,scourse.indexOf("</span>")+7);
+                        scourse=scourse.replace(_name,"");
+                    }
+                    var _template="";
+                    _totalchar=_totalchar+scourse.split(" ").length;
+                    if($.trim(_english)!="")
+                        _totalkeychar=_totalkeychar+_english.split(" ").length;
+                    for(var y=0;y<scourse.split(" ").length;y++)
+                    {
+                        var _temp=scourse.split(" ")[y];//.replace("!","").replace(",","").replace(";","").replace(".","");
+
+                        var _ischeck=false;
+                        if($.trim(_temp)!="")
+                        {
+                            for(var i=0;i<_english.split(" ").length;i++)
+                            {
+
+                                if(replacesymbol(_english.split(" ")[i])==replacesymbol(_temp))
+                                {
+                                    _ischeck=true;
+                                    break;
+                                }
+                            }
+                            if(!_ischeck)
+                                _temp="<i>"+_temp+"</i>";
+                            _template=_template+_temp+" ";
+                        }
+                    }
+                    _temphtml=_temphtml+"<p class='keysource'>"+_template+"</p>";
+
+                }
+                _temphtml="<div class='keycontent'>"+_temphtml+"</div><div>正确率："+(Math.round(_totalkeychar/_totalchar*100,2))+"%</div>"
+                $('.alertcontent').html(_temphtml);
+
+                $(this).removeClass("active");
+                $(this).parent().prev().find("input").remove();
+            }
+            else
+            {
+                if($(".minkey.active").length>0)
+                {
+                    alert("正在进行默写！")
+                }
+                else
+                {
+                    $(this).addClass("active");
+                    var html=$(this).parent().prev().html();
+                    var _name="";
+                    if(html.indexOf("</span>")>0)
+                    {_name=html.substr(0,html.indexOf("</span>")+7);
+                    }
+//                    var phtml="<p>"+_name+json.List[index].Chinese+"</p>";
+                    var phtml="";
+                    $(this).parent().prev().html(phtml+"<input type='text'/><input type='button' class='btn' value='确定'>")
+                    wordplaySent($(this).prev().prev().attr("data-id"),true);
+                    if(globalstatus==0)
+                        globalkeyevent(index);
+                }
+            }
+
+            //$(this).parent().parent().addClass("audioread");
+        });
+        $(".minread").bind("click",function(){
+
+
+            if(_minglobalstatus>3&&_minglobalstatus!=5)
+            {
+                if(_minglobalstatus==4)
+                    alert("正在进行听读");
+                if(_minglobalstatus==6)
+                    alert("正在进行听写");
+                return false;
+            }
+            $('.proccess').find("span").css({ "width":"0%" });//录音前清除评分
+            $(".alertcontainer").hide();
+
+            _minglobalstatus=5;
+            hidealertbtn();
+            $(this).addClass("active");
+            $(this).parent().parent().addClass("audioread");
+            var guid=$(this).prev().attr("data-id");
+            var index=parseInt( $(this).parent().parent().attr("data-index"),10);
+            _optionid=index;
+
+            refText = $(this).parent().prev().html();
+            if(refText.indexOf("</span>")>0)
+            {
+                refText=refText.substr(refText.indexOf("</span>")+7);
+            }
+            duration=( 2000 + $.trim(refText).split(" ").length * 600 );
+            var index=$(this).parent().parent().attr("data-index");
+            //console.log(index);
+            if(json.List[index].List.length>0)
+            {
+                duration=json.List[index].List[0].Duration*1000;
+            }
+
+            var speed=$(".textheader").find("a[class='active']").attr("data-value");
+            var url = siteUrl+"services/audio.ashx?type=teacher&lang="+getVoinceName(guid)+"&guid=" + guid + "&speed="+speed+"&pitch=0";
+
+            //调用张总的函数
+            cordovaSentAudio(url,textType,refText);
+
+            data = result;
+            clearInterval(intTimer);
+            SP.step=100;
+            SP.startpos = 0;
+            intTimer = setInterval(function(){
+                processSent();
+            },100);
+        });
+    }
+
+    window.onresize = function(){
+        wHeight = window.innerHeight;
+        resizeWindow(elementTop,wHeight,obj,topValue);
+    };
+    function resizeWindow(evTop,winHeight,_obj,tValue){
+        var evTop = evTop/(document.documentElement.clientWidth/18);
+        var offTop = _obj.offset().top/(document.documentElement.clientWidth/18);
+        winHeight = winHeight/(document.documentElement.clientWidth/18);
+
+        if((evTop+1) >= winHeight){
+            var divtop = evTop+2.2-winHeight;
+            _obj.css('marginTop',-divtop+'rem');
+        };
+        if(offTop < tValue){
+            _obj.css('marginTop','0');
+        };
+    };
+
+    function showScore(_this,score){
+        $('#showscoreId').remove();
+        $(document.body).append('<div id=showscoreId style="position:absolute; width:auto; height:auto; padding:0.2rem 0.3rem; border-radius:0.2rem; -webkit-border-radius:0.2rem; border:1px solid #666; background: #fff; font-size:0.6rem; z-index:9000; left:'+_this.offset().left+'px; top:'+_this.offset().top+'px; margin-top:-1.2rem;">'+score+'</div>');
+    };
+    function hideScore(){
+        if(scoreStatus == 0){
+            $('#showscoreId').remove();
+        };
+    };
+    function processSent() {
+        SP.startpos = SP.startpos + SP.step;
+        $('.proccess').find("span").css({ "width": Math.round(SP.startpos/duration*100) + "%" });
+        if($('.proccess').find('span').width() >= $('.proccess').width()){
+            getResultData();
+        };
+    }
+
+    function wordplayclearSent(){
+        $("#jplayMP3").jPlayer("clearMedia");
+        $("#jplayMP3").jPlayer("stop");
+        $("#jplayMP3").unbind($.jPlayer.event.ended);
+        $("#jplayMP3").unbind($.jPlayer.event.progress);
+        $(".audioread").each(function () {
+            $(this).removeClass("audioread");
+            $(this).removeAttr("style");
+            $(this).find(".minaudio").removeClass("active");
+        });
+        $(".proccess").find("span").width(0);
+        _minglobalstatus = 0;
+    };
+    function wordplaySent(guid,isrepeat,isplaylist){
+        $("#"+guid).addClass("audioread");
+        if(typeof isrepeat=="undefined")
+        {
+            isrepeat=false;
+        }
+        var speed=$(".textheader").find("a[class='active']").attr("data-value");
+
+        var url = siteUrl+"services/audio.ashx?type=teacher&lang="+getVoinceName(guid)+"&guid=" + guid + "&speed="+speed+"&pitch=0";
+        $("#jplayMP3").bind($.jPlayer.event.ended, function (event) {
+            wordplayclearSent();
+
+            if(isplaylist)
+            {
+                var index=parseInt( $("#"+guid).attr("data-index"),10);
+                if($("dl").length-1==index)
+                {
+                    $("dd").css("visibility","visible");
+                    $(".bc_big_audio_sent").removeClass("active")
+                    globalstatus=0;
+                }
+                else
+                {
+                    guid= $("#"+guid).next().attr("id");
+                    setTimeout("wordplaySent('"+guid+"',false,true)",1000);
+                }
+            }
+            else if(isrepeat)
+            {
+                wordplaySent(guid,isrepeat);
+            }
+            else
+            {
+                _minglobalstatus=0;
+            }
+        });
+
+
+        $("#jplayMP3").bind($.jPlayer.event.timeupdate, function(event) { // Add a listener to report the time play began
+            if(event.jPlayer.status.duration>0){
+                $(".proccess").find("span").width(event.jPlayer.status.currentTime/event.jPlayer.status.duration*100+"%")
+            };
+        });
+        $("#jplayMP3").jPlayer("setMedia", { mp3: url }).jPlayer("play");
+
+    }
+
+    $(".textheader").find("a").bind("click",function(){
+        $(".textheader").find("a").removeClass("active");
+        $(this).addClass("active");
+    });
+    var globalstatus=0;
+    var isStop=false;
+    $(".bc_big_audio_sent").bind("click",function(){
+
+        if(globalstatus>0&&globalstatus!=1)
+        {
+            if(globalstatus==3)
+                alert("正在进行全文拼写");
+            if(globalstatus==2)
+                alert("正在进行全文朗读");
+            return false;
+        }
+
+        if($(this).hasClass("active"))
+        {
+            if(!isStop)
+            { $("#jplayMP3").jPlayer("pause");isStop=true;$(this).addClass("pause")}
+            else
+            { $("#jplayMP3").jPlayer("play");isStop=false;$(this).removeClass("pause")}
+
+        }
+        else
+        {
+            $(this).addClass("active");
+            $("dd").css("visibility","hidden");
+            globalstatus=1;
+            isStop=false;
+            isglobalevent=true;
+            wordplaySent(json.List[0].GUID,false,true);
+        }
+
+    });
+    $(".bc_big_key_sent").bind("click",function(){
+        console.log(globalstatus);
+        if(globalstatus>0&&globalstatus!=3)
+        {
+            if(globalstatus==1)
+                alert("正在进行全文听读");
+            if(globalstatus==2)
+                alert("正在进行全文朗读");
+            return false;
+        }
+
+        if(!$(this).hasClass("active"))
+        {
+            $(this).addClass("active");
+            $("dd").css("visibility","hidden");
+            globalstatus=3;
+            globalkeyevent(0);
+        }
+
+    });
+    $(".bc_big_read_sent").bind("click",function(){
+
+        if(globalstatus>0&&globalstatus!=2)
+        {
+            if(globalstatus==3)
+                alert("正在进行全文拼写");
+            if(globalstatus==1)
+                alert("正在进行全文听读");
+            return false;
+        }
+
+        if(!$(this).hasClass("active"))
+        {
+            $(this).addClass("active");
+            $("dd").css("visibility","hidden");
+            globalstatus=2;
+            $("dl").eq(0).find(".minread").click();
+        }
+
+    });
+    function globalkeyevent(index){
+        if(globalstatus==3)
+        {
+            $("dl").eq(index).find(".minkey").click();
+        }
+        $("input[type='text']").focus();
+
+        $("input[type='button']").click(function(event){//点击按钮
+            var index=parseInt( $(this).parent().parent().attr("data-index"),10);
+            $("dl").eq(index).find(".minkey").click();
+            if(globalstatus==3)
+            {
+                if($("dl").length-1==index)
+                {
+                    $(".bc_big_key_sent").removeClass("active");
+                    $("dd").css("visibility","visible");
+                    globalstatus=0;
+                    $(".alertcontainer").show();
+                    initSent();
+                }
+                else
+                {
+                    //$("dl").eq(index+1).find(".minkey").click();
+                    globalkeyevent(index+1);
+                    //return false;
+                }
+            }
+        });
+
+        $("input[type='text']").keyup(function(event){
+            var keycode = event.which;
+            if (keycode == 13) {
+                var index=parseInt( $(this).parent().parent().attr("data-index"),10);
+                $("dl").eq(index).find(".minkey").click();
+                if(globalstatus==3)
+                {
+                    if($("dl").length-1==index)
+                    {
+                        $(".bc_big_key_sent").removeClass("active");
+                        $("dd").css("visibility","visible");
+                        globalstatus=0;
+                        $(".alertcontainer").show();
+                        initSent();
                     }
                     else
                     {
-                        if (parseInt(data[i]["ChapterID"],10) == unitid) {
-                            dataNew.push(data[i]);
-                            _title=data[i]["ChapterName"];
-                            if(data[i]["PointID"] == pointid)
-                            {
-                                _index=_setp;
-                            }
-                            _setp=_setp+1;
-                        }
+                        //$("dl").eq(index+1).find(".minkey").click();
+                        globalkeyevent(index+1);
+                        //return false;
+                    }
+                }
+
+            }
+        });
+    }
+    function getVoinceName( guid){
+        for(var i=0;i<json.List.length;i++)
+        {
+            if(json.List[i].GUID==guid)
+            {
+                if(json.List[i].Voice!="")
+                {
+                    return json.List[i].Voice;
+                }
+                else
+                {
+                    if(json.List[i].List.length>0)
+                    {
+                        return json.List[i].List[0].VoiceName;
                     }
                 }
             }
-            if (dataNew.length == 0) {
-                dataNew = data;
-            }
-            FiresPointId = dataNew[_index]["PointID"];
-            FiresPointName = dataNew[_index]["PointName"];
-            FiresChapterID = dataNew[_index]["ChapterID"];
-            FiresChapterName = dataNew[_index]["ChapterName"];
-
-            return dataNew;
         }
+        return "";
     }
+    function replacesymbol(content){
+        return content.replace(/\?/g,"").replace(/\;/g,"").replace(/\,/g,"").replace(/\!/g,"")
+    }
+    function addlog(wordid,keycontent,score){
+        $.ajax({
+            url:siteUrl+"services/studyroomlist.ashx",
+            type:"post",
+            dataType:"json",
 
-    //正确率和完成率切换
-    function selectLessonRate(type){
-        if ($("#divstudent").find("input").val() == "") {
-            LegendTitle = ["课时", "作业正确率", "练习正确率", "随堂测试"];
-            para = ["PointName", "Work", "Exercise", "Test"];
-            if (type == 2) {
-                LegendTitle = ["课时", "作业完成率", "练习完成率", "微课完成率", "预习完成率"];
-                para = ["PointName", "ClassWork", "ClassExercise", "Micro", "Preview"];
-            }
-        }
-        else {
-            LegendTitle = ["课时", "作业首次正确率", "全班作业正确率", "练习首次正确率", "全班练习正确率"];
-        }
-        $("#chartlessons").prev().find("a").removeClass("btn-success");
-        $("#chartlessons").prev().find("a").eq(type - 1).addClass("btn-success");
-        var unitname=$("#divunit").find("div").html();
-        var personName = $('#person').val() + ' - ';
-        if($('#person').val() == '个人'){
-            personName = '';
-        };
-        var _title = "<span style='color:red'>" + personName + "</span>";
-        if (unitname != "全部章节")
+            data:{guid:currentid,gradeid:_gradeid,userid:_userid,type:"add",otype:2,versionid:_versionid,termid:_termid,pointid:_pointid,unitid:_unitid,id:wordid,prepareLessonID:_prepareLessonID,keycontent:keycontent,audiosore:score,siteid:apisiteid},
+            success:function(json)
+            {}
+
+        })
+    }
+    function hidealertbtn(){
+        $(".alertbtn_reread").hide();
+        $(".alertbtn_nextread").hide();
+        $(".alertbtn_rekey").hide();
+        $(".alertbtn_nextkey").hide();
+    }
+    $(".alertbtn_reread").bind("click",function(){
+        $(".alertcontainer").hide();
+        $('.alertcontent').html("");
+
+        $("dl[data-index='"+(_optionid)+"']").find(".minread").click();
+
+
+    });
+    $(".alertbtn_nextread").bind("click",function(){
+        $(".alertcontainer").hide();
+        $('.alertcontent').html("");
+        if( _optionid>= $("dl").length-1)
         {
-            _title = _title + "当前章节：" + unitname;
-        }else{
-            _title = '全部章节';
-        };
-        EChartsLoad("chartlessons", "Borkenline", Data_Source, LegendTitle, para, _title, "PointID", true);
-    }
 
-    function getExam(data){
-        examData = data;
+        }
+        else
+        {
+            $("dl[data-index='"+(_optionid+1)+"']").find(".minread").click();
+        }
 
-        var _type = 0;
-        var drphtml = "";
-        var _setp = 0;
-        var _epid = "";
-        for (var i = 0; i < examData.length; i++) {
-            if (examData[i].Type == 1) {
-                $("#qestion_btn_lianxi").show();
-                if (_type == 0) {
-                    _type = 1;
-                    _epid = examData[i].EPID;
-                }
-            }
-            if (examData[i].Type == 2) {
-                $("#qestion_btn_zuoye").show();
-                if (_type == 0) {
-                    _type = 2;
-                    _epid = examData[i].EPID;
-                }
+    });
+    $(".alertbtn_rekey").bind("click",function(){
+        $(".alertcontainer").hide();
+        $('.alertcontent').html("");
 
-            }
-            if (examData[i].Type == 3) {
-                $("#qestion_btn_suitang").show();
-                drphtml = drphtml + "<li data-value='" + _setp + "' data-epid='" + examData[i].EPID + "'>随堂练习" + (_setp + 1) + "</li>";
-                _setp = _setp + 1;
+        $("dl[data-index='"+(_optionid)+"']").find(".minkey").click();
 
-                if (_type == 0) {
-                    _type = 3;
-                    _epid = examData[i].EPID;
-                }
+
+    });
+    $(".alertbtn_nextkey").bind("click",function(){
+        $(".alertcontainer").hide();
+        $('.alertcontent').html("");
+
+        $("dl[data-index='"+(_optionid+1)+"']").find(".minkey").click();
+
+
+    });
+</script>
+<!--释放张总获取数据程序-->
+<script>
+    function getWordData(){
+        clearInterval(intTimer);
+        //获取张总word数据
+//        cordova.plugins.traceclass.stopRecord(
+//            function success(result){
+//                var data = result;
+        $('.nowTime').css({ "width":  "0" });
+        var s1 = data.result.overall;   //评分
+        $('.bc_big_read').removeClass("active");
+        var html = htmlA = htmlB = '';
+        html += '<table border="0" cellpadding="0" cellspacing="0">';
+
+        for (var i = 0; i < data.result.details.length; i++) {
+            for (var j = 0; j < data.result.details[i].phone.length; j++) {
+                htmlA += '<td>' + toword(data.result.details[i].phone[j].char) + '</td>';
+                htmlB += '<td>' + data.result.details[i].phone[j].score + '</td>';
             }
         }
-        $("#qestion_btn_suitang").find("ul").html(drphtml);
-        $("#qestion_btn_suitang").find("li").unbind("click");
-        $("#qestion_btn_suitang").find("li").bind("click", function () {
-            showChartQuestion(3, $(this).attr("data-epid"));
+
+        html += '<tr><td>/</td>' + htmlA + '<td>/</td></tr>';
+        html += '<tr><td>&nbsp;</td>' + htmlB + '<td>&nbsp;</td></tr>';
+        html += '</table>';
+        html+="<div  style='padding-top:10px;'>发音得分：<span>"+s1+"分</span></div>"
+        $('.alertcontent').html(html);
+        $(".alertcontainer").show();
+//            }, function error(result){
+//
+//                $('.bc_big_read').removeClass("active");
+//                alert(result);
+//            }, ""
+//        );
+    };
+    function getResultData(){
+        clearInterval(intTimer);
+
+        //获取张总sentence数据
+//        cordova.plugins.traceclass.stopRecord(
+//            function success(result){
+//                var data = result;
+        var s1 = data.result.overall;   //评分
+        var s2 = data.result.fluency.overall;
+        $('.bc_big_read_sent').removeClass("active");
+
+        $(".audioread").each(function () {
+            $(this).removeClass("audioread");
         });
-        showChartQuestion(_type, _epid);
-    }
-    //作业按钮点击事件
-    function showChartQuestion(type,epid){
-        var _legendTitle = ["课时", "首次正确率"];
-        var _para = ["PointName", "AccurateRate"];
-        var _exam = [];
-        $("#studentlistquestions").html("");
-        for (var i = 0; i < examData.length; i++)
-        {
-            if (type == 1 || type ==2) {
-                if ( examData[i].Type == type) {
-                    _exam = examData[i].Exam;
-                    $("#qestion_btn_suitang").find("div").html("随堂练习");
-                    $("#studentlistquestions").html(examData[i].SPTable)
-                    break;
-                }
-            }
-            else {
-                if (examData[i].EPID == epid && examData[i].Type == type) {
-                    _exam = examData[i].Exam;
-                    $("#studentlistquestions").html(examData[i].SPTable)
-                    break;
-                }
-            }
-
-        }
-        $("#qestion_btn_lianxi").removeClass("btn-success");
-        $("#qestion_btn_zuoye").removeClass("btn-success");
-        $("#qestion_btn_suitang").removeClass("dropdown-success");
-        if (type == 1)
-        {
-            $("#qestion_btn_lianxi").addClass("btn-success");
-            _legendTitle = ["课时", "练习题分析"];
-        }
-        if (type == 2)
-        {
-            $("#qestion_btn_zuoye").addClass("btn-success");
-            _legendTitle = ["课时", "作业题分析"];
-        }
-        if (type == 3)
-        {
-            $("#qestion_btn_suitang").addClass("dropdown-success");
-            var _index = $("#qestion_btn_suitang").find("li[data-epid='" + epid + "']").attr("data-value");
-            if (typeof _index == "undefined")
+        var index=parseInt( $(".minread.active").parent().parent().attr("data-index"),10);
+        $(".minread.active").removeClass("active");
+        //                addlog(json.List[index].ID,"",s1);
+        var html ='';
+        var htmlread="";
+        htmlread= '<p class="alertread">';
+        for (var i = 0; i < data.result.details.length; i++) {
+            if(data.result.details[i].score>=80)
             {
-                _index = 0;
+                htmlread += data.result.details[i].char+" "
             }
-            _legendTitle = ["课时", "随堂练习" + (parseInt(_index,10)+1) + "题分析"];
+            else
+            {
+                htmlread +="<i title=\"读音打分"+data.result.details[i].score+"分\" onmouseover=\"scoreStatus=1\" onmouseout=\"scoreStatus=0\" onclick='showScore($(this),\"读音"+data.result.details[i].score+"分\");'>"+data.result.details[i].char+"</i> ";
+            }
+
         }
-        var _title = "当前课时：<span style='color:red'>" + FiresPointName + "</span>";
-        EChartsLoad("chartquestions", "Line", _exam, _legendTitle, _para, _title, "PointID", false);
-    }
-</script>
-<!--班级个人选择-->
-<script>
-    document.getElementById('personDiv').onclick = function(){
-        hideWindow('personDiv');
+        htmlread+="</p>";
+        html+="<div class=\"alertreadcontent\">"+htmlread+"</div>"
+        html+="<div>发音得分：<span>"+s1+"分</span></div>";
+        html+="<div>流利度得分：<span>"+s2+"分</span></div>";
+        if(globalstatus==2)
+        {
+            readjhtml=readjhtml+htmlread;
+            readscore=readscore+parseInt(s1,10);
+            readfscore=readfscore+parseInt(s2,10);
+
+        }
+        else
+        {
+            $(".alertcontainer").show();
+            $('.alertcontent').html(html);
+            $(".alertbtn_reread").show();
+            $(".alertbtn_nextread").show();
+            _minglobalstatus=0;
+        }
+
+        if(globalstatus==2)
+        {
+            hidealertbtn();
+            if($("dl").length-1==index)
+            {
+                $(".alertcontainer").show();
+                readjhtml="<div class=\"alertreadcontent\">"+readjhtml+"</div>"
+                readjhtml+="<div  style='padding-top:10px;'>总发音得分：<span>"+(readscore)/$("dl").length+"分</span></div>";
+                readjhtml+="<div  style='padding-top:10px;'>总流利度得分：<span>"+(readfscore)/$("dl").length+"分</span></div>";
+                $('.alertcontent').html(readjhtml);
+                readjhtml="";
+                readscore=0;
+                readfscore=0;
+                globalstatus=0;
+                _minglobalstatus=0;
+                $("dd").css("visibility","visible");
+                $(".bc_big_read_sent").removeClass("active");
+            }
+            else
+            {
+                $("dl").eq(index+1).find(".minread").click();
+            }
+        }
+//            }, function error(result){
+//                $('.bc_big_read').removeClass("active");
+//                alert(result);
+//            }, ""
+//        );
+    };
+    //发送声音，调用mic函数
+    function cordovaSentAudio(url,textType,refText){
+//        cordova.plugins.traceclass.startRecord(
+//                function success(result){
+//
+//                }, function error(result){
+//
+//                },
+//                {
+//                    audioUrl: url,
+//                    serverParams: {
+//                        coreType: textType,
+//                        refText: refText,
+//                        rank: 100,
+//                        userId: "guest"
+//                    }
+//                }
+//        );
     };
 </script>
 
-<!--课时切换，切换图表页面-->
-<script>
-    var aLiInput = document.querySelectorAll('#lip p input');
-    var oLabelName = document.querySelector('#timeName');
-    var oDivName = document.querySelector('#mName');
-    for(var i=0; i<aLiInput.length; i++){
-        aLiInput[i].onclick = function(){
-            for(var i=0; i<aLiInput.length; i++){
-                aLiInput[i].className = '';
-            };
-            this.className = 'cur';
-            oLabelName.innerHTML = this.value;
-            oDivName.innerHTML = this.value;
-        };
-    };
-</script>
+<div id="jplayMP3"></div>
 </body>
-</html>

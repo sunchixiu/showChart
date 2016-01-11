@@ -232,53 +232,6 @@
                 <li><a class="nav-area" href="http://www.fiberhomeedu.com/Home/Index/getarea">区域</a></li>
             </ul>
         </div>
-        <div class="f-fr">
-            <div class="homeico-d">
-
-				<span class="homeico-u"><i></i><a href="javascript:;" title="{$userinfo['lgnname']}"> </a><i class="homei-i1"></i>
-					<em></em>
-					<ul>
-                        <li><a href="/Space/Childrenlink/index">我的空间</a></li>
-                        <li><a href="/Space/My/index">我的空间</a></li>
-                        <li><a href="<php>echo RESOURCE_ADDR</php>/jspui/mydspace">我的资源</a></li>
-                        <li><a href="/Space/My/centerindex">管理中心</a></li>
-                        <li><a href="/Space/Appstore/developerAppList">应用管理</a></li>
-                    </ul>
-				</span>
-
-				<span class="homeico-e"><i></i>
-					<em></em>
-					<ul>
-                        <li><a href="/Space/Notice/index">系统消息</a></li>
-                        <li><a href="/Space/My/notice">通知公告</a></li>
-                    </ul>
-				</span>
-				<span class="homeico-i"><i></i>
-					<em></em>
-					<ul>
-                        <li><a href="/">i币：2</a></li>
-                        <li><a href="/">积分：3</a></li>
-
-                        <li><a href="/">学分：4</a></li>
-
-
-                    </ul>
-				</span>
-				<span class="homeico-s"><i></i>
-					<em></em>
-					<ul>
-                        <li><a href="/Space/Personalset/info">个人设置</a></li>
-                        <li><a href="/Space/Personalset/safe">账号安全</a></li>
-                        <li><a href="/Home/Home/listpage/id/11eaf354f2354e91828cb0a06049e7b1/homeid/<php>echo SCHOOLID;</php>">帮助中心</a></li>
-                        <li style="border-top:1px solid #ddd;"><a href="/Home/Index/logout">退出登录</a></li>
-                    </ul>
-				</span>
-
-                <p style="text-align:right">欢迎您，请&nbsp;<a href=" "><font >登录</font></a> 或 <a href="/Home/Register/index"> <font  >注册</font></a></p>
-
-            </div>
-
-        </div>
     </div>
 </div>
 <div class="m-headWrap">
@@ -286,12 +239,12 @@
         <h1><a href="/">湖北省教育资源公共服务平台</a></h1>
         <h2>WWW.FIBERHOMEEDU.COM</h2>
     </div>
-    <div class="m-search  f-fr" style="width:400px;padding-top:20px;">
+    <div class="m-search  f-fr" style="width:400px;padding-top:34px;">
 
         <input type="hidden" id="searchType" value="1">
         <input type="hidden" id="isThisHtml" value="0">
         <input class="u-txt" type="text" placeholder="" id="SearchText" style="width:320px;" value="">
-        <input class="u-btn  f-csp" type="button" value="搜索" onclick="search();">
+        <input class="btn btn-info" type="button" value="搜索" style="margin-top: -10px;" onclick="search();">
         <div class="searchSub">
             <!-- 选定当前添加class selected -->
             <span><a class="selected" href="javascript:void(0);" scope='1'>文章</a></span>
@@ -406,85 +359,7 @@
                 </div>
             </div>
             <div class="k_content">
-                <div class="device_list_control clearfix">
-                    <div class="grades">
-                        <h4>一年级一班<!--<input type="button" value="删除" class="btn btn-default" onclick="deleteClass();">--></h4>
-                        <div class="device_line" style="border-top: 1px solid #ddd; clear: both;">
-                            <div class="device_main clearfix">
-                                <div class="device_icon_box pull-left">
-                                    <img src="images/white_pc.png" alt=""/>
-                                </div>
-                                <div class="pull-left device_info_box">
-                                    <p class="info"><a href="eq_showEquConfPC.action?equid=13&equtypeid=1&role=0">计算机</a></p>
-                                    <p class="info">运行状态：运行</p>
-                                    <p class="info">IP地址：10.0.10.204</p>
-                                </div>
-                                <div class="pc_div">
-                                    <p><span id="cpuinfor" style="width: 118px;">处理器：</span><span id="raminfor">内存信息：</span></p>
-                                    <p><span id="pcdev" style="height: 34px; vertical-align: top;">硬盘容量：</span></p>
-                                    <p><span id="netinfor">网络：</span></p>
-                                    <input type="button" class="btn btn-info" value="开机">
-                                    <input type="button" class="btn btn-info" value="注销">
-                                    <input type="button" class="btn btn-info" value="重启">
-                                    <input type="button" class="btn btn-info" value="关机">
-                                </div>
-                            </div>
-
-                            <div class="device_sub_info">
-                                <p class="info">型号：2000-1-01-B</p>
-                                <p class="info">处理器：Intel(R) Core(TM) i7-4840 CPU</p>
-                                <p class="info"> 内存：8.00 GB</p>
-                                <p class="info">硬盘：2T </p>
-                                <p class="info">显卡：集成显卡</p>
-                                <p class="info">购买时间：2015-12-22</p>
-                            </div>
-
-                            <div class="device_chart">
-                                <div class="chart_1_13" style="width: 260px;height: 90px;overflow: hidden;float: left; margin-left: 20px;"></div>
-                                <div class="chart_2_13" style="width: 260px;height: 90px;overflow: hidden;float: left; margin-left: 24px;"></div>
-                                <div class="chart_3_13" style="width: 260px;height: 90px;overflow: hidden;float: left; margin-left: 20px;"></div>
-                                <div class="chart_4_13" style="width: 260px;height: 90px;overflow: hidden;float: left; margin-left: 24px;"></div>
-                            </div>
-                        </div>
-                        <div class="device_line" style="border-top: 1px solid #ddd; clear: both;">
-                            <div class="device_main clearfix" style="height: 90px;">
-                                <div class="device_icon_box pull-left">
-                                    <img src="images/white_baiban.png" alt=""/>
-                                </div>
-                                <div class="pull-left device_info_box">
-                                    <p class="info"><a href="eq_showEquConfBoard.action?equid=14&equtypeid=3&role=0" >电子白板 </a></p>
-                                    <p class="info">运行状态：故障</p>
-                                    <p class="info">白板类型： 电磁</p>
-                                </div>
-                            </div>
-                            <div class="device_sub_info" style="width: 800px; height: 90px; border-right: none;">
-                                <span class="info">厂家：XXXX有限公司</span>
-                                <span class="info">尺寸：100cm*100cm*5cm</span>
-                                <span class="info">重量：10kg</span>
-                                <span class="info">型号：2000-1-01-C</span>
-                                <span class="info">购买时间：2015-12-22</span>
-                            </div>
-                        </div>
-                        <div class="device_line" style="border-top: 1px solid #ddd; clear: both;">
-                            <div class="device_main clearfix" style="height: 90px;">
-                                <div class="device_icon_box pull-left">
-                                    <img src="images/white_tyy.png" alt=""/>
-                                </div>
-                                <div class="pull-left device_info_box">
-                                    <p class="info"><a href="eq_showEquConfBoard.action?equid=14&equtypeid=3&role=0" >投影仪</a></p>
-                                    <p class="info">运行状态：关机</p>
-                                    <p class="info">投影技术：短焦距投影技术</p>
-                                </div>
-                            </div>
-                            <div class="device_sub_info" style="width: 800px; height: 90px; border-right: none;">
-                                <span class="info">型号：2000-1-01-D</span>
-                                <span class="info">亮度：80%</span>
-                                <span class="info">最高分辨率：1920*1080</span>
-                                <span class="info">购买时间：2015-12-22</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <!--班级表格数据-->
             </div>
 
         </div>
@@ -511,7 +386,7 @@
         <h4>删除 <em class="className">三年级二班</em></h4>
     </div>
     <div class="modal-body" style="height: 80px; line-height: 80px; text-align: center;">
-        <div>确实要删除 <em class="className">三年级二班</em> 吗？</div>
+        <div>确定要删除 <em class="className">三年级二班</em> 吗？</div>
     </div>
     <div class="modal-footer" style="text-align: center; height: 30px; padding: 6px;">
         <input type="button" class="btn btn-default" value="确定"> <input type="button" class="btn btn-default" data-dismiss="modal" value="取消">
@@ -697,8 +572,8 @@
                     break;
             };
             if(i%3 == 0){
-                html += '<div class="device_list_control clearfix"><div class="grades"><h4>'+(data.data[i].grade+data.data[i].classc)+'<input type="button" value="删除" class="btn btn-default" onclick=deleteClass("'+(data.data[i].grade+data.data[i].classc)+'")></h4>' +
-//                html += '<div class="device_list_control clearfix"><div class="grades"><h4>'+(data.data[i].grade+data.data[i].classc)+'</h4>' +
+//                html += '<div class="device_list_control clearfix"><div class="grades"><h4>'+(data.data[i].grade+data.data[i].classc)+'<input type="button" value="删除" class="btn btn-default" onclick=deleteClass("'+(data.data[i].grade+data.data[i].classc)+'")></h4>' +
+                html += '<div class="device_list_control clearfix"><div class="grades"><h4>'+(data.data[i].grade+data.data[i].classc)+'</h4>' +
                 '<div class="device_line" style="border-top: 1px solid #ddd; clear: both;">' +
                 '<div class="device_main clearfix">' +
                 '<div class="device_icon_box pull-left">' +
