@@ -18,16 +18,17 @@
 
     <script>
         $(document).ready(function(){
-            $('#topStudent > li').eq(0).children('p.pic').css({'width':'3.6rem','height':'3.6rem','marginLeft':'-0.675rem','marginTop':'-2.1rem'});
+            $('#topStudent > ul > li').eq(Math.ceil($('#topStudent > ul > li').length/2)-1).children('p.pic').css({'width':'3.6rem','height':'3.6rem','marginLeft':'-0.675rem','marginTop':'-2.1rem'});
 
             //创建一个新的hammer对象并且在初始化时指定要处理的dom元素
-            var hammertime = new Hammer(document.getElementById("topStudentDiv"));
+            var hammertime = new Hammer(document.getElementById("topStudent"));
             //添加事件
-//            alert($('#topStudent > li').eq(0).offset().left/(document.documentElement.clientWidth/18));
-            var numI = 0;
+//            alert($('#topStudent > ul > li').eq(2).offset().left/(document.documentElement.clientWidth/18));
+//            alert($('#topStudent > ul > li').eq(0).children('p.pic').css('marginTop'));
+            var numI = Math.ceil($('#topStudent > ul > li').length/2)-1;
             var remC = document.documentElement.clientWidth/18;
             var uLleft;
-            var left1=7.85,left2=12.5;
+            var left1=3.625,left2=7.875,left3=12.125;
             var width1=2.25,width2=3.6,width3=2.25;
             var top1=3.6,top2=1.5,top3=3.6;
 
@@ -37,6 +38,7 @@
             });
             hammertime.on('panleft panright',function(e){
                 $('#topStudent').css('marginLeft', (uLleft+e.deltaX/remC)+'rem');
+                e.preventDefault();
             });
             hammertime.on('panend',function(e){
                 var l = parseInt($('#topStudent').css('marginLeft'))/remC - uLleft;
@@ -53,8 +55,8 @@
                         tX = uLleft+n*(left2-left1);
                         numI -= n;
                     };
-                    if(parseInt($('#topStudent > li').eq(0).offset().left)/remC > left1){
-                        tX = 0;
+                    if(parseInt($('#topStudent > ul >li > p.pic').eq(0).offset().left)/remC > left2){
+                        tX = Math.floor($('#topStudent > ul >li').length/2)*(left2-left1);
                         numI = 0;
                     };
                 }else{
@@ -66,15 +68,15 @@
                         tX = uLleft+(n-1)*(left2-left1);
                         numI -= n-1;
                     };
-                    if(parseInt($('#topStudent > li').eq($('#topStudent > li').length-1).offset().left)/remC < left1){
-                        tX = -($('#topStudent > li').length-1)*(left2-left1);
-                        numI = $('#topStudent > li').length-1;
+                    if(parseInt($('#topStudent > ul >li > p.pic').eq($('#topStudent > ul >li').length-1).offset().left)/remC < left2){
+                        tX = -Math.floor($('#topStudent > ul >li').length/2)*(left2-left1);
+                        numI = $('#topStudent > ul >li').length-1;
                     };
                 };
                 endTurnChild(tX,numI);
             });
 
-            var aLipic = document.querySelectorAll('#topStudent > li');
+            var aLipic = document.querySelectorAll('#topStudent > ul >li');
             for(var i=0; i<aLipic.length; i++){
                 (function(index){
                     var hammerLi = new Hammer(aLipic[index]);
@@ -89,6 +91,45 @@
                     });
                 })(i);
             };
+//            hammertime.on("panstart", function (e){
+//                uLleft = $('#topStudent').offset().left/remC;
+//            });
+//            hammertime.on("panmove", function (e) {
+////                document.getElementById("result").innerHTML = "X偏移量：【" + e.deltaX + "】，Y偏移量：【" + e.deltaY + "】<br />";
+//                if(Math.abs(e.deltaX/remC) <= 4.25){
+//                    $('#topStudent').css('marginLeft', e.deltaX);
+//                    $('#topStudent > ul > li').each(function(i){
+//                        if(e.deltaX > 0){
+//                            if($('#topStudent > ul > li').eq(i).offset().left/remC > left1 && $('#topStudent > ul > li').eq(i).offset().left/remC < left2){
+//                                $('#topStudent > ul > li').eq(i).children('p.pic').css({'width': (((e.deltaX/remC)/(left2-left1))*(width2-width1)+width1)+'rem','height':(((e.deltaX/remC)/(left2-left1))*(width2-width1)+width1)+'rem','marginTop':(((e.deltaX/remC)/(left2-left1))*(-2.1))+'rem','marginLeft':((e.deltaX/remC)/(left2-left1))*(-0.675) + 'rem'});
+//                            };
+//                            if($('#topStudent > ul > li').eq(i).offset().left/remC > left2 && $('#topStudent > ul > li').eq(i).offset().left/remC < left3){
+//                                $('#topStudent > ul > li').eq(i).children('p.pic').css({'width': (((e.deltaX/remC)/(left3-left2))*(width3-width2)+width2)+'rem','height':(((e.deltaX/remC)/(left3-left2))*(width3-width2)+width2)+'rem','marginTop':(((e.deltaX/remC)/(left3-left2))*2.1-2.1)+'rem','marginLeft':((e.deltaX/remC)/(left2-left1))*0.675 + 'rem'});
+//                            };
+//                        }else{
+//                            if($('#topStudent > ul > li').eq(i).offset().left/remC > left1 && $('#topStudent > ul > li').eq(i).offset().left/remC < left2){
+//                                $('#topStudent > ul > li').eq(i).children('p.pic').css({'width': (((e.deltaX/remC)/(left1-left2))*(width1-width2)+width2)+'rem','height':(((e.deltaX/remC)/(left1-left2))*(width1-width2)+width2)+'rem','marginTop':(((e.deltaX/remC)/(left2-left3))*2.1-2.1)+'rem','marginLeft':((e.deltaX/remC)/(left1-left2))*0.675 + 'rem'});
+//                            };
+//                            if($('#topStudent > ul > li').eq(i).offset().left/remC > left2 && $('#topStudent > ul > li').eq(i).offset().left/remC < left3){
+//                                $('#topStudent > ul > li').eq(i).children('p.pic').css({'width': (((e.deltaX/remC)/(left2-left3))*(width2-width3)+width3)+'rem','height':(((e.deltaX/remC)/(left2-left3))*(width2-width3)+width3)+'rem','marginTop':(((e.deltaX/remC)/(left1-left2))*(-2.1))+'rem','marginLeft':((e.deltaX/remC)/(left1-left2))*(-0.675) + 'rem'});
+//                            };
+//                        };
+//
+//                    });
+//                };
+//            });
+//            hammertime.on("panend", function (e){
+//                var l = $('#topStudent').offset().left/remC;
+//                var c = left2-left1;
+//                var n = Math.floor(l/c);
+//
+//                if(l-uLleft > 0){
+//                    alert(n)
+//                    if(l-n*c > (left2-left1)/2){
+//                        $('#topStudent').css('marginLeft',(n+1)*(left2-left1) + 'rem');
+//                    };
+//                };
+//            });
 
             //折叠列表
             var Accordion = function(el, multiple) {
@@ -122,21 +163,8 @@
 <div class="iiheader" style="z-index: 2;">
     <div class="top" id="top">
         <div class="l"></div>
-        <div class="m" id="topStudentDiv">
-            <ul id="topStudent">
-                <li>
-                    <p class="pic"><img src="images/student2.jpg"></p>
-                    <p class="text">王悦</p>
-                </li>
-                <li>
-                    <p class="pic"><img src="images/student1.jpg"></p>
-                    <p class="text">王欣</p>
-                    <!--<p>学号：1</p>-->
-                </li>
-                <li>
-                    <p class="pic"><img src="images/student3.jpg"></p>
-                    <p class="text">王成</p>
-                </li>
+        <div class="m" id="topStudent">
+            <ul>
                 <li>
                     <p class="pic"><img src="images/student2.jpg"></p>
                     <p class="text">王悦</p>
@@ -299,11 +327,11 @@
             'webkitTransition':'none'
         });
 
-        $('#topStudent > li > p.pic').css({
+        $('#topStudent > ul > li > p.pic').css({
             'transition':'.3s all ease',
             'webkitTransition':'.3s all ease'
         });
-        $('#topStudent > li').children('p.pic').css({'width':'2.25rem','height':'2.25rem','marginLeft':'0','marginTop':'0'});
+        $('#topStudent > ul > li').children('p.pic').css({'width':'2.25rem','height':'2.25rem','marginLeft':'0','marginTop':'0'});
     };
     function endTurnChild(tX,num){
         $('#topStudent').css({
@@ -311,7 +339,7 @@
             'webkitTransition':'.3s all ease'
         });
         $('#topStudent').css('marginLeft',tX+'rem');
-        $('#topStudent > li').eq(num).children('p.pic').css({'width':'3.6rem','height':'3.6rem','marginLeft':'-0.675rem','marginTop':'-2.1rem'});
+        $('#topStudent > ul > li').eq(num).children('p.pic').css({'width':'3.6rem','height':'3.6rem','marginLeft':'-0.675rem','marginTop':'-2.1rem'});
     };
 
     //家长签字
