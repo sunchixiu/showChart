@@ -66,7 +66,7 @@
         }
 
         function read() {
-            that.temp = ((input && that.val !== null && that.val != elm.val()) || that.values === null) ? s.parseValue(elm.val() || '', that) : that.values.slice(0);
+            that.temp = ((input && that.val !== null && that.val != elm.attr('data-value')) || that.values === null) ? s.parseValue(elm.attr('data-value') || '', that) : that.values.slice(0);
             that.setValue(true);
         }
 
@@ -373,6 +373,7 @@
                 //if (input) {
                 //    elm.val(v).trigger('change');
                 //}
+                elm.attr('data-value',v).trigger('change');
                 setDateTime(v);
             }
         };

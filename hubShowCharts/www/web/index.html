@@ -26,13 +26,13 @@
 //            alert($('#topStudent > li').eq(0).offset().left/(document.documentElement.clientWidth/18));
             var numI = 0;
             var remC = document.documentElement.clientWidth/18;
-            var uLleft;
+            var uLleft = parseInt($('#topStudent').css('marginLeft'))/remC;
             var left1=7.85,left2=12.5;
             var width1=2.25,width2=3.6,width3=2.25;
             var top1=3.6,top2=1.5,top3=3.6;
 
             hammertime.on('panstart',function(e){
-                uLleft = parseInt($('#topStudent').css('marginLeft'))/remC;
+//                uLleft = parseInt($('#topStudent').css('marginLeft'))/remC;
                 startTurnChild();
             });
             hammertime.on('panleft panright',function(e){
@@ -71,6 +71,7 @@
                         numI = $('#topStudent > li').length-1;
                     };
                 };
+                uLleft = tX;
                 endTurnChild(tX,numI);
             });
 
@@ -79,12 +80,13 @@
                 (function(index){
                     var hammerLi = new Hammer(aLipic[index]);
                     hammerLi.on("tap", function(e){
-                        uLleft = parseInt($('#topStudent').css('marginLeft'))/remC;
+//                        uLleft = parseInt($('#topStudent').css('marginLeft'))/remC;
                         if(numI != index){
                             var tX = uLleft+(numI-index)*(left2-left1);
                             numI = index;
                             startTurnChild();
                             endTurnChild(tX,numI);
+                            uLleft = tX;
                         };
                     });
                 })(i);
@@ -161,13 +163,13 @@
         <span class="week_left">
             <em class="big" id="thisM">1月</em>
             <em class="small">
-                <p id="thisW">周五</p>
+                <p id="thisW" class="pup">周五</p>
                 <p id="thisY">2016年</p>
             </em>
         </span>
         <span id="thisYM"></span>
         <span class="week_right">
-            <input type="button" id="rili">
+            <input type="button" id="rili" data-value="">
         </span>
     </div>
     <div class="week_con_up">

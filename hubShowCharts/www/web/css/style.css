@@ -29,8 +29,8 @@ body{width: 100%; font-family: '微软雅黑';}
 .week_bg span{display: inline-block;}
 .week_bg span.week_left{float: left; width: 6rem; height: 1.4rem; text-align: left; margin-left: 0.6rem;}
 .week_bg span.week_left em{display: inline-block;}
-.week_bg span.week_left em.big{width: auto; height: 1.4rem; line-height: 1.4rem; font-size: 1.1rem;}
-.week_bg span.week_left em.small{ -webkit-text-size-adjust: none; font-size: 0.5rem;}
+.week_bg span.week_left em.big{width: auto; height: 1.4rem; line-height: 1.6rem; font-size: 1.1rem; vertical-align: top;}
+.week_bg span.week_left em.small{ -webkit-text-size-adjust: none; font-size: 0.5rem; height: 1.4rem; margin-top: 0rem;}
 
 .week_bg span.week_right{float: right; width: 0.93rem; height: 1.4rem; text-align: right; margin-right: 1.2rem;}
 .week_bg span.week_right input{width: 0.96rem; height: 0.96rem; background:none; background-image: url("../images/pic_map.png"); background-size: 3.075rem 2.275rem; background-position: -1.05rem -1.038rem; background-repeat: no-repeat; display: inline-block; margin-top: 0.24rem;}
