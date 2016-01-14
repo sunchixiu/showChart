@@ -1,0 +1,26 @@
+.week_con_down.borderBgGray ul li em{background: #efefef; border-color: #efefef;}
+.week_con_down.borderBgGray ul li.active em{ background: #dcf4f7; border: 1px solid #83d8e4; border-radius: 50%; -webkit-border-radius: 50%;}
+
+.per_content_k{width: 16.8rem; margin: 1rem 0.5rem; background: #fff; border: 0.05rem solid #d8d8d8; border-radius: 0.2rem; -webkit-border-radius: 0.2rem;}
+.per_content_k h2{width: 96%; margin: 0 2%; font-size: 14px; color: #666; line-height: 1rem; text-align: center; border-bottom: 0.05rem solid #ccc; padding: 1rem 0;}
+.per_content_k ul{margin: 1.2rem 0;}
+.per_content_k ul li{margin-left: 1.2rem; margin-right: 1.2rem; position: relative; height: auto; padding-bottom:0.6rem;}
+/*.per_content_k ul li:first-child{padding-top: 0;}*/
+/*.per_content_k ul li:last-child{padding-bottom: 0;}*/
+.per_content_k ul li span{display: inline-block; vertical-align: middle;}
+.per_content_k ul li span.bgPot{width: 0.1rem; height: 100%; background: #c9c9c9; position: absolute;}
+.per_content_k ul li:first-child span.bgPot{height: 100%; margin-top: 0.8rem;}
+.per_content_k ul li:last-child span.bgPot{height: 0.8rem; margin-top: 0rem;}
+.per_content_k ul li span.pot{width: 0.4rem; height: 0.4rem; border-radius: 50%; -webkit-border-radius: 50%; background: #c9c9c9; margin-left: -0.15rem;}
+.per_content_k ul li span.pot em{display: inline-block; width: 0.2rem; height: 0.2rem; background: #999; border-radius: 50%; -webkit-border-radius: 50%; position: absolute; margin: 0.1rem;}
+.per_content_k ul li span.typeIcon{width: 1rem; height: 1rem; background-image: url("../images/pic_map.png"); background-size: 6rem 5rem; margin-left: 0.5rem;}
+.per_content_k ul li span.lx{background-position: 0 -3.7rem;}
+.per_content_k ul li span.cs{background-position: -1.2rem -3.7rem;}
+.per_content_k ul li span.xx{background-position: -2.4rem -3.7rem;}
+.per_content_k ul li span.text{font-size: 0.5rem; color: #333; margin-top: 0.2rem; line-height: 1.1rem; vertical-align: top; margin-left: 0.1rem;}
+.per_content_k ul li span.text p.title{font-size: 0.7rem;}
+.per_content_k ul li span.text p.last{margin-top: 0.3rem;}
+.per_content_k ul li span.text p span{width: 1.8rem; height: 1.2rem; background-image: url("../images/pic_map.png"); background-size: 6rem 5rem; margin-right: 0.5rem;}
+.per_content_k ul li span.text p span.pdf{background-position: 0 -2.5rem;}
+.per_content_k ul li span.text p span.doc{background-position: -2rem -2.5rem;}
+.per_content_k ul li span.text p span.mp4{background-position: -4rem -2.5rem;}
