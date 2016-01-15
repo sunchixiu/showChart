@@ -84,12 +84,12 @@ ul.submenu{background: #eee; display: none;}
 .con_subject .homework_k p.message label.title{font-size: 0.7rem; display: block; color: #333;}
 .con_subject .homework_k p.message label.con{font-size: 0.6rem; color: #666; line-height: 0.9rem; margin-bottom: 1rem; display: block; margin-top: 0.2rem;}
 
-.header{width: 100%; height: 2.6rem; background: #3399cc; text-align: center; font-size: 0.9rem; line-height: 2.6rem; color: #fff; display:-webkit-box; overflow: hidden;}
+.header{width: 100%; height: 2.6rem; background: #3399cc; position: fixed; top: 0; text-align: center; font-size: 0.9rem; line-height: 2.6rem; color: #fff; display:-webkit-box; overflow: hidden; z-index: 3;}
 .header .l{ width:3.4rem; height: 2.6rem; background:#3399cc; font-size: 0.7rem;}
 .header .r{ width:3.4rem; height: 2.6rem; background:#3399cc; font-size: 0.7rem;}
 .header .l a,.header .r a{color: #fff;}
 .header .m{ -webkit-box-flex:1;}
-.section{-webkit-box-flex:1; overflow-x:hidden;}
+.section{-webkit-box-flex:1; overflow-x:hidden; margin-top: 2.6rem;}
 
 .bgWhite{background: #fff;}
 .bgGray{background: #efefef;}
