@@ -357,13 +357,13 @@
             if (!$.isArray(that.temp)) {
                 that.temp = s.parseValue(that.temp + '', that);
             }
-            
+
             if (visible && sc) {
                 scrollToPos(time);
             }
-            
+
             v = s.formatResult(that.temp);
-            
+
             if (!temp) {
                 that.values = that.temp.slice(0);
                 that.val = v;

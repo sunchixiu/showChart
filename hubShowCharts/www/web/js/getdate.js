@@ -109,6 +109,8 @@ function getdate(Y,M,D,W){
         $("#thisY").html(dateArr[0] + '年');
         $("#thisM").html(dateArr[1] + '月');
         $("#thisW").html(turnWeek(dateArr[3]));
+
+        $('#rili').attr('data-value','00'+dateArr[0]+'-'+dateArr[1]+'-'+dateArr[2]);
     });
 
     function turnWeek(week){
