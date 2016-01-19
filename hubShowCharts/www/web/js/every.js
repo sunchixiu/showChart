@@ -7,7 +7,8 @@ document.onselectstart = function(){
     return false;
 };
 function loaded (id) {
-    var myScroll = new IScroll('#'+id+'', {click: true, preventDefaultException: {tagName: /^(INPUT|TEXTAREA|BUTTON|SELECT|LI)$/, className: /(^|\s)btn(\s|$)/ },scrollbars: false});
+    //var myScroll = new IScroll('#'+id+'', {click: true, preventDefaultException: {tagName: /^(INPUT|TEXTAREA|BUTTON|SELECT|LI)$/, className: /(^|\s)btn(\s|$)/ },scrollbars: false});
+    var myScroll = new iScroll(id, {click: true, preventDefaultException: {tagName: /^(INPUT|TEXTAREA|BUTTON|SELECT|LI)$/, className: /(^|\s)btn(\s|$)/ },scrollbars: false});
 }
 //document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
 
