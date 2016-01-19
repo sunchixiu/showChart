@@ -10,10 +10,11 @@
     <link href="css/mobiscroll.css" rel="stylesheet" />
     <link href="css/mobiscroll_date.css" rel="stylesheet" />
 
-    <script src="js/every.js"></script>
     <script src="js/jquery-1.11.1.min.js"></script>
     <script src="js/mobiscroll_date.js"></script>
     <script src="js/mobiscroll.js"></script>
+    <script src="js/iscroll.js"></script>
+    <script src="js/every.js"></script>
     <script src="js/getdate.js"></script>
 </head>
 <body class="bgGray">
@@ -22,8 +23,9 @@
     <div class="m">课堂表现</div>
     <div class="r">查看详情</div>
 </div>
-<div class="section">
-    <div class="week_bg bgWhite">
+<div class="section" id="wrapper">
+    <div class="scroll">
+        <div class="week_bg bgWhite">
         <span class="week_left">
             <em class="big" id="thisM">1月</em>
             <em class="small">
@@ -31,41 +33,41 @@
                 <p id="thisY">2016年</p>
             </em>
         </span>
-        <span id="thisYM"></span>
+            <span id="thisYM"></span>
         <span class="week_right">
             <input type="button" id="rili" data-value="">
         </span>
-    </div>
-    <div class="week_con_up" style="margin-top: 0.3rem;">
-        <ul><li>日</li><li>一</li><li>二</li><li>三</li><li>四</li><li>五</li><li>六</li></ul>
-    </div>
-    <div class="week_con_down borderBgGray">
-        <ul><li id="week0"><em></em></li><li id="week1"><em></em></li><li id="week2"><em></em></li><li id="week3"><em></em></li><li id="week4"><em></em></li><li id="week5"><em></em></li><li id="week6"><em></em></li></ul>
-    </div>
+        </div>
+        <div class="week_con_up" style="margin-top: 0.3rem;">
+            <ul><li>日</li><li>一</li><li>二</li><li>三</li><li>四</li><li>五</li><li>六</li></ul>
+        </div>
+        <div class="week_con_down borderBgGray">
+            <ul><li id="week0"><em></em></li><li id="week1"><em></em></li><li id="week2"><em></em></li><li id="week3"><em></em></li><li id="week4"><em></em></li><li id="week5"><em></em></li><li id="week6"><em></em></li></ul>
+        </div>
 
-    <div class="per_content_k">
-        <h2>课时1：正多边形与圆(数学)</h2>
-        <ul>
-            <li>
-                <span class="bgPot"></span><span class="pot"><em></em></span>
-                <span class="typeIcon lx"></span>
+        <div class="per_content_k">
+            <h2>课时1：正多边形与圆(数学)</h2>
+            <ul>
+                <li>
+                    <span class="bgPot"></span><span class="pot"><em></em></span>
+                    <span class="typeIcon lx"></span>
                 <span class="text">
                     <p class="title">[课堂练习]选取三角形</p>
                     <p>包含1个文件</p>
                     <p class="last"><span class="pdf"></span>选取三角形</p>
                 </span>
-            </li>
-            <li>
-                <span class="bgPot"></span><span class="pot"><em></em></span>
-                <span class="typeIcon cs"></span>
+                </li>
+                <li>
+                    <span class="bgPot"></span><span class="pot"><em></em></span>
+                    <span class="typeIcon cs"></span>
                 <span class="text">
                     <p class="title">[课堂测试]认识三角形</p>
                     <p>平均正确率87.6%</p>
                 </span>
-            </li>
-            <li>
-                <span class="bgPot"></span><span class="pot"><em></em></span>
-                <span class="typeIcon xx"></span>
+                </li>
+                <li>
+                    <span class="bgPot"></span><span class="pot"><em></em></span>
+                    <span class="typeIcon xx"></span>
                 <span class="text">
                     <p class="title">[探究学习（自主）]自主探究</p>
                     <p>包含3个文件</p>
@@ -73,12 +75,15 @@
                     <p class="last"><span class="doc"></span>资料阅读-三角形（边）</p>
                     <p class="last"><span class="mp4"></span>视频观看-认识三角形</p>
                 </span>
-            </li>
-        </ul>
+                </li>
+            </ul>
+        </div>
     </div>
 </div>
 
 <script>
+//    document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+//    loaded('wrapper');
     getdate();
 </script>
 <script>

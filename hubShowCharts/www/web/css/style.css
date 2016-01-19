@@ -89,6 +89,7 @@ ul.submenu{background: #eee; display: none;}
 .header .r{ width:3.4rem; height: 2.6rem; background:#3399cc; font-size: 0.7rem;}
 .header .l a,.header .r a{color: #fff;}
 .header .m{ -webkit-box-flex:1;}
+/*.section{overflow-x:hidden; top: 2.6rem; bottom: 0; width: 100%; position: absolute;}*/
 .section{-webkit-box-flex:1; overflow-x:hidden; margin-top: 2.6rem;}
 
 .bgWhite{background: #fff;}

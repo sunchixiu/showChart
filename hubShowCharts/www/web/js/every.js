@@ -6,8 +6,8 @@ document.documentElement.style.fontSize=document.documentElement.clientWidth/18+
 document.onselectstart = function(){
     return false;
 };
-function loaded (className) {
-    var myScroll = new IScroll('.'+className+'', { mouseWheel: true, click: true, preventDefaultException: {tagName: /^(INPUT|TEXTAREA|BUTTON|SELECT|LI)$/, className: /(^|\s)btn(\s|$)/ }});
+function loaded (id) {
+    var myScroll = new IScroll('#'+id+'', {click: true, preventDefaultException: {tagName: /^(INPUT|TEXTAREA|BUTTON|SELECT|LI)$/, className: /(^|\s)btn(\s|$)/ },scrollbars: false});
 }
 //document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
 
