@@ -44,6 +44,7 @@ function saveSignature(subjectId) {
     $.ajax({
         url:'',
         type:'post',
+        dataType:'json',
         data:{},
         success:function(data){
             setTimeout(function(){
