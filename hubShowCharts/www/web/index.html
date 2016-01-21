@@ -14,7 +14,10 @@
     <script src="js/hammer.min.js"></script>
     <script src="js/mobiscroll_date.js"></script>
     <script src="js/mobiscroll.js"></script>
+    <script src="js/iscroll4.js"></script>
     <script src="js/getdate.js"></script>
+    <script src="js/jq-signature.js"></script>
+    <script src="js/parentMark.js"></script>
 
     <script>
         var txTimer = null;
@@ -115,7 +118,12 @@
                 if (!e.data.multiple) {
                     $el.find('.submenu').not($next).slideUp();
                 };
-            }
+//                setTimeout(function(){
+//                    var h = $('#bottomDiv').offset().top+20;
+//
+//                    $('#main').css('height',h);
+//                },400);
+            };
 
             var accordion = new Accordion($('#accordion'), false);
 
@@ -123,45 +131,47 @@
     </script>
 </head>
 <body>
-<div class="jheader">
-    <div class="top" id="top">
-        <div class="l"></div>
-        <div class="m" id="topStudentDiv">
-            <ul id="topStudent">
-                <li>
-                    <p class="pic"><img src="images/student2.jpg"></p>
-                    <p class="text">王悦0</p>
-                </li>
-                <li>
-                    <p class="pic"><img src="images/student1.jpg"></p>
-                    <p class="text">王欣1</p>
-                    <!--<p>学号：1</p>-->
-                </li>
-                <li>
-                    <p class="pic"><img src="images/student3.jpg"></p>
-                    <p class="text">王成2</p>
-                </li>
-                <li>
-                    <p class="pic"><img src="images/student2.jpg"></p>
-                    <p class="text">王悦3</p>
-                </li>
-                <li>
-                    <p class="pic"><img src="images/student1.jpg"></p>
-                    <p class="text">王欣4</p>
-                    <!--<p>学号：1</p>-->
-                </li>
-                <li>
-                    <p class="pic"><img src="images/student3.jpg"></p>
-                    <p class="text">王成5</p>
-                </li>
-            </ul>
-        </div>
-        <div class="r">
-            <div class="warning"><span>3</span></div>
-        </div>
-    </div>
-    <div class="fengexian"></div>
-    <div class="week_bg">
+<div>
+    <div class="scroll">
+        <div class="jheader">
+            <div class="top" id="top">
+                <div class="l"></div>
+                <div class="m" id="topStudentDiv">
+                    <ul id="topStudent">
+                        <li>
+                            <p class="pic"><img src="images/student2.jpg"></p>
+                            <p class="text">王悦0</p>
+                        </li>
+                        <li>
+                            <p class="pic"><img src="images/student1.jpg"></p>
+                            <p class="text">王欣1</p>
+                            <!--<p>学号：1</p>-->
+                        </li>
+                        <li>
+                            <p class="pic"><img src="images/student3.jpg"></p>
+                            <p class="text">王成2</p>
+                        </li>
+                        <li>
+                            <p class="pic"><img src="images/student2.jpg"></p>
+                            <p class="text">王悦3</p>
+                        </li>
+                        <li>
+                            <p class="pic"><img src="images/student1.jpg"></p>
+                            <p class="text">王欣4</p>
+                            <!--<p>学号：1</p>-->
+                        </li>
+                        <li>
+                            <p class="pic"><img src="images/student3.jpg"></p>
+                            <p class="text">王成5</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="r">
+                    <div class="warning"><span>3</span></div>
+                </div>
+            </div>
+            <div class="fengexian"></div>
+            <div class="week_bg">
         <span class="week_left">
             <em class="big" id="thisM">1月</em>
             <em class="small">
@@ -169,97 +179,102 @@
                 <p id="thisY">2016年</p>
             </em>
         </span>
-        <span id="thisYM"></span>
+                <span id="thisYM"></span>
         <span class="week_right">
             <input type="button" id="rili" data-value="">
         </span>
-    </div>
-    <div class="week_con_up">
-        <ul><li>日</li><li>一</li><li>二</li><li>三</li><li>四</li><li>五</li><li>六</li></ul>
-    </div>
-    <div class="week_con_down">
-        <ul><li id="week0"><em></em></li><li id="week1"><em></em></li><li id="week2"><em></em></li><li id="week3"><em></em></li><li id="week4"><em></em></li><li id="week5"><em></em></li><li id="week6"><em></em></li></ul>
+            </div>
+            <div class="week_con_up">
+                <ul><li>日</li><li>一</li><li>二</li><li>三</li><li>四</li><li>五</li><li>六</li></ul>
+            </div>
+            <div class="week_con_down">
+                <ul><li id="week0"><em></em></li><li id="week1"><em></em></li><li id="week2"><em></em></li><li id="week3"><em></em></li><li id="week4"><em></em></li><li id="week5"><em></em></li><li id="week6"><em></em></li></ul>
+            </div>
+        </div>
+
+        <div class="jsection">
+            <div class="daystatus">
+                <span id=""><label class="big">88%</label> <label class="small">完成率</label></span>
+                <span id=""><label class="big">8<em>&uarr;&darr;</em></label> <label class="small">班级排名</label></span>
+                <span id=""><label class="big">50%</label> <label class="small">正确率</label></span>
+                <span id=""><label class="big">2</label> <label class="small">表扬次数</label></span>
+            </div>
+
+            <ul id="accordion" class="accordion">
+                <li>
+                    <div class="link"><span class="left"><i class="subject">文</i>语文</span><span class="right"><label>作业</label> <i class="feelsmile"></i> <label>课堂表现</label> <i class="feelcry"></i><span class="jz_mark"><input type="button" class="mark_btn" value="家长签字" data-subject="12"></span></span></div>
+                    <ul class="submenu">
+                        <div class="con_subject">
+                            <div class="homework_k">
+                                <p><span class="hw_title">今日作业</span><span class="jz_mark"><input type="button" class="hw_btn" value="作业详情"></span></p>
+                                <p class="message">
+                                    <label class="title">老师留言</label>
+                                    <label class="con">
+                                        老师留言老师留言老师留言老师留言老师留言老师留言老师留言老师留言老师留言老师留言老师留言老师留言
+                                    </label>
+                                </p>
+                            </div>
+                            <div class="homework_k">
+                                <div class="fgx"></div>
+                                <span class="fgkL"></span><span class="fgkR"></span>
+                                <p style="margin-top: -0.5rem;"><span class="hw_title">今日表现</span><span class="jz_mark"><input type="button" class="hw_btn" value="课堂表现"></span></p></p>
+                                <p class="con">表扬次数：<label>1次</label>答题正确率：<label>70%</label>课堂积极性：<label class="lh">良好</label></p>
+                                <p class="bx">梅子课堂表现得分88，请继续努力</p>
+                            </div>
+                        </div>
+                    </ul>
+                </li>
+                <li>
+                    <div class="link"><span class="left"><i class="subject">数</i>数学</span><span class="right"><label>作业</label> <i class="feelsmile"></i> <label>课堂表现</label> <i class="feelsmile"></i><span class="jz_mark"><input type="button" class="mark_btn" value="家长签字" data-subject="13"></span></span></div>
+                    <ul class="submenu">
+                        <div class="con_subject">
+                            <div class="homework_k">
+                                <p><span class="hw_title">今日作业</span><span class="jz_mark"><input type="button" class="hw_btn" value="作业详情"></span></p>
+                                <p class="message">
+                                    <label class="title">已批阅</label>
+                                </p>
+                                <p class="con">完成率：<label>98%</label>正确率：<label>70%</label>提交排名：<label>6</label></p>
+                            </div>
+                            <div class="homework_k">
+                                <div class="fgx"></div>
+                                <span class="fgkL"></span><span class="fgkR"></span>
+                                <p style="margin-top: -0.5rem;"><span class="hw_title">今日表现</span><span class="jz_mark"><input type="button" class="hw_btn" value="课堂表现"></span></p></p>
+                                <p class="con">表扬次数：<label>1次</label>答题正确率：<label>70%</label>课堂积极性：<label class="lh">良好</label></p>
+                                <p class="bx">梅子1课堂表现得分88，请继续努力</p>
+                            </div>
+                        </div>
+                    </ul>
+                </li>
+                <li>
+                    <div class="link"><span class="left"><i class="subject">英</i>英语</span><span class="right"><label>作业</label> <i class="feelsmile"></i> <label>课堂表现</label> <i class="feelsmile2"></i><span class="jz_mark"><input type="button" class="mark_btn" value="家长签字" data-subject="14"></span></span></div>
+                    <ul class="submenu">
+                        <div class="con_subject">
+                            <div class="homework_k">
+                                <p><span class="hw_title">今日作业</span><span class="jz_mark"><input type="button" class="hw_btn" value="作业详情"></span></p>
+                                <p class="message">
+                                    <label class="title">已批阅</label>
+                                </p>
+                                <p class="con">完成率：<label>98%</label>正确率：<label>70%</label>提交排名：<label>6</label></p>
+                            </div>
+                            <div class="homework_k">
+                                <div class="fgx"></div>
+                                <span class="fgkL"></span><span class="fgkR"></span>
+                                <p style="margin-top: -0.5rem;"><span class="hw_title">今日表现</span><span class="jz_mark"><input type="button" class="hw_btn" value="课堂表现"></span></p></p>
+                                <p class="con">表扬次数：<label>1次</label>答题正确率：<label>70%</label>课堂积极性：<label class="lh">良好</label></p>
+                                <p class="bx">梅子2课堂表现得分88，请继续努力</p>
+                            </div>
+                        </div>
+                    </ul>
+                </li>
+                <div id="bottomDiv"></div>
+            </ul>
+        </div>
     </div>
 </div>
 
-<div class="jsection">
-    <div class="daystatus">
-        <span id=""><label class="big">88%</label> <label class="small">完成率</label></span>
-        <span id=""><label class="big">8<em>&uarr;&darr;</em></label> <label class="small">班级排名</label></span>
-        <span id=""><label class="big">50%</label> <label class="small">正确率</label></span>
-        <span id=""><label class="big">2</label> <label class="small">表扬次数</label></span>
-    </div>
-
-    <ul id="accordion" class="accordion">
-        <li>
-            <div class="link"><span class="left"><i class="subject">文</i>语文</span><span class="right"><label>作业</label> <i class="feelsmile"></i> <label>课堂表现</label> <i class="feelcry"></i><span class="jz_mark"><input type="button" class="mark_btn" value="家长签字"></span></span></div>
-            <ul class="submenu">
-                <div class="con_subject">
-                    <div class="homework_k">
-                        <p><span class="hw_title">今日作业</span><span class="jz_mark"><input type="button" class="hw_btn" value="作业详情"></span></p>
-                        <p class="message">
-                            <label class="title">老师留言</label>
-                            <label class="con">
-                                老师留言老师留言老师留言老师留言老师留言老师留言老师留言老师留言老师留言老师留言老师留言老师留言
-                            </label>
-                        </p>
-                    </div>
-                    <div class="homework_k">
-                        <div class="fgx"></div>
-                        <span class="fgkL"></span><span class="fgkR"></span>
-                        <p style="margin-top: -0.5rem;"><span class="hw_title">今日表现</span><span class="jz_mark"><input type="button" class="hw_btn" value="课堂表现"></span></p></p>
-                        <p class="con">表扬次数：<label>1次</label>答题正确率：<label>70%</label>课堂积极性：<label class="lh">良好</label></p>
-                        <p class="bx">梅子课堂表现得分88，请继续努力</p>
-                    </div>
-                </div>
-            </ul>
-        </li>
-        <li>
-            <div class="link"><span class="left"><i class="subject">数</i>数学</span><span class="right"><label>作业</label> <i class="feelsmile"></i> <label>课堂表现</label> <i class="feelsmile"></i><span class="jz_mark"><input type="button" class="mark_btn" value="家长签字"></span></span></div>
-            <ul class="submenu">
-                <div class="con_subject">
-                    <div class="homework_k">
-                        <p><span class="hw_title">今日作业</span><span class="jz_mark"><input type="button" class="hw_btn" value="作业详情"></span></p>
-                        <p class="message">
-                            <label class="title">已批阅</label>
-                        </p>
-                        <p class="con">完成率：<label>98%</label>正确率：<label>70%</label>提交排名：<label>6</label></p>
-                    </div>
-                    <div class="homework_k">
-                        <div class="fgx"></div>
-                        <span class="fgkL"></span><span class="fgkR"></span>
-                        <p style="margin-top: -0.5rem;"><span class="hw_title">今日表现</span><span class="jz_mark"><input type="button" class="hw_btn" value="课堂表现"></span></p></p>
-                        <p class="con">表扬次数：<label>1次</label>答题正确率：<label>70%</label>课堂积极性：<label class="lh">良好</label></p>
-                        <p class="bx">梅子1课堂表现得分88，请继续努力</p>
-                    </div>
-                </div>
-            </ul>
-        </li>
-        <li>
-            <div class="link"><span class="left"><i class="subject">英</i>英语</span><span class="right"><label>作业</label> <i class="feelsmile"></i> <label>课堂表现</label> <i class="feelsmile2"></i><span class="jz_mark"><input type="button" class="mark_btn" value="家长签字"></span></span></div>
-            <ul class="submenu">
-                <div class="con_subject">
-                    <div class="homework_k">
-                        <p><span class="hw_title">今日作业</span><span class="jz_mark"><input type="button" class="hw_btn" value="作业详情"></span></p>
-                        <p class="message">
-                            <label class="title">已批阅</label>
-                        </p>
-                        <p class="con">完成率：<label>98%</label>正确率：<label>70%</label>提交排名：<label>6</label></p>
-                    </div>
-                    <div class="homework_k">
-                        <div class="fgx"></div>
-                        <span class="fgkL"></span><span class="fgkR"></span>
-                        <p style="margin-top: -0.5rem;"><span class="hw_title">今日表现</span><span class="jz_mark"><input type="button" class="hw_btn" value="课堂表现"></span></p></p>
-                        <p class="con">表扬次数：<label>1次</label>答题正确率：<label>70%</label>课堂积极性：<label class="lh">良好</label></p>
-                        <p class="bx">梅子2课堂表现得分88，请继续努力</p>
-                    </div>
-                </div>
-            </ul>
-        </li>
-    </ul>
-</div>
 
 <script>
+//    loaded('main');
     getdate();
 </script>
 
@@ -322,8 +337,13 @@
     };
 
     //家长签字
-    $('.mark_btn').click(function(e){
+    $('.jz_mark').delegate('input.mark_btn','click',function(e){
         e.stopPropagation();
+        popMark($(this).attr('data-subject'));
+    });
+$('.jz_mark').delegate('input.markal_btn','click',function(e){
+        e.stopPropagation();
+        popImg($(this).attr('data-url'));
     });
 </script>
 
