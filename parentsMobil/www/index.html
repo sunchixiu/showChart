@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=9">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <title>家长端</title>
+    <link href="css/style.css?v=1.02" rel="stylesheet" type="text/css">
+    <link href="css/performance.css" rel="stylesheet" type="text/css">
+    <link href="css/mobiscroll.css" rel="stylesheet" />
+    <link href="css/mobiscroll_date.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/mobilebone.css">
+    <link rel="stylesheet" href="css/homework.css">
+
+    <script src="js/every.js"></script>
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/hammer.min.js"></script>
+    <script src="js/mobiscroll_date.js"></script>
+    <script src="js/mobiscroll.js"></script>
+    <script src="js/iscroll4.js"></script>
+    <script src="js/getdate.js"></script>
+    <script src="js/jq-signature.js"></script>
+    <script src="js/parentMark.js"></script>
+
+    <script>
+        var txTimer = null;
+        $(document).ready(function(){
+            $('#topStudent > li').eq(0).children('p.pic').css({'width':'3.6rem','height':'3.6rem','marginLeft':'-0.675rem','marginTop':'-2.1rem'});
+
+            //创建一个新的hammer对象并且在初始化时指定要处理的dom元素
+            var hammertime = new Hammer(document.getElementById("topStudentDiv"));
+            //添加事件
+//            alert($('#topStudent > li').eq(0).offset().left/(document.documentElement.clientWidth/18));
+            var numI = 0;
+            var remC = document.documentElement.clientWidth/18;
+            var uLleft = parseInt($('#topStudent').css('marginLeft'))/remC;
+            var left1=7.85,left2=12.5;
+            var width1=2.25,width2=3.6,width3=2.25;
+            var top1=3.6,top2=1.5,top3=3.6;
+
+            hammertime.on('panstart',function(e){
+//                uLleft = parseInt($('#topStudent').css('marginLeft'))/remC;
+                startTurnChild();
+                clearTimeout(txTimer);
+            });
+            hammertime.on('panleft panright',function(e){
+                $('#topStudent').css('marginLeft', (uLleft+e.deltaX/remC)+'rem');
+            });
+            hammertime.on('panend',function(e){
+                var l = parseInt($('#topStudent').css('marginLeft'))/remC - uLleft;
+                var c = left2-left1;
+                var n;
+                var tX;
+
+                if(l > 0){
+                    n = Math.floor(l/c)
+                    if(l-n*c > (left2-left1)/2){
+                        tX = uLleft+(n+1)*(left2-left1);
+                        numI -= n+1;
+                    }else{
+                        tX = uLleft+n*(left2-left1);
+                        numI -= n;
+                    };
+                    if(parseInt($('#topStudent > li').eq(0).offset().left)/remC > left1){
+                        tX = 0;
+                        numI = 0;
+                    };
+                }else{
+                    n = Math.ceil(l/c);
+                    if(l-n*c > (left1-left2)/2){
+                        tX = uLleft+n*(left2-left1);
+                        numI -= n;
+                    }else{
+                        tX = uLleft+(n-1)*(left2-left1);
+                        numI -= n-1;
+                    };
+                    if(parseInt($('#topStudent > li').eq($('#topStudent > li').length-1).offset().left)/remC < left1){
+                        tX = -($('#topStudent > li').length-1)*(left2-left1);
+                        numI = $('#topStudent > li').length-1;
+                    };
+                };
+                uLleft = tX;
+                endTurnChild(tX,numI);
+            });
+
+            var aLipic = document.querySelectorAll('#topStudent > li');
+            for(var i=0; i<aLipic.length; i++){
+                (function(index){
+                    var hammerLi = new Hammer(aLipic[index]);
+                    hammerLi.on("tap", function(e){
+//                        uLleft = parseInt($('#topStudent').css('marginLeft'))/remC;
+                        if(numI != index){
+                            var tX = uLleft+(numI-index)*(left2-left1);
+                            numI = index;
+                            startTurnChild();
+                            endTurnChild(tX,numI);
+                            uLleft = tX;
+                        };
+                    });
+                })(i);
+            };
+
+            //折叠列表
+            var Accordion = function(el, multiple) {
+                this.el = el || {};
+                this.multiple = multiple || false;
+
+                // Variables privadas
+                var links = this.el.find('.link');
+                // Evento
+                links.on('click', {el: this.el, multiple: this.multiple}, this.dropdown)
+            }
+
+            Accordion.prototype.dropdown = function(e) {
+                var $el = e.data.el;
+                $this = $(this),
+                        $next = $this.next();
+
+                $next.slideToggle();
+
+                if (!e.data.multiple) {
+                    $el.find('.submenu').not($next).slideUp();
+                };
+                setTimeout(function(){
+                    var h = $('#bottomDiv').offset().top+20;
+
+                    $('#main').css('height',h);
+                },400);
+            };
+
+            var accordion = new Accordion($('#accordion'), false);
+
+        });
+    </script>
+</head>
+<body>
+<div id="pageHome" class="main page out" style="overflow-y: auto;">
+    <!--<div class="scroll">-->
+        <div class="jheader">
+            <div class="top" id="top">
+                <div class="l"></div>
+                <div class="m" id="topStudentDiv">
+                    <ul id="topStudent">
+                        <li>
+                            <p class="pic"><img src="images/student2.jpg"></p>
+                            <p class="text">王悦0</p>
+                        </li>
+                        <li>
+                            <p class="pic"><img src="images/student1.jpg"></p>
+                            <p class="text">王欣1</p>
+                            <!--<p>学号：1</p>-->
+                        </li>
+                        <li>
+                            <p class="pic"><img src="images/student3.jpg"></p>
+                            <p class="text">王成2</p>
+                        </li>
+                        <li>
+                            <p class="pic"><img src="images/student2.jpg"></p>
+                            <p class="text">王悦3</p>
+                        </li>
+                        <li>
+                            <p class="pic"><img src="images/student1.jpg"></p>
+                            <p class="text">王欣4</p>
+                            <!--<p>学号：1</p>-->
+                        </li>
+                        <li>
+                            <p class="pic"><img src="images/student3.jpg"></p>
+                            <p class="text">王成5</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="r">
+                    <div class="warning"><span>3</span></div>
+                </div>
+            </div>
+            <div class="fengexian"></div>
+            <div class="week_bg">
+        <span class="week_left">
+            <em class="big" id="thisM">1月</em>
+            <em class="small">
+                <p id="thisW" class="pup">周五</p>
+                <p id="thisY">2016年</p>
+            </em>
+        </span>
+                <span id="thisYM"></span>
+        <span class="week_right">
+            <input type="button" id="rili" data-value="">
+        </span>
+            </div>
+            <div class="week_con_up">
+                <ul><li>日</li><li>一</li><li>二</li><li>三</li><li>四</li><li>五</li><li>六</li></ul>
+            </div>
+            <div class="week_con_down">
+                <ul><li id="week0"><em></em></li><li id="week1"><em></em></li><li id="week2"><em></em></li><li id="week3"><em></em></li><li id="week4"><em></em></li><li id="week5"><em></em></li><li id="week6"><em></em></li></ul>
+            </div>
+        </div>
+
+        <div class="jsection">
+            <div class="daystatus">
+                <span id=""><label class="big">88%</label> <label class="small">完成率</label></span>
+                <span id=""><label class="big">8<em>&uarr;&darr;</em></label> <label class="small">班级排名</label></span>
+                <span id=""><label class="big">50%</label> <label class="small">正确率</label></span>
+                <span id=""><label class="big">2</label> <label class="small">表扬次数</label></span>
+            </div>
+
+            <ul id="accordion" class="accordion">
+                <li>
+                    <div class="link"><span class="left"><i class="subject">文</i>语文</span><span class="right"><label>作业</label> <i class="feelsmile"></i> <label>课堂表现</label> <i class="feelcry"></i><span class="jz_mark"><input type="button" class="mark_btn" value="家长签字" data-subject="12"></span></span></div>
+                    <ul class="submenu">
+                        <div class="con_subject">
+                            <div class="homework_k">
+                                <p><span class="hw_title">今日作业</span><span class="jz_mark"><input type="button" class="hw_btn" value="作业详情" onclick="toHomework();"></span></p>
+                                <p class="message">
+                                    <label class="title">老师留言</label>
+                                    <label class="con">
+                                        老师留言老师留言老师留言老师留言老师留言老师留言老师留言老师留言老师留言老师留言老师留言老师留言
+                                    </label>
+                                </p>
+                            </div>
+                            <div class="homework_k">
+                                <div class="fgx"></div>
+                                <span class="fgkL"></span><span class="fgkR"></span>
+                                <p style="margin-top: -0.5rem;"><span class="hw_title">今日表现</span><span class="jz_mark"><input type="button" class="hw_btn" value="课堂表现" onclick="toPerformance();"></span></p></p>
+                                <p class="con">表扬次数：<label>1次</label>答题正确率：<label>70%</label>课堂积极性：<label class="lh">良好</label></p>
+                                <p class="bx">梅子课堂表现得分88，请继续努力</p>
+                            </div>
+                        </div>
+                    </ul>
+                </li>
+                <li>
+                    <div class="link"><span class="left"><i class="subject">数</i>数学</span><span class="right"><label>作业</label> <i class="feelsmile"></i> <label>课堂表现</label> <i class="feelsmile"></i><span class="jz_mark"><input type="button" class="mark_btn" value="家长签字" data-subject="13"></span></span></div>
+                    <ul class="submenu">
+                        <div class="con_subject">
+                            <div class="homework_k">
+                                <p><span class="hw_title">今日作业</span><span class="jz_mark"><input type="button" class="hw_btn" value="作业详情" onclick="toHomework();"></span></p>
+                                <p class="message">
+                                    <label class="title">已批阅</label>
+                                </p>
+                                <p class="con">完成率：<label>98%</label>正确率：<label>70%</label>提交排名：<label>6</label></p>
+                            </div>
+                            <div class="homework_k">
+                                <div class="fgx"></div>
+                                <span class="fgkL"></span><span class="fgkR"></span>
+                                <p style="margin-top: -0.5rem;"><span class="hw_title">今日表现</span><span class="jz_mark"><input type="button" class="hw_btn" value="课堂表现" onclick="toPerformance();"></span></p></p>
+                                <p class="con">表扬次数：<label>1次</label>答题正确率：<label>70%</label>课堂积极性：<label class="lh">良好</label></p>
+                                <p class="bx">梅子1课堂表现得分88，请继续努力</p>
+                            </div>
+                        </div>
+                    </ul>
+                </li>
+                <li>
+                    <div class="link"><span class="left"><i class="subject">英</i>英语</span><span class="right"><label>作业</label> <i class="feelsmile"></i> <label>课堂表现</label> <i class="feelsmile2"></i><span class="jz_mark"><input type="button" class="mark_btn" value="家长签字" data-subject="14"></span></span></div>
+                    <ul class="submenu">
+                        <div class="con_subject">
+                            <div class="homework_k">
+                                <p><span class="hw_title">今日作业</span><span class="jz_mark"><input type="button" class="hw_btn" value="作业详情" onclick="toHomework();"></span></p>
+                                <p class="message">
+                                    <label class="title">已批阅</label>
+                                </p>
+                                <p class="con">完成率：<label>98%</label>正确率：<label>70%</label>提交排名：<label>6</label></p>
+                            </div>
+                            <div class="homework_k">
+                                <div class="fgx"></div>
+                                <span class="fgkL"></span><span class="fgkR"></span>
+                                <p style="margin-top: -0.5rem;"><span class="hw_title">今日表现</span><span class="jz_mark"><input type="button" class="hw_btn" value="课堂表现" onclick="toPerformance();"></span></p></p>
+                                <p class="con">表扬次数：<label>1次</label>答题正确率：<label>70%</label>课堂积极性：<label class="lh">良好</label></p>
+                                <p class="bx">梅子2课堂表现得分88，请继续努力</p>
+                            </div>
+                        </div>
+                    </ul>
+                </li>
+                <div id="bottomDiv"></div>
+            </ul>
+        </div>
+    <!--</div>-->
+</div>
+
+<div class="main page out bggray" id="pagePerformance" style="background: #efefef;">
+    <div class="header">
+        <div class="l"><a href="#&pageHome" data-rel="back">&laquo;返回</a></div>
+        <div class="m">课堂表现</div>
+        <div class="r">详情</div>
+    </div>
+    <div class="section" id="wrapper">
+        <div class="scroll">
+            <div class="per_content_k">
+                <h2>课时1：正多边形与圆(数学)</h2>
+                <ul>
+                    <li>
+                        <span class="bgPot"></span><span class="pot"><em></em></span>
+                        <span class="typeIcon lx"></span>
+                <span class="text">
+                    <p class="title">[课堂练习]选取三角形</p>
+                    <p>包含1个文件</p>
+                    <p class="last"><span class="pdf"></span>选取三角形</p>
+                </span>
+                    </li>
+                    <li>
+                        <span class="bgPot"></span><span class="pot"><em></em></span>
+                        <span class="typeIcon cs"></span>
+                <span class="text">
+                    <p class="title">[课堂测试]认识三角形</p>
+                    <p>平均正确率87.6%</p>
+                </span>
+                    </li>
+                    <li>
+                        <span class="bgPot"></span><span class="pot"><em></em></span>
+                        <span class="typeIcon xx"></span>
+                <span class="text">
+                    <p class="title">[探究学习（自主）]自主探究</p>
+                    <p>包含3个文件</p>
+                    <p class="last"><span class="pdf"></span>资料-三角形</p>
+                    <p class="last"><span class="doc"></span>资料阅读-三角形（边）</p>
+                    <p class="last"><span class="mp4"></span>视频观看-认识三角形</p>
+                </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="main page out" id="pageWork">
+    <div class="header">
+        <div class="l"><a href="#&pageHome" data-rel="back">&laquo;返回</a></div>
+        <div class="m">认识三角形</div>
+        <div class="r"></div>
+    </div>
+    <div class="section" id="homework">
+        <div class="scroll">
+            <div class="work_title">◇ 试卷总分数 25,作答时间为 20分钟</div>
+            <div class="work_k">
+                <div class="question_title">1.已知等腰三角形的两边长分别为3和6,则它的周长为(       )</div>
+                <div class="question_con">
+                    <ul>
+                        <li data-value="A">A. 9</li>
+                        <li data-value="B">B. 12</li>
+                        <li data-value="C">C. 15</li>
+                        <li data-value="D">D. 12或10</li>
+                    </ul>
+                </div>
+                <div class="answer_title">学生的答案：</div>
+                <div class="answer_title">正确答案：</div>
+                <div class="answer_content">解:设第三边的长为x,根据两边之和大于第三边得:x＜2+7即x＜9根据两边之差小于第三边得:x>7-2即x>5所以x的值大于5小于9,又因为它是奇数,所以x只能取7。</div>
+                <div class="studentAnswer"></div>
+                <div class="answer_select">
+                    <ul>
+                        <li><span><em></em></span><label>A</label></li>
+                        <li class="select"><span><em></em></span><label>B</label></li>
+                        <li><span><em></em></span><label>C</label></li>
+                        <li><span><em></em></span><label>D</label></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="work_k">
+                <div class="question_title">2.已知等腰三角形的两边长分别为3和6,则它的周长为(       )</div>
+                <div class="question_con">
+                    <ul>
+                        <li data-value="A">A. 9</li>
+                        <li data-value="B">B. 12</li>
+                        <li data-value="C">C. 15</li>
+                        <li data-value="D">D. 12或10</li>
+                    </ul>
+                </div>
+                <div class="answer_title">学生的答案：</div>
+                <div class="answer_title">正确答案：</div>
+                <div class="answer_content">解:设第三边的长为x,根据两边之和大于第三边得:x＜2+7即x＜9根据两边之差小于第三边得:x>7-2即x>5所以x的值大于5小于9,又因为它是奇数,所以x只能取7。</div>
+                <div class="studentAnswer"></div>
+                <div class="answer_select">
+                    <ul>
+                        <li><span><em></em></span><label>A</label></li>
+                        <li class="select"><span><em></em></span><label>B</label></li>
+                        <li><span><em></em></span><label>C</label></li>
+                        <li><span><em></em></span><label>D</label></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="work_k">
+                <div class="question_title">3.已知等腰三角形的两边长分别为3和6,则它的周长为(       )</div>
+                <div class="question_con">
+                    <ul>
+                        <li data-value="A">A. 9</li>
+                        <li data-value="B">B. 12</li>
+                        <li data-value="C">C. 15</li>
+                        <li data-value="D">D. 12或10</li>
+                    </ul>
+                </div>
+                <div class="answer_title">学生的答案：</div>
+                <div class="answer_title">正确答案：</div>
+                <div class="answer_content">解:设第三边的长为x,根据两边之和大于第三边得:x＜2+7即x＜9根据两边之差小于第三边得:x>7-2即x>5所以x的值大于5小于9,又因为它是奇数,所以x只能取7。</div>
+                <div class="studentAnswer"></div>
+                <div class="answer_select">
+                    <ul>
+                        <li><span><em></em></span><label>A</label></li>
+                        <li class="select"><span><em></em></span><label>B</label></li>
+                        <li><span><em></em></span><label>C</label></li>
+                        <li><span><em></em></span><label>D</label></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/mobilebone.js"></script>
+
+<script>
+    //  弹出日历
+    var currYear = (new Date()).getFullYear();
+    var opt={};
+    opt.date = {preset : 'date'};
+    opt.datetime = {preset : 'datetime'};
+    opt.time = {preset : 'time'};
+    opt.default = {
+        theme: 'android-ics light', //皮肤样式
+        display: 'modal', //显示方式
+        mode: 'scroller', //日期选择模式
+        dateFormat: 'yyyy-mm-dd',
+        animate:'fade',
+        lang: 'zh',
+        showNow: true,
+        nowText: "今天",
+        startYear: currYear - 50, //开始年份
+        endYear: currYear + 10 //结束年份
+    };
+
+    function setDateTime(fullYear){
+        var arr = fullYear.split('-');
+        var curFullYear = new Date();
+        var thisYear = parseInt(arr[0]);
+        var thisMonth = parseInt(arr[1])-1;
+        var thisDate = parseInt(arr[2]);
+
+        curFullYear.setFullYear(thisYear,thisMonth,thisDate);
+        var week = curFullYear.getDay();
+        getdate(thisYear,(thisMonth+1),thisDate,week);
+    };
+</script>
+
+<script>
+//    loaded('main');
+    getdate();
+</script>
+
+<script>
+    $("#rili").mobiscroll($.extend(opt['date'], opt['default']));
+
+    //头像选择
+    function startTurnChild(){
+        $('#topStudent').css({
+            'transition':'none',
+            'webkitTransition':'none'
+        });
+
+        $('#topStudent > li > p.pic').css({
+            'transition':'.3s all ease',
+            'webkitTransition':'.3s all ease'
+        });
+        $('#topStudent > li').children('p.pic').css({'width':'2.25rem','height':'2.25rem','marginLeft':'0','marginTop':'0'});
+    };
+    function endTurnChild(tX,num){
+        $('#topStudent').css({
+            'transition':'.3s all ease',
+            'webkitTransition':'.3s all ease'
+        });
+        $('#topStudent').css('marginLeft',tX+'rem');
+        $('#topStudent > li').eq(num).children('p.pic').css({'width':'3.6rem','height':'3.6rem','marginLeft':'-0.675rem','marginTop':'-2.1rem'});
+        txTimer = setTimeout(function(){
+            console.log(num);
+        },300);
+    };
+
+    //家长签字
+    $('.jz_mark').delegate('input.mark_btn','click',function(e){
+        e.stopPropagation();
+        popMark($(this).attr('data-subject'));
+    });
+$('.jz_mark').delegate('input.markal_btn','click',function(e){
+        e.stopPropagation();
+        popImg($(this).attr('data-url'));
+    });
+</script>
+
+
+<!--页面跳转-->
+<script>
+    function toPerformance(){
+        window.location.href = '#&pagePerformance';
+        loaded('wrapper');
+    };
+    function toHomework(){
+        window.location.href = '#&pageWork';
+        loaded('homework');
+    };
+</script>
+</body>
+</html>

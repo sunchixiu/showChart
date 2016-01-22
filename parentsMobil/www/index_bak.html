@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=9">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <title>家长端</title>
+    <link href="css/style.css?v=1.02" rel="stylesheet" type="text/css">
+    <link href="css/mobiscroll.css" rel="stylesheet" />
+    <link href="css/mobiscroll_date.css" rel="stylesheet" />
+
+    <script src="js/every.js"></script>
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/hammer.min.js"></script>
+    <script src="js/mobiscroll_date.js"></script>
+    <script src="js/mobiscroll.js"></script>
+    <script src="js/getdate.js"></script>
+
+    <script>
+        $(document).ready(function(){
+            $('#topStudent > ul > li').eq(Math.ceil($('#topStudent > ul > li').length/2)-1).children('p.pic').css({'width':'3.6rem','height':'3.6rem','marginLeft':'-0.675rem','marginTop':'-2.1rem'});
+
+            //创建一个新的hammer对象并且在初始化时指定要处理的dom元素
+            var hammertime = new Hammer(document.getElementById("topStudent"));
+            //添加事件
+//            alert($('#topStudent > ul > li').eq(2).offset().left/(document.documentElement.clientWidth/18));
+//            alert($('#topStudent > ul > li').eq(0).children('p.pic').css('marginTop'));
+            var numI = Math.ceil($('#topStudent > ul > li').length/2)-1;
+            var remC = document.documentElement.clientWidth/18;
+            var uLleft;
+            var left1=3.625,left2=7.875,left3=12.125;
+            var width1=2.25,width2=3.6,width3=2.25;
+            var top1=3.6,top2=1.5,top3=3.6;
+
+            hammertime.on('panstart',function(e){
+                uLleft = parseInt($('#topStudent').css('marginLeft'))/remC;
+                startTurnChild();
+            });
+            hammertime.on('panleft panright',function(e){
+                $('#topStudent').css('marginLeft', (uLleft+e.deltaX/remC)+'rem');
+                e.preventDefault();
+            });
+            hammertime.on('panend',function(e){
+                var l = parseInt($('#topStudent').css('marginLeft'))/remC - uLleft;
+                var c = left2-left1;
+                var n;
+                var tX;
+
+                if(l > 0){
+                    n = Math.floor(l/c)
+                    if(l-n*c > (left2-left1)/2){
+                        tX = uLleft+(n+1)*(left2-left1);
+                        numI -= n+1;
+                    }else{
+                        tX = uLleft+n*(left2-left1);
+                        numI -= n;
+                    };
+                    if(parseInt($('#topStudent > ul >li > p.pic').eq(0).offset().left)/remC > left2){
+                        tX = Math.floor($('#topStudent > ul >li').length/2)*(left2-left1);
+                        numI = 0;
+                    };
+                }else{
+                    n = Math.ceil(l/c);
+                    if(l-n*c > (left1-left2)/2){
+                        tX = uLleft+n*(left2-left1);
+                        numI -= n;
+                    }else{
+                        tX = uLleft+(n-1)*(left2-left1);
+                        numI -= n-1;
+                    };
+                    if(parseInt($('#topStudent > ul >li > p.pic').eq($('#topStudent > ul >li').length-1).offset().left)/remC < left2){
+                        tX = -Math.floor($('#topStudent > ul >li').length/2)*(left2-left1);
+                        numI = $('#topStudent > ul >li').length-1;
+                    };
+                };
+                endTurnChild(tX,numI);
+            });
+
+            var aLipic = document.querySelectorAll('#topStudent > ul >li');
+            for(var i=0; i<aLipic.length; i++){
+                (function(index){
+                    var hammerLi = new Hammer(aLipic[index]);
+                    hammerLi.on("tap", function(e){
+                        uLleft = parseInt($('#topStudent').css('marginLeft'))/remC;
+                        if(numI != index){
+                            var tX = uLleft+(numI-index)*(left2-left1);
+                            numI = index;
+                            startTurnChild();
+                            endTurnChild(tX,numI);
+                        };
+                    });
+                })(i);
+            };
+//            hammertime.on("panstart", function (e){
+//                uLleft = $('#topStudent').offset().left/remC;
+//            });
+//            hammertime.on("panmove", function (e) {
+////                document.getElementById("result").innerHTML = "X偏移量：【" + e.deltaX + "】，Y偏移量：【" + e.deltaY + "】<br />";
+//                if(Math.abs(e.deltaX/remC) <= 4.25){
+//                    $('#topStudent').css('marginLeft', e.deltaX);
+//                    $('#topStudent > ul > li').each(function(i){
+//                        if(e.deltaX > 0){
+//                            if($('#topStudent > ul > li').eq(i).offset().left/remC > left1 && $('#topStudent > ul > li').eq(i).offset().left/remC < left2){
+//                                $('#topStudent > ul > li').eq(i).children('p.pic').css({'width': (((e.deltaX/remC)/(left2-left1))*(width2-width1)+width1)+'rem','height':(((e.deltaX/remC)/(left2-left1))*(width2-width1)+width1)+'rem','marginTop':(((e.deltaX/remC)/(left2-left1))*(-2.1))+'rem','marginLeft':((e.deltaX/remC)/(left2-left1))*(-0.675) + 'rem'});
+//                            };
+//                            if($('#topStudent > ul > li').eq(i).offset().left/remC > left2 && $('#topStudent > ul > li').eq(i).offset().left/remC < left3){
+//                                $('#topStudent > ul > li').eq(i).children('p.pic').css({'width': (((e.deltaX/remC)/(left3-left2))*(width3-width2)+width2)+'rem','height':(((e.deltaX/remC)/(left3-left2))*(width3-width2)+width2)+'rem','marginTop':(((e.deltaX/remC)/(left3-left2))*2.1-2.1)+'rem','marginLeft':((e.deltaX/remC)/(left2-left1))*0.675 + 'rem'});
+//                            };
+//                        }else{
+//                            if($('#topStudent > ul > li').eq(i).offset().left/remC > left1 && $('#topStudent > ul > li').eq(i).offset().left/remC < left2){
+//                                $('#topStudent > ul > li').eq(i).children('p.pic').css({'width': (((e.deltaX/remC)/(left1-left2))*(width1-width2)+width2)+'rem','height':(((e.deltaX/remC)/(left1-left2))*(width1-width2)+width2)+'rem','marginTop':(((e.deltaX/remC)/(left2-left3))*2.1-2.1)+'rem','marginLeft':((e.deltaX/remC)/(left1-left2))*0.675 + 'rem'});
+//                            };
+//                            if($('#topStudent > ul > li').eq(i).offset().left/remC > left2 && $('#topStudent > ul > li').eq(i).offset().left/remC < left3){
+//                                $('#topStudent > ul > li').eq(i).children('p.pic').css({'width': (((e.deltaX/remC)/(left2-left3))*(width2-width3)+width3)+'rem','height':(((e.deltaX/remC)/(left2-left3))*(width2-width3)+width3)+'rem','marginTop':(((e.deltaX/remC)/(left1-left2))*(-2.1))+'rem','marginLeft':((e.deltaX/remC)/(left1-left2))*(-0.675) + 'rem'});
+//                            };
+//                        };
+//
+//                    });
+//                };
+//            });
+//            hammertime.on("panend", function (e){
+//                var l = $('#topStudent').offset().left/remC;
+//                var c = left2-left1;
+//                var n = Math.floor(l/c);
+//
+//                if(l-uLleft > 0){
+//                    alert(n)
+//                    if(l-n*c > (left2-left1)/2){
+//                        $('#topStudent').css('marginLeft',(n+1)*(left2-left1) + 'rem');
+//                    };
+//                };
+//            });
+
+            //折叠列表
+            var Accordion = function(el, multiple) {
+                this.el = el || {};
+                this.multiple = multiple || false;
+
+                // Variables privadas
+                var links = this.el.find('.link');
+                // Evento
+                links.on('click', {el: this.el, multiple: this.multiple}, this.dropdown)
+            }
+
+            Accordion.prototype.dropdown = function(e) {
+                var $el = e.data.el;
+                $this = $(this),
+                        $next = $this.next();
+
+                $next.slideToggle();
+
+                if (!e.data.multiple) {
+                    $el.find('.submenu').not($next).slideUp();
+                };
+            }
+
+            var accordion = new Accordion($('#accordion'), false);
+
+        });
+    </script>
+</head>
+<body>
+<div class="iiheader" style="z-index: 2;">
+    <div class="top" id="top">
+        <div class="l"></div>
+        <div class="m" id="topStudent">
+            <ul>
+                <li>
+                    <p class="pic"><img src="images/student2.jpg"></p>
+                    <p class="text">王悦</p>
+                </li>
+                <li>
+                    <p class="pic"><img src="images/student1.jpg"></p>
+                    <p class="text">王欣</p>
+                    <!--<p>学号：1</p>-->
+                </li>
+                <li>
+                    <p class="pic"><img src="images/student3.jpg"></p>
+                    <p class="text">王成</p>
+                </li>
+            </ul>
+        </div>
+        <div class="r">
+            <div class="warning"><span>3</span></div>
+        </div>
+    </div>
+    <div class="fengexian"></div>
+    <div class="week_bg">
+        <span class="week_left">
+            <em class="big" id="thisM">1月</em>
+            <em class="small">
+                <p id="thisW">周五</p>
+                <p id="thisY">2016年</p>
+            </em>
+        </span>
+        <span id="thisYM"></span>
+        <span class="week_right">
+            <input type="button" id="rili">
+        </span>
+    </div>
+    <div class="week_con_up">
+        <ul><li>日</li><li>一</li><li>二</li><li>三</li><li>四</li><li>五</li><li>六</li></ul>
+    </div>
+    <div class="week_con_down">
+        <ul><li id="week0"><em></em></li><li id="week1"><em></em></li><li id="week2"><em></em></li><li id="week3"><em></em></li><li id="week4"><em></em></li><li id="week5"><em></em></li><li id="week6"><em></em></li></ul>
+    </div>
+</div>
+
+<div class="iisection">
+    <div class="daystatus">
+        <span id=""><label class="big">88%</label> <label class="small">完成率</label></span>
+        <span id=""><label class="big">8<em>&uarr;&darr;</em></label> <label class="small">班级排名</label></span>
+        <span id=""><label class="big">50%</label> <label class="small">正确率</label></span>
+        <span id=""><label class="big">2</label> <label class="small">表扬次数</label></span>
+    </div>
+
+    <ul id="accordion" class="accordion">
+        <li>
+            <div class="link"><span class="left"><i class="subject">文</i>语文</span><span class="right"><label>作业</label> <i class="feelsmile"></i> <label>课堂表现</label> <i class="feelcry"></i><span class="jz_mark"><input type="button" class="mark_btn" value="家长签字"></span></span></div>
+            <ul class="submenu">
+                <div class="con_subject">
+                    <div class="homework_k">
+                        <p><span class="hw_title">今日作业</span><span class="jz_mark"><input type="button" class="hw_btn" value="作业详情"></span></p>
+                        <p class="message">
+                            <label class="title">老师留言</label>
+                            <label class="con">
+                                老师留言老师留言老师留言老师留言老师留言老师留言
+                            </label>
+                        </p>
+                    </div>
+                    <div class="homework_k">
+                        <div class="fgx"></div>
+                        <span class="fgkL"></span><span class="fgkR"></span>
+                        <p style="margin-top: -0.5rem;"><span class="hw_title">今日表现</span><span class="jz_mark"><input type="button" class="hw_btn" value="课堂表现"></span></p></p>
+                        <p class="con">表扬次数：<label>1次</label>答题正确率：<label>70%</label>课堂积极性：<label class="lh">良好</label></p>
+                        <p class="bx">梅子课堂表现得分88，请继续努力</p>
+                    </div>
+                </div>
+            </ul>
+        </li>
+        <li>
+            <div class="link"><span class="left"><i class="subject">数</i>数学</span><span class="right"><label>作业</label> <i class="feelsmile"></i> <label>课堂表现</label> <i class="feelsmile"></i><span class="jz_mark"><input type="button" class="mark_btn" value="家长签字"></span></span></div>
+            <ul class="submenu">
+                <div class="con_subject">
+                    <div class="homework_k">
+                        <p><span class="hw_title">今日作业</span><span class="jz_mark"><input type="button" class="hw_btn" value="作业详情"></span></p>
+                        <p class="message">
+                            <label class="title">已批阅</label>
+                        </p>
+                        <p class="con">完成率：<label>98%</label>正确率：<label>70%</label>提交排名：<label>6</label></p>
+                    </div>
+                    <div class="homework_k">
+                        <div class="fgx"></div>
+                        <span class="fgkL"></span><span class="fgkR"></span>
+                        <p style="margin-top: -0.5rem;"><span class="hw_title">今日表现</span><span class="jz_mark"><input type="button" class="hw_btn" value="课堂表现"></span></p></p>
+                        <p class="con">表扬次数：<label>1次</label>答题正确率：<label>70%</label>课堂积极性：<label class="lh">良好</label></p>
+                        <p class="bx">梅子1课堂表现得分88，请继续努力</p>
+                    </div>
+                </div>
+            </ul>
+        </li>
+        <li>
+            <div class="link"><span class="left"><i class="subject">英</i>英语</span><span class="right"><label>作业</label> <i class="feelsmile"></i> <label>课堂表现</label> <i class="feelsmile2"></i><span class="jz_mark"><input type="button" class="mark_btn" value="家长签字"></span></span></div>
+            <ul class="submenu">
+                <div class="con_subject">
+                    <div class="homework_k">
+                        <p><span class="hw_title">今日作业</span><span class="jz_mark"><input type="button" class="hw_btn" value="作业详情"></span></p>
+                        <p class="message">
+                            <label class="title">已批阅</label>
+                        </p>
+                        <p class="con">完成率：<label>98%</label>正确率：<label>70%</label>提交排名：<label>6</label></p>
+                    </div>
+                    <div class="homework_k">
+                        <div class="fgx"></div>
+                        <span class="fgkL"></span><span class="fgkR"></span>
+                        <p style="margin-top: -0.5rem;"><span class="hw_title">今日表现</span><span class="jz_mark"><input type="button" class="hw_btn" value="课堂表现"></span></p></p>
+                        <p class="con">表扬次数：<label>1次</label>答题正确率：<label>70%</label>课堂积极性：<label class="lh">良好</label></p>
+                        <p class="bx">梅子2课堂表现得分88，请继续努力</p>
+                    </div>
+                </div>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<script>
+    getdate();
+</script>
+
+<script>
+//  弹出日历
+    var currYear = (new Date()).getFullYear();
+    var opt={};
+    opt.date = {preset : 'date'};
+    opt.datetime = {preset : 'datetime'};
+    opt.time = {preset : 'time'};
+    opt.default = {
+        theme: 'android-ics light', //皮肤样式
+        display: 'modal', //显示方式
+        mode: 'scroller', //日期选择模式
+        dateFormat: 'yyyy-mm-dd',
+        animate:'fade',
+        lang: 'zh',
+        showNow: true,
+        nowText: "今天",
+        startYear: currYear - 50, //开始年份
+        endYear: currYear + 10 //结束年份
+    };
+
+    function setDateTime(fullYear){
+        var arr = fullYear.split('-');
+        var curFullYear = new Date();
+        var thisYear = parseInt(arr[0]);
+        var thisMonth = parseInt(arr[1])-1;
+        var thisDate = parseInt(arr[2]);
+
+        curFullYear.setFullYear(thisYear,thisMonth,thisDate);
+        var week = curFullYear.getDay();
+        getdate(thisYear,(thisMonth+1),thisDate,week);
+    };
+    $("#rili").mobiscroll($.extend(opt['date'], opt['default']));
+
+    //头像选择
+    function startTurnChild(){
+        $('#topStudent').css({
+            'transition':'none',
+            'webkitTransition':'none'
+        });
+
+        $('#topStudent > ul > li > p.pic').css({
+            'transition':'.3s all ease',
+            'webkitTransition':'.3s all ease'
+        });
+        $('#topStudent > ul > li').children('p.pic').css({'width':'2.25rem','height':'2.25rem','marginLeft':'0','marginTop':'0'});
+    };
+    function endTurnChild(tX,num){
+        $('#topStudent').css({
+            'transition':'.3s all ease',
+            'webkitTransition':'.3s all ease'
+        });
+        $('#topStudent').css('marginLeft',tX+'rem');
+        $('#topStudent > ul > li').eq(num).children('p.pic').css({'width':'3.6rem','height':'3.6rem','marginLeft':'-0.675rem','marginTop':'-2.1rem'});
+    };
+
+    //家长签字
+    $('.mark_btn').click(function(e){
+        e.stopPropagation();
+    });
+</script>
+
+</body>
+</html>
