@@ -21,6 +21,7 @@
     <script src="js/getdate.js"></script>
     <script src="js/jq-signature.js"></script>
     <script src="js/parentMark.js"></script>
+    <script src="js/websiteurl.js"></script>
 
     <script>
         var txTimer = null;
@@ -173,19 +174,19 @@
                     <div class="warning"><span>3</span></div>
                 </div>
             </div>
-            <div class="fengexian"></div>
+
             <div class="week_bg">
-        <span class="week_left">
-            <em class="big" id="thisM">1月</em>
-            <em class="small">
-                <p id="thisW" class="pup">周五</p>
-                <p id="thisY">2016年</p>
-            </em>
-        </span>
+                <span class="week_left">
+                    <em class="big" id="thisM">1月</em>
+                    <em class="small">
+                        <p id="thisW" class="pup">周五</p>
+                        <p id="thisY">2016年</p>
+                    </em>
+                </span>
                 <span id="thisYM"></span>
-        <span class="week_right">
-            <input type="button" id="rili" data-value="">
-        </span>
+                <span class="week_right">
+                    <input type="button" id="rili" data-value="">
+                </span>
             </div>
             <div class="week_con_up">
                 <ul><li>日</li><li>一</li><li>二</li><li>三</li><li>四</li><li>五</li><li>六</li></ul>
@@ -279,7 +280,7 @@
     <div class="header">
         <div class="l"><a href="#&pageHome" data-rel="back">&laquo;返回</a></div>
         <div class="m">课堂表现</div>
-        <div class="r">详情</div>
+        <div class="r"></div>
     </div>
     <div class="section" id="wrapper">
         <div class="scroll">
@@ -330,7 +331,7 @@
         <div class="scroll">
             <div class="work_title">◇ 试卷总分数 25,作答时间为 20分钟</div>
             <div class="work_k">
-                <div class="question_title">1.已知等腰三角形的两边长分别为3和6,则它的周长为(       )</div>
+                <div class="question_title">1.已知等腰三角形的两边长为3和6,则它的周长为(       )</div>
                 <div class="question_con">
                     <ul>
                         <li data-value="A">A. 9</li>
@@ -339,10 +340,6 @@
                         <li data-value="D">D. 12或10</li>
                     </ul>
                 </div>
-                <div class="answer_title">学生的答案：</div>
-                <div class="answer_title">正确答案：</div>
-                <div class="answer_content">解:设第三边的长为x,根据两边之和大于第三边得:x＜2+7即x＜9根据两边之差小于第三边得:x>7-2即x>5所以x的值大于5小于9,又因为它是奇数,所以x只能取7。</div>
-                <div class="studentAnswer"></div>
                 <div class="answer_select">
                     <ul>
                         <li><span><em></em></span><label>A</label></li>
@@ -354,51 +351,16 @@
             </div>
 
             <div class="work_k">
-                <div class="question_title">2.已知等腰三角形的两边长分别为3和6,则它的周长为(       )</div>
-                <div class="question_con">
-                    <ul>
-                        <li data-value="A">A. 9</li>
-                        <li data-value="B">B. 12</li>
-                        <li data-value="C">C. 15</li>
-                        <li data-value="D">D. 12或10</li>
-                    </ul>
-                </div>
-                <div class="answer_title">学生的答案：</div>
-                <div class="answer_title">正确答案：</div>
-                <div class="answer_content">解:设第三边的长为x,根据两边之和大于第三边得:x＜2+7即x＜9根据两边之差小于第三边得:x>7-2即x>5所以x的值大于5小于9,又因为它是奇数,所以x只能取7。</div>
-                <div class="studentAnswer"></div>
-                <div class="answer_select">
-                    <ul>
-                        <li><span><em></em></span><label>A</label></li>
-                        <li class="select"><span><em></em></span><label>B</label></li>
-                        <li><span><em></em></span><label>C</label></li>
-                        <li><span><em></em></span><label>D</label></li>
-                    </ul>
-                </div>
+                <div class="question_title">2.若五条线段的长分别是1cm,2cm,3cm,4cm,5cm, 则以其中三条线段为边可构成()个三角形。</div>
+                <div class="answer_title">学生的答案：<label>3</label></div>
+                <div class="answer_title">正确答案：<label>2</label></div>
             </div>
 
             <div class="work_k">
-                <div class="question_title">3.已知等腰三角形的两边长分别为3和6,则它的周长为(       )</div>
-                <div class="question_con">
-                    <ul>
-                        <li data-value="A">A. 9</li>
-                        <li data-value="B">B. 12</li>
-                        <li data-value="C">C. 15</li>
-                        <li data-value="D">D. 12或10</li>
-                    </ul>
-                </div>
-                <div class="answer_title">学生的答案：</div>
-                <div class="answer_title">正确答案：</div>
-                <div class="answer_content">解:设第三边的长为x,根据两边之和大于第三边得:x＜2+7即x＜9根据两边之差小于第三边得:x>7-2即x>5所以x的值大于5小于9,又因为它是奇数,所以x只能取7。</div>
-                <div class="studentAnswer"></div>
-                <div class="answer_select">
-                    <ul>
-                        <li><span><em></em></span><label>A</label></li>
-                        <li class="select"><span><em></em></span><label>B</label></li>
-                        <li><span><em></em></span><label>C</label></li>
-                        <li><span><em></em></span><label>D</label></li>
-                    </ul>
-                </div>
+                <div class="question_title">3.若三角形的两边长分别是2和7,第三边长为奇数,求第三边的长。</div>
+                <div class="answer_title">学生的答案：<label>解:设第三边的长为x,根据两边之和大于第三边得:x＜2+7即x＜9根据两边之差小于第三边得:x>7-2即x>5所以x的值大于5小于9,又因为它是奇数,所以x只能取7。</label></div>
+                <div class="answer_title">正确答案：<label>解:设第三边的长为x,根据两边之和大于第三边得</label></div>
+                <div class="answer_content"></div>
             </div>
         </div>
     </div>

@@ -1,12 +1,12 @@
 .work_title{font-size: 0.7rem; color: #333; margin: 0.6rem 0.6rem 0 0.6rem;}
 .work_k{margin: 0.6rem; border: 1px solid #d8d8d8; border-radius: 0.1rem; -webkit-border-radius: 0.1rem;}
-.question_title{padding: 0.6rem; font-size: 0.7rem; color: #333; line-height: 0.9rem; background: #f9f9f9; overflow: hidden;}
-.question_con ul{margin-top: 0.6rem;}
+.question_title{padding: 0.6rem; font-size: 0.7rem; color: #333; line-height: 0.9rem; background: #f9f9f9; overflow: hidden; margin-bottom: 0.6rem;}
+.question_con ul{}
 .question_con ul li{margin-bottom: 0.6rem; margin-left: 1rem; ;margin-right: 1rem; font-size: 0.7rem; color: #333;}
-.answer_title{font-size: 0.7rem; color: #999; line-height: 1rem; margin-left: 1rem; ;margin-right: 1rem;}
-.answer_content{font-size: 0.7rem; color: #666; line-height: 1rem; margin-left: 1rem; ;margin-right: 1rem; margin-bottom: 0.6rem;}
+.answer_title{font-size: 0.7rem; color: #999; line-height: 1rem; margin-left: 1rem; margin-right: 1rem; margin-bottom: 0.6rem;}
+.answer_title label{font-size: 0.7rem; color: #666; line-height: 1rem ;margin-right: 1rem;}
 .answer_select{overflow: hidden; margin-bottom: 0.6rem;}
-.answer_select ul{margin-left: 0.4rem;}
+.answer_select ul{margin-left: 0.5rem;}
 .answer_select ul li{width: 3.6rem; height: 1.6rem; line-height: 1.4rem; border: 1px solid #cdd0d2; border-radius: 0.1rem; -webkit-border-radius: 0.1rem; background: #f8fbf9; font-size: 0.8rem; color: #333; float: left; margin-right: 0.3rem;}
 .answer_select ul li span{width: 0.9rem; height: 0.9rem; display: inline-block; border-radius: 50%; -webkit-border-radius: 50%; border: 1px solid #cdd0d2; background: #fff; margin: 0rem 0.55rem; vertical-align: middle; position: relative;}
 .answer_select ul li span em{width: 0.5rem; height: 0.5rem; display: inline-block; border-radius: 50%; -webkit-border-radius: 50%; background: #fff; position: absolute; margin: 0.2rem;}
