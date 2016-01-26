@@ -10,7 +10,7 @@
     <link href="css/mobiscroll.css" rel="stylesheet" />
     <link href="css/mobiscroll_date.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/mobilebone.css">
-    <link rel="stylesheet" href="css/homework.css">
+    <link rel="stylesheet" href="css/homework.css?v=1.01">
 
     <script src="js/every.js"></script>
     <script src="js/jquery-1.11.1.min.js"></script>
@@ -22,84 +22,22 @@
     <script src="js/jq-signature.js"></script>
     <script src="js/parentMark.js"></script>
     <script src="js/websiteurl.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/exampaper.js"></script>
+    <script src="js/newexampaper.js"></script>
+
+    <script src="js/json.js"></script>
 
     <script>
         var txTimer = null;
+        var studentid;
+        var dateval;
         $(document).ready(function(){
-            $('#topStudent > li').eq(0).children('p.pic').css({'width':'3.6rem','height':'3.6rem','marginLeft':'-0.675rem','marginTop':'-2.1rem'});
+            var iinow = new Date();
+            dateval = iinow.getFullYear() + '-' + (iinow.getMonth()+1) + '-' + iinow.getDate();
 
-            //创建一个新的hammer对象并且在初始化时指定要处理的dom元素
-            var hammertime = new Hammer(document.getElementById("topStudentDiv"));
-            //添加事件
-//            alert($('#topStudent > li').eq(0).offset().left/(document.documentElement.clientWidth/18));
-            var numI = 0;
-            var remC = document.documentElement.clientWidth/18;
-            var uLleft = parseInt($('#topStudent').css('marginLeft'))/remC;
-            var left1=7.85,left2=12.5;
-            var width1=2.25,width2=3.6,width3=2.25;
-            var top1=3.6,top2=1.5,top3=3.6;
+            getBeginData();
 
-            hammertime.on('panstart',function(e){
-//                uLleft = parseInt($('#topStudent').css('marginLeft'))/remC;
-                startTurnChild();
-                clearTimeout(txTimer);
-            });
-            hammertime.on('panleft panright',function(e){
-                $('#topStudent').css('marginLeft', (uLleft+e.deltaX/remC)+'rem');
-            });
-            hammertime.on('panend',function(e){
-                var l = parseInt($('#topStudent').css('marginLeft'))/remC - uLleft;
-                var c = left2-left1;
-                var n;
-                var tX;
-
-                if(l > 0){
-                    n = Math.floor(l/c)
-                    if(l-n*c > (left2-left1)/2){
-                        tX = uLleft+(n+1)*(left2-left1);
-                        numI -= n+1;
-                    }else{
-                        tX = uLleft+n*(left2-left1);
-                        numI -= n;
-                    };
-                    if(parseInt($('#topStudent > li').eq(0).offset().left)/remC > left1){
-                        tX = 0;
-                        numI = 0;
-                    };
-                }else{
-                    n = Math.ceil(l/c);
-                    if(l-n*c > (left1-left2)/2){
-                        tX = uLleft+n*(left2-left1);
-                        numI -= n;
-                    }else{
-                        tX = uLleft+(n-1)*(left2-left1);
-                        numI -= n-1;
-                    };
-                    if(parseInt($('#topStudent > li').eq($('#topStudent > li').length-1).offset().left)/remC < left1){
-                        tX = -($('#topStudent > li').length-1)*(left2-left1);
-                        numI = $('#topStudent > li').length-1;
-                    };
-                };
-                uLleft = tX;
-                endTurnChild(tX,numI);
-            });
-
-            var aLipic = document.querySelectorAll('#topStudent > li');
-            for(var i=0; i<aLipic.length; i++){
-                (function(index){
-                    var hammerLi = new Hammer(aLipic[index]);
-                    hammerLi.on("tap", function(e){
-//                        uLleft = parseInt($('#topStudent').css('marginLeft'))/remC;
-                        if(numI != index){
-                            var tX = uLleft+(numI-index)*(left2-left1);
-                            numI = index;
-                            startTurnChild();
-                            endTurnChild(tX,numI);
-                            uLleft = tX;
-                        };
-                    });
-                })(i);
-            };
 
             //折叠列表
             var Accordion = function(el, multiple) {
@@ -142,32 +80,10 @@
                 <div class="l"></div>
                 <div class="m" id="topStudentDiv">
                     <ul id="topStudent">
-                        <li>
-                            <p class="pic"><img src="images/student2.jpg"></p>
-                            <p class="text">王悦0</p>
-                        </li>
-                        <li>
-                            <p class="pic"><img src="images/student1.jpg"></p>
-                            <p class="text">王欣1</p>
-                            <!--<p>学号：1</p>-->
-                        </li>
-                        <li>
-                            <p class="pic"><img src="images/student3.jpg"></p>
-                            <p class="text">王成2</p>
-                        </li>
-                        <li>
-                            <p class="pic"><img src="images/student2.jpg"></p>
-                            <p class="text">王悦3</p>
-                        </li>
-                        <li>
-                            <p class="pic"><img src="images/student1.jpg"></p>
-                            <p class="text">王欣4</p>
-                            <!--<p>学号：1</p>-->
-                        </li>
-                        <li>
-                            <p class="pic"><img src="images/student3.jpg"></p>
-                            <p class="text">王成5</p>
-                        </li>
+                        <!--<li>-->
+                            <!--<p class="pic"><img src="images/student2.jpg"></p>-->
+                            <!--<p class="text">王悦0</p>-->
+                        <!--</li>-->
                     </ul>
                 </div>
                 <div class="r">
@@ -201,7 +117,7 @@
                 <span id=""><label class="big">88%</label> <label class="small">完成率</label></span>
                 <span id=""><label class="big">8<em>&uarr;&darr;</em></label> <label class="small">班级排名</label></span>
                 <span id=""><label class="big">50%</label> <label class="small">正确率</label></span>
-                <span id=""><label class="big">2</label> <label class="small">表扬次数</label></span>
+                <span id="praiseCount"><label class="big">0</label> <label class="small">表扬次数</label></span>
             </div>
 
             <ul id="accordion" class="accordion">
@@ -222,8 +138,13 @@
                                 <div class="fgx"></div>
                                 <span class="fgkL"></span><span class="fgkR"></span>
                                 <p style="margin-top: -0.5rem;"><span class="hw_title">今日表现</span><span class="jz_mark"><input type="button" class="hw_btn" value="课堂表现" onclick="toPerformance();"></span></p></p>
-                                <p class="con">表扬次数：<label>1次</label>答题正确率：<label>70%</label>课堂积极性：<label class="lh">良好</label></p>
-                                <p class="bx">梅子课堂表现得分88，请继续努力</p>
+                                <div class="courseTrue" data-value="9">
+                                    <p class="con" data-value="9">表扬次数：<label>1次</label>答题正确率：<label>70%</label>课堂积极性：<label class="lh">良好</label></p>
+                                    <p class="bx" data-value="9">梅子1课堂表现得分88，请继续努力</p>
+                                </div>
+                                <div class="courseFalse" data-value="9">
+                                    <p class="bx">今天没上课！</p>
+                                </div>
                             </div>
                         </div>
                     </ul>
@@ -243,8 +164,13 @@
                                 <div class="fgx"></div>
                                 <span class="fgkL"></span><span class="fgkR"></span>
                                 <p style="margin-top: -0.5rem;"><span class="hw_title">今日表现</span><span class="jz_mark"><input type="button" class="hw_btn" value="课堂表现" onclick="toPerformance();"></span></p></p>
-                                <p class="con">表扬次数：<label>1次</label>答题正确率：<label>70%</label>课堂积极性：<label class="lh">良好</label></p>
-                                <p class="bx">梅子1课堂表现得分88，请继续努力</p>
+                                <div class="courseTrue" data-value="13">
+                                    <p class="con" data-value="13">表扬次数：<label>1次</label>答题正确率：<label>70%</label>课堂积极性：<label class="lh">良好</label></p>
+                                    <p class="bx" data-value="13">梅子1课堂表现得分88，请继续努力</p>
+                                </div>
+                                <div class="courseFalse" data-value="13">
+                                    <p class="bx">今天没上课！</p>
+                                </div>
                             </div>
                         </div>
                     </ul>
@@ -264,8 +190,13 @@
                                 <div class="fgx"></div>
                                 <span class="fgkL"></span><span class="fgkR"></span>
                                 <p style="margin-top: -0.5rem;"><span class="hw_title">今日表现</span><span class="jz_mark"><input type="button" class="hw_btn" value="课堂表现" onclick="toPerformance();"></span></p></p>
-                                <p class="con">表扬次数：<label>1次</label>答题正确率：<label>70%</label>课堂积极性：<label class="lh">良好</label></p>
-                                <p class="bx">梅子2课堂表现得分88，请继续努力</p>
+                                <div class="courseTrue" data-value="10">
+                                    <p class="con" data-value="10">表扬次数：<label>1次</label>答题正确率：<label>70%</label>课堂积极性：<label class="lh">良好</label></p>
+                                    <p class="bx" data-value="10">梅子1课堂表现得分88，请继续努力</p>
+                                </div>
+                                <div class="courseFalse" data-value="10">
+                                    <p class="bx">今天没上课！</p>
+                                </div>
                             </div>
                         </div>
                     </ul>
@@ -324,44 +255,22 @@
 <div class="main page out" id="pageWork">
     <div class="header">
         <div class="l"><a href="#&pageHome" data-rel="back">&laquo;返回</a></div>
-        <div class="m">认识三角形</div>
+        <div class="m" id="hwTitle">认识三角形</div>
         <div class="r"></div>
     </div>
     <div class="section" id="homework">
-        <div class="scroll">
-            <div class="work_title">◇ 试卷总分数 25,作答时间为 20分钟</div>
-            <div class="work_k">
-                <div class="question_title">1.已知等腰三角形的两边长为3和6,则它的周长为(       )</div>
-                <div class="question_con">
-                    <ul>
-                        <li data-value="A">A. 9</li>
-                        <li data-value="B">B. 12</li>
-                        <li data-value="C">C. 15</li>
-                        <li data-value="D">D. 12或10</li>
-                    </ul>
-                </div>
-                <div class="answer_select">
-                    <ul>
-                        <li><span><em></em></span><label>A</label></li>
-                        <li class="select"><span><em></em></span><label>B</label></li>
-                        <li><span><em></em></span><label>C</label></li>
-                        <li><span><em></em></span><label>D</label></li>
-                    </ul>
+        <div class="scroll" id="hwJson">
+            <div class="Wrap">
+                <div style=" overflow:hidden; position:relative" id="exampapercontainer">
+                    <div style='margin-top:30px;' class='alert alert-warning'> 数据加载中，请稍后</div>
                 </div>
             </div>
+            <script>
+                var usertype = "teacher"//用户类型
+                ischool.ExamPaper.usertype = usertype;
+                ischool.ExamPaper.init();
+            </script>
 
-            <div class="work_k">
-                <div class="question_title">2.若五条线段的长分别是1cm,2cm,3cm,4cm,5cm, 则以其中三条线段为边可构成()个三角形。</div>
-                <div class="answer_title">学生的答案：<label>3</label></div>
-                <div class="answer_title">正确答案：<label>2</label></div>
-            </div>
-
-            <div class="work_k">
-                <div class="question_title">3.若三角形的两边长分别是2和7,第三边长为奇数,求第三边的长。</div>
-                <div class="answer_title">学生的答案：<label>解:设第三边的长为x,根据两边之和大于第三边得:x＜2+7即x＜9根据两边之差小于第三边得:x>7-2即x>5所以x的值大于5小于9,又因为它是奇数,所以x只能取7。</label></div>
-                <div class="answer_title">正确答案：<label>解:设第三边的长为x,根据两边之和大于第三边得</label></div>
-                <div class="answer_content"></div>
-            </div>
         </div>
     </div>
 </div>
@@ -389,6 +298,7 @@
     };
 
     function setDateTime(fullYear){
+        dateval = fullYear;
         var arr = fullYear.split('-');
         var curFullYear = new Date();
         var thisYear = parseInt(arr[0]);
@@ -398,6 +308,7 @@
         curFullYear.setFullYear(thisYear,thisMonth,thisDate);
         var week = curFullYear.getDay();
         getdate(thisYear,(thisMonth+1),thisDate,week);
+        getChangeData();
     };
 </script>
 
@@ -430,7 +341,8 @@
         $('#topStudent').css('marginLeft',tX+'rem');
         $('#topStudent > li').eq(num).children('p.pic').css({'width':'3.6rem','height':'3.6rem','marginLeft':'-0.675rem','marginTop':'-2.1rem'});
         txTimer = setTimeout(function(){
-            console.log(num);
+            studentid = $('#topStudent > li').eq(num).attr('data-sid');
+            getChangeData();
         },300);
     };
 
@@ -445,6 +357,173 @@ $('.jz_mark').delegate('input.markal_btn','click',function(e){
     });
 </script>
 
+<!--课堂数据函数-->
+<script>
+    function getInclassData(courseid){
+        $.ajax({
+            url:courseurl + '/TSB_ISCHOOL_LCS_SERVER/stulesson/getstulessondetails',
+            type:'post',
+            dataType:'json',
+            data:JSON.stringify({"studentid":"6d70fe52497249afb4984043ae3e060e","courseid":courseid ,"endtime":dateval}),
+            contentType: "application/json; charset=utf-8",
+            success:function(data){
+                if(data.data.stulessondetails.length == 0){
+                    $('.courseTrue[data-value='+courseid+']').hide();
+                    $('.courseFalse[data-value='+courseid+']').show();
+                }else{
+                    $('.courseTrue[data-value='+courseid+']').show();
+                    $('.courseFalse[data-value='+courseid+']').hide();
+                    var praisecount = data.data.stulessondetails[0].lessonsummer.praisecount;
+                    var accuracy = data.data.stulessondetails[0].lessonsummer.accuracy;
+                    var performance;
+                    if(praisecount > 0){
+                        performance = '积极';
+                    }else{
+                        performance = '良好';
+                    };
+                    $('p.con[data-value="'+courseid+'"] > label').eq(0).html(praisecount+'次');
+                    $('p.con[data-value="'+courseid+'"] > label').eq(1).html(accuracy*100+'%');
+                    $('p.con[data-value="'+courseid+'"] > label').eq(2).html(performance);
+                    $('#praiseCount > label.big').html(parseInt($('#praiseCount > label.big').html())+parseInt(praisecount));
+                };
+            },
+            error:function(data){
+                alert('课堂数据获取失败');
+            }
+        });
+    };
+</script>
+
+<!--获取数据-->
+<script>
+    function getBeginData(){
+        $.ajax({
+            url:websiteurl + '/TSB_ISCHOOL_LCS_SERVER/stulessonwork/getstulessonwork',
+            type:'post',
+            dataType:'json',
+            data:JSON.stringify({"iinum":"100464313","date":"2016-1-4"}),
+            contentType: "application/json; charset=utf-8",
+            success:function(data){
+                var data = data.data;
+                var liContent;
+                for(var i=0; i<data.length; i++){
+                    liContent += '<li data-sid="'+data[i].sid+'"><p class="pic"><img src="'+websiteurl+data[i].headurl+'"></p><p class="text">'+data[i].name+'</p></li>';
+                };
+                $('#topStudent').append(liContent);
+                childLayout();
+                getInclassData(9);
+                getInclassData(13);
+                getInclassData(10);
+            },
+            error:function(data){
+                alert('获取课程失败');
+            }
+        });
+    };
+
+    function getChangeData(){
+        $('#praiseCount > label.big').html(0);
+        getInclassData(9);
+        getInclassData(13);
+        getInclassData(10);
+    }
+</script>
+
+<script>
+    function childLayout(){
+        $('#topStudent > li').eq(0).children('p.pic').css({'width':'3.6rem','height':'3.6rem','marginLeft':'-0.675rem','marginTop':'-2.1rem'});
+        studentid = $('#topStudent > li').eq(0).attr('data-sid');
+
+        //创建一个新的hammer对象并且在初始化时指定要处理的dom元素
+        var hammertime = new Hammer(document.getElementById("topStudentDiv"));
+        //添加事件
+//            alert($('#topStudent > li').eq(0).offset().left/(document.documentElement.clientWidth/18));
+        var numI = 0;
+        var remC = document.documentElement.clientWidth/18;
+        var uLleft = parseInt($('#topStudent').css('marginLeft'))/remC;
+        var left1=7.85,left2=12.5;
+        var width1=2.25,width2=3.6,width3=2.25;
+        var top1=3.6,top2=1.5,top3=3.6;
+
+        hammertime.on('panstart',function(e){
+//                uLleft = parseInt($('#topStudent').css('marginLeft'))/remC;
+            startTurnChild();
+            clearTimeout(txTimer);
+        });
+        hammertime.on('panleft panright',function(e){
+            $('#topStudent').css('marginLeft', (uLleft+e.deltaX/remC)+'rem');
+        });
+        hammertime.on('panend',function(e){
+            var l = parseInt($('#topStudent').css('marginLeft'))/remC - uLleft;
+            var c = left2-left1;
+            var n;
+            var tX;
+
+            if(l > 0){
+                n = Math.floor(l/c)
+                if(l-n*c > (left2-left1)/2){
+                    tX = uLleft+(n+1)*(left2-left1);
+                    numI -= n+1;
+                }else{
+                    tX = uLleft+n*(left2-left1);
+                    numI -= n;
+                };
+                if(parseInt($('#topStudent > li').eq(0).offset().left)/remC > left1){
+                    tX = 0;
+                    numI = 0;
+                };
+            }else{
+                n = Math.ceil(l/c);
+                if(l-n*c > (left1-left2)/2){
+                    tX = uLleft+n*(left2-left1);
+                    numI -= n;
+                }else{
+                    tX = uLleft+(n-1)*(left2-left1);
+                    numI -= n-1;
+                };
+                if(parseInt($('#topStudent > li').eq($('#topStudent > li').length-1).offset().left)/remC < left1){
+                    tX = -($('#topStudent > li').length-1)*(left2-left1);
+                    numI = $('#topStudent > li').length-1;
+                };
+            };
+            uLleft = tX;
+            endTurnChild(tX,numI);
+        });
+
+        var aLipic = document.querySelectorAll('#topStudent > li');
+        for(var i=0; i<aLipic.length; i++){
+            (function(index){
+                var hammerLi = new Hammer(aLipic[index]);
+                hammerLi.on("tap", function(e){
+//                        uLleft = parseInt($('#topStudent').css('marginLeft'))/remC;
+                    if(numI != index){
+                        var tX = uLleft+(numI-index)*(left2-left1);
+                        numI = index;
+                        startTurnChild();
+                        endTurnChild(tX,numI);
+                        uLleft = tX;
+                    };
+                });
+            })(i);
+        };
+    };
+</script>
+
+<script>
+    // 给每个日期增加点击事件
+    $('.week_con_down > ul > li').bind('click',function(){
+        $(this).attr('class','active').siblings().removeAttr('class');
+        var dateArr = $(this).attr('full-date').split('-');
+
+        $("#thisY").html(dateArr[0] + '年');
+        $("#thisM").html(dateArr[1] + '月');
+        $("#thisW").html(turnWeek(dateArr[3]));
+
+        $('#rili').attr('data-value','00'+dateArr[0]+'-'+dateArr[1]+'-'+dateArr[2]);
+        dateval = dateArr[0]+'-'+dateArr[1]+'-'+dateArr[2];
+        getChangeData();
+    });
+</script>
 
 <!--页面跳转-->
 <script>

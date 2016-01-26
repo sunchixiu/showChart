@@ -100,32 +100,20 @@ function getdate(Y,M,D,W){
         $("#week" + i).attr("full-date",thisYear + "-" + thisMonth + "-" + thisDateX + "-" + thisWeek);
     }
     /**********************日历初始化结束************************/
+};
 
-    // 给每个日期增加点击事件
-    $('.week_con_down > ul > li').click(function(){
-        $(this).attr('class','active').siblings().removeAttr('class');
-        var dateArr = $(this).attr('full-date').split('-');
-
-        $("#thisY").html(dateArr[0] + '年');
-        $("#thisM").html(dateArr[1] + '月');
-        $("#thisW").html(turnWeek(dateArr[3]));
-
-        $('#rili').attr('data-value','00'+dateArr[0]+'-'+dateArr[1]+'-'+dateArr[2]);
-    });
-
-    function turnWeek(week){
-        var week = parseInt(week);
-        var weekText;
-        switch (week){
-            case 0: weekText = '周日'; break;
-            case 1: weekText = '周一'; break;
-            case 2: weekText = '周二'; break;
-            case 3: weekText = '周三'; break;
-            case 4: weekText = '周四'; break;
-            case 5: weekText = '周五'; break;
-            case 6: weekText = '周六'; break;
-            default : weekText = '周六'; break;
-        };
-        return weekText;
+function turnWeek(week){
+    var week = parseInt(week);
+    var weekText;
+    switch (week){
+        case 0: weekText = '周日'; break;
+        case 1: weekText = '周一'; break;
+        case 2: weekText = '周二'; break;
+        case 3: weekText = '周三'; break;
+        case 4: weekText = '周四'; break;
+        case 5: weekText = '周五'; break;
+        case 6: weekText = '周六'; break;
+        default : weekText = '周六'; break;
     };
-}
+    return weekText;
+};

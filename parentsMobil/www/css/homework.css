@@ -1,16 +1,27 @@
 .work_title{font-size: 0.7rem; color: #333; margin: 0.6rem 0.6rem 0 0.6rem;}
-.work_k{margin: 0.6rem; border: 1px solid #d8d8d8; border-radius: 0.1rem; -webkit-border-radius: 0.1rem;}
-.question_title{padding: 0.6rem; font-size: 0.7rem; color: #333; line-height: 0.9rem; background: #f9f9f9; overflow: hidden; margin-bottom: 0.6rem;}
-.question_con ul{}
-.question_con ul li{margin-bottom: 0.6rem; margin-left: 1rem; ;margin-right: 1rem; font-size: 0.7rem; color: #333;}
-.answer_title{font-size: 0.7rem; color: #999; line-height: 1rem; margin-left: 1rem; margin-right: 1rem; margin-bottom: 0.6rem;}
-.answer_title label{font-size: 0.7rem; color: #666; line-height: 1rem ;margin-right: 1rem;}
-.answer_select{overflow: hidden; margin-bottom: 0.6rem;}
-.answer_select ul{margin-left: 0.5rem;}
-.answer_select ul li{width: 3.6rem; height: 1.6rem; line-height: 1.4rem; border: 1px solid #cdd0d2; border-radius: 0.1rem; -webkit-border-radius: 0.1rem; background: #f8fbf9; font-size: 0.8rem; color: #333; float: left; margin-right: 0.3rem;}
-.answer_select ul li span{width: 0.9rem; height: 0.9rem; display: inline-block; border-radius: 50%; -webkit-border-radius: 50%; border: 1px solid #cdd0d2; background: #fff; margin: 0rem 0.55rem; vertical-align: middle; position: relative;}
-.answer_select ul li span em{width: 0.5rem; height: 0.5rem; display: inline-block; border-radius: 50%; -webkit-border-radius: 50%; background: #fff; position: absolute; margin: 0.2rem;}
-.answer_select ul li label{display: inline-block; vertical-align: middle;}
-.answer_select ul li.select{border-color: #42b0ff; background: #53b7fe; color: #fff;}
-.answer_select ul li.select span{border-color: #53b7fe;}
-.answer_select ul li.select span em{background: #53b7fe;}
+.examContainer{margin: 0.6rem 0; border: 1px solid #d8d8d8; border-radius: 0.1rem; -webkit-border-radius: 0.1rem;}
+.examquestion_content{padding: 0.6rem; font-size: 0.7rem; color: #333; line-height: 0.9rem; background: #f9f9f9; overflow: hidden; margin-bottom: 0.6rem;}
+.examquestioncontent ul{}
+.examquestioncontent ul li{margin-bottom: 0.6rem; margin-left: 1rem; ;margin-right: 1rem; font-size: 0.7rem; color: #333;}
+.answercontent i.label{font-size: 0.7rem; color: #999; line-height: 1rem; margin-left: 1rem; margin-right: 1rem; margin-bottom: 0.6rem; margin: 0;}
+.answercontent label{font-size: 0.7rem; color: #666; line-height: 1rem ;margin-right: 1rem;}
+.examquestioncontentcheckedbox{overflow: hidden; margin-bottom: 0.6rem;}
+.examquestioncontentcheckedbox ul{}
+.examquestioncontentcheckedbox ul li{width: 3.6rem; height: 1.6rem; line-height: 1.4rem; border: 1px solid #cdd0d2; border-radius: 0.1rem; -webkit-border-radius: 0.1rem; background: #f8fbf9; font-size: 0.8rem; color: #333; float: left; margin-right: 0.3rem;}
+.examquestioncontentcheckedbox ul li span{width: 0.9rem; height: 0.9rem; display: inline-block; border-radius: 50%; -webkit-border-radius: 50%; border: 1px solid #cdd0d2; background: #fff; margin: 0rem 0.55rem; vertical-align: middle; position: relative;}
+.examquestioncontentcheckedbox ul li span em{width: 0.5rem; height: 0.5rem; display: inline-block; border-radius: 50%; -webkit-border-radius: 50%; background: #fff; position: absolute; margin: 0.2rem;}
+.examquestioncontentcheckedbox ul li label{display: inline-block; vertical-align: middle;}
+.examquestioncontentcheckedbox ul li.checked{border-color: #42b0ff; background: #53b7fe; color: #fff;}
+.examquestioncontentcheckedbox ul li.checked span{border-color: #53b7fe;}
+.examquestioncontentcheckedbox ul li.checked span em{background: #53b7fe;}
+
+.Wrap{margin-left: 0.6rem; margin-right: 0.6rem; width: 16.8rem;}
+.examContainer img{height: 0.9rem;}
+
+.viewanalyzebtn{font-size: 0.7rem; color: #3399cc; line-height: 1rem; margin-left: 1rem; margin-right: 1rem; margin-bottom: 0.6rem;}
+.answercontainer_detail{font-size: 0.7rem; color: #999; line-height: 1rem; margin-left: 1rem; margin-right: 1rem; margin-bottom: 0.6rem;}
+.viewanalyzebtn{margin: 0; margin-top: 0.2rem;}
+
+/*不显示解析*/
+.viewanalyze{display: none;}
+.viewanalyzebtn{display: none;}
