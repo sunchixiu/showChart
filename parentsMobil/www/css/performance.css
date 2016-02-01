@@ -20,7 +20,8 @@
 .per_content_k ul li span.text{font-size: 0.7rem; color: #333; margin-top: 0rem; line-height: 1.4rem; vertical-align: top; margin-left: 0.1rem;}
 .per_content_k ul li span.text p.title{font-size: 0.8rem;}
 .per_content_k ul li span.text p.last{margin-top: 0.3rem;}
-.per_content_k ul li span.text p span{width: 2.75rem; height: 1.8rem; background-image: url("../images/pic_map.png"); background-size: 9rem 7.5rem; margin-right: 0.5rem;}
+.per_content_k ul li span.text p span{width: 2.75rem; height: 1.8rem; background-image: url("../images/pic_map.png"); background-size: 9rem 7.5rem; background-position: 0 -3.75rem; margin-right: 0.5rem;}
 .per_content_k ul li span.text p span.pdf{background-position: 0 -3.75rem;}
 .per_content_k ul li span.text p span.doc{background-position: -3rem -3.75rem;}
 .per_content_k ul li span.text p span.mp4{background-position: -6rem -3.75rem;}
+.per_content_k ul li span.text p span.zip{background-position: -6rem -3.75rem;}

@@ -32,6 +32,10 @@
         var txTimer = null;
         var studentid;
         var dateval;
+        var hwArr = [];
+        var timenum = 0;
+        var ifshow = 0;
+        var studentname = '';
         $(document).ready(function(){
             var iinow = new Date();
             dateval = iinow.getFullYear() + '-' + (iinow.getMonth()+1) + '-' + iinow.getDate();
@@ -87,7 +91,7 @@
                     </ul>
                 </div>
                 <div class="r">
-                    <div class="warning"><span>3</span></div>
+                    <div class="warning" onclick="toNews();"><span>3</span></div>
                 </div>
             </div>
 
@@ -112,7 +116,9 @@
             </div>
         </div>
 
-        <div class="jsection">
+        <div class="nocontent">没有数据</div>
+        <span class="loadingpic" id="loadingMain" style="margin-top: 1rem;"></span>
+        <div class="jsection" style="display: none;">
             <div class="daystatus">
                 <span id=""><label class="big">88%</label> <label class="small">完成率</label></span>
                 <span id=""><label class="big">8<em>&uarr;&darr;</em></label> <label class="small">班级排名</label></span>
@@ -121,70 +127,33 @@
             </div>
 
             <ul id="accordion" class="accordion">
-                <li>
-                    <div class="link"><span class="left"><i class="subject">文</i>语文</span><span class="right"><label>作业</label> <i class="feelsmile"></i> <label>课堂表现</label> <i class="feelcry"></i><span class="jz_mark"><input type="button" class="mark_btn" value="家长签字" data-subject="12"></span></span></div>
-                    <ul class="submenu">
-                        <div class="con_subject">
-                            <div class="homework_k">
-                                <p><span class="hw_title">今日作业</span><span class="jz_mark"><input type="button" class="hw_btn" value="作业详情" onclick="toHomework();"></span></p>
-                                <p class="message">
-                                    <label class="title">老师留言</label>
-                                    <label class="con">
-                                        老师留言老师留言老师留言老师留言老师留言老师留言老师留言老师留言老师留言老师留言老师留言老师留言
-                                    </label>
-                                </p>
-                            </div>
-                            <div class="homework_k">
-                                <div class="fgx"></div>
-                                <span class="fgkL"></span><span class="fgkR"></span>
-                                <p style="margin-top: -0.5rem;"><span class="hw_title">今日表现</span><span class="jz_mark"><input type="button" class="hw_btn" value="课堂表现" onclick="toPerformance();"></span></p></p>
-                                <div class="courseTrue" data-value="9">
-                                    <p class="con" data-value="9">表扬次数：<label>1次</label>答题正确率：<label>70%</label>课堂积极性：<label class="lh">良好</label></p>
-                                    <p class="bx" data-value="9">梅子1课堂表现得分88，请继续努力</p>
-                                </div>
-                                <div class="courseFalse" data-value="9">
-                                    <p class="bx">今天没上课！</p>
-                                </div>
-                            </div>
-                        </div>
+                <li data-subject="9">
+                    <div class="link"><span class="left"><i class="subject">文</i>语文</span><span class="right"><label>作业</label> <i class="feelsmile"></i> <label>课堂表现</label> <i class="feelcry"></i></span></div>
+                    <ul class="submenu" data-subject="9">
+                        <!--ajax获取-->
                     </ul>
                 </li>
-                <li>
-                    <div class="link"><span class="left"><i class="subject">数</i>数学</span><span class="right"><label>作业</label> <i class="feelsmile"></i> <label>课堂表现</label> <i class="feelsmile"></i><span class="jz_mark"><input type="button" class="mark_btn" value="家长签字" data-subject="13"></span></span></div>
-                    <ul class="submenu">
-                        <div class="con_subject">
-                            <div class="homework_k">
-                                <p><span class="hw_title">今日作业</span><span class="jz_mark"><input type="button" class="hw_btn" value="作业详情" onclick="toHomework();"></span></p>
-                                <p class="message">
-                                    <label class="title">已批阅</label>
-                                </p>
-                                <p class="con">完成率：<label>98%</label>正确率：<label>70%</label>提交排名：<label>6</label></p>
-                            </div>
-                            <div class="homework_k">
-                                <div class="fgx"></div>
-                                <span class="fgkL"></span><span class="fgkR"></span>
-                                <p style="margin-top: -0.5rem;"><span class="hw_title">今日表现</span><span class="jz_mark"><input type="button" class="hw_btn" value="课堂表现" onclick="toPerformance();"></span></p></p>
-                                <div class="courseTrue" data-value="13">
-                                    <p class="con" data-value="13">表扬次数：<label>1次</label>答题正确率：<label>70%</label>课堂积极性：<label class="lh">良好</label></p>
-                                    <p class="bx" data-value="13">梅子1课堂表现得分88，请继续努力</p>
-                                </div>
-                                <div class="courseFalse" data-value="13">
-                                    <p class="bx">今天没上课！</p>
-                                </div>
-                            </div>
-                        </div>
+                <li data-subject="13">
+                    <div class="link"><span class="left"><i class="subject">数</i>数学</span><span class="right"><label>作业</label> <i class="feelsmile"></i> <label>课堂表现</label> <i class="feelsmile"></i></span></div>
+                    <ul class="submenu" data-subject="13">
+                        <!--ajax获取-->
                     </ul>
                 </li>
-                <li>
-                    <div class="link"><span class="left"><i class="subject">英</i>英语</span><span class="right"><label>作业</label> <i class="feelsmile"></i> <label>课堂表现</label> <i class="feelsmile2"></i><span class="jz_mark"><input type="button" class="mark_btn" value="家长签字" data-subject="14"></span></span></div>
-                    <ul class="submenu">
+                <li data-subject="10">
+                    <div class="link"><span class="left"><i class="subject">英</i>英语</span><span class="right"><label>作业</label> <i class="feelsmile"></i> <label>课堂表现</label> <i class="feelsmile2"></i></span></div>
+                    <ul class="submenu" data-subject="10">
                         <div class="con_subject">
                             <div class="homework_k">
                                 <p><span class="hw_title">今日作业</span><span class="jz_mark"><input type="button" class="hw_btn" value="作业详情" onclick="toHomework();"></span></p>
-                                <p class="message">
-                                    <label class="title">已批阅</label>
-                                </p>
-                                <p class="con">完成率：<label>98%</label>正确率：<label>70%</label>提交排名：<label>6</label></p>
+                                <div class="homeworkTrue">
+                                    <p class="message" data-value="10">
+                                        <label class="title">已批阅</label>
+                                    </p>
+                                    <p class="con">完成率：<label>98%</label>正确率：<label>70%</label>提交排名：<label>6</label></p>
+                                </div>
+                                <div class="homeworkFalse">
+                                    <p class="bx">这节课没作业！</p>
+                                </div>
                             </div>
                             <div class="homework_k">
                                 <div class="fgx"></div>
@@ -214,37 +183,37 @@
         <div class="r"></div>
     </div>
     <div class="section" id="wrapper">
-        <div class="scroll">
+        <div class="scroll" id="wrapperScroll">
             <div class="per_content_k">
                 <h2>课时1：正多边形与圆(数学)</h2>
                 <ul>
                     <li>
                         <span class="bgPot"></span><span class="pot"><em></em></span>
                         <span class="typeIcon lx"></span>
-                <span class="text">
-                    <p class="title">[课堂练习]选取三角形</p>
-                    <p>包含1个文件</p>
-                    <p class="last"><span class="pdf"></span>选取三角形</p>
-                </span>
+                        <span class="text">
+                            <p class="title">[课堂练习]选取三角形</p>
+                            <p>包含1个文件</p>
+                            <p class="last"><span class="pdf"></span>选取三角形</p>
+                        </span>
                     </li>
                     <li>
                         <span class="bgPot"></span><span class="pot"><em></em></span>
                         <span class="typeIcon cs"></span>
-                <span class="text">
-                    <p class="title">[课堂测试]认识三角形</p>
-                    <p>平均正确率87.6%</p>
-                </span>
+                        <span class="text">
+                            <p class="title">[课堂测试]认识三角形</p>
+                            <p>平均正确率87.6%</p>
+                        </span>
                     </li>
                     <li>
                         <span class="bgPot"></span><span class="pot"><em></em></span>
                         <span class="typeIcon xx"></span>
-                <span class="text">
-                    <p class="title">[探究学习（自主）]自主探究</p>
-                    <p>包含3个文件</p>
-                    <p class="last"><span class="pdf"></span>资料-三角形</p>
-                    <p class="last"><span class="doc"></span>资料阅读-三角形（边）</p>
-                    <p class="last"><span class="mp4"></span>视频观看-认识三角形</p>
-                </span>
+                        <span class="text">
+                            <p class="title">[探究学习（自主）]自主探究</p>
+                            <p>包含3个文件</p>
+                            <p class="last"><span class="pdf"></span>资料-三角形</p>
+                            <p class="last"><span class="doc"></span>资料阅读-三角形（边）</p>
+                            <p class="last"><span class="mp4"></span>视频观看-认识三角形</p>
+                        </span>
                     </li>
                 </ul>
             </div>
@@ -262,15 +231,42 @@
         <div class="scroll" id="hwJson">
             <div class="Wrap">
                 <div style=" overflow:hidden; position:relative" id="exampapercontainer">
-                    <div style='margin-top:30px;' class='alert alert-warning'> 数据加载中，请稍后</div>
+                    <div style='margin-top:30px;' class='alert alert-warning'><span class="loadingpic" id="loadingHW"></span></div>
                 </div>
             </div>
-            <script>
-                var usertype = "teacher"//用户类型
-                ischool.ExamPaper.usertype = usertype;
-                ischool.ExamPaper.init();
-            </script>
+        </div>
+    </div>
+</div>
 
+<div class="main page out" id="pageNews">
+    <div class="header">
+        <div class="l"><a href="#&pageHome" data-rel="back">&laquo;返回</a></div>
+        <div class="m" id="hwTitle">消息</div>
+        <div class="r"></div>
+    </div>
+    <div class="section" id="newsList">
+        <div class="scroll">
+            <div class="examContainer Wrap">
+                <div class="examquestion_content">家长会通知<span class="time">2016-1-29</span></div>
+                <div class="newsCon">
+                    本周五下午3点在学校二年级三班召开家长会，请各位家长务必准时出席，谢谢！
+                </div>
+
+            </div>
+            <div class="examContainer Wrap">
+                <div class="examquestion_content">提醒孩子带文具<span class="time">2016-1-22</span></div>
+                <div class="newsCon">
+                    夏雪家长您好，明天数学课需要圆规与三角尺，请提醒孩子带齐文具，谢谢您的配合！
+                </div>
+
+            </div>
+            <div class="examContainer Wrap">
+                <div class="examquestion_content">夏雪同学获得表扬<span class="time">2015-11-6</span></div>
+                <div class="newsCon">
+                    由于您的孩子夏雪在其中考试中取得班级第三名、年级第五名的好成绩，特此提出表扬！
+                </div>
+
+            </div>
         </div>
     </div>
 </div>
@@ -333,7 +329,7 @@
         });
         $('#topStudent > li').children('p.pic').css({'width':'2.25rem','height':'2.25rem','marginLeft':'0','marginTop':'0'});
     };
-    function endTurnChild(tX,num){
+    function endTurnChild(tX,num,numNew){
         $('#topStudent').css({
             'transition':'.3s all ease',
             'webkitTransition':'.3s all ease'
@@ -342,49 +338,250 @@
         $('#topStudent > li').eq(num).children('p.pic').css({'width':'3.6rem','height':'3.6rem','marginLeft':'-0.675rem','marginTop':'-2.1rem'});
         txTimer = setTimeout(function(){
             studentid = $('#topStudent > li').eq(num).attr('data-sid');
-            getChangeData();
+            if(num != numNew){
+                getChangeData();
+            };
         },300);
     };
-
-    //家长签字
-    $('.jz_mark').delegate('input.mark_btn','click',function(e){
-        e.stopPropagation();
-        popMark($(this).attr('data-subject'));
-    });
-$('.jz_mark').delegate('input.markal_btn','click',function(e){
-        e.stopPropagation();
-        popImg($(this).attr('data-url'));
-    });
 </script>
 
-<!--课堂数据函数-->
+<!--课堂和作业数据函数-->
 <script>
     function getInclassData(courseid){
+        var hwsubjectArr = [];
+        var hwpointid = [];
+        var inpointid = [];
+        for(var i=0; i<hwArr.length; i++){
+            if(hwArr[i].subjectid == courseid){
+                hwsubjectArr.push(hwArr[i]);
+                hwpointid.push({"point":[hwArr[i].pointid,hwArr[i].pointname]});
+            };
+        };
+
+        //课堂表现初始化
+        var div_per_content_k='';
+        $('#wrapperScroll').html('');
+
         $.ajax({
-            url:courseurl + '/TSB_ISCHOOL_LCS_SERVER/stulesson/getstulessondetails',
+            url:websiteurl + '/TSB_ISCHOOL_LCS_SERVER/stulesson/getstulessondetails',
             type:'post',
             dataType:'json',
-            data:JSON.stringify({"studentid":"6d70fe52497249afb4984043ae3e060e","courseid":courseid ,"endtime":dateval}),
+            data:JSON.stringify({"studentid":studentid,"courseid":courseid ,"endtime":dateval}),
             contentType: "application/json; charset=utf-8",
             success:function(data){
-                if(data.data.stulessondetails.length == 0){
+                var data = data.data;
+                var subjectLicontent = '';
+                var subjectLicontents = '';
+                subjectLicontent = '<div class="con_subject">' +
+                '<div class="homework_k">' +
+                '<div class="titleMark_k"><h3 class="pointTitle"></h3><span class="parent_mark"><input type="button" class="mark_btn_none" disabled="disabled" value="家长签字"></span>' +
+                '<div class="fgx"></div>' +
+                '<span class="fgkL"></span><span class="fgkR"></span></div>' +
+                '<p><span class="hw_title">今日作业</span><span class="jz_mark"><input type="button" class="hw_btn_none homework" value="作业详情" data-title=""></span></p>' +
+                '<div class="homeworkTrue" data-value="'+courseid+'"><p class="message" data-value="'+courseid+'">' +
+                '<label class="title">老师留言</label>' +
+                '<label class="con">老师留言老师留言老师留言老师留言老师留言老师留言老师留言老师留言老师留言老师留言老师留言老师留言</label>' +
+                '</p></div>' +
+                '<div class="homeworkFalse" data-value="'+courseid+'"><p class="bx">这节课没作业！</p></div>' +
+                '</div>' +
+                '<div class="homework_k">' +
+                '<div class="fgx"></div>' +
+                '<span class="fgkL"></span><span class="fgkR"></span>' +
+                '<p style="margin-top: -0.5rem;"><span class="hw_title">今日表现</span><span class="jz_mark"><input type="button" class="hw_btn_none performance" value="课堂表现"></span></p></p>' +
+                '<div class="courseTrue" data-value="'+courseid+'">' +
+                '<p class="con" data-value="'+courseid+'">表扬次数：<label>1次</label>答题正确率：<label>70%</label>课堂积极性：<label class="lh">良好</label></p>' +
+                '<p class="bx" data-value="'+courseid+'"><label>梅子</label>课堂表现得分<label>88</label>，请继续努力</p>' +
+                '</div>' +
+                '<div class="courseFalse" data-value="'+courseid+'"><p class="bx">今天没上课！</p></div>' +
+                '</div>' +
+                '</div>';
+
+
+                for(var i=0; i<data.stulessondetails.length; i++){
+                    inpointid.push({"point":[data.stulessondetails[i].stulesson.pointid,data.stulessondetails[i].stulesson.pointname]});
+                };
+
+                var pointidArr = [];
+                pointidArr = arrsmerge(hwpointid,inpointid);
+                $('#loadingMain').css('display','none');
+                timenum++;
+                if(pointidArr.length == 0){
+                    if(timenum == 3 && ifshow == 0){
+                        $('.nocontent').css('display','block');
+                    };
+                    $('ul.submenu[data-subject="'+courseid+'"]').html(subjectLicontent);
+                    $('.homeworkTrue[data-value='+courseid+']').hide();
+                    $('.homeworkFalse[data-value='+courseid+']').show();
                     $('.courseTrue[data-value='+courseid+']').hide();
                     $('.courseFalse[data-value='+courseid+']').show();
-                }else{
-                    $('.courseTrue[data-value='+courseid+']').show();
-                    $('.courseFalse[data-value='+courseid+']').hide();
-                    var praisecount = data.data.stulessondetails[0].lessonsummer.praisecount;
-                    var accuracy = data.data.stulessondetails[0].lessonsummer.accuracy;
-                    var performance;
-                    if(praisecount > 0){
-                        performance = '积极';
-                    }else{
-                        performance = '良好';
+                }
+                else{
+                    ifshow = 1;
+                    $('.jsection').css('display','block');
+                    for(var i=0; i<pointidArr.length; i++){
+                        subjectLicontents += subjectLicontent;
                     };
-                    $('p.con[data-value="'+courseid+'"] > label').eq(0).html(praisecount+'次');
-                    $('p.con[data-value="'+courseid+'"] > label').eq(1).html(accuracy*100+'%');
-                    $('p.con[data-value="'+courseid+'"] > label').eq(2).html(performance);
-                    $('#praiseCount > label.big').html(parseInt($('#praiseCount > label.big').html())+parseInt(praisecount));
+                    $('ul.submenu[data-subject="'+courseid+'"]').html(subjectLicontents);
+                    for(var i=0; i<pointidArr.length; i++){
+                        $('ul.submenu[data-subject="'+courseid+'"] > div.con_subject').eq(i).attr('data-pointid',pointidArr[i].point[0]);
+                    };
+
+                    for(var i=0; i<pointidArr.length; i++){
+                        //作业数据赋值
+                        for(var j=0; j<hwArr.length; j++){
+                            if(hwArr[j].pointid == pointidArr[i].point[0]){
+                                $('#accordion > li[data-subject='+courseid+']').css('display','block');
+
+                                $('div.con_subject[data-pointid="'+hwArr[j].pointid+'"] > div.homework_k > div.titleMark_k').css('display','block').next('p').css('marginTop','-0.5rem');
+                                $('div.con_subject[data-pointid="'+hwArr[j].pointid+'"] > div.homework_k > div.titleMark_k > h3.pointTitle').html(pointidArr[i].point[1]);
+                                if(hwArr[j].sign == null){
+                                    $('div.con_subject[data-pointid="'+hwArr[j].pointid+'"] > div.homework_k > div.titleMark_k > span.parent_mark > input').removeAttr('disabled').addClass('mark_btn').removeClass('mark_btn_none').removeClass('markal_btn').attr({'data-workid':hwArr[j].sid,'onclick':'popMark($(this).attr("data-subject"),$(this).attr("data-workid"))'});
+                                }else{
+                                    $('div.con_subject[data-pointid="'+hwArr[j].pointid+'"] > div.homework_k > div.titleMark_k > span.parent_mark > input').removeAttr('disabled').addClass('markal_btn').removeClass('mark_btn_none').removeClass('mark_btn').attr({'data-workid':hwArr[j].sid,'data-url':hwArr[j].sign,'onclick':'popImg($(this).attr("data-url"))'}).val('签字完毕');
+                                };
+
+                                $('div.con_subject[data-pointid="'+hwArr[j].pointid+'"] > div.homework_k > .homeworkTrue').show();
+                                $('div.con_subject[data-pointid="'+hwArr[j].pointid+'"] > div.homework_k > .homeworkFalse').hide();
+                                $('div.con_subject[data-pointid="'+hwArr[j].pointid+'"] > div.homework_k > p > span.jz_mark > input.homework').attr({'data-title':hwArr[j].pointname,'data-roomworkid':hwArr[j].sid,'onclick':'toHomework($(this).attr("data-title"),$(this).attr("data-roomworkid"))'}).addClass('hw_btn').removeClass('hw_btn_none');
+                                $('div.con_subject[data-pointid="'+hwArr[j].pointid+'"] > div.homework_k > div.homeworkTrue > p > label.con').html(hwArr[j].content);
+                            };
+                        };
+
+
+
+                        //课堂数据赋值
+                        for(var j=0; j<data.stulessondetails.length; j++){
+                            if(data.stulessondetails[j].stulesson.pointid == pointidArr[i].point[0]){
+                                $('#accordion > li[data-subject='+courseid+']').css('display','block');
+
+                                $('div.con_subject[data-pointid="'+data.stulessondetails[j].stulesson.pointid+'"] > div.homework_k > div.titleMark_k').css('display','block').next('p').css('marginTop','-0.5rem');
+                                $('div.con_subject[data-pointid="'+data.stulessondetails[j].stulesson.pointid+'"] > div.homework_k > div.titleMark_k > h3.pointTitle').html(pointidArr[i].point[1]);
+                                $('div.con_subject[data-pointid="'+data.stulessondetails[j].stulesson.pointid+'"] > div.homework_k > .courseTrue').show();
+                                $('div.con_subject[data-pointid="'+data.stulessondetails[j].stulesson.pointid+'"] > div.homework_k > .courseFalse').hide();
+                                $('div.con_subject[data-pointid="'+data.stulessondetails[j].stulesson.pointid+'"] > div.homework_k > p > span.jz_mark > input.performance').attr({'onclick':'toPerformance("'+data.stulessondetails[j].stulesson.pointid+'")'}).removeClass('hw_btn_none').addClass('hw_btn');
+
+                                var praisecount = data.stulessondetails[j].lessonsummer.praisecount;
+                                var accuracy = data.stulessondetails[j].lessonsummer.accuracy;
+                                var performance;
+                                if(praisecount > 0){
+                                    performance = '积极';
+                                }else{
+                                    performance = '良好';
+                                };
+                                var labelcontent = $('div.con_subject[data-pointid="'+data.stulessondetails[j].stulesson.pointid+'"] > div.homework_k').eq(1).children('div.courseTrue').children('p.con').children('label');
+                                labelcontent.eq(0).html(praisecount+'次');
+                                labelcontent.eq(1).html(accuracy*100+'%');
+                                labelcontent.eq(2).html(performance);
+                                $('#praiseCount > label.big').html(parseInt($('#praiseCount > label.big').html())+parseInt(praisecount));
+                                var bxcontent = $('div.con_subject[data-pointid="'+data.stulessondetails[j].stulesson.pointid+'"] > div.homework_k').eq(1).children('div.courseTrue').children('p.bx').children('label');
+                                bxcontent.eq(0).html(studentname);
+                                bxcontent.eq(1).html(data.stulessondetails[j].lessonsummer.score);
+
+                                //课堂练习
+                                var activityCon = '';
+                                for(var a=0; a<data.stulessondetails[j].activitylist.length; a++){
+                                    var activityFile = '';
+                                    var activityNum = 0;
+                                    for(o in data.stulessondetails[j].activitylist[a].filelist){
+                                        activityNum++;
+                                        activityFile += '<p class="last"><span class="'+getExt(data.stulessondetails[j].activitylist[a].actftype)+'"></span>'+data.stulessondetails[j].activitylist[a].filelist[o]+'</p>'
+                                    };
+
+                                    activityCon += '<li>' +
+                                    '<span class="bgPot"></span><span class="pot"><em></em></span>' +
+                                    '<span class="typeIcon lx"></span>' +
+                                    '<span class="text">' +
+                                    '<p class="title">'+data.stulessondetails[j].activitylist[a].actdesc+'</p>' +
+                                    '<p>包含'+activityNum+'个文件</p>' +
+                                    activityFile +
+                                    '</span>' +
+                                    '</li>';
+                                };
+
+                                //课堂测试
+                                var testCon = '';
+                                for(var b=0; b<data.stulessondetails[j].testlist.length; b++){
+                                    testCon += '<li>' +
+                                    '<span class="bgPot"></span><span class="pot"><em></em></span>' +
+                                    '<span class="typeIcon cs"></span>' +
+                                    '<span class="text">' +
+                                    '<p class="title">'+data.stulessondetails[j].testlist[b].testdesc+'</p>' +
+                                    '<p>平均正确率'+data.stulessondetails[j].testlist[b].avgaccuracy+'%</p>' +
+                                    '</span>' +
+                                    '</li>';
+                                };
+
+                                //探究学习
+                                var selfdisCon = '';
+                                for(var c=0; c<data.stulessondetails[j].selfdislist.length; c++){
+                                    var selfFile = '';
+                                    var selefNum = 0;
+                                    for(o in data.stulessondetails[j].selfdislist[c].filelist){
+                                        selefNum++;
+                                        selfFile += '<p class="last"><span class="'+getExt(data.stulessondetails[j].selfdislist[c].filelist[o])+'"></span>'+data.stulessondetails[j].selfdislist[c].filelist[o]+'</p>'
+                                    };
+
+                                    selfdisCon += '<li>' +
+                                    '<span class="bgPot"></span><span class="pot"><em></em></span>' +
+                                    '<span class="typeIcon xx"></span>' +
+                                    '<span class="text">' +
+                                    '<p class="title">'+data.stulessondetails[j].selfdislist[c].disdesc+'</p>' +
+                                    '<p>包含'+selefNum+'个文件</p>' +
+                                    selfFile +
+                                    '</span>' +
+                                    '</li>';
+                                };
+
+
+                                div_per_content_k = '<div class="per_content_k" data-pid="'+data.stulessondetails[j].stulesson.pointid+'">' +
+                                '<h2>'+data.stulessondetails[j].stulesson.pointname+'</h2>' +
+                                '<ul>' +
+                                activityCon +
+                                testCon +
+                                selfdisCon +
+                                '</ul>' +
+                                '</div>';
+
+                                $('#wrapperScroll').append(div_per_content_k);
+
+//                                div_per_content_k = '<div class="per_content_k">' +
+//                                '<h2>'+pointidArr[i].point[1]+'</h2>' +
+//                                '<ul>' +
+//                                '<li>' +
+//                                '<span class="bgPot"></span><span class="pot"><em></em></span>' +
+//                                '<span class="typeIcon lx"></span>' +
+//                                '<span class="text">' +
+//                                '<p class="title">[课堂练习]选取三角形</p>' +
+//                                '<p>包含11个文件</p>' +
+//                                '<p class="last"><span class="pdf"></span>选取三角形</p>' +
+//                                '</span>' +
+//                                '</li>' +
+//                                '<li>' +
+//                                '<span class="bgPot"></span><span class="pot"><em></em></span>' +
+//                                '<span class="typeIcon cs"></span>' +
+//                                '<span class="text">' +
+//                                '<p class="title">[课堂测试]认识三角形</p>' +
+//                                '<p>平均正确率87.6%</p>' +
+//                                '</span>' +
+//                                '</li>' +
+//                                '<li>' +
+//                                '<span class="bgPot"></span><span class="pot"><em></em></span>' +
+//                                '<span class="typeIcon xx"></span>' +
+//                                '<span class="text">' +
+//                                '<p class="title">[探究学习（自主）]自主探究</p>' +
+//                                '<p>包含3个文件</p>' +
+//                                '<p class="last"><span class="pdf"></span>资料-三角形</p>' +
+//                                '<p class="last"><span class="doc"></span>资料阅读-三角形（边）</p>' +
+//                                '<p class="last"><span class="mp4"></span>视频观看-认识三角形</p>' +
+//                                '</span>' +
+//                                '</li>' +
+//                                '</ul>' +
+//                                '</div>';
+//alert(div_per_content_k);
+//                                $('#wrapperScroll').append(div_per_content_k);
+                            };
+                        };
+                    };
                 };
             },
             error:function(data){
@@ -401,19 +598,17 @@ $('.jz_mark').delegate('input.markal_btn','click',function(e){
             url:websiteurl + '/TSB_ISCHOOL_LCS_SERVER/stulessonwork/getstulessonwork',
             type:'post',
             dataType:'json',
-            data:JSON.stringify({"iinum":"100464313","date":"2016-1-4"}),
+            data:JSON.stringify({"iinum":"100464325","date":dateval}),
             contentType: "application/json; charset=utf-8",
             success:function(data){
                 var data = data.data;
                 var liContent;
                 for(var i=0; i<data.length; i++){
-                    liContent += '<li data-sid="'+data[i].sid+'"><p class="pic"><img src="'+websiteurl+data[i].headurl+'"></p><p class="text">'+data[i].name+'</p></li>';
+                    liContent += '<li data-sid="'+data[i].sid+'"><p class="pic"><img src="'+filesiteurl+data[i].headurl+'"></p><p class="text">'+data[i].name+'</p></li>';
                 };
                 $('#topStudent').append(liContent);
                 childLayout();
-                getInclassData(9);
-                getInclassData(13);
-                getInclassData(10);
+                getChangeData();
             },
             error:function(data){
                 alert('获取课程失败');
@@ -422,11 +617,36 @@ $('.jz_mark').delegate('input.markal_btn','click',function(e){
     };
 
     function getChangeData(){
-        $('#praiseCount > label.big').html(0);
-        getInclassData(9);
-        getInclassData(13);
-        getInclassData(10);
-    }
+        timenum = 0;
+        ifshow = 0;
+        $('.nocontent').css('display','none');
+        $('#loadingMain').css('display','block');
+        $('.jsection').css('display','none');
+        $.ajax({
+            url:websiteurl + '/TSB_ISCHOOL_LCS_SERVER/stulessonwork/getstulessonwork',
+            type:'post',
+            dataType:'json',
+            data:JSON.stringify({"iinum":"100464325","date":dateval}),
+            contentType: "application/json; charset=utf-8",
+            success:function(data){
+                var data = data.data;
+                for(var i=0; i<data.length; i++){
+                    if(data[i].sid == studentid){
+                        studentname = data[i].name;
+                        hwArr = data[i].afterClassList;
+                    };
+                };
+
+                $('#praiseCount > label.big').html(0);
+                getInclassData(9);
+                getInclassData(13);
+                getInclassData(10);
+            },
+            error:function(data){
+                alert('获取作业失败');
+            }
+        });
+    };
 </script>
 
 <script>
@@ -439,6 +659,7 @@ $('.jz_mark').delegate('input.markal_btn','click',function(e){
         //添加事件
 //            alert($('#topStudent > li').eq(0).offset().left/(document.documentElement.clientWidth/18));
         var numI = 0;
+        var numInew = 0;
         var remC = document.documentElement.clientWidth/18;
         var uLleft = parseInt($('#topStudent').css('marginLeft'))/remC;
         var left1=7.85,left2=12.5;
@@ -487,7 +708,8 @@ $('.jz_mark').delegate('input.markal_btn','click',function(e){
                 };
             };
             uLleft = tX;
-            endTurnChild(tX,numI);
+            endTurnChild(tX,numI,numInew);
+            numInew = numI;
         });
 
         var aLipic = document.querySelectorAll('#topStudent > li');
@@ -523,18 +745,81 @@ $('.jz_mark').delegate('input.markal_btn','click',function(e){
         dateval = dateArr[0]+'-'+dateArr[1]+'-'+dateArr[2];
         getChangeData();
     });
+
+    //家长签字
+    function parentMark(){
+        $('span.parent_mark').delegate('input.mark_btn','click',function(e){
+            e.stopPropagation();
+            popMark($(this).attr('data-subject'),$(this).attr('data-workid'));
+        });
+        $('span.parent_mark').delegate('input.markal_btn','click',function(e){
+            e.stopPropagation();
+            popImg($(this).attr('data-url'));
+        });
+    };
 </script>
 
 <!--页面跳转-->
 <script>
-    function toPerformance(){
+    function toPerformance(pid){
+        $('#wrapperScroll > div.per_content_k[data-pid="'+pid+'"]').css('display','block').siblings().css('display','none');
         window.location.href = '#&pagePerformance';
         loaded('wrapper');
     };
-    function toHomework(){
+    function toHomework(title,roomworkid){
+        $('.Wrap').html('');
         window.location.href = '#&pageWork';
-        loaded('homework');
+        var usertype = "teacher"//用户类型
+        ischool.ExamPaper.usertype = usertype;
+        var roomworkid = roomworkid;
+        ischool.ExamPaper.init(title,roomworkid);
     };
+    function toNews(){
+        window.location.href = '#&pageNews';
+    };
+</script>
+
+<!--两个数组去重-->
+<script>
+    function arrsmerge(arr1,arr2){
+        var c = [];
+        var json = {};
+        for(var i=0; i< arr1.length; i++){
+            json[JSON.stringify(arr1[i])] = 1;
+            c.push(arr1[i]);
+        };
+
+        for(var i=0; i< arr2.length; i++){
+            if(!json[JSON.stringify(arr2[i])]){
+                c.push(arr2[i]);
+            };
+        };
+        return c;
+    };
+</script>
+
+<!--得分转换-->
+<script>
+    function tonumber(num){
+        var numArr = num.split('');
+        var newArr = [];
+        for(var i=0; i<numArr.length; i++){
+            if(numArr[i] == '.'){
+                newArr.push('<span class="aspot"></span>');
+            }else{
+                newArr.push('<span class="a'+numArr[i]+'"></span>');
+            };
+        };
+        return newArr.join('');
+    };
+</script>
+
+<!--获取文件扩展名-->
+<script>
+    function getExt(fileName){
+        var result = fileName.substring(fileName.lastIndexOf('.') + 1);
+        return result;
+    }
 </script>
 </body>
 </html>

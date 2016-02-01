@@ -56,10 +56,11 @@ body{width: 100%; font-family: '微软雅黑';}
 .daystatus span label.small{font-size: 0.7rem; color: #3399cc;}
 
 ul.accordion{border-bottom: 1px solid #d3d3d3; margin-top: 0.6rem;}
+ul.accordion li{display: none;}
 ul.accordion li div.link{border-top: 1px solid #d3d3d3; height: 2.8rem; width: 15.6rem; padding: 0 1.2rem;}
 .link span.left{width: 4rem; height: 2.8rem; float: left; line-height: 2.8rem;}
 .link span.left i.subject{width: 1.15rem; height: 1.15rem; background: #3cc2d5; border-radius: 50%; -webkit-border-radius: 50%; color: #fff; text-align: center; line-height: 1.15rem; display: inline-block; font-size: 1rem; margin-right: 0.3rem;}
-.link span.right{width: 10.6rem; height: 2.8rem; float: right; line-height: 2.8rem; font-size: 0.6rem; text-align: left;}
+.link span.right{width: 10.6rem; height: 2.8rem; float: right; line-height: 2.8rem; font-size: 0.6rem; text-align: right;}
 .link span.right label{display: inline-block;}
 .link span.right i.feelsmile{width: 1.05rem; height: 1.05rem; display: inline-block; background-image: url("../images/pic_map.png"); background-size: 6rem 5rem; background-position: 0 0; background-repeat: no-repeat; vertical-align: middle; margin-right: 0.4rem;}
 .link span.right i.feelsmile2{width: 1.05rem; height: 1.05rem; display: inline-block; background-image: url("../images/pic_map.png"); background-size: 6rem 5rem; background-position: -1.2rem 0; background-repeat: no-repeat; vertical-align: middle; margin-right: 0.4rem;}
@@ -71,13 +72,14 @@ ul.submenu{background: #eee; display: none;}
 .con_subject .homework_k p{width: 100%; text-align: center; font-size: 0.6rem; float: left;}
 .con_subject .homework_k p span.hw_title{float: left; background: #dcdcdc; padding:0.2rem 0.3rem; font-size: 0.6rem; color: #fff; display: inline-block; margin-left: 1rem;}
 .link span.right span.jz_mark{float: right; font-size: 0.5rem; color: #99cc66; display: inline-block;}
-.link span.right span.jz_mark input.mark_btn{padding:0.2rem 0.3rem; color: #99cc66; background: #fff; border: 1px solid #99cc66; border-radius: 1rem; -webkit-border-radius: 1rem; margin-top: 0rem;}
-.link span.right span.jz_mark input.mark_btn:active{background: #99cc66; color: #fff;}
-.link span.right span.jz_mark input.markal_btn{padding:0.2rem 0.3rem; color: #ff8a00; background: #fff; border: 1px solid #ff8a00; border-radius: 1rem; -webkit-border-radius: 1rem; margin-top: 0rem;}
-.link span.right span.jz_mark input.markal_btn:active{background: #ff8a00; color: #fff;}
+
 .con_subject .homework_k p span.jz_mark{float: right; font-size: 0.6rem; color: #99cc66; display: inline-block;}
 .con_subject .homework_k p span.jz_mark input.hw_btn{padding:0.2rem 0.3rem; color: #fff; background: #99cc66; border: 1px solid #99cc66; border-radius: 0.2rem; -webkit-border-radius: 0.2rem; margin-top: 0.8rem; margin-right: 1.2rem;}
 .con_subject .homework_k p span.jz_mark input.hw_btn:active{background: #fff; color: #99cc66;}
+
+.con_subject .homework_k p span.jz_mark input.hw_btn_none{padding:0.2rem 0.3rem; color: #eee; background: #e5e5e5; border: 1px solid #e5e5e5; border-radius: 0.2rem; -webkit-border-radius: 0.2rem; margin-top: 0.8rem; margin-right: 1.2rem;}
+.con_subject .homework_k p span.jz_mark input.hw_btn_none:active{background: #e5e5e5; color: #eee;}
+
 .con_subject .homework_k p.con{margin-top: 0.6rem; margin-bottom: 1.2rem;}
 .con_subject .homework_k p.con label{font-size: 0.8rem; color: #ff8a00; margin-right: 0.3rem;}
 .con_subject .homework_k .fgx{width: 100%; height: 2px; background: url("../images/fgx.png");}
@@ -119,8 +121,46 @@ ul.submenu{background: #eee; display: none;}
 .attention{width: 100%; height: 100%; position: fixed; z-index: 1002;}
 .attention label{width: 6rem; height: 1.6rem; background: rgba(0,0,0,0.8); text-align: center; line-height: 1.6rem; font-size: 0.8rem; position: absolute; top: 50%; left: 50%; margin-top: -1rem; margin-left: -3rem; color: #fff; border-radius: 0.2rem; -webkit-border-radius: 0.1rem; transition: .3s all ease; -webkit-transition: .3s all ease; opacity: 1;}
 
-.courseFalse{display: none;}
+.courseTrue{display: none;}
+.homeworkTrue{display: none;}
+/*.courseFalse{display: none;}*/
+/*.homeworkFalse{display: none;}*/
 
+/*加载loading*/
+span.loadingpic{width: 1.4rem; height: 1.4rem; position: fixed; background-image: url("../images/loadding.gif"); background-size: 1.4rem 1.4rem; top: 50%; left: 50%; margin-left: -0.7rem; margin-top: -1rem;}
 
+/*家长签字*/
+.titleMark_k{display: none;}
+span.parent_mark{margin-left: 4rem; margin-top: -1.85rem; position: absolute;}
+span.parent_mark input.mark_btn{padding:0.2rem 0.3rem; color: #99cc66; background: #fff; border: 1px solid #99cc66; border-radius: 1rem; -webkit-border-radius: 1rem; margin-top: 0rem;}
+span.parent_mark input.mark_btn:active{background: #99cc66; color: #fff;}
 
+span.parent_mark input.mark_btn_none{padding:0.2rem 0.3rem; color: #eee; background: #fff; border: 1px solid #eee; border-radius: 1rem; -webkit-border-radius: 1rem; margin-top: 0rem;}
+span.parent_mark input.mark_btn_none:active{background: #fff; color: #eee;}
+
+span.parent_mark input.markal_btn{padding:0.2rem 0.3rem; color: #ff8a00; background: #fff; border: 1px solid #ff8a00; border-radius: 1rem; -webkit-border-radius: 1rem; margin-top: 0rem;}
+span.parent_mark input.markal_btn:active{background: #ff8a00; color: #fff;}
+
+/*pointname*/
+h3.pointTitle{color: #29799c; font-size: 0.8rem; line-height: 1.2rem; height: 1.2rem; font-weight: 200; margin: 0.6rem; padding: 0; text-align: left; width: 11rem;}
+
+.getScore{width: 4rem; height: 2.5rem; display: block; position: absolute; font-size: 0.7rem; right: 0.6rem; top: 0.2rem; text-align: center; background-image: url("../images/totalscore.png"); background-size: 11rem 4.15rem; background-position: -7rem -1.65rem;}
+.getScore span{display: inline-block; vertical-align: top;}
+.getScore span.a0{width: 1.1rem; height: 2rem; background-image: url("../images/totalscore.png"); background-size: 11rem 4.15rem; background-position: 0 0;}
+.getScore span.a1{width: 0.5rem; height: 2rem; background-image: url("../images/totalscore.png"); background-size: 11rem 4.15rem; background-position: -1.1rem 0;}
+.getScore span.a2{width: 1.35rem; height: 2rem; background-image: url("../images/totalscore.png"); background-size: 11rem 4.15rem; background-position: -1.65rem 0;}
+.getScore span.a3{width: 1.1rem; height: 2rem; background-image: url("../images/totalscore.png"); background-size: 11rem 4.15rem; background-position: -3rem 0;}
+.getScore span.a4{width: 1rem; height: 2rem; background-image: url("../images/totalscore.png"); background-size: 11rem 4.15rem; background-position: -4.1rem 0;}
+.getScore span.a5{width: 1.1rem; height: 2.2rem; background-image: url("../images/totalscore.png"); background-size: 11rem 4.15rem; background-position: 0 -2rem;}
+.getScore span.a6{width: 0.9rem; height: 2.2rem; background-image: url("../images/totalscore.png"); background-size: 11rem 4.15rem; background-position: -1.1rem -2rem;}
+.getScore span.a7{width: 1rem; height: 2.2rem; background-image: url("../images/totalscore.png"); background-size: 11rem 4.15rem; background-position: -2rem -2rem;}
+.getScore span.a8{width: 1.1rem; height: 2.2rem; background-image: url("../images/totalscore.png"); background-size: 11rem 4.15rem; background-position: -3rem -2rem;}
+.getScore span.a9{width: 0.8rem; height: 2.2rem; background-image: url("../images/totalscore.png"); background-size: 11rem 4.15rem; background-position: -4.1rem -2rem;}
+.getScore span.aspot{width: 0.6rem; height: 1.8rem; background-image: url("../images/totalscore.png"); background-size: 11rem 4.15rem; background-position: -5.7rem -2.2rem;}
+
+/*没有数据*/
+.nocontent{width: 100%; height: 1rem; line-height: 1rem; color: #999; font-size: 0.9rem; text-align: center; position: absolute; top:50%; display: none;}
+
+/*课堂表现*/
+.per_content_k{display: none;}
 

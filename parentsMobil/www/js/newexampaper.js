@@ -63,7 +63,7 @@ ischool.newExamPaper = {
                 var _andetail = mycurrent.andetail;//答题过程；
                 var _dataisanswer = 0;
                 var answerattname = "answer" + bignum + "" + smallnum;
-              
+
                
                 var strclass = "";
                 var  _examclass="";
@@ -101,9 +101,9 @@ ischool.newExamPaper = {
                 html.append(" <div class=\"examquestion\">");
                 if(smallnum>0)
                 {
-                    html.append(" <span class='number'>" + smallnum + ".</span> ");
+                    //html.append(" <span class='number'>" + smallnum + ".</span> ");
                 }
-                html.append("<div class='examquestion_content'>");
+                html.append("<div class='examquestion_content'>"+" <span class='number'>" + smallnum + ".</span> ");
                 if (subjectjson.qamain != null) {
                     for (var i = 0; i < subjectjson.qamain.length; i++) {
                         html.append(ischool.ExamPaper.replacequestioncontent(subjectjson.qamain[i].qamaincont));
@@ -209,7 +209,7 @@ ischool.newExamPaper = {
                             answerhtml.append("<div class='answercontainer_detail'>");
                             var _myanswer = ischool.ExamPaper.showanswer(subjecttype, mycurrent.answer.replace(/#@#/g, " ")).replace("答案：", "");
                            
-                            answerhtml.append("<div class='answercontent  " + strclass + "'><i class='label'>我的答案：</i>" + _myanswer + "</div>");
+                            answerhtml.append("<div class='answercontent  " + strclass + "'><i class='label'>我的答案：</i><span class='appanswer'>" + _myanswer + "</span></div>");
                             answerhtml.append("<div class='answercontent'><i class='label'>正确答案：</i><span class='appanswer'>" + ischool.ExamPaper.showanswer(subjecttype, _questionanswer).replace("答案：", "") + "</span></div>");
                             answerhtml.append("<div class='viewanalyzebtn'>收起解析</div>");
                             answerhtml.append("</div>");
@@ -235,11 +235,12 @@ ischool.newExamPaper = {
                             }
                             else
                             {
-                                answerhtml.append("<div class='answercontainer' " + _isshowscorestyle + ">手动评分:本题" + questionjson[q].paqamaincont[s].paqaitem.qascore + "分,学生的得分<u></u> <u><input type='text' class='input' style='width:50px;' data-value='" + questionjson[q].paqamaincont[s].paqaitem.qascore + "' data-type='myscorevalue' value='" + mycurrent.score + "'><a href='javascript:void(0)' class='btn btn-success btnselfscore' data-type='myscore' style='display:none'>评分</a></u></div>");
-                                answerhtml.append("<div class='answercontainer_detail viewanalyze'>");
+                                answerhtml.append("<div class='answercontainer_detail'>");
                                 answerhtml.append("<div class='item'><label>我的答案：</label><span class='myanswer analyzecontent'>" + ischool.ExamPaper.showanswer(subjecttype, mycurrent.answer.replace(/#@#/g, " ")).replace("答案：", "") + "</span></div>");
                                 answerhtml.append("<div class='item'><label>正确答案：</label><span class='analyzecontent appanswer'>" + ischool.ExamPaper.showanswer(subjecttype, questionjson[q].paqamaincont[s].paqaitem.qans[0].qaitemcont).replace("答案：", "") + "</span></div>");
                                 answerhtml.append("</div>");
+
+                                answerhtml.append("<div class='answercontainer' " + _isshowscorestyle + ">手动评分:本题" + questionjson[q].paqamaincont[s].paqaitem.qascore + "分,学生的得分<u></u> <u><input type='text' class='input' style='width:50px;' data-value='" + questionjson[q].paqamaincont[s].paqaitem.qascore + "' data-type='myscorevalue' value='" + mycurrent.score + "'><a href='javascript:void(0)' class='btn btn-success btnselfscore' data-type='myscore' style='display:none'>评分</a></u></div>");
                                 if (_questionanalysis != "") {
                                     answerhtml.append("<div class='answercontainer_detail viewanalyze'>");
                                     answerhtml.append("<div class='item'><label>难度系数：</label><div class='analyzecontent'>" + ischool.ExamPaper.rate(subjectjson.qadif) + "</div></div>");

@@ -28,245 +28,284 @@ ischool.ExamPaper = {
     answercount:0,
     savecount: 0,
     subjectid:"",
-    init: function () {
-
+    init: function (title,roomworkid) {
+        $('.Wrap').html('<span class="loadingpic" id="loadingHW" style="margin-top: 60%; position: absolute;"></span>');
         var _htmltemplate = "<div id=\"exam_container\" class=\"hw_k\"></div>";
         var _isfist=true;
         var _iscomplate=false;
 
+        $('#hwTitle').html(title);
 
+        $.ajax({
+            url:websiteurl + '/TSB_ISCHOOL_LCS_SERVER/newroomwork/getworkdetail',
+            type:'post',
+            dataType:'json',
+            data:JSON.stringify({"stuid":studentid,"roomworkid":roomworkid ,"isneedpaperbean":"1"}),
+            contentType: "application/json; charset=utf-8",
+            success:function(data){
+                var json = {};
+                json.data = data.data.workinfobean;
+                json.data.paperbean = data.data.workinfobean.paperbean;
+                var paperid = json.data.paperid;
 
-                //json.data.paperbean.pacont;
-                if (1) {
-                    ischool.ExamPaper.isstudentshowsubmit = false;
-                    if (typeof json.data.answerBean == "undefined") {
-                        ischool.ExamPaper.isstudentshowsubmit = true;
-                    }
-                    if (typeof json.data.answercount != "undefined") {
-                        if (json.data.answercount!=null)
-                            ischool.ExamPaper.answercount=json.data.answercount;
-                    }
-                    if (typeof json.data.savecount != "undefined") {
-                        if (json.data.savecount != null)
-                            ischool.ExamPaper.savecount=json.data.savecount;
-                    }
+                $.ajax({
+                    url:websiteurl + '/TSB_ISCHOOL_LCS_SERVER/tchmyroom/getworkinfo',
+                    type:'post',
+                    dataType:'json',
+                    data:JSON.stringify({"studentid":studentid,"workid":paperid}),
+                    contentType: "application/json; charset=utf-8",
+                    success:function(answerdata){
+                        var valScore = '0';
+                        var classScore = 'getScoreNo';
+                        if(!answerdata.data.answerBean){
 
-                    if (json.data.answerBean == null) {
-                        ischool.ExamPaper.isstudentshowsubmit = true;
-                    }
-                    else {
-                        //是否重新做卷
-                        if (ischool.ExamPaper.isrework)
-                        { ischool.ExamPaper.isstudentshowsubmit = true; }
-                        else
-                        {
-                            ischool.ExamPaper.jsonanswer = json.data.answerBean;
-                            if (typeof json.data.isfirstmark!="undefined")
-                                 ischool.ExamPaper.isfirstmark = json.data.isfirstmark;
-                            _isfist = false;
-                            ischool.ExamPaper.iscomplate = true;
-                            //判断是否作业并且当前是学生
-                            if ((ischool.ExamPaper.type == "homework"||ischool.ExamPaper.type == "sumhomework") && ischool.ExamPaper.usertype == "student") {
+                        }else{
+                            json.data.answerBean = answerdata.data.answerBean;
+                            valScore = json.data.answerBean.angetscore;
+                            classScore = 'getScore';
+                        };
 
-                                if (ischool.ExamPaper.jsonanswer.andesignscore != ischool.ExamPaper.jsonanswer.angetscore) {
-                                    ischool.ExamPaper.isstudentshowsubmit = true;
-                                    ischool.ExamPaper.iscomplate = false;
-                                    ischool.ExamPaper.isrepeatexam = true;
-                                }
-                                //满分自动展示卷子
-                                if (parseInt(ischool.ExamPaper.jsonanswer.andesignscore, 10) <= parseInt(ischool.ExamPaper.jsonanswer.angetscore, 10)) {
+                        if (1) {
+                            ischool.ExamPaper.isstudentshowsubmit = false;
+                            //if (typeof json.data.answerBean == "undefined") {
+                            //    ischool.ExamPaper.isstudentshowsubmit = true;
+                            //}
+                            if (typeof json.data.answercount != "undefined") {
+                                if (json.data.answercount!=null)
+                                    ischool.ExamPaper.answercount=json.data.answercount;
+                            }
+                            if (typeof json.data.savecount != "undefined") {
+                                if (json.data.savecount != null)
+                                    ischool.ExamPaper.savecount=json.data.savecount;
+                            }
+
+                            //if (json.data.answerBean == null) {
+                            //    ischool.ExamPaper.isstudentshowsubmit = true;
+                            //}
+                            else {
+                                //是否重新做卷
+                                if (ischool.ExamPaper.isrework)
+                                { ischool.ExamPaper.isstudentshowsubmit = true; }
+                                else
+                                {
+                                    ischool.ExamPaper.jsonanswer = json.data.answerBean;
+                                    if (typeof json.data.isfirstmark!="undefined")
+                                        ischool.ExamPaper.isfirstmark = json.data.isfirstmark;
+                                    _isfist = false;
                                     ischool.ExamPaper.iscomplate = true;
-                                    ischool.ExamPaper.isstudentshowsubmit = false;
-                                    ischool.ExamPaper.isrepeatexam = false;
-                                }
-                                if (ischool.ExamPaper.type == "sumhomework") {
-                                    if (ischool.ExamPaper.answercount >= 2) {
-                                        ischool.ExamPaper.iscomplate = true;
-                                        ischool.ExamPaper.isstudentshowsubmit = false;
-                                    }
-                                    else {
-                                        ischool.ExamPaper.isrepeatexam = true;
-                                        ischool.ExamPaper.isstudentshowsubmit == true
+                                    //判断是否作业并且当前是学生
+                                    if ((ischool.ExamPaper.type == "homework"||ischool.ExamPaper.type == "sumhomework") && ischool.ExamPaper.usertype == "student") {
 
-                                        if (ischool.ExamPaper.answercount == 0) {
+                                        if (ischool.ExamPaper.jsonanswer.andesignscore != ischool.ExamPaper.jsonanswer.angetscore) {
+                                            ischool.ExamPaper.isstudentshowsubmit = true;
+                                            ischool.ExamPaper.iscomplate = false;
+                                            ischool.ExamPaper.isrepeatexam = true;
+                                        }
+                                        //满分自动展示卷子
+                                        if (parseInt(ischool.ExamPaper.jsonanswer.andesignscore, 10) <= parseInt(ischool.ExamPaper.jsonanswer.angetscore, 10)) {
+                                            ischool.ExamPaper.iscomplate = true;
+                                            ischool.ExamPaper.isstudentshowsubmit = false;
+                                            ischool.ExamPaper.isrepeatexam = false;
+                                        }
+                                        if (ischool.ExamPaper.type == "sumhomework") {
+                                            if (ischool.ExamPaper.answercount >= 2) {
+                                                ischool.ExamPaper.iscomplate = true;
+                                                ischool.ExamPaper.isstudentshowsubmit = false;
+                                            }
+                                            else {
+                                                ischool.ExamPaper.isrepeatexam = true;
+                                                ischool.ExamPaper.isstudentshowsubmit == true
 
-                                            if (ischool.ExamPaper.jsonanswer != null) {
+                                                if (ischool.ExamPaper.answercount == 0) {
 
-                                                var anendtime = ischool.ExamPaper.jsonanswer.antotalusetime
-                                                if (typeof anendtime == "undefined") {
-                                                    anendtime = 0;
+                                                    if (ischool.ExamPaper.jsonanswer != null) {
+
+                                                        var anendtime = ischool.ExamPaper.jsonanswer.antotalusetime
+                                                        if (typeof anendtime == "undefined") {
+                                                            anendtime = 0;
+                                                        }
+                                                        if (anendtime == null)
+                                                            anendtime = 0;
+                                                        anendtime = parseInt(anendtime, 10);
+
+                                                        ischool.ExamPaper.saveexamtime = anendtime;
+                                                    }
                                                 }
-                                                if (anendtime == null)
-                                                    anendtime = 0;
-                                                anendtime = parseInt(anendtime, 10);
-
-                                                ischool.ExamPaper.saveexamtime = anendtime;
                                             }
                                         }
+
                                     }
-                                }
 
+                                }
                             }
 
-                        }
-                    }
+                            if(typeof json.data.depid!="undefined")
+                            {
+                                ischool.ExamPaper.depid=json.data.depid;
+                            }
+                            if (typeof json.data.paperbean.pacoursecode != "undefined") {
+                                ischool.ExamPaper.subjectid = json.data.paperbean.pacoursecode;
+                            }
+                            if (ischool.ExamPaper.usertype == "teacher") {
+                                if (ischool.ExamPaper.studentid == "")
+                                {
+                                    ischool.ExamPaper.isread = true;
 
-                    if(typeof json.data.depid!="undefined")
-                    {
-                        ischool.ExamPaper.depid=json.data.depid;
-                    }
-                    if (typeof json.data.paperbean.pacoursecode != "undefined") {
-                        ischool.ExamPaper.subjectid = json.data.paperbean.pacoursecode;
-                    }
-                    if (ischool.ExamPaper.usertype == "teacher") {
-                        if (ischool.ExamPaper.studentid == "")
+                                }
+                            }
+                            ischool.ExamPaper.begindate = new Date();
+                            //ischool.ExamPaper.epid = paperid;
+                            $(ischool.ExamPaper.containerid).html(_htmltemplate);
+                            var vcode = "<img src=\"/Home/Index/paperpic/epid/" + ischool.ExamPaper.epid + "\" class='vcode'>";
+                            var excontent = new StringBuilder();
+                            if (ischool.ExamPaper.isread==false ) {
+                                //$('#hwTitle').html(json.data.paperbean.paname);
+                                excontent.append( "<div class='work_title'>◇ 试卷总分数 " + json.data.paperbean.pascore + ",作答时间为 " + json.data.paperbean.paminu + "分钟</div><div class='"+classScore+"'>"+tonumber(valScore)+"</div>");
+                                //excontent.append( "<div class='work_title'>◇ 试卷总分数 " + json.data.paperbean.pascore + ",作答时间为 " + json.data.paperbean.paminu + "分钟</div>");
+                                excontent.append( "<input type='hidden' id='hidpascore' value='" + json.data.paperbean.pascore + "'>");
+
+                            }
+                            if (ischool.ExamPaper.teachercomment != "") {
+                                excontent.append(" <div class='work_title'>");
+                                excontent.append("教师评语：");
+                                excontent.append(ischool.ExamPaper.teachercomment);
+                                excontent.append("</div>");
+                            }
+                            var _clickpostanswer = "";
+                            var _clickpostscore = "";
+                            if (typeof json.data.paperbean.palevel == "undefined") {
+                                excontent.append(ischool.ExamPaper.createquestion(json.data.paperbean.pacont));
+                                _clickpostanswer = "ischool.ExamPaper.postanswer()";
+                                _clickpostscore = "ischool.ExamPaper.postscore()";
+                            }
+                            else
+                            {
+                                excontent.append(ischool.newExamPaper.init(json.data.paperbean.palevel));
+                                _clickpostanswer = "ischool.newExamPaper.postanswer()";
+                                _clickpostscore = "ischool.newExamPaper.postscore()";
+                            }
+                            var isselfscore = true;
+
+
+
+
+                            $("#exam_container").html(excontent.toString());
+                            //隐藏答题卡
+
+
+                            if (ischool.ExamPaper.isread == true || ischool.ExamPaper.isstudentshowsubmit == false|| ischool.ExamPaper.type=="") {
+                                $("#examanswer_container").css("display", "none");
+                                //$("#exam_container").css("width", "100%");
+                                if (ischool.ExamPaper.type == "sumhomework")
+                                    ischool.ExamPaper.collectlist();
+                            }
+                            else {
+
+                                var _fixedstatus = 0;
+                                window.onscroll =function () {
+                                    var scrollTop = document.documentElement.scrollTop + document.body.scrollTop;
+                                    //console.log(scrollTop)
+                                    if (scrollTop > 150) {
+                                        //if (_fixedstatus == 0) {
+                                        $("#examanswer_container").css("top", (scrollTop - $("#examanswer_container").height()/2+50) + "px");
+                                        _fixedstatus = 1;
+                                        //}
+
+                                    }
+                                    else {
+                                        if (_fixedstatus == 1) {
+                                            $("#examanswer_container").css("top","0");
+                                            _fixedstatus = 0;
+                                        }
+                                    }
+
+                                };
+                            }
+
+                            if (ischool.ExamPaper.isread == false)
+                            {
+                                if (ischool.ExamPaper.type == "homework" || ischool.ExamPaper.type == "jingsai" || ischool.ExamPaper.type == "sumhomework") {
+                                    ischool.ExamPaper.bindevetTimer();
+
+                                }
+                            }
+                            $(".viewanalyzebtn").bind("mousedown", function () {
+                                var obj = $(this).parent().parent().find(".viewanalyze");
+                                if (obj.css("display") == "none") {
+                                    obj.show('fast');
+                                    $(this).html("收起解析");
+                                    $(this).removeClass("down");
+                                }
+                                else { obj.hide('fast'); $(this).html("展开解析"); $(this).addClass("down"); }
+                            });
+                            $(".audioplay").bind("click", function () {
+                                $("#jplayMP3").jPlayer("clearMedia");
+                                $("#jplayMP3").jPlayer("stop");
+                                $("#jplayMP3").unbind($.jPlayer.event.ended);
+                                $("#jplayMP3").unbind($.jPlayer.event.progress);
+                                $(this).addClass("playing");
+                                var _this = $(this)
+                                $("#jplayMP3").bind($.jPlayer.event.ended, function (event) {
+                                    $("#jplayMP3").jPlayer("clearMedia");
+                                    $("#jplayMP3").jPlayer("stop");
+                                    _this.removeClass("playing");
+                                });
+                                $("#jplayMP3").jPlayer("setMedia", { mp3: $(this).attr("data-url") }).jPlayer("play");
+
+                            })
+                            if (isselfscore==false)
+                            {
+                                $("[data-type='myscorevalue']").each(function () {
+                                    $(this).parent().parent().hide();
+                                })
+                            }
+                            $("[data-type='myscorevalue']").each(function () {
+                                $(this).bind("blur", function () {
+
+                                    var score = $.trim($(this).val());
+
+                                    var answer = $.trim($(this).parent().parent().next().find(".myanswer").html());
+                                    var currentscore = $(this).attr("data-value");
+
+                                    if (/0|([1-9](\d)?)/.test(score)) {
+                                        if (parseInt(score, 10) > parseInt(currentscore, 10)) {
+                                            alert("您无法输入大于本题的分数");
+                                            $(this).val("");
+                                            return false;
+                                        }
+                                        if (answer == "") {
+                                            alert("您没有作答本题");
+                                            $(this).val("0");
+                                            return false;
+                                        }
+
+                                    }
+                                    else {
+                                        alert("请输入整数");
+                                        $(this).val("");
+                                        return false;
+                                    }
+                                    // $(this).parent().hide();
+                                    //$(this).parent().prev().html("评分：" + score);
+                                });
+                            });
+
+                            loaded('homework');
+                        }
+                        else
                         {
-                            ischool.ExamPaper.isread = true;
-
+                            $(ischool.ExamPaper.containerid).html("暂无试题");
                         }
+                    },
+                    error:function(data){
+                        alert('获取答案失败')
                     }
-                    ischool.ExamPaper.begindate = new Date();
-                    //ischool.ExamPaper.epid = paperid;
-                    $(ischool.ExamPaper.containerid).html(_htmltemplate);
-                    var vcode = "<img src=\"/Home/Index/paperpic/epid/" + ischool.ExamPaper.epid + "\" class='vcode'>";
-                    var excontent = new StringBuilder();
-                    if (ischool.ExamPaper.isread==false ) {
-                        $('#hwTitle').html(json.data.paperbean.paname);
-                        excontent.append( "<div class='work_title'>◇ 试卷总分数 " + json.data.paperbean.pascore + ",作答时间为 " + json.data.paperbean.paminu + "分钟</div>");
-                        excontent.append( "<input type='hidden' id='hidpascore' value='" + json.data.paperbean.pascore + "'>");
-
-                    }
-                    if (ischool.ExamPaper.teachercomment != "") {
-                        excontent.append(" <div class='work_title'>");
-                        excontent.append("教师评语：");
-                        excontent.append(ischool.ExamPaper.teachercomment);
-                        excontent.append("</div>");
-                    }
-                    var _clickpostanswer = "";
-                    var _clickpostscore = "";
-                    if (typeof json.data.paperbean.palevel == "undefined") {
-                        excontent.append(ischool.ExamPaper.createquestion(json.data.paperbean.pacont));
-                        _clickpostanswer = "ischool.ExamPaper.postanswer()";
-                        _clickpostscore = "ischool.ExamPaper.postscore()";
-                    }
-                    else
-                    {
-                        excontent.append(ischool.newExamPaper.init(json.data.paperbean.palevel));
-                        _clickpostanswer = "ischool.newExamPaper.postanswer()";
-                        _clickpostscore = "ischool.newExamPaper.postscore()";
-                    }
-                    var isselfscore = true;
-
-
-
-
-                    $("#exam_container").html(excontent.toString());
-                    //隐藏答题卡
-
-
-                    if (ischool.ExamPaper.isread == true || ischool.ExamPaper.isstudentshowsubmit == false|| ischool.ExamPaper.type=="") {
-                        $("#examanswer_container").css("display", "none");
-                        //$("#exam_container").css("width", "100%");
-                        if (ischool.ExamPaper.type == "sumhomework")
-                           ischool.ExamPaper.collectlist();
-                    }
-                    else {
-
-                        var _fixedstatus = 0;
-                        window.onscroll =function () {
-                            var scrollTop = document.documentElement.scrollTop + document.body.scrollTop;
-                            //console.log(scrollTop)
-                            if (scrollTop > 150) {
-                                //if (_fixedstatus == 0) {
-                                $("#examanswer_container").css("top", (scrollTop - $("#examanswer_container").height()/2+50) + "px");
-                                    _fixedstatus = 1;
-                                //}
-
-                            }
-                            else {
-                                if (_fixedstatus == 1) {
-                                    $("#examanswer_container").css("top","0");
-                                    _fixedstatus = 0;
-                                }
-                            }
-
-                        };
-                    }
-
-                    if (ischool.ExamPaper.isread == false)
-                    {
-                        if (ischool.ExamPaper.type == "homework" || ischool.ExamPaper.type == "jingsai" || ischool.ExamPaper.type == "sumhomework") {
-                            ischool.ExamPaper.bindevetTimer();
-
-                        }
-                    }
-                    $(".viewanalyzebtn").bind("mousedown", function () {
-                        var obj = $(this).parent().parent().find(".viewanalyze");
-                        if (obj.css("display") == "none") {
-                            obj.show('fast');
-                            $(this).html("收起解析");
-                            $(this).removeClass("down");
-                        }
-                        else { obj.hide('fast'); $(this).html("展开解析"); $(this).addClass("down"); }
-                    });
-                    $(".audioplay").bind("click", function () {
-                        $("#jplayMP3").jPlayer("clearMedia");
-                        $("#jplayMP3").jPlayer("stop");
-                        $("#jplayMP3").unbind($.jPlayer.event.ended);
-                        $("#jplayMP3").unbind($.jPlayer.event.progress);
-                        $(this).addClass("playing");
-                        var _this = $(this)
-                        $("#jplayMP3").bind($.jPlayer.event.ended, function (event) {
-                            $("#jplayMP3").jPlayer("clearMedia");
-                            $("#jplayMP3").jPlayer("stop");
-                            _this.removeClass("playing");
-                        });
-                        $("#jplayMP3").jPlayer("setMedia", { mp3: $(this).attr("data-url") }).jPlayer("play");
-
-                    })
-                    if (isselfscore==false)
-                    {
-                        $("[data-type='myscorevalue']").each(function () {
-                            $(this).parent().parent().hide();
-                        })
-                    }
-                    $("[data-type='myscorevalue']").each(function () {
-                        $(this).bind("blur", function () {
-
-                            var score = $.trim($(this).val());
-
-                            var answer = $.trim($(this).parent().parent().next().find(".myanswer").html());
-                            var currentscore = $(this).attr("data-value");
-
-                            if (/0|([1-9](\d)?)/.test(score)) {
-                                if (parseInt(score, 10) > parseInt(currentscore, 10)) {
-                                    alert("您无法输入大于本题的分数");
-                                    $(this).val("");
-                                    return false;
-                                }
-                                if (answer == "") {
-                                    alert("您没有作答本题");
-                                    $(this).val("0");
-                                    return false;
-                                }
-
-                            }
-                            else {
-                                alert("请输入整数");
-                                $(this).val("");
-                                return false;
-                            }
-                            // $(this).parent().hide();
-                            //$(this).parent().prev().html("评分：" + score);
-                        });
-                    });
-
-
-                }
-                else
-                {
-                    $(ischool.ExamPaper.containerid).html("暂无试题");
-                }
+                });
+            },
+            error:function(data){
+                alert('获取详细作业失败');
+            }
+        });
 
     },
 

@@ -4,14 +4,14 @@
 //        alert(document.documentElement.clientHeight);
 //        $('.js-signature').attr('data-height',window.innerHeight);
 
-function popMark(subjectId){
+function popMark(subjectId,workid){
     $(document.body).append('' +
     '<div id="bgMark" class="bgMark">' +
         '<div class="js-signature" data-width="100%" data-height="200" data-border="1px solid #999" data-line-color="#333" data-auto-fit="true"></div>' +
         '<div class="canvas_btn">' +
             '<ul>' +
                 '<li><button id="clearBtn" onclick="clearCanvas();">清除</button></li>' +
-                '<li><button id="saveBtn" onclick="saveSignature('+subjectId+');" class="confirm" disabled>确定</button></li>' +
+                '<li><button id="saveBtn" onclick=saveSignature('+subjectId+',"'+workid+'") class="confirm" disabled>确定</button></li>' +
                 '<li><button id="cancelBtn" onclick="cancelMark();">取消</button></li>' +
             '</ul>' +
         '</div>' +
@@ -35,39 +35,32 @@ function clearCanvas() {
     $('#saveBtn').addClass('confirm');
 };
 
-function saveSignature(subjectId) {
+function saveSignature(subjectId,workid) {
     var dataUrl = $('.js-signature').jqSignature('getDataURL');
     //alert(dataUrl);
     $(document.body).append('' +
     '<div class="attention" id="attention"><label>正在提交签名...</label></div>' +
     '');
+
     $.ajax({
-        url:'',
+        url:websiteurl + '/TSB_ISCHOOL_LCS_SERVER/stulessonwork/dofamsignwork',
         type:'post',
         dataType:'json',
-        data:{},
+        data:JSON.stringify({"workid":workid,"stuid":studentid,"sign":dataUrl}),
+        contentType: "application/json; charset=utf-8",
         success:function(data){
-            setTimeout(function(){
-                $('#attention > label').html('签名提交成功');
-                $('input.mark_btn[data-subject = "'+subjectId+'"]').val('签名完毕').removeClass('mark_btn').addClass('markal_btn').attr('data-url',dataUrl);
-                setTimeout(function(){
-                    $('#attention > label').css('opacity','0');
-                    cancelMark();
-                    $('#attention').remove();
-                },1000);
-            },2000);
+            $('#attention > label').html('签名提交成功');
+            $('input.mark_btn[data-workid = "'+workid+'"]').attr({'data-url':dataUrl}).val('签名完毕').removeClass('mark_btn').addClass('markal_btn');
+            $('input[data-workid = "'+workid+'"]').attr('onclick','popImg("'+dataUrl+'")');
+
+            $('#attention > label').css('opacity','0');
+            cancelMark();
+            $('#attention').remove();
         },
         error:function(data){
-            //alert(data);
-            setTimeout(function(){
-                $('#attention > label').html('签名提交成功');
-                $('input.mark_btn[data-subject = "'+subjectId+'"]').val('签名完毕').removeClass('mark_btn').addClass('markal_btn').attr('data-url',dataUrl);
-                setTimeout(function(){
-                    $('#attention > label').css('opacity','0');
-                    cancelMark();
-                    $('#attention').remove();
-                },1000);
-            },2000);
+            $('#attention > label').html('签名提交失败');
+            $('#attention > label').css('opacity','0');
+            $('#attention').remove();
         }
     });
 };

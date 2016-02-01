@@ -25,3 +25,11 @@
 /*不显示解析*/
 .viewanalyze{display: none;}
 .viewanalyzebtn{display: none;}
+
+span.number{font-size: 0.7rem; display: inline;}
+
+/*手动评分样式*/
+.answercontainer{font-size: 0.7rem; color: #999; margin: 0.6rem 1rem;}
+
+.newsCon{font-size: 0.7rem; color: #999; line-height: 1rem; margin-left: 0.6rem; margin-right: 1rem; margin-bottom: 0.6rem;}
+.examquestion_content span.time{float: right; color: #999;}
