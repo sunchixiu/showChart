@@ -301,8 +301,8 @@
 
 <script src="js/mobilebone.js"></script>
 
+<!--弹出日历-->
 <script>
-    //  弹出日历
     var currYear = (new Date()).getFullYear();
     var opt={};
     opt.date = {preset : 'date'};
@@ -683,6 +683,7 @@
     };
 </script>
 
+<!--选取孩子-->
 <script>
     function childLayout(){
         $('#topStudent > li').eq(0).children('p.pic').css({'width':'3.6rem','height':'3.6rem','marginLeft':'-0.675rem','marginTop':'-2.1rem'});
@@ -765,9 +766,8 @@
     };
 </script>
 
+<!--家长签字-->
 <script>
-
-    //家长签字
     function parentMark(){
         $('span.parent_mark').delegate('input.mark_btn','click',function(e){
             e.stopPropagation();
