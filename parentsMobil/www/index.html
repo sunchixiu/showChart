@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="css/mobilebone.css">
     <link rel="stylesheet" href="css/homework.css?v=1.01">
 
+    <script src="cordova.js"></script>
     <script src="js/every.js"></script>
     <script src="js/jquery-1.11.1.min.js"></script>
     <script src="js/hammer.min.js"></script>
@@ -36,12 +37,20 @@
         var timenum = 0;
         var ifshow = 0;
         var studentname = '';
+        var iinum = '';
+        var complationRate = 0;
+        var rightRate = 0;
+        function getUrlParam(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+            var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+            if (r != null) return unescape(r[2]); return null; //返回参数值
+        }
         $(document).ready(function(){
+//            iinum = getUrlParam('userID');
+            iinum = '992100464325';
             var iinow = new Date();
             dateval = iinow.getFullYear() + '-' + (iinow.getMonth()+1) + '-' + iinow.getDate();
-
             getBeginData();
-
 
             //折叠列表
             var Accordion = function(el, multiple) {
@@ -75,13 +84,23 @@
 
         });
     </script>
+
+    <script>
+        function closeWebview(){
+            cordova.plugins.traceclass.exitActivity(function success(result){
+
+            }, function error(result) {
+
+            }, "");
+        };
+    </script>
 </head>
 <body>
 <div id="pageHome" class="main page out" style="overflow-y: auto;">
     <!--<div class="scroll">-->
         <div class="jheader">
             <div class="top" id="top">
-                <div class="l"></div>
+                <div class="l"><a href="javascript:closeWebview();">&laquo;返回</a></div>
                 <div class="m" id="topStudentDiv">
                     <ul id="topStudent">
                         <!--<li>-->
@@ -111,18 +130,18 @@
             <div class="week_con_up">
                 <ul><li>日</li><li>一</li><li>二</li><li>三</li><li>四</li><li>五</li><li>六</li></ul>
             </div>
-            <div class="week_con_down">
+            <div class="week_con_down" id="cal_week">
                 <ul><li id="week0"><em></em></li><li id="week1"><em></em></li><li id="week2"><em></em></li><li id="week3"><em></em></li><li id="week4"><em></em></li><li id="week5"><em></em></li><li id="week6"><em></em></li></ul>
             </div>
         </div>
 
         <div class="nocontent">没有数据</div>
         <span class="loadingpic" id="loadingMain" style="margin-top: 1rem;"></span>
-        <div class="jsection" style="display: none;">
+        <div class="jsection" style="display: none; overflow-x: hidden; overflow-y: hidden;">
             <div class="daystatus">
-                <span id=""><label class="big">88%</label> <label class="small">完成率</label></span>
-                <span id=""><label class="big">8<em>&uarr;&darr;</em></label> <label class="small">班级排名</label></span>
-                <span id=""><label class="big">50%</label> <label class="small">正确率</label></span>
+                <span id="complationRate"><label class="big">88%</label> <label class="small">完成率</label></span>
+                <span id="classSort"><label class="big">8<em>&uarr;&darr;</em></label> <label class="small">班级排名</label></span>
+                <span id="rightRate"><label class="big">50%</label> <label class="small">正确率</label></span>
                 <span id="praiseCount"><label class="big">0</label> <label class="small">表扬次数</label></span>
             </div>
 
@@ -219,6 +238,15 @@
             </div>
         </div>
     </div>
+
+    <!--进度条-->
+    <div class="progress_bg" id="progress_bg">
+        <div class="progress_k">
+            <div class="progress">
+                <span class="green" id="progressID" style="width: 0%;"><span>0%</span></span>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="main page out" id="pageWork">
@@ -246,21 +274,21 @@
     </div>
     <div class="section" id="newsList">
         <div class="scroll">
-            <div class="examContainer Wrap">
+            <div class="examContainer WrapNews">
                 <div class="examquestion_content">家长会通知<span class="time">2016-1-29</span></div>
                 <div class="newsCon">
                     本周五下午3点在学校二年级三班召开家长会，请各位家长务必准时出席，谢谢！
                 </div>
 
             </div>
-            <div class="examContainer Wrap">
+            <div class="examContainer WrapNews">
                 <div class="examquestion_content">提醒孩子带文具<span class="time">2016-1-22</span></div>
                 <div class="newsCon">
                     夏雪家长您好，明天数学课需要圆规与三角尺，请提醒孩子带齐文具，谢谢您的配合！
                 </div>
 
             </div>
-            <div class="examContainer Wrap">
+            <div class="examContainer WrapNews">
                 <div class="examquestion_content">夏雪同学获得表扬<span class="time">2015-11-6</span></div>
                 <div class="newsCon">
                     由于您的孩子夏雪在其中考试中取得班级第三名、年级第五名的好成绩，特此提出表扬！
@@ -309,8 +337,8 @@
 </script>
 
 <script>
-//    loaded('main');
     getdate();
+    loaded('wrapper');
 </script>
 
 <script>
@@ -483,8 +511,10 @@
                                     var activityFile = '';
                                     var activityNum = 0;
                                     for(o in data.stulessondetails[j].activitylist[a].filelist){
+                                        var datavalue = data.stulessondetails[j].activitylist[a];
                                         activityNum++;
-                                        activityFile += '<p class="last"><span class="'+getExt(data.stulessondetails[j].activitylist[a].actftype)+'"></span>'+data.stulessondetails[j].activitylist[a].filelist[o]+'</p>'
+                                        var fileurl = filedownurl+datavalue.stuactpos+datavalue.stuactfname+'.'+datavalue.stuactftype;
+                                        activityFile += '<a href=javascript:downloadFile("'+fileurl+'")><p class="last"><span class="'+getExt(datavalue.stuactftype)+'"></span>'+datavalue.filelist[o]+'</p></a>';
                                     };
 
                                     activityCon += '<li>' +
@@ -513,21 +543,27 @@
 
                                 //探究学习
                                 var selfdisCon = '';
+
                                 for(var c=0; c<data.stulessondetails[j].selfdislist.length; c++){
+                                    var datavalue = data.stulessondetails[j].selfdislist[c];
                                     var selfFile = '';
                                     var selefNum = 0;
-                                    for(o in data.stulessondetails[j].selfdislist[c].filelist){
+                                    var downurl = '';
+                                    for(o in datavalue.filelist){
                                         selefNum++;
-                                        selfFile += '<p class="last"><span class="'+getExt(data.stulessondetails[j].selfdislist[c].filelist[o])+'"></span>'+data.stulessondetails[j].selfdislist[c].filelist[o]+'</p>'
+                                        selfFile += '<p class="last"><span class="'+getExt(datavalue.filelist[o])+'"></span>'+datavalue.filelist[o]+'</p>'
                                     };
+
+                                    downurl = filedownurl+datavalue.dispos+datavalue.disfname+'.'+datavalue.disftype;
 
                                     selfdisCon += '<li>' +
                                     '<span class="bgPot"></span><span class="pot"><em></em></span>' +
                                     '<span class="typeIcon xx"></span>' +
                                     '<span class="text">' +
-                                    '<p class="title">'+data.stulessondetails[j].selfdislist[c].disdesc+'</p>' +
+                                    '<p class="title">'+datavalue.disdesc+'</p>' +
                                     '<p>包含'+selefNum+'个文件</p>' +
                                     selfFile +
+                                    '<p class="last"><a href=javascript:downloadFile("'+downurl+'") data-ajax="false">下载全部</a></p>' +
                                     '</span>' +
                                     '</li>';
                                 };
@@ -543,42 +579,6 @@
                                 '</div>';
 
                                 $('#wrapperScroll').append(div_per_content_k);
-
-//                                div_per_content_k = '<div class="per_content_k">' +
-//                                '<h2>'+pointidArr[i].point[1]+'</h2>' +
-//                                '<ul>' +
-//                                '<li>' +
-//                                '<span class="bgPot"></span><span class="pot"><em></em></span>' +
-//                                '<span class="typeIcon lx"></span>' +
-//                                '<span class="text">' +
-//                                '<p class="title">[课堂练习]选取三角形</p>' +
-//                                '<p>包含11个文件</p>' +
-//                                '<p class="last"><span class="pdf"></span>选取三角形</p>' +
-//                                '</span>' +
-//                                '</li>' +
-//                                '<li>' +
-//                                '<span class="bgPot"></span><span class="pot"><em></em></span>' +
-//                                '<span class="typeIcon cs"></span>' +
-//                                '<span class="text">' +
-//                                '<p class="title">[课堂测试]认识三角形</p>' +
-//                                '<p>平均正确率87.6%</p>' +
-//                                '</span>' +
-//                                '</li>' +
-//                                '<li>' +
-//                                '<span class="bgPot"></span><span class="pot"><em></em></span>' +
-//                                '<span class="typeIcon xx"></span>' +
-//                                '<span class="text">' +
-//                                '<p class="title">[探究学习（自主）]自主探究</p>' +
-//                                '<p>包含3个文件</p>' +
-//                                '<p class="last"><span class="pdf"></span>资料-三角形</p>' +
-//                                '<p class="last"><span class="doc"></span>资料阅读-三角形（边）</p>' +
-//                                '<p class="last"><span class="mp4"></span>视频观看-认识三角形</p>' +
-//                                '</span>' +
-//                                '</li>' +
-//                                '</ul>' +
-//                                '</div>';
-//alert(div_per_content_k);
-//                                $('#wrapperScroll').append(div_per_content_k);
                             };
                         };
                     };
@@ -598,7 +598,7 @@
             url:websiteurl + '/TSB_ISCHOOL_LCS_SERVER/stulessonwork/getstulessonwork',
             type:'post',
             dataType:'json',
-            data:JSON.stringify({"iinum":"100464325","date":dateval}),
+            data:JSON.stringify({"iinum":iinum,"date":dateval}),
             contentType: "application/json; charset=utf-8",
             success:function(data){
                 var data = data.data;
@@ -626,7 +626,7 @@
             url:websiteurl + '/TSB_ISCHOOL_LCS_SERVER/stulessonwork/getstulessonwork',
             type:'post',
             dataType:'json',
-            data:JSON.stringify({"iinum":"100464325","date":dateval}),
+            data:JSON.stringify({"iinum":iinum,"date":dateval}),
             contentType: "application/json; charset=utf-8",
             success:function(data){
                 var data = data.data;
@@ -636,6 +636,40 @@
                         hwArr = data[i].afterClassList;
                     };
                 };
+
+                if(data.length > 0){
+                    var comi = 0;
+                    var righti = 0;
+                    for(var i=0; i<hwArr.length; i++){
+                        if(hwArr[i].status != 0){
+                            comi++;
+                            //complationRate
+                        };
+                    };
+                    complationRate = ((comi/hwArr.length)*100).toFixed(0) + '%';
+
+                    for(var i=0; i<hwArr.length; i++){
+                        var dopaperscore = hwArr[i].dopaperscore;
+                        var allscore = hwArr[i].allscore;
+                        var paperscore = hwArr[i].paperscore;
+
+                        if(!dopaperscore){
+                            dopaperscore = 0;
+                        };
+                        if(!allscore){
+                            allscore = 0;
+                        };
+                        if(!paperscore){
+                            paperscore = 100;
+                        };
+                        righti += (parseInt(dopaperscore)+parseInt(allscore))/parseInt(paperscore);
+                    };
+
+                    rightRate = ((righti/hwArr.length)*100).toFixed(0) + '%';
+                };
+
+                $('#complationRate > label.big').html(complationRate);
+                $('#rightRate > label.big').html(rightRate);
 
                 $('#praiseCount > label.big').html(0);
                 getInclassData(9);
@@ -732,19 +766,6 @@
 </script>
 
 <script>
-    // 给每个日期增加点击事件
-    $('.week_con_down > ul > li').bind('click',function(){
-        $(this).attr('class','active').siblings().removeAttr('class');
-        var dateArr = $(this).attr('full-date').split('-');
-
-        $("#thisY").html(dateArr[0] + '年');
-        $("#thisM").html(dateArr[1] + '月');
-        $("#thisW").html(turnWeek(dateArr[3]));
-
-        $('#rili').attr('data-value','00'+dateArr[0]+'-'+dateArr[1]+'-'+dateArr[2]);
-        dateval = dateArr[0]+'-'+dateArr[1]+'-'+dateArr[2];
-        getChangeData();
-    });
 
     //家长签字
     function parentMark(){
@@ -764,7 +785,7 @@
     function toPerformance(pid){
         $('#wrapperScroll > div.per_content_k[data-pid="'+pid+'"]').css('display','block').siblings().css('display','none');
         window.location.href = '#&pagePerformance';
-        loaded('wrapper');
+//        loaded('wrapper');
     };
     function toHomework(title,roomworkid){
         $('.Wrap').html('');
@@ -820,6 +841,140 @@
         var result = fileName.substring(fileName.lastIndexOf('.') + 1);
         return result;
     }
+</script>
+
+<!--下载文件-->
+<script>
+    document.addEventListener("deviceready", onDeviceReady, false);
+    function onDeviceReady() {
+        window.fullPath; //全局变保存文件的路径
+        fileReady();
+    }
+    //创建目录
+    function fileReady() {
+        console.log("device is ready");
+        window.requestFileSystem(1, 0, function (fileSystem) {
+//download_pic 是创建的文件夹
+            fileSystem.root.getDirectory("iiSchool/com.iiSchool.iChat", {
+                create: true,
+                exclusive: false
+            }, function (entry) {
+//网上流传的资料中都是使用fullPath，在这里我获取到的是相对目录，在下载时使用会报错，所以换做了toURL()
+//这是一个全局全局变量，用以保存路径
+                window.fullPath = entry.toURL();
+            }, function () {
+                console.log('创建文件夹失败');
+                console.log(window.fullPath);
+            });
+        }, function () {
+            console.log('创建文件夹失败');
+        });
+    }
+
+    var t1 = null;//这个设置为全局,为了解决两次点击事件问题
+    function downloadFile(url){
+        if (t1 == null){
+            t1 = new Date().getTime();
+        }else{
+            var t2 = new Date().getTime();
+            if(t2 - t1 < 500){
+                t1 = t2;
+                return;
+            }else{
+                t1 = t2;
+            }
+        };//解决双击问题
+
+        reg = /[^\\\/]*[\\\/]+/g;
+        filePath = window.fullPath + "/" + url.replace(reg,"");
+        url = encodeURI(url);
+        fileTransfer = new FileTransfer();
+
+        fileTransfer.download(url, filePath,
+                function (entry) {
+                    $('#progress_bg').css('display','none');
+                    $('#progressID').css('width','0%').children('span').html('0%');
+                    downWindow('保存成功！请在' + window.fullPath + '目录中查看');
+                    showWindow('downwindowid');
+                    console.log("download complete: " + entry.fullPath);
+                    console.log("download name: " + entry.name);
+                },
+                function (error) {
+                    downWindow('保存失败！');
+                    showWindow('downwindowid');
+                    /*showalert("error");
+                     showalert(JSON.stringify(error));*/
+                    console.log("download error source " + error.source);
+                    console.log("download error target " + error.target);
+                    console.log("upload error code" + error.code);
+                });
+
+        fileTransfer.onprogress = function(progressEvent) {
+            if (progressEvent.lengthComputable) {
+                getPregress(progressEvent.loaded / progressEvent.total);
+            } else {
+                loadingStatus.increment();
+            }
+        };
+
+    };
+
+    function getPregress(percent){
+        var percent = (percent*100).toFixed(0);
+        $('#progress_bg').css('display','block');
+        $('#progressID').css('width',(percent+'%')).children('span').html(percent+'%');
+    };
+
+    //下载后弹出框
+    function downWindow(text){
+        $(document.body).append('' +
+        '<div id="downwindowid" class="downwindowdiv">' +
+        '<div class="title">提示</div>' +
+        '<div class="text">' + text + '</div>' +
+        '<div class="confirm"><a href="javascript:hideWindow(\'downwindowid\');" class="blueButton">确定</a></div>' +
+        '</div>' +
+        '');
+    };
+
+    // 给每个日期增加点击事件
+    $('.week_con_down > ul > li').bind('touchstart',function(){
+        var thisX=event.changedTouches[0].clientX;
+        var tX=0;
+        var disX=thisX;
+        function fnMove(ev){
+            tX=ev.targetTouches[0].pageX-disX;
+        }
+        this.addEventListener('touchmove',fnMove,false);
+
+        function fnEnd(){
+            if(tX < 2 && tX > -2) {
+                $(this).attr('class','active').siblings().removeAttr('class');
+                var dateArr = $(this).attr('full-date').split('-');
+
+                $("#thisY").html(dateArr[0] + '年');
+                $("#thisM").html(dateArr[1] + '月');
+                $("#thisW").html(turnWeek(dateArr[3]));
+
+                $('#rili').attr('data-value','00'+dateArr[0]+'-'+dateArr[1]+'-'+dateArr[2]);
+                dateval = dateArr[0]+'-'+dateArr[1]+'-'+dateArr[2];
+                calender.CHOOSE_DATE = dateArr[0]+'-'+dateArr[1]+'-'+dateArr[2]+'-'+dateArr[3];
+                getChangeData();
+            };
+            this.removeEventListener('touchmove',fnMove,false);
+            this.removeEventListener('touchend',fnEnd,false);
+        };
+        this.addEventListener('touchend',fnEnd,false);
+    });
+
+</script>
+
+<!--给日历控件左滑和右滑事件-->
+<script>
+    document.getElementById("cal_week").addEventListener('touchstart',function(event){
+        event.preventDefault();
+        var thisX = event.changedTouches[0].clientX;
+        calender.mouseDown(this, thisX);
+    },false);
 </script>
 </body>
 </html>

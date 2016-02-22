@@ -4,7 +4,118 @@
 var calender = {
     CHOOSE_DATE: "",
     TODAY_DATE: "",
-    IS_LOADING: false
+    IS_LOADING: false,
+    /**
+     * 改变当前选择时间
+     * @param {object} obj 当前控件（应该是span）
+     */
+    changeFocus: function(obj) {
+        var doc = document,
+            fDate = obj.getAttribute("full-date"),
+            pre = doc.querySelector(".focus"),
+            preClass, thisClass,
+            arr = fDate.split("-");
+
+        doc.getElementById("thisYM").innerText = arr[0] + "年" + arr[1] + "月";
+        if(pre != null) {
+            preClass = pre.getAttribute("class");
+            preClass = preClass.replace("focus", "");
+            pre.setAttribute("class", preClass);
+        }
+        thisClass = obj.getAttribute("class");
+        obj.setAttribute("class", thisClass + " focus");
+        // 改变全局变量的值
+        calender.CHOOSE_DATE = obj.getAttribute("full-date");
+    },
+
+    /**
+     * 滑动改变日期
+     * @param {number} type 递增正数，递减为负数；可自行修改。
+     */
+    changeDate: function(type) {
+        var doc = document;
+        // 去除之前的focus样式和today样式
+        var focus = doc.querySelector(".focus"),
+            focusClass;
+        if (focus != null) {
+            focusClass = focus.getAttribute("class");
+            focusClass = focusClass.replace("focus", "");
+            focus.setAttribute("class", focusClass);
+        }
+        var active = doc.querySelector(".active"),
+            todayClass;
+        if (active != null) {
+            todayClass = active.getAttribute("class");
+            todayClass = todayClass.replace("active", "");
+            active.setAttribute("class", todayClass);
+        }
+
+        // 改变日期
+        for (var i = 0, infor, preDate, fdate; i < 7; i++) {
+            infor = doc.getElementById("week" + i);
+            preDate = infor.getAttribute("full-date");
+            var arr = preDate.split("-"),
+                preYear = arr[0],
+                preMonth = arr[1],
+                preDate = arr[2];
+            preMonth = preMonth - 1;
+            var now = new Date();
+            now.setFullYear(preYear, preMonth, preDate);
+            now.setDate(now.getDate() + type);
+            var year = now.getFullYear(),
+                month = now.getMonth() + 1,
+                thisDate = now.getDate(),
+                thisWeek = now.getDay();
+
+
+            if (month < 10) {
+                month = "0" + month;
+            }
+            if (thisDate < 10) {
+                thisDate = "0" + thisDate;
+            }
+            // 如果最后一天的月份不等于之前月份
+            //if(i == 6){
+            //    if (month != (preMonth + 1) || year != preYear) {
+            //        doc.getElementById("thisYM").innerText =
+            //            year + "年" + month + "月";
+            //    }
+            //}
+
+            infor.innerHTML = '<em>'+thisDate+'</em>';
+            fdate = year + "-" + month + "-" + thisDate + "-" + thisWeek;
+            infor.setAttribute("full-date", fdate);
+            // 判断是否滑动回到选择的时间
+            if (fdate == calender.CHOOSE_DATE) { // 上次选择的时间
+                var thisClass = 'active';
+                infor.setAttribute("class", thisClass);
+            };
+        }
+    },
+    mouseDown: function(obj, thisX){
+        var tX=0;
+        var disX=thisX;
+
+        function fnMove(ev){
+            tX=ev.targetTouches[0].pageX-disX;
+            //obj.style.WebkitTransform='translate('+tX+'px,'+tY+'px)';
+        }
+        obj.addEventListener('touchmove',fnMove,false);
+
+        function fnEnd(){
+            if(tX > 60 && !calender.IS_LOADING){
+                calender.IS_LOADING = true;
+                calender.changeDate(-7);
+            }else if(tX < -60 && !calender.IS_LOADING){
+                calender.IS_LOADING = true;
+                calender.changeDate(7);
+            };
+            obj.removeEventListener('touchmove',fnMove,false);
+            obj.removeEventListener('touchend',fnEnd,false);
+            calender.IS_LOADING = false;
+        }
+        obj.addEventListener('touchend',fnEnd,false);
+    }
 };
 
 function getdate(Y,M,D,W){
@@ -101,6 +212,8 @@ function getdate(Y,M,D,W){
     }
     /**********************日历初始化结束************************/
 };
+
+
 
 function turnWeek(week){
     var week = parseInt(week);

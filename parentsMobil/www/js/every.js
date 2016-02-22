@@ -8,7 +8,7 @@ document.onselectstart = function(){
 };
 function loaded (id) {
     //var myScroll = new IScroll('#'+id+'', {click: true, preventDefaultException: {tagName: /^(INPUT|TEXTAREA|BUTTON|SELECT|LI)$/, className: /(^|\s)btn(\s|$)/ },scrollbars: false});
-    var myScroll = new iScroll(id, {click: true, preventDefaultException: {tagName: /^(INPUT|TEXTAREA|BUTTON|SELECT|LI)$/, className: /(^|\s)btn(\s|$)/ },scrollbars: false});
+    var myScroll = new iScroll(id, {click: true, preventDefaultException: {tagName: /^(INPUT|TEXTAREA|BUTTON|SELECT|LI|A)$/, className: /(^|\s)btn(\s|$)/ },scrollbars: false,checkDOMChanges:true});
 }
 //document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
 
@@ -45,7 +45,8 @@ function hideWindow(id){
     oDivWindow.style.opacity = 0;
     setTimeout(function(){
         document.body.removeChild(oDivWindowBg);
-        oDivWindow.style.zIndex = '-1';
+        document.body.removeChild(oDivWindow);
+        //oDivWindow.style.zIndex = '-1';
     },300);
 };
 

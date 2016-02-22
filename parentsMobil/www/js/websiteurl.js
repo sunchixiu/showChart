@@ -3,3 +3,4 @@
  */
 var websiteurl = 'http://182.48.115.253:71';
 var filesiteurl = 'http://182.48.115.253:91';
+var filedownurl = 'http://182.48.115.253:8072/fipfile';

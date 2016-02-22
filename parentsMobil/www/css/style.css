@@ -10,11 +10,11 @@ body{width: 100%; font-family: '微软雅黑';}
 
 .jheader{width: 100%; height: 11.6rem; position: relative; text-align: center; font-size: 0.9rem; color: #fff; top: 0; background: #fff;}
 .jheader .top{height: 7.2rem; background: #3399cc; position: relative; overflow: hidden;}
-.jheader .top .l{ width:1.9rem; height: 7.2rem; background:#3399cc; font-size: 0.7rem; display: inline-block; position: absolute; left: 0; z-index: 1;}
+.jheader .top .l{ width:1.9rem; height: 7.2rem; background:#3399cc; font-size: 0.7rem; display: inline-block; position: absolute; left: 0; z-index: 1; padding:0.3rem 0 0 0.2rem;}
 .jheader .top .r{ width:1.9rem; height: 7.2rem; background:#3399cc; font-size: 0.7rem; display: inline-block; position: absolute; right: 0; z-index: 1;}
 .jheader .top .l a,.iiheader .top .r a{color: #fff;}
 .jheader .top .m{text-align: center; display: inline-block; width: 14.2rem; height: 7.2rem; position: absolute; left: 1.9rem; z-index: 0;}
-.jsection{position: relative; left: 0; width: 100%; overflow: scroll; background: #fff;}
+.jsection{position: relative; left: 0; width: 100%; overflow: auto; background: #fff;}
 
 .jheader .top .m ul{padding-top: 3.6rem; display: inline-block; width: 160rem; position: absolute; left: 4.775rem;}
 .jheader .top .m ul li{width: 2.25rem; text-align: center; margin: 0 1.2rem; font-size: 0.7rem; display: inline-block; float: left;}
@@ -22,7 +22,7 @@ body{width: 100%; font-family: '微软雅黑';}
 .jheader .top .m ul li p.pic img{width: 94%; height: 94%; border-radius: 50%; -webkit-border-radius: 50%; margin: 3%;}
 .jheader .top .m ul li p.text{margin-top: 0.1rem;}
 
-.jheader .top .r .warning{width: 1.05rem; height: 1.25rem; background-image: url("../images/pic_map.png"); background-size: 6rem 5rem; background-position: 0 -1.2rem; background-repeat: no-repeat; display: inline-block; margin-top: 0.4rem; margin-left: -1rem;}
+.jheader .top .r .warning{width: 1.05rem; height: 1.25rem; background-image: url("../images/pic_map.png"); background-size: 12rem 10rem; background-position: 0 -1.2rem; background-repeat: no-repeat; display: inline-block; margin-top: 0.4rem; margin-left: -1rem;}
 .jheader .top .r .warning span{min-width: 0.6rem; height: 0.6rem; border-radius: 0.3rem; -webkit-border-radius: 0.3rem; background: red; display: inline-block; -webkit-text-size-adjust: none; text-size-adjust: none; font-size: 0.5rem; line-height: 0.72rem; float: right; margin-right: -0.6rem; text-align: center;}
 .jheader .fengexian{width: 100%; height: 0; border-top: 1px solid #add6eb; border-bottom: 1px solid #fcfcfc;}
 .week_bg{width: 100%; height: 1.6rem; background: #eee; color: #333;}
@@ -33,13 +33,13 @@ body{width: 100%; font-family: '微软雅黑';}
 .week_bg span.week_left em.small{ -webkit-text-size-adjust: none; font-size: 0.5rem; height: 1.4rem; margin-top: 0.1rem;}
 
 .week_bg span.week_right{float: right; width: 0.93rem; height: 1.4rem; text-align: right; margin-right: 1.2rem;}
-.week_bg span.week_right input{width: 0.96rem; height: 0.96rem; background:none; background-image: url("../images/pic_map.png"); background-size: 6rem 5rem; background-position: -1.2rem -1.2rem; background-repeat: no-repeat; display: inline-block; margin-top: 0.24rem;}
+.week_bg span.week_right input{width: 0.96rem; height: 0.96rem; background:none; background-image: url("../images/pic_map.png"); background-size: 12rem 10rem; background-position: -1.2rem -1.2rem; background-repeat: no-repeat; display: inline-block; margin-top: 0.24rem;}
 .week_bg span.week_right input:active{opacity: 0.6;}
 
 .week_con_up ul{width: 94%; height: 1.2rem; display: -webkit-box; color: #666; position: relative; z-index: 1; padding: 0 3%;}
-.week_con_up ul li{float: left; -webkit-box-flex: 1; text-align: center; height: 1.2rem; line-height: 1.2rem; color: #666; display: inline-block; position: relative; z-index: 2; font-size: 0.6rem;}
+.week_con_up ul li{float: left; -webkit-box-flex: 1; text-align: center; height: 1.2rem; line-height: 1.2rem; color: #666; display: inline-block; position: relative; z-index: 1; font-size: 0.6rem;}
 .week_con_down ul{width: 94%; height: 1.2rem; display: -webkit-box; color: #666; position: relative; z-index: 1; padding: 0 3%;}
-.week_con_down ul li{float: left; -webkit-box-flex: 1; text-align: center; height: 1.2rem; line-height: 1.2rem; color: #666; display: inline-block; position: relative; z-index: 2;}
+.week_con_down ul li{float: left; -webkit-box-flex: 1; text-align: center; height: 1.2rem; line-height: 1.2rem; color: #666; display: inline-block; position: relative; z-index: 2; display: inline-block;}
 .week_con_down ul li em{display: inline-block; width: 1rem; height: 1rem; line-height: 1rem; text-align: center; font-size: 0.75rem; background: #fff; border: 1px solid #fff; border-radius: 50%; -webkit-border-radius: 50%;}
 .week_con_down ul li.active em{ background: #dcf4f7; border: 1px solid #83d8e4; border-radius: 50%; -webkit-border-radius: 50%;}
 
@@ -62,9 +62,9 @@ ul.accordion li div.link{border-top: 1px solid #d3d3d3; height: 2.8rem; width: 1
 .link span.left i.subject{width: 1.15rem; height: 1.15rem; background: #3cc2d5; border-radius: 50%; -webkit-border-radius: 50%; color: #fff; text-align: center; line-height: 1.15rem; display: inline-block; font-size: 1rem; margin-right: 0.3rem;}
 .link span.right{width: 10.6rem; height: 2.8rem; float: right; line-height: 2.8rem; font-size: 0.6rem; text-align: right;}
 .link span.right label{display: inline-block;}
-.link span.right i.feelsmile{width: 1.05rem; height: 1.05rem; display: inline-block; background-image: url("../images/pic_map.png"); background-size: 6rem 5rem; background-position: 0 0; background-repeat: no-repeat; vertical-align: middle; margin-right: 0.4rem;}
-.link span.right i.feelsmile2{width: 1.05rem; height: 1.05rem; display: inline-block; background-image: url("../images/pic_map.png"); background-size: 6rem 5rem; background-position: -1.2rem 0; background-repeat: no-repeat; vertical-align: middle; margin-right: 0.4rem;}
-.link span.right i.feelcry{width: 1.05rem; height: 1.05rem; display: inline-block; background-image: url("../images/pic_map.png"); background-size: 6rem 5rem; background-position: -2.4rem 0; background-repeat: no-repeat; vertical-align: middle; margin-right: 0.4rem;}
+.link span.right i.feelsmile{width: 1.05rem; height: 1.05rem; display: inline-block; background-image: url("../images/pic_map.png"); background-size: 12rem 10rem; background-position: 0 0; background-repeat: no-repeat; vertical-align: middle; margin-right: 0.4rem;}
+.link span.right i.feelsmile2{width: 1.05rem; height: 1.05rem; display: inline-block; background-image: url("../images/pic_map.png"); background-size: 12rem 10rem; background-position: -1.2rem 0; background-repeat: no-repeat; vertical-align: middle; margin-right: 0.4rem;}
+.link span.right i.feelcry{width: 1.05rem; height: 1.05rem; display: inline-block; background-image: url("../images/pic_map.png"); background-size: 12rem 10rem; background-position: -2.4rem 0; background-repeat: no-repeat; vertical-align: middle; margin-right: 0.4rem;}
 
 ul.submenu{background: #eee; display: none;}
 .con_subject{width: 16.8rem; height: auto; padding: 0.6rem; overflow: hidden;}
@@ -163,4 +163,63 @@ h3.pointTitle{color: #29799c; font-size: 0.8rem; line-height: 1.2rem; height: 1.
 
 /*课堂表现*/
 .per_content_k{display: none;}
+
+/*下载完毕弹出框*/
+.downwindowdiv{width: 14rem; height: auto; position: fixed; background: #fff; top: 50%; left: 50%; margin-top: -4rem; margin-left: -7rem; border: 1px solid #e5e5e5; border-radius: 0.3rem; -webkit-border-radius: 0.3rem; opacity: 0; z-index: -1; overflow: hidden; font-size: 0.8rem; color: #333; line-height: 1rem;}
+.downwindowdiv .title{width: 100%; height: 1.6rem; background: #e5e5e5; text-align: center; line-height: 1.6rem; color: #333; font-size: 0.9rem;}
+.downwindowdiv .text{width: 92%; margin-top: 1rem; padding: 0 4%;}
+.downwindowdiv .confirm{width: 100%; margin-top: 1rem; text-align: center; margin-bottom: 0.8rem;}
+
+
+/*蓝色按钮*/
+.blueButton {
+    background-color:#3bb3e0;
+    padding:0.3rem 0.5rem;
+    position:relative;
+    font-size:0.8rem;
+    text-decoration:none;
+    color:#fff;
+    border: solid 1px #186f8f;
+    background-image: linear-gradient(bottom, rgb(44,160,202) 0%, rgb(62,184,229) 100%);
+    background-image: -o-linear-gradient(bottom, rgb(44,160,202) 0%, rgb(62,184,229) 100%);
+    background-image: -moz-linear-gradient(bottom, rgb(44,160,202) 0%, rgb(62,184,229) 100%);
+    background-image: -webkit-linear-gradient(bottom, rgb(44,160,202) 0%, rgb(62,184,229) 100%);
+    background-image: -ms-linear-gradient(bottom, rgb(44,160,202) 0%, rgb(62,184,229) 100%);
+    background-image: -webkit-gradient(
+            linear,
+            left bottom,
+            left top,
+            color-stop(0, rgb(44,160,202)),
+            color-stop(1, rgb(62,184,229))
+    );
+    -webkit-box-shadow: inset 0px 1px 0px #7fd2f1, 0px 1px 0px #fff;
+    -moz-box-shadow: inset 0px 1px 0px #7fd2f1, 0px 1px 0px #fff;
+    box-shadow: inset 0px 1px 0px #7fd2f1, 0px 1px 0px #fff;
+    -webkit-border-radius: 0.2rem;
+    border-radius: 0.2rem;
+}
+
+.blueButton::before {
+
+}
+
+.blueButton:active {
+    padding-bottom:0.45rem;
+    padding-left:0.5rem;
+    padding-right:0.5rem;
+    padding-top:0.55rem;
+    top:0;
+    background-image: linear-gradient(bottom, rgb(62,184,229) 0%, rgb(44,160,202) 100%);
+    background-image: -o-linear-gradient(bottom, rgb(62,184,229) 0%, rgb(44,160,202) 100%);
+    background-image: -moz-linear-gradient(bottom, rgb(62,184,229) 0%, rgb(44,160,202) 100%);
+    background-image: -webkit-linear-gradient(bottom, rgb(62,184,229) 0%, rgb(44,160,202) 100%);
+    background-image: -ms-linear-gradient(bottom, rgb(62,184,229) 0%, rgb(44,160,202) 100%);
+    background-image: -webkit-gradient(
+            linear,
+            left bottom,
+            left top,
+            color-stop(0, rgb(62,184,229)),
+            color-stop(1, rgb(44,160,202))
+    );
+}
 
