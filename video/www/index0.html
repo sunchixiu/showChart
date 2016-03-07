@@ -1,0 +1,233 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=9">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <title>课程视频</title>
+    <script src="js/every.js"></script>
+    <script>
+    var aSource=['http://images.sohu.com/ytv/SH/Coke/64036020120714021103.mp4','../v/1.mp4','../v/2.mp4','../v/3.mp4','../v/4.mp4'];
+    window.onload=function(){
+        var oV=document.getElementById('v1');
+        var oPlay=document.getElementById('play');
+        var oPause=document.getElementById('pause');
+        var oStop=document.getElementById('stop');
+
+
+        oV.oncanplay=function(){
+//		alert('可以播');
+        };
+
+        var iNow=0;
+
+
+        //用localStorage
+        if(localStorage.nowTime){
+            oV.currentTime=localStorage.nowTime;
+        }
+
+
+        //1. 播放、暂停、停止
+        oPlay.onclick=function(){
+            oV.play();
+            oPlay.style.display='none';
+            oPause.style.display='block';
+        };
+
+        oPause.onclick=function(){
+            oV.pause();
+            oPlay.style.display='block';
+            oPause.style.display='none';
+        };
+
+        oStop.onclick=function(){
+            //window.location.reload();
+            oV.pause();
+            oV.currentTime=0;
+            oPlay.style.display='block';
+            oPause.style.display='none';
+        };
+
+        //2. 播放进度
+        ;(function(){
+            var oSpeedBox=document.querySelector('.speed_this');
+            var oBtn=document.querySelector('.speed_this .button');
+            var oTimeThis=document.querySelector('.timeThis');
+            var oTotalTime=document.querySelector('#totalTime');
+            oV.ontimeupdate=function(){
+                var scale=oV.currentTime/oV.duration;
+                document.title=oV.duration;
+                oSpeedBox.style.width=scale*100+'%';
+                oBtn.style.left=scale*(oSpeedBox.parentNode.offsetWidth-oBtn.offsetWidth)+'px';
+
+                //时间
+                oTimeThis.innerHTML=parseInt(oV.currentTime/60)+':'+parseInt(oV.currentTime%60);
+                oTotalTime.innerHTML=parseInt(oV.duration/60)+':'+parseInt(oV.duration%60);
+
+                //存一下播放进度
+                localStorage.nowTime=oV.currentTime;
+            };
+
+            //拖拽
+            oBtn.addEventListener('touchstart',function(ev){
+                var disX=ev.targetTouches[0].pageX-oBtn.offsetLeft;
+                var id=ev.targetTouches[0].identifier; //
+
+                function fnMove(ev){
+                    if(ev.targetTouches[0].identifier==id){
+                        var l=ev.targetTouches[0].pageX-disX;
+                        l<0 && (l=0);
+                        l>(oSpeedBox.parentNode.offsetWidth-oBtn.offsetWidth) && (l=(oSpeedBox.parentNode.offsetWidth-oBtn.offsetWidth));
+                        oBtn.style.left=l+'px';
+
+                        var scale=l/(oSpeedBox.parentNode.offsetWidth-oBtn.offsetWidth);
+                        oSpeedBox.style.width=scale*100+'%';
+                        oV.currentTime=scale*oV.duration;
+                    }
+                }
+
+                function fnEnd(){
+                    document.removeEventListener('touchmove',fnMove,false);
+                    document.removeEventListener('touchend',fnEnd,false);
+                }
+
+                document.addEventListener('touchmove',fnMove,false);
+                document.addEventListener('touchend',fnEnd,false);
+                ev.preventDefault();
+            },false);
+//                oBtn.onmousedown=function(ev){
+//                    var disX=ev.clientX-oBtn.offsetLeft;
+//                    document.onmousemove=function(ev){
+//                        var l=ev.clientX-disX;
+//                        l<0 && (l=0);
+//                        l>(oSpeedBox.parentNode.offsetWidth-oBtn.offsetWidth) && (l=(oSpeedBox.parentNode.offsetWidth-oBtn.offsetWidth));
+//                        oBtn.style.left=l+'px';
+//
+//                        var scale=l/(oSpeedBox.parentNode.offsetWidth-oBtn.offsetWidth);
+//                        oSpeedBox.style.width=scale*100+'%';
+//                        oV.currentTime=scale*oV.duration;
+//                    };
+//                    document.onmouseup=function(){
+//                        document.onmouseup=null;
+//                        document.onmousemove=null;
+//                    };
+//                    return false;
+//                };
+        })();
+
+        //4. 音量控制
+        ;(function(){
+            var oVolumeBox=document.querySelector('.volume_this');
+            var oBtn=document.querySelector('.volume_this .button');
+
+            oBtn.addEventListener('touchstart',function(ev){
+                var disX=ev.targetTouches[0].pageX-oBtn.offsetLeft;
+                var id=ev.targetTouches[0].identifier; //
+
+                function fnMove(ev){
+                    if(ev.targetTouches[0].identifier==id){
+                        var l=ev.targetTouches[0].pageX-disX;
+                        if(l<0)l=0;
+                        if(l>oVolumeBox.parentNode.offsetWidth-oBtn.offsetWidth)l=oVolumeBox.parentNode.offsetWidth-oBtn.offsetWidth;
+                        oBtn.style.left=l+'px';
+                        var scale=l/(oVolumeBox.parentNode.offsetWidth-oBtn.offsetWidth);
+                        oVolumeBox.style.width=scale*100+'%';
+                        oV.volume=scale;
+                    }
+                }
+
+                function fnEnd(){
+                    document.removeEventListener('touchmove',fnMove,false);
+                    document.removeEventListener('touchend',fnEnd,false);
+                }
+
+                document.addEventListener('touchmove',fnMove,false);
+                document.addEventListener('touchend',fnEnd,false);
+                ev.preventDefault();
+            },false);
+        })();
+
+        //其他
+        var oAd=document.getElementById('ad');
+        oV.onended=function(){
+            oAd.style.display='block';
+            //清
+            delete localStorage.nowTime;
+        };
+
+        //下一个
+        var oNext=document.getElementById('next');
+
+        var oSpeedBox=document.querySelector('.speed_this');
+        var oBtn=document.querySelector('.speed_this .button');
+        oNext.onclick=function(){
+            iNow++;
+            oV.currentTime=0;
+            delete localStorage.nowTime;
+            oSpeedBox.style.width=0;
+            oBtn.style.left=0;
+            oPlay.style.display='block';
+            oPause.style.display='none';
+            oV.src=aSource[iNow%aSource.length]
+        };
+    };
+</script>
+
+    <link href="css/style.css" type="text/css" rel="stylesheet" />
+    <link href="css/common.css" type="text/css" rel="stylesheet" />
+    <style>
+        #ad{ position:fixed; width:100%; height:100%; left:0; top:0; background:rgba(0,0,0,0.5); color:#fff; font-size:50px; text-align:center; font-weight:bold; display:none;}
+    </style>
+</head>
+
+<body>
+<div class="videoBox">
+    <div class="video_list" style="width:0%;">
+        <dl class="list">
+            <dt><span>课程列表</span></dt>
+            <dd><a href="#">课程1视频</a><span>20分15秒</span></dd>
+        </dl>
+        <a href="javascript:;" class="listBtnContraction">&nbsp;</a>
+        <a href="javascript:;" class="listBtnOpen">&nbsp;</a>
+    </div>
+    <div class="video_play">
+        <div class="video">
+            <div id="video_div" style="display:block;">
+                <video id="v1" width="100%" height="100%" src="http://images.sohu.com/ytv/SH/Coke/64036020120714021103.mp4"></video>
+            </div>
+        </div>
+        <div class="videoBar">
+            <!--播放 暂停 等操作部分-->
+            <div class="play">
+                <input type="button" id="stop" class="stop" />
+                <!--<img id="prev" src="img/prev.jpg" />-->
+                <input type="button" id="play" class="play" />
+                <input type="button" id="pause" class="pause" style="display:none;" />
+                <!--<img id="next" src="img/next.jpg" />-->
+            </div>
+            <!--声音-->
+            <div class="full">
+                <div class="timer">
+                    <span class="timeThis" id="curTime">00:00</span>/<span id="totalTime">00:00</span>
+                </div>
+
+                <div class="volume">
+                    <div class="volume_this" style="width:100%;"><div class="button"></div></div>
+                </div>
+                <img src="img/horn.png" style="float:right; margin-top:13px; margin-right:10px;" />
+            </div>
+            <!--进度条-->
+            <div class="speed">
+                <div class="speed_buffer" style="width:0%;"></div>
+                <div class="speed_this" style="width:0%;"><div class="button"></div></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div id="ad">
+    这是广告！
+</div>
+</body>
+</html>

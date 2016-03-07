@@ -98,15 +98,17 @@ var calender = {
 
         function fnMove(ev){
             tX=ev.targetTouches[0].pageX-disX;
-            //obj.style.WebkitTransform='translate('+tX+'px,'+tY+'px)';
+            obj.style.WebkitTransform='translate('+tX+'px,0px)';
         }
         obj.addEventListener('touchmove',fnMove,false);
 
         function fnEnd(){
             if(tX > 60 && !calender.IS_LOADING){
+                obj.style.webkitTransform = 'translate(0,0)';
                 calender.IS_LOADING = true;
                 calender.changeDate(-7);
             }else if(tX < -60 && !calender.IS_LOADING){
+                obj.style.webkitTransform = 'translate(0,0)';
                 calender.IS_LOADING = true;
                 calender.changeDate(7);
             };
