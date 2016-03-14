@@ -44,12 +44,13 @@ a{text-decoration:none;}
 .speed{height:0.3rem; border-radius:0.15rem; border:#CCC solid 1px; margin-top: 0.4rem; width:100%;}
 .speed_buffer{background:#999; width:55%; height:0.3rem; font-family:Verdana; font-size:0;}
 .speed_this{background:#eee; width:25%; height:0.3rem; border-radius:0.15rem; font-family:Verdana; font-size:0; margin-top:-0.35rem; position:relative;}
+.speed_this .button{width:0.7rem;height:0.7rem;border-radius:50%;background:#FFF;position:absolute;top:-0.2rem;left:0rem; cursor:pointer;}
 .volume{width:5rem; border:#CCC solid 1px; height:0.3rem; border-radius: 0.15rem; margin-top:0.7rem; margin-right:0.25rem; float:right;}
 span.volume_icon{width: 0.7rem; height: 0.6rem; background-image: url("../img/horn.png"); background-size: 0.7rem 0.6rem; margin-right: 0.5rem; margin-top: 0.6rem; float: right; display: inline-block;}
 .full input.fullScreen{width: 1.5rem; height: 1.35rem; background-image: url("../img/full_screen.jpg"); background-size: 1.5rem 1.35rem; margin-top: 0.3rem; float: right;}
 .full input.returnScreen{width: 1.5rem; height: 1.35rem; background-image: url("../img/return_screen.jpg"); background-size: 1.5rem 1.35rem; margin-top: 0.3rem; float: right;}
 .volume_this{background:#999; width:45%; height:0.3rem; border-radius: 0.15rem; font-size:0; position:relative; margin-top: -0.05rem;}
-.button{width:0.6rem;height:0.6rem;border-radius:50%;background:#FFF;position:absolute;top:-0.15rem;right:-0.6rem; cursor:pointer;}
+.volume_this .button{width:0.6rem;height:0.6rem;border-radius:50%;background:#FFF;position:absolute;top:-0.15rem;right:0rem; cursor:pointer;}
 /*timer*/
 .timer{width:4rem; float:left; margin-top:0.56rem; color:#CCC;}
 .timeThis{color:#FFF;}

@@ -7,6 +7,7 @@
     <title>课程视频</title>
     <link rel="stylesheet" type="text/css" href="css/default.css" />
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/component.css" />
     <link rel="stylesheet" type="text/css" href="css/common.css" />
     <link rel="stylesheet" href="css/mobilebone.css">
 
@@ -22,96 +23,30 @@
 <body>
 <div class="main page out" id="pageHome">
     <div class="iiheader" style="z-index: 2;"><div class="l"><a href="javascript:closeWebview();">&laquo;返回</a></div><div class="m" id="schoolNameId">我的书桌</div><div class="r"></div></div>
-    <div class="iisection" style="z-index: 1; background: #eee;" id="homeSection">
-        <div class="scroll">
+    <div class="iisection" style="z-index: 1;" id="homeSection">
+            <div class="block_book" style="margin-bottom: 0.6rem;">
+                <ul>
+                    <!--<li style="border-bottom: none; font-size: 0.8rem; height: 0.8rem; border-top: none;"><span>同学好，请选择您的课本。</span></li>-->
+                </ul>
+            </div>
             <!--<div class="tempLoading"></div>-->
-            <div id="pageHomeContent" class="jheader">
+            <div id="pageHomeContent">
                 <!--<div id="tempLoading" class="tempLoading" aria-invalid="tempLoading" style="margin-top: -8rem;"></div>-->
-                <div class="top" id="top">
-                    <div class="m" id="topBookDiv">
-                        <ul id="topBook">
-                            <li>
-                                <p class="pic"><img src="img/book.jpg"></p>
-                                <p class="text">数学0</p>
-                            </li>
-                            <li>
-                                <p class="pic"><img src="img/book.jpg"></p>
-                                <p class="text">英语1</p>
-                            </li>
-                            <li>
-                                <p class="pic"><img src="img/book.jpg"></p>
-                                <p class="text">语文2</p>
-                            </li>
-                            <li>
-                                <p class="pic"><img src="img/book.jpg"></p>
-                                <p class="text">数学3</p>
-                            </li>
-                        </ul>
+                <div class="dl-menuwrapper">
+                    <div class="dl-trigger div-dl" onclick="toggleMenu($(this));">
+                        <span><img src="img/book.jpg"></span><span class="right"><p class="up">英语（苏教版）</p><p class="down">一年级1班(上)</p></span>
                     </div>
-                </div>
-                <div class="chapterList">
-                    <div class="chapterContent">
-                        <h3>第1章<a href="javascript:popDiv(2,'课时2',$(this).parent());">推荐课时</a></h3>
-                        <ul>
-                            <li onclick="popDiv(2,'课时1',$(this).parent())">
-                                <div class="videoDiv"><img src="img/videok.jpg"></div>
-                                <p>第一课时名</p>
-                            </li>
-                            <li onclick="popDiv(2,'课时2',$(this).parent())">
-                                <div class="videoDiv"><img src="img/videok.jpg"></div>
-                                <p>第二课时名</p>
-                            </li>
-                            <li onclick="popDiv(2,'课时3',$(this).parent())">
-                                <div class="videoDiv"><img src="img/videok.jpg"></div>
-                                <p>第三课时名</p>
-                            </li>
-                            <li onclick="popDiv(2,'课时4',$(this).parent())">
-                                <div class="videoDiv"><img src="img/videok.jpg"></div>
-                                <p>第四课时名</p>
-                            </li>
-                            <li onclick="popDiv(2,'课时5',$(this).parent())">
-                                <div class="videoDiv"><img src="img/videok.jpg"></div>
-                                <p>第五课时名</p>
-                            </li>
-                            <li onclick="popDiv(2,'课时6',$(this).parent())">
-                                <div class="videoDiv"><img src="img/videok.jpg"></div>
-                                <p>第六课时名</p>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="chapterContent">
-                        <h3>第2章<a href="javascript:popDiv(2,'课时3',$(this).parent());">推荐课时</a></h3>
-                        <ul>
-                            <li onclick="popDiv(2,'课时1',$(this).parent())">
-                                <div class="videoDiv"><img src="img/videok.jpg"></div>
-                                <p>第一课时名</p>
-                            </li>
-                            <li onclick="popDiv(2,'课时2',$(this).parent())">
-                                <div class="videoDiv"><img src="img/videok.jpg"></div>
-                                <p>第二课时名</p>
-                            </li>
-                            <li onclick="popDiv(2,'课时3',$(this).parent())">
-                                <div class="videoDiv"><img src="img/videok.jpg"></div>
-                                <p>第三课时名</p>
-                            </li>
-                            <li onclick="popDiv(2,'课时4',$(this).parent())">
-                                <div class="videoDiv"><img src="img/videok.jpg"></div>
-                                <p>第四课时名</p>
-                            </li>
-                            <li onclick="popDiv(2,'课时5',$(this).parent())">
-                                <div class="videoDiv"><img src="img/videok.jpg"></div>
-                                <p>第五课时名</p>
-                            </li>
-                            <li onclick="popDiv(2,'课时6',$(this).parent())">
-                                <div class="videoDiv"><img src="img/videok.jpg"></div>
-                                <p>第六课时名</p>
-                            </li>
-                        </ul>
-                    </div>
+                    <ul class="dl-menu">
+                        <li><a href="#" data-id="1" onclick="getPointName(&quot;1&quot;,&quot;章节1&quot;,&quot;10&quot;,&quot;3&quot;,&quot;1&quot;,&quot;10&quot;,$(this))">章节1</a></li>
+                        <li><a href="#" data-id="2" onclick="getPointName(&quot;2&quot;,&quot;章节2&quot;,&quot;10&quot;,&quot;3&quot;,&quot;1&quot;,&quot;10&quot;,$(this))">章节2</a></li>
+                        <li><a href="#" data-id="3" onclick="getPointName(&quot;3&quot;,&quot;章节3&quot;,&quot;10&quot;,&quot;3&quot;,&quot;1&quot;,&quot;10&quot;,$(this))">章节3</a></li>
+                        <li><a href="#" data-id="4" onclick="getPointName(&quot;4&quot;,&quot;章节4&quot;,&quot;10&quot;,&quot;3&quot;,&quot;1&quot;,&quot;10&quot;,$(this))">章节4</a></li>
+                        <li><a href="#" data-id="5" onclick="getPointName(&quot;5&quot;,&quot;章节5&quot;,&quot;10&quot;,&quot;3&quot;,&quot;1&quot;,&quot;10&quot;,$(this))">章节5</a></li>
+                    </ul>
                 </div>
             </div>
         </div>
-    </div>
+
 </div>
 
 <!--二级页面-->
@@ -159,7 +94,7 @@
             <span class="volume_icon"></span>
         </div>
     </div>
-    <div class="iiheader" style="z-index: 0;" id="iiheader"><div class="l"><a href="#&pageHome" onclick="backClear();" data-rel="back">&laquo;返回</a></div><div class="m" id="AudioclassName">课时名称</div><div class="r"></div></div>
+    <div class="iiheader" style="z-index: 0;" id="iiheader"><div class="l"><a href="#&page1" onclick="backClear();" data-rel="back">&laquo;返回</a></div><div class="m" id="AudioclassName">课时名称</div><div class="r"></div></div>
     <div class="iisection">
         <div style="margin-top: 11.2rem;" id="videoSection">
             <div class="message_k">
@@ -211,7 +146,22 @@
 <script src="js/mobilebone.js"></script>
 
 <script>
-    loaded('homeSection');
+    var statusMenu = 0;
+    function toggleMenu(_this){
+        _this.next('ul.dl-menu').toggle('fast');
+    };
+    $('.iisection').click(function(event){
+        if(statusMenu == 0){
+            event.stopPropagation();
+            $('ul.dl-menu').hide('fast');
+        };
+    });
+    $('.dl-menuwrapper').mouseover(function(){
+        statusMenu=1;
+//        $(this).css('z-index',101).sibling().css('z-index',100);
+    }).mouseout(function(){
+        statusMenu=0;
+    });
 </script>
 
 <!--跳转页面-->
@@ -242,125 +192,6 @@
     };
 </script>
 
-
-
-<!--选取课本-->
-<script>
-    childLayout();
-    var txTimer = null;
-    function childLayout(){
-        $('#topBook > li').eq(0).children('p.pic').css({'width':'3.6rem','height':'4.5rem','marginLeft':'-0.675rem','marginTop':'-2.1rem'});
-        studentid = $('#topBook > li').eq(0).attr('data-sid');
-
-        //创建一个新的hammer对象并且在初始化时指定要处理的dom元素
-        var hammertime = new Hammer(document.getElementById("topBookDiv"));
-        //添加事件
-//            alert($('#topBook > li').eq(0).offset().left/(document.documentElement.clientWidth/18));
-        var numI = 0;
-        var numInew = 0;
-        var remC = document.documentElement.clientWidth/18;
-        var uLleft = parseInt($('#topBook').css('marginLeft'))/remC;
-        var left1=7.85,left2=12.5;
-        var width1=2.25,width2=3.6,width3=2.25;
-        var top1=3.6,top2=1.5,top3=3.6;
-
-        hammertime.on('panstart',function(e){
-//                uLleft = parseInt($('#topBook').css('marginLeft'))/remC;
-            startTurnChild();
-            clearTimeout(txTimer);
-        });
-        hammertime.on('panleft panright',function(e){
-            $('#topBook').css('marginLeft', (uLleft+e.deltaX/remC)+'rem');
-        });
-        hammertime.on('panend',function(e){
-            var l = parseInt($('#topBook').css('marginLeft'))/remC - uLleft;
-            var c = left2-left1;
-            var n;
-            var tX;
-
-            if(l > 0){
-                n = Math.floor(l/c)
-                if(l-n*c > (left2-left1)/2){
-                    tX = uLleft+(n+1)*(left2-left1);
-                    numI -= n+1;
-                }else{
-                    tX = uLleft+n*(left2-left1);
-                    numI -= n;
-                };
-                if(parseInt($('#topBook > li').eq(0).offset().left)/remC > left1){
-                    tX = 0;
-                    numI = 0;
-                };
-            }else{
-                n = Math.ceil(l/c);
-                if(l-n*c > (left1-left2)/2){
-                    tX = uLleft+n*(left2-left1);
-                    numI -= n;
-                }else{
-                    tX = uLleft+(n-1)*(left2-left1);
-                    numI -= n-1;
-                };
-                if(parseInt($('#topBook > li').eq($('#topBook > li').length-1).offset().left)/remC < left1){
-                    tX = -($('#topBook > li').length-1)*(left2-left1);
-                    numI = $('#topBook > li').length-1;
-                };
-            };
-            uLleft = tX;
-            endTurnChild(tX,numI,numInew);
-            numInew = numI;
-        });
-
-        var aLipic = document.querySelectorAll('#topBook > li');
-        for(var i=0; i<aLipic.length; i++){
-            (function(index){
-                var hammerLi = new Hammer(aLipic[index]);
-                hammerLi.on("tap", function(e){
-//                        uLleft = parseInt($('#topBook').css('marginLeft'))/remC;
-                    if(numI != index){
-                        var tX = uLleft+(numI-index)*(left2-left1);
-                        numI = index;
-                        startTurnChild();
-                        endTurnChild(tX,numI);
-                        uLleft = tX;
-                    };
-                });
-            })(i);
-        };
-    };
-</script>
-<!--课本选择函数-->
-<script>
-    function startTurnChild(){
-        $('#topBook').css({
-            'transition':'none',
-            'webkitTransition':'none'
-        });
-
-        $('#topBook > li > p.pic').css({
-            'transition':'.3s all ease',
-            'webkitTransition':'.3s all ease'
-        });
-        $('#topBook > li').children('p.pic').css({'width':'2.25rem','height':'2.8rem','marginLeft':'0','marginTop':'0'});
-    };
-    function endTurnChild(tX,num,numNew){
-        $('#topBook').css({
-            'transition':'.3s all ease',
-            'webkitTransition':'.3s all ease'
-        });
-        $('#topBook').css('marginLeft',tX+'rem');
-        $('#topBook > li').eq(num).children('p.pic').css({'width':'3.6rem','height':'4.5rem','marginLeft':'-0.675rem','marginTop':'-2.1rem'});
-        txTimer = setTimeout(function(){
-            studentid = $('#topBook > li').eq(num).attr('data-sid');
-            if(num != numNew){
-                getChangeData();
-            };
-        },300);
-    };
-
-    function getChangeData(){
-//        loaded('homeSection');
-    };
-</script>
 
 <!--视频播放-->
 <script>
