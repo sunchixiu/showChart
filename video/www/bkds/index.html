@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=9">
+    <title>备课大师</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/unslider.min.js"></script>
+    <script src="js/every.js"></script>
+</head>
+<body>
+<div class="bg">
+    <div class="main">
+        <div class="left">
+            <div class="topword"><img src="images/bkds.png"></div>
+            <div class="wordcontent">互联新时代  为学校和家长建立沟通桥梁</div>
+            <div class="wordcontent">全国已有1000余所院校申请接入并持续增加中...</div>
+            <div class="download">
+                <h2>WINDOWS版</h2>
+                <input type="button" class="downbtn" value="下载" onclick="window.location.href = 'http://182.48.115.248:8099/tracebookcps/update/cps_setup.exe';">
+            </div>
+        </div>
+        <div class="right">
+            <div class="banner" id="b04">
+                <ul>
+                    <li><img src="images/pic1.png"></li>
+                    <li><img src="images/pic2.png"></li>
+                </ul>
+                <a href="javascript:void(0);" class="unslider-arrow04 prev"><img class="arrow" id="al" src="images/arrleft.png" alt="prev" width="17" height="38"></a>
+                <a href="javascript:void(0);" class="unslider-arrow04 next"><img class="arrow" id="ar" src="images/arrright.png" alt="next" width="17" height="38"></a>
+            </div>
+        </div>
+    </div>
+    <div class="bottomInfo">
+        <p>关于我们　　联系我们</p>
+        <p>Copyright@2016 iiSchool.com All Rights Reserved.</p>
+    </div>
+</div>
+
+<script>
+    setBanner();
+    function setBanner(){
+        var unslider04 = $('#b04').unslider({
+                    dots: false,
+                    delay: 3000
+                }),
+                data04 = unslider04.data('unslider');
+
+        $('.unslider-arrow04').click(function() {
+            var fn = this.className.split(' ')[1];
+            data04[fn]();
+        });
+    };
+</script>
+</body>
+</html>

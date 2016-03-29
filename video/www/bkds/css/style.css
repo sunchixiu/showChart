@@ -1,0 +1,49 @@
+body,div,dl,dt,dd,ul,ol,li,form,fieldset,input,button,textarea,p{margin:0; padding:0;}
+fieldset,img,input {border:0; vertical-align:middle;}
+address,caption,cite,code,dfn,em,strong,th,var,i {font-style:normal; font-weight:normal;}
+ol,ul {list-style:none;}
+a{text-decoration:none;}
+input,textarea,button{outline:none;}
+html,body{font-family: '微软雅黑'; width: 100%; height: 100%;}
+
+.bg{width: 100%; height: 100%; background-image: url("../images/bg.jpg"); background-size: 100% 100%; background-repeat: no-repeat; min-width: 996px; min-height: 364px;}
+.main{width: 84rem; height: 30.7rem; position: absolute; top: 50%; left: 50%; margin-top: -15.5rem; margin-left: -42rem;}
+.left{width: 20.6rem; height: auto; margin-left: 10rem; float: left; text-align: right; color: #fff;}
+.left .topword{margin-top: 3.4rem;}
+.left .topword img{width: 13.5rem; height: 3rem; margin-bottom: 2.5rem;}
+.left .wordcontent{font-size: 0.9rem; line-height: 1.6rem;}
+.left .download{width: 15.8rem; text-align: center; margin-top: 1.8rem; float: right;}
+.left .download h2{font-size: 2.1rem; margin: 0;}
+.left .download input{width: 100%; height: 3.9rem; border: 0.2rem solid #56ad5c; -webkit-border-radius: 0.2rem; border-radius: 0.2rem; color: #56ad5c; text-align: center; line-height: 3.4rem; font-size: 1.8rem; background: none; font-family: '微软雅黑'; margin-top: 0.2rem;}
+.left .download input:hover{border-color: #66c968; color: #66c968; cursor: pointer;}
+
+.right{width: 50.2rem; height: auto; margin-left: 3rem; float: left;}
+.bottomInfo{width: 100%; height: 3rem; line-height: 1.2rem; position: absolute; bottom: 0.6rem; color: #333; text-align: center; font-size: 0.7rem;}
+
+/*轮播*/
+.banner { position: relative; overflow: auto; text-align: center;}
+.banner li { list-style: none; }
+.banner ul li { float: left; }
+.banner ul li img{width: 50.2rem; height: 30.7rem;}
+#b04 { width: 50.2rem;}
+#b04 .arrow { position: absolute; top: 12rem;}
+#b04 #al { left: 17px;}
+#b04 #ar { right: 17px;}
+
+
+/*移动端下载*/
+.mainIX{width: 85.4rem; height: 26rem; position: absolute; top: 50%; left: 50%; margin-top: -13.7rem; margin-left: -41rem; color: #fff;}
+.mainIX .leftIX{width: 36rem; height: auto; text-align: center; float: left;}
+.mainIX .leftIX .top{font-size: 0.9rem;}
+.mainIX .leftIX .top p.icon img{width: 4rem; height: 3rem;}
+p.bottomdown{width: 36rem;}
+p.bottomdown span{width: 12rem; height: 11.5rem; display: inline-block; float: left;}
+p.bottomdown span img{margin-bottom: 0.6rem;}
+p.bottomdown span img.top{width: 8.8rem; height: 2rem;}
+p.bottomdown span img.down{width: 8.8rem; height: 8.8rem;}
+p.bottomdown span input.downbtn{width: 10rem; height: 3.9rem; border: 0.2rem solid #56ad5c; -webkit-border-radius: 0.2rem; border-radius: 0.2rem; color: #56ad5c; text-align: center; line-height: 3.4rem; font-size: 1.8rem; background: none; font-family: '微软雅黑'; margin-top: 0.2rem;}
+p.bottomdown span input.downbtn:hover{border-color: #66c968; color: #66c968; cursor: pointer;}
+
+.mainIX .rightIX{width: 45.6rem; margin-left: 3.8rem; float: left;}
+.mainIX .rightIX img{width: 45.6rem; height: 22.5rem;}
+

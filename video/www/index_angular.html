@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=9">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <title>课程视频</title>
+    <link rel="stylesheet" type="text/css" href="css/default.css" />
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/common.css" />
+    <link rel="stylesheet" href="css/mobilebone.css">
+
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/videoApp.js"></script>
+    <script src="js/videoController.js"></script>
+    <script src="js/iscroll4.js"></script>
+    <script src="js/hammer.min.js"></script>
+    <script src="js/every.js"></script>
+</head>
+<body ng-app="videoList" ng-controller="videoListCtrl">
+<div class="main page out" id="pageHome">
+    <div class="iiheader" style="z-index: 2;"><div class="l"><a href="javascript:closeWebview();">&laquo;返回</a></div><div class="m" id="schoolNameId">我的书桌</div><div class="r"></div></div>
+    <div class="iisection" style="z-index: 1; background: #eee;" id="homeSection">
+        <div class="scroll">
+            <!--<div class="tempLoading"></div>-->
+            <div id="pageHomeContent" class="jheader">
+                <!--<div id="tempLoading" class="tempLoading" aria-invalid="tempLoading" style="margin-top: -8rem;"></div>-->
+                <div class="top" id="top">
+                    <div class="m" id="topBookDiv">
+                        <ul id="topBook">
+                            <li ng-repeat="book in bookArr" repeat-finish="renderFinish();">
+                                <p class="pic"><img src="img/book.jpg"></p>
+                                <p class="text">{{ book.bookName }}</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="chapterList">
+                    <div class="chapterContent" ng-repeat="point in pointArr">
+                        <h3>{{ point.pointName }}<a href="javascript:;" ng-click="popDiv(2,'第二课时')">推荐课时</a></h3>
+                        <ul>
+                            <li ng-repeat="video in point.pointContent" ng-click="popDiv(2,video.name,$(this).parent())">
+                                <div class="videoDiv"><img src="img/videok.jpg"></div>
+                                <p>{{ video.name }}</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--二级页面-->
+<div class="main page out" id="page1">
+    <div class="iiheader"><div class="l"><a href="#&pageHome" data-rel="back">&laquo;返回</a></div><div class="m" id="AudiounitName"></div><div class="r"></div></div>
+    <div class="iisection word">
+        <div class="list_book" id="pointListId">
+            <!--<div id="tempLoading" class="tempLoading" aria-invalid="tempLoading" style="margin-top: -6rem;"></div>-->
+            <ul>
+                <li><p class="up">课时1</p><p class="down"><input type="button" class="ifNullWord" value="播放" onclick=popDiv(2,"课时1",$(this).parent())></p></li>
+                <li><p class="up">课时2</p><p class="down"><input type="button" class="ifNullWord" value="播放" onclick=popDiv(2,"课时2",$(this).parent())></p></li>
+            </ul>
+        </div>
+        <div style="height: 3.2rem;"></div>
+    </div>
+</div>
+
+<!--三级页面-->
+<div class="main page out" id="page2">
+    <video id="v1" class="video" src="http://images.sohu.com/ytv/SH/Coke/64036020120714021103.mp4"></video>
+    <div class="videoBar" id="videoBar">
+        <!--进度条-->
+        <div class="speed" id="speedk">
+            <div class="speed_buffer" id="speed_buffer" style="width:0%;"></div>
+            <div class="speed_this" id="speed_this" style="width:0%;"><div class="button"></div></div>
+        </div>
+        <!--播放 暂停 等操作部分-->
+        <div class="play" style="margin-top: 0.3rem;">
+            <input type="button" id="stop" class="stop" />
+            <!--<img id="prev" src="img/prev.jpg" />-->
+            <input type="button" id="play" class="play" />
+            <input type="button" id="pause" class="pause" style="display:none;" />
+            <!--<img id="next" src="img/next.jpg" />-->
+        </div>
+        <!--声音-->
+        <div class="full">
+            <div class="timer">
+                <span class="timeThis" id="curTime">00:00</span>/<span id="totalTime">00:00</span>
+            </div>
+
+            <input type="button" id="fullScreen" class="fullScreen" onclick="fullScreen($('#v1'));">
+            <div class="volume">
+                <div class="volume_this" style="width:100%;"><div class="button"></div></div>
+            </div>
+            <span class="volume_icon"></span>
+        </div>
+    </div>
+    <div class="iiheader" style="z-index: 0;" id="iiheader"><div class="l"><a href="#&pageHome" onclick="backClear();" data-rel="back">&laquo;返回</a></div><div class="m" id="AudioclassName">{{ bookName }}</div><div class="r"></div></div>
+    <div class="iisection">
+        <div style="margin-top: 11.2rem;" id="videoSection">
+            <div class="message_k">
+                <div class="message_tab">
+                    <ul>
+                        <li class="cur">相关微课</li>
+                        <li>写笔记</li>
+                        <li>课堂评价</li>
+                        <li>课堂错题</li>
+                    </ul>
+                    <div class="tabcontent">
+                        <div class="cur">
+                            相关微课内容
+                        </div>
+                        <div>
+                            <textarea id="noteId"></textarea>
+                        </div>
+                        <div>
+                            课堂评价内容
+                        </div>
+                        <div>
+                            课堂错题内容
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="message_k">
+                <div class="m-tl">
+                    <h3>发表评论</h3>
+                    <span class="f-csp"><a href="#">0人跟帖</a></span>
+                </div>
+            </div>
+            <div class="message_k">
+                <textarea rows="3" cols="20" id="messageContent"></textarea>
+            </div>
+        </div>
+        <div id="ad">
+            视频结束后弹出
+        </div>
+    </div>
+</div>
+<div class="main page out" id="page2_2">
+    <div class="iiheader"><div class="l"><a href="#&page1" onclick="backClear();" data-rel="back">&laquo;返回</a></div><div class="m" id="AudioclassName">课时名称</div><div class="r"></div></div>
+    <div class="iisection" style="background: #52691f;">
+
+    </div>
+</div>
+
+<script src="js/mobilebone.js"></script>
+
+<script>
+    loaded('homeSection');
+</script>
+
+<!--跳转页面-->
+<script>
+//    function popDiv(index,str,_this){
+//        if(_this){
+//            _pointid = _this.attr('data-pointid');
+//            _unitid = _this.attr('data-unitid');
+//            _termid = _this.attr('data-termid');
+//            _versionid = _this.attr('data-versionid');
+//            _gradeid = _this.attr('data-gradeid');
+//        };
+//
+//        if(index == 1){
+//            window.location.href = '#&page1';
+//        }else if(index == 2){
+//            $('#AudioclassName').html(str);
+//            window.location.href = '#&page2';
+//            playVideo();
+//        }else if(index == 3){
+//            window.location.href = '#&page2_2';
+//        };
+//    };
+//
+//    function getPointName(unitid,unitname,termid,versionid,gradeid,subjectid,_this) {
+//        popDiv(1, unitname);
+//        $('#AudiounitName').html(unitname);
+//    };
+</script>
+
+
+
+<!--选取课本-->
+<script>
+    var txTimer = null;
+    function childLayout(){
+        $('#topBook > li').eq(0).children('p.pic').css({'width':'3.6rem','height':'4.5rem','marginLeft':'-0.675rem','marginTop':'-2.1rem'});
+        studentid = $('#topBook > li').eq(0).attr('data-sid');
+
+        //创建一个新的hammer对象并且在初始化时指定要处理的dom元素
+        var hammertime = new Hammer(document.getElementById("topBookDiv"));
+        //添加事件
+//            alert($('#topBook > li').eq(0).offset().left/(document.documentElement.clientWidth/18));
+        var numI = 0;
+        var numInew = 0;
+        var remC = document.documentElement.clientWidth/18;
+        var uLleft = parseInt($('#topBook').css('marginLeft'))/remC;
+        var left1=7.85,left2=12.5;
+        var width1=2.25,width2=3.6,width3=2.25;
+        var top1=3.6,top2=1.5,top3=3.6;
+
+        hammertime.on('panstart',function(e){
+//                uLleft = parseInt($('#topBook').css('marginLeft'))/remC;
+            startTurnChild();
+            clearTimeout(txTimer);
+        });
+        hammertime.on('panleft panright',function(e){
+            $('#topBook').css('marginLeft', (uLleft+e.deltaX/remC)+'rem');
+        });
+        hammertime.on('panend',function(e){
+            var l = parseInt($('#topBook').css('marginLeft'))/remC - uLleft;
+            var c = left2-left1;
+            var n;
+            var tX;
+
+            if(l > 0){
+                n = Math.floor(l/c)
+                if(l-n*c > (left2-left1)/2){
+                    tX = uLleft+(n+1)*(left2-left1);
+                    numI -= n+1;
+                }else{
+                    tX = uLleft+n*(left2-left1);
+                    numI -= n;
+                };
+                if(parseInt($('#topBook > li').eq(0).offset().left)/remC > left1){
+                    tX = 0;
+                    numI = 0;
+                };
+            }else{
+                n = Math.ceil(l/c);
+                if(l-n*c > (left1-left2)/2){
+                    tX = uLleft+n*(left2-left1);
+                    numI -= n;
+                }else{
+                    tX = uLleft+(n-1)*(left2-left1);
+                    numI -= n-1;
+                };
+                if(parseInt($('#topBook > li').eq($('#topBook > li').length-1).offset().left)/remC < left1){
+                    tX = -($('#topBook > li').length-1)*(left2-left1);
+                    numI = $('#topBook > li').length-1;
+                };
+            };
+            uLleft = tX;
+            endTurnChild(tX,numI,numInew);
+            numInew = numI;
+        });
+
+        var aLipic = document.querySelectorAll('#topBook > li');
+        for(var i=0; i<aLipic.length; i++){
+            (function(index){
+                var hammerLi = new Hammer(aLipic[index]);
+                hammerLi.on("tap", function(e){
+//                        uLleft = parseInt($('#topBook').css('marginLeft'))/remC;
+                    if(numI != index){
+                        var tX = uLleft+(numI-index)*(left2-left1);
+                        numI = index;
+                        startTurnChild();
+                        endTurnChild(tX,numI);
+                        uLleft = tX;
+                    };
+                });
+            })(i);
+        };
+    };
+</script>
+<!--课本选择函数-->
+<script>
+    function startTurnChild(){
+        $('#topBook').css({
+            'transition':'none',
+            'webkitTransition':'none'
+        });
+
+        $('#topBook > li > p.pic').css({
+            'transition':'.3s all ease',
+            'webkitTransition':'.3s all ease'
+        });
+        $('#topBook > li').children('p.pic').css({'width':'2.25rem','height':'2.8rem','marginLeft':'0','marginTop':'0'});
+    };
+    function endTurnChild(tX,num,numNew){
+        $('#topBook').css({
+            'transition':'.3s all ease',
+            'webkitTransition':'.3s all ease'
+        });
+        $('#topBook').css('marginLeft',tX+'rem');
+        $('#topBook > li').eq(num).children('p.pic').css({'width':'3.6rem','height':'4.5rem','marginLeft':'-0.675rem','marginTop':'-2.1rem'});
+        txTimer = setTimeout(function(){
+            studentid = $('#topBook > li').eq(num).attr('data-sid');
+            if(num != numNew){
+                getChangeData();
+            };
+        },300);
+    };
+
+    function getChangeData(){
+//        loaded('homeSection');
+    };
+</script>
+
+<!--视频播放-->
+<script>
+    var xyStatus = 0;
+    function playVideo(){
+        var oV=document.getElementById('v1');
+        var oPlay=document.getElementById('play');
+        var oPause=document.getElementById('pause');
+        var oStop=document.getElementById('stop');
+
+        oV.oncanplay=function(){
+        };
+
+        var iNow=0;
+
+
+        //用localStorage
+        if(localStorage.nowTime){
+            oV.currentTime=localStorage.nowTime;
+        }
+
+
+        //1. 播放、暂停、停止
+        oPlay.onclick=function(){
+            oV.play();
+            oPlay.style.display='none';
+            oPause.style.display='block';
+        };
+
+        oPause.onclick=function(){
+            oV.pause();
+            oPlay.style.display='block';
+            oPause.style.display='none';
+        };
+
+        oStop.onclick=function(){
+            //window.location.reload();
+            oV.pause();
+            oV.currentTime=0;
+            oPlay.style.display='block';
+            oPause.style.display='none';
+        };
+
+        //2. 播放进度
+        ;(function(){
+            var oSpeedBox=document.querySelector('.speed_this');
+            var oBtn=document.querySelector('.speed_this .button');
+            var oTimeThis=document.querySelector('.timeThis');
+            var oSpeedk = document.querySelector('#speedk');
+            var oTotalTime=document.querySelector('#totalTime');
+
+            oV.ontimeupdate=function(){
+                var scale=oV.currentTime/oV.duration;
+                oSpeedBox.style.width=scale*100+'%';
+                oBtn.style.left=scale*(oSpeedBox.parentNode.offsetWidth-oBtn.offsetWidth)+'px';
+
+
+                //时间
+                oTimeThis.innerHTML=parseInt(oV.currentTime/60)+':'+parseInt(oV.currentTime%60);
+                oTotalTime.innerHTML=parseInt(oV.duration/60)+':'+parseInt(oV.duration%60);
+
+                //存一下播放进度
+                localStorage.nowTime=oV.currentTime;
+            };
+
+            //拖拽
+            var hammerPlay = new Hammer(document.querySelector(".speed_this .button"));
+            var disX;
+            hammerPlay.on('panstart',function(ev){
+                if(xyStatus == 0){
+                    disX=ev.deltaX-oBtn.offsetLeft;
+                }else{
+                    disX=ev.deltaY-oBtn.offsetLeft;
+                };
+            });
+            hammerPlay.on('panleft panright',function(ev){
+                var evL,l;
+                if(xyStatus == 0){
+                    evL = ev.deltaX;
+                }else{
+                    evL = ev.deltaY;
+                };
+                l=evL-disX;
+                l<0 && (l=0);
+                l>(oSpeedBox.parentNode.offsetWidth-oBtn.offsetWidth) && (l=(oSpeedBox.parentNode.offsetWidth-oBtn.offsetWidth));
+                oBtn.style.left=l+'px';
+
+                var scale=l/(oSpeedBox.parentNode.offsetWidth-oBtn.offsetWidth);
+                oSpeedBox.style.width=scale*100+'%';
+                oV.currentTime=scale*oV.duration;
+            });
+            hammerPlay.on('panend',function(ev){
+
+            });
+        })();
+
+        //4. 音量控制
+        ;(function(){
+            var oVolumeBox=document.querySelector('.volume_this');
+            var oBtn=document.querySelector('.volume_this .button');
+            var hammerVolum = new Hammer(document.querySelector('.volume_this .button'));
+            var disX;
+
+            hammerVolum.on('panstart',function(ev){
+                if(xyStatus == 0){
+                    disX = ev.deltaX-oBtn.offsetLeft;
+                }else{
+                    disX = ev.deltaY-oBtn.offsetLeft;
+                };
+            });
+            hammerVolum.on('panleft panright',function(ev){
+                var evL,l;
+                if(xyStatus == 0){
+                    evL = ev.deltaX;
+                }else{
+                    evL = ev.deltaY;
+                };
+                l = evL-disX;
+                if(l<0)l=0;
+                if(l>oVolumeBox.parentNode.offsetWidth-oBtn.offsetWidth)l=oVolumeBox.parentNode.offsetWidth-oBtn.offsetWidth;
+                oBtn.style.left=l+'px';
+                var scale=l/(oVolumeBox.parentNode.offsetWidth-oBtn.offsetWidth);
+                oVolumeBox.style.width=scale*100+'%';
+                oV.volume=scale;
+            });
+
+//            oBtn.addEventListener('touchstart',function(ev){
+//                var disX;
+//                var id=ev.targetTouches[0].identifier; //
+//                if(xyStatus == 0){
+//                    disX = ev.targetTouches[0].pageX-oBtn.offsetLeft
+//                }else{
+//                    disX = ev.targetTouches[0].pageY-oBtn.offsetLeft
+//                };
+//
+//                function fnMove(ev){
+//                    if(ev.targetTouches[0].identifier==id){
+//                        var evL,l;
+//                        if(xyStatus == 0){
+//                            evL = ev.targetTouches[0].pageX;
+//                        }else{
+//                            evL = ev.targetTouches[0].pageY;
+//                        };
+//                        l = evL-disX;
+//                        if(l<0)l=0;
+//                        if(l>oVolumeBox.parentNode.offsetWidth-oBtn.offsetWidth)l=oVolumeBox.parentNode.offsetWidth-oBtn.offsetWidth;
+//                        oBtn.style.left=l+'px';
+//                        var scale=l/(oVolumeBox.parentNode.offsetWidth-oBtn.offsetWidth);
+//                        oVolumeBox.style.width=scale*100+'%';
+//                        oV.volume=scale;
+//                    }
+//                }
+//
+//                function fnEnd(){
+//                    document.removeEventListener('touchmove',fnMove,false);
+//                    document.removeEventListener('touchend',fnEnd,false);
+//                }
+//
+//                document.addEventListener('touchmove',fnMove,false);
+//                document.addEventListener('touchend',fnEnd,false);
+//                ev.preventDefault();
+//            },false);
+        })();
+
+        //其他
+        var oAd=document.getElementById('ad');
+        oV.onended=function(){
+//                oAd.style.display='block';
+            //清
+            delete localStorage.nowTime;
+        };
+    };
+</script>
+<!--全屏-->
+<script>
+    var timerButton = null;
+    var timerBar = null;
+    var oBar = $('#videoBar');
+    function fullScreen(element){
+        if(element.css('top') == '0px'){
+            element.css({'transform':'rotate(0deg)','width':'100%','height':'8rem','top':'2.6rem'});
+            oBar.css({'transform':'rotate(0deg) translate(0px,-10.6rem)','top':'10.6rem','width':'100%'});
+            $('#fullScreen').attr('class','fullScreen');
+            clearTimeout(timerButton);
+            timerButton = setTimeout(function(){
+                progress($('#speed_this > div.button'),$('#speed_this'));
+            },200);
+            xyStatus = 0;
+            clearTimeout(timerBar);
+            $('#videoBar').css({'opacity':1,'zIndex':2});
+        }else{
+            element.css({'transform':'rotate(90deg) translate(0px,-'+document.body.clientWidth+'px)','width':document.body.clientHeight + 'px','height':document.body.clientWidth + 'px','top':'0'});
+            oBar.css({'transform':'rotate(90deg) translate(-10.6rem,-2.6rem)','top':'0','width':document.body.clientHeight + 'px'});
+            $('#fullScreen').attr('class','returnScreen');
+            clearTimeout(timerButton);
+            timerButton = setTimeout(function(){
+                progress($('#speed_this > div.button'),$('#speed_this'));
+            },200);
+            xyStatus = 1;
+            clearTimeout(timerBar);
+            timerBar = setTimeout(function(){
+                $('#videoBar').css({'opacity':0,'zIndex':0});
+            },2000);
+        };
+    };
+    $('#v1').bind('click',function(){
+        if(xyStatus == 1){
+            if($('#videoBar').css('opacity') == 1){
+                clearTimeout(timerBar);
+                $('#videoBar').css({'opacity':0,'zIndex':0});
+            }else{
+                $('#videoBar').css({'opacity':1,'zIndex':2});
+                clearTimeout(timerBar);
+                timerBar = setTimeout(function(){
+                    $('#videoBar').css({'opacity':0,'zIndex':0});
+                },3000);
+            };
+        };
+    });
+
+    //操作时面板不消失
+    var oVideoBar = document.getElementById('videoBar');
+    oVideoBar.addEventListener('touchstart',function(ev){
+        clearTimeout(timerBar);
+    },false);
+    oVideoBar.addEventListener('touchend',function(ev){
+        if(xyStatus == 1){
+            clearTimeout(timerBar);
+            timerBar = setTimeout(function(){
+                $('#videoBar').css({'opacity':0,'zIndex':0});
+            },3000);
+        };
+    },false);
+
+    function progress(curbutton,_this){
+        curbutton.css('left',_this.css('width'));
+    };
+</script>
+<!--tab切换-->
+<script>
+    function tabNav(tab, content) {
+        $(tab).click(function() {
+            $(tab).removeClass('cur');
+            $(content).hide();
+            $(this).addClass('cur');
+            $(content).eq($(this).index()).show();
+        });
+        $(tab).eq(0).addClass('cur');
+        $(content).eq(0).show();
+    }
+    tabNav('.message_tab ul li', '.tabcontent div');
+</script>
+
+<!--弹出虚拟键盘后位移-->
+<script>
+    var windowHeight = document.body.clientHeight;
+    $(window).resize(function() {
+        var isMessageFocus = $("#messageContent").is(":focus");
+        var isNoteFocus = $("#noteId").is(":focus");
+        if(isMessageFocus && document.body.clientHeight<windowHeight){
+            $('#iiheader').css('zIndex',3);
+            changeTop(-11.6);
+            $('#fullScreen').attr('disabled','disabled');
+        };
+        if(isNoteFocus && document.body.clientHeight<windowHeight){
+            $('#iiheader').css('zIndex',3);
+            changeTop(-2);
+            $('#fullScreen').attr('disabled','disabled');
+        };
+
+        if(document.body.clientHeight==windowHeight){
+            changeTop(0);
+            $('#fullScreen').removeAttr('disabled');
+            $('#iiheader').css('zIndex',0);
+        };
+    });
+
+
+    function changeTop(num){
+        $('#videoSection').css('marginTop',videoSctionTop(num));
+        $('#v1').css('top',videoTop(num));
+        $('#videoBar').css('marginTop',videoBarTop(num));
+    };
+    function videoTop(num){
+        var marginTopNum = 2.6+num;
+        return marginTopNum+'rem';
+    };
+    function videoBarTop(num){
+        var marginTopNum = 10.6+num;
+        return marginTopNum+'rem';
+    };
+    function videoSctionTop(num){
+        var marginTopNum = 11.2+num;
+        return marginTopNum+'rem';
+    };
+</script>
+
+<!--返回后清除-->
+<script>
+    function backClear(){
+
+    };
+</script>
+
+<!--iscroll-->
+<script>
+//    loaded('homeSection');
+</script>
+</body>

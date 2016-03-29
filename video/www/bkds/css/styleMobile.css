@@ -1,0 +1,24 @@
+body,div,dl,dt,dd,ul,ol,li,form,fieldset,input,button,textarea,p{margin:0; padding:0;}
+fieldset,img,input {border:0; vertical-align:middle;}
+address,caption,cite,code,dfn,em,strong,th,var,i {font-style:normal; font-weight:normal;}
+ol,ul {list-style:none;}
+a{text-decoration:none;}
+input,textarea,button{outline:none;}
+html,body{font-family: '微软雅黑'; width: 100%; height: 100%; background: #333;}
+
+.bgMobile{width: 100%; height: 100%; background-image: url("../images/mobile/mobileBg.jpg"); background-size: 100% 100%; background-repeat: no-repeat; max-width: 414px; min-height: 22rem; text-align: center; color: #fff; font-size: 0.7rem; line-height: 1rem; margin: 0 auto; display: box; display: -webkit-box; -webkit-box-orient:vertical; box-orient:vertical;}
+
+.topMobile{}
+.topMobile p.picIcon{}
+.topMobile p.picIcon img{width: 2.5rem; height: 1.9rem;}
+.middleMobile{}
+.middleMobile img{width: 11.65rem; height: 11.95rem;}
+.bottomMobile{}
+.bottomMobile p button{width: 11.25rem; height: 2.65rem; background: #d05808; border: none; border-radius: 0.15rem; -webkit-border-radius: 0.15rem; position: relative;}
+.bottomMobile p button div{background-color: #ff6600;}
+.bottomMobile p button .btnAndroid{width: 11.25rem; height: 2.5rem; border-radius: 0.15rem; -webkit-border-radius: 0.15rem; position: absolute; top: 0; background-image: url("../images/mobile/downAndroid.png"); background-size: 8.35rem 1.7rem; background-position: center center; background-repeat: no-repeat;}
+.bottomMobile p button .btnIos{width: 11.25rem; height: 2.5rem; background-color: #ff6600; border-radius: 0.15rem; -webkit-border-radius: 0.15rem; position: absolute; top: 0; background-image: url("../images/mobile/downIos.png"); background-size: 8.35rem 1.7rem; background-position: center center; background-repeat: no-repeat;}
+.bottomMobile p button:active{background: #dc6f26;}
+.bottomMobile p button:active div{background-color: #fc8230;}
+
+.autoHeight{-webkit-box-flex: 1; box-flex: 1;}
