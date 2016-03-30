@@ -1,7 +1,7 @@
 /**
  * Created by Wilson on 2016/3/25.
  */
-videoListApp.controller("videoListCtrl",function($scope,$http) {
+videoListApp.controller("videoListCtrl",function($scope,$http,$sce) {
     $scope.bookArr = [
         {bookName: '数学0'}, {bookName: '英语1'}, {bookName: '语文2'}, {bookName: '数学3'}
     ];
@@ -17,7 +17,22 @@ videoListApp.controller("videoListCtrl",function($scope,$http) {
         },
         {pointName: '第二章', pointContent: [{name: '第一课时名'}, {name: '第二课时名'}, {name: '第三课时名'}, {name: '第四课时名'}]}
     ];
+
+    //跳转页面
+    var t1 = null; //解决点击两次问题
     $scope.popDiv = function (index, str, _this) {
+        if (t1 == null){
+            t1 = new Date().getTime();
+        }else{
+            var t2 = new Date().getTime();
+            if(t2 - t1 < 500){
+                t1 = t2;
+                return;
+            }else{
+                t1 = t2;
+            }
+        };//解决双击问题
+
         if (_this) {
             _pointid = _this.attr('data-pointid');
             _unitid = _this.attr('data-unitid');
@@ -40,12 +55,16 @@ videoListApp.controller("videoListCtrl",function($scope,$http) {
         }
         ;
     };
+
+    //$scope.ifshow = false;
     $scope.ajaxVideo = function (iinum, date){
         $http({
             method: 'post',
             url: 'http://182.48.115.253:71/TSB_ISCHOOL_LCS_SERVER/stulessonwork/getstulessonwork',
             data: {"iinum": iinum, "date": date}
         }).success(function (req) {
+            $scope.videoUrl = $sce.trustAsResourceUrl('http://images.sohu.com/ytv/SH/Coke/64036020120714021103.mp4');
+            $scope.ifshow = true;
             alert(req.code);
         });
     };
@@ -53,15 +72,15 @@ videoListApp.controller("videoListCtrl",function($scope,$http) {
 
 //post参数设置
 videoListApp.config(function($httpProvider) {
-    $httpProvider.defaults.transformRequest = function (obj) {
-        var str = [];
-        for (var p in obj) {
-            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-        }
-        return str.join("&");
-    };
+    //$httpProvider.defaults.transformRequest = function (obj) {
+    //    var str = [];
+    //    for (var p in obj) {
+    //        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+    //    }
+    //    return str.join("&");
+    //};
     $httpProvider.defaults.headers.post = {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json; charset=UTF-8'
     };
 });
 

@@ -71,37 +71,40 @@
 
 <!--三级页面-->
 <div class="main page out" id="page2">
-    <video id="v1" class="video" src="http://images.sohu.com/ytv/SH/Coke/64036020120714021103.mp4"></video>
-    <div class="videoBar" id="videoBar">
-        <!--进度条-->
-        <div class="speed" id="speedk">
-            <div class="speed_buffer" id="speed_buffer" style="width:0%;"></div>
-            <div class="speed_this" id="speed_this" style="width:0%;"><div class="button"></div></div>
-        </div>
-        <!--播放 暂停 等操作部分-->
-        <div class="play" style="margin-top: 0.3rem;">
-            <input type="button" id="stop" class="stop" />
-            <!--<img id="prev" src="img/prev.jpg" />-->
-            <input type="button" id="play" class="play" />
-            <input type="button" id="pause" class="pause" style="display:none;" />
-            <!--<img id="next" src="img/next.jpg" />-->
-        </div>
-        <!--声音-->
-        <div class="full">
-            <div class="timer">
-                <span class="timeThis" id="curTime">00:00</span>/<span id="totalTime">00:00</span>
+    <div ng-show="ifshow">
+        <video id="v1" class="video" ng-src="{{ videoUrl }}"></video>
+        <div class="videoBar" id="videoBar">
+            <!--进度条-->
+            <div class="speed" id="speedk">
+                <div class="speed_buffer" id="speed_buffer" style="width:0%;"></div>
+                <div class="speed_this" id="speed_this" style="width:0%;"><div class="button"></div></div>
             </div>
+            <!--播放 暂停 等操作部分-->
+            <div class="play" style="margin-top: 0.3rem;">
+                <input type="button" id="stop" class="stop" />
+                <!--<img id="prev" src="img/prev.jpg" />-->
+                <input type="button" id="play" class="play" />
+                <input type="button" id="pause" class="pause" style="display:none;" />
+                <!--<img id="next" src="img/next.jpg" />-->
+            </div>
+            <!--声音-->
+            <div class="full">
+                <div class="timer">
+                    <span class="timeThis" id="curTime">00:00</span>/<span id="totalTime">00:00</span>
+                </div>
 
-            <input type="button" id="fullScreen" class="fullScreen" onclick="fullScreen($('#v1'));">
-            <div class="volume">
-                <div class="volume_this" style="width:100%;"><div class="button"></div></div>
+                <input type="button" id="fullScreen" class="fullScreen" onclick="fullScreen($('#v1'));">
+                <div class="volume">
+                    <div class="volume_this" style="width:100%;"><div class="button"></div></div>
+                </div>
+                <span class="volume_icon"></span>
             </div>
-            <span class="volume_icon"></span>
         </div>
     </div>
     <div class="iiheader" style="z-index: 0;" id="iiheader"><div class="l"><a href="#&pageHome" onclick="backClear();" data-rel="back">&laquo;返回</a></div><div class="m" id="AudioclassName">{{ bookName }}</div><div class="r"></div></div>
     <div class="iisection">
-        <div style="margin-top: 11.2rem;" id="videoSection">
+        <div class="videoLoading" ng-hide="ifshow"></div>
+        <div style="margin-top: 11.2rem;" id="videoSection" ng-show="ifshow">
             <div class="message_k">
                 <div class="message_tab">
                     <ul>
@@ -136,9 +139,6 @@
                 <textarea rows="3" cols="20" id="messageContent"></textarea>
             </div>
         </div>
-        <div id="ad">
-            视频结束后弹出
-        </div>
     </div>
 </div>
 <div class="main page out" id="page2_2">
@@ -152,34 +152,6 @@
 
 <script>
     loaded('homeSection');
-</script>
-
-<!--跳转页面-->
-<script>
-//    function popDiv(index,str,_this){
-//        if(_this){
-//            _pointid = _this.attr('data-pointid');
-//            _unitid = _this.attr('data-unitid');
-//            _termid = _this.attr('data-termid');
-//            _versionid = _this.attr('data-versionid');
-//            _gradeid = _this.attr('data-gradeid');
-//        };
-//
-//        if(index == 1){
-//            window.location.href = '#&page1';
-//        }else if(index == 2){
-//            $('#AudioclassName').html(str);
-//            window.location.href = '#&page2';
-//            playVideo();
-//        }else if(index == 3){
-//            window.location.href = '#&page2_2';
-//        };
-//    };
-//
-//    function getPointName(unitid,unitname,termid,versionid,gradeid,subjectid,_this) {
-//        popDiv(1, unitname);
-//        $('#AudiounitName').html(unitname);
-//    };
 </script>
 
 
