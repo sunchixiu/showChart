@@ -41,9 +41,10 @@
                     <div class="chapterContent" ng-repeat="point in pointArr">
                         <h3>{{ point.pointName }}<a href="javascript:;" ng-click="popDiv(2,'第二课时')">推荐课时</a></h3>
                         <ul>
-                            <li ng-repeat="video in point.pointContent" ng-click="popDiv(2,video.name,$(this).parent())">
+                            <li ng-repeat="video in point.pointContent | limitTo:3" ng-click="popDiv(2,video.name,$(this).parent())">
                                 <div class="videoDiv"><img src="img/videok.jpg"></div>
                                 <p>{{ video.name }}</p>
+                                <p>{{ $last }}</p>
                             </li>
                         </ul>
                     </div>
@@ -136,7 +137,8 @@
                 </div>
             </div>
             <div class="message_k">
-                <textarea rows="3" cols="20" id="messageContent"></textarea>
+                <textarea rows="3" cols="20" id="messageContent" ng-model="messageValue" ng-change="checkText()"></textarea>
+                <p>还可输入 <span>{{ 100-messageValue.length }}</span> 个字</p>
             </div>
         </div>
     </div>

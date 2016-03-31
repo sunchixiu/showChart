@@ -11,14 +11,15 @@
     <link rel="stylesheet" href="css/mobilebone.css">
 
     <script src="js/jquery-1.11.1.min.js"></script>
-    <script src="js/angular.min.js"></script>
-    <script src="js/videoApp.js"></script>
-    <script src="js/videoController.js"></script>
     <script src="js/iscroll4.js"></script>
     <script src="js/hammer.min.js"></script>
     <script src="js/every.js"></script>
+
+    <style>
+        #ad{ position:fixed; width:100%; height:100%; left:0; top:0; background:rgba(0,0,0,0.5); color:#fff; font-size:50px; text-align:center; font-weight:bold; display:none;}
+    </style>
 </head>
-<body ng-app="videoList" ng-controller="videoListCtrl">
+<body>
 <div class="main page out" id="pageHome">
     <div class="iiheader" style="z-index: 2;"><div class="l"><a href="javascript:closeWebview();">&laquo;返回</a></div><div class="m" id="schoolNameId">我的书桌</div><div class="r"></div></div>
     <div class="iisection" style="z-index: 1; background: #eee;" id="homeSection">
@@ -29,27 +30,85 @@
                 <div class="top" id="top">
                     <div class="m" id="topBookDiv">
                         <ul id="topBook">
-                            <li ng-repeat="book in bookArr" repeat-finish="renderFinish();">
+                            <li>
                                 <p class="pic"><img src="img/book.jpg"></p>
-                                <p class="text">{{ book.bookName }}</p>
+                                <p class="text">数学0</p>
+                            </li>
+                            <li>
+                                <p class="pic"><img src="img/book.jpg"></p>
+                                <p class="text">英语1</p>
+                            </li>
+                            <li>
+                                <p class="pic"><img src="img/book.jpg"></p>
+                                <p class="text">语文2</p>
+                            </li>
+                            <li>
+                                <p class="pic"><img src="img/book.jpg"></p>
+                                <p class="text">数学3</p>
                             </li>
                         </ul>
                     </div>
                 </div>
-
                 <div class="chapterList">
-                    <div class="chapterContent" ng-repeat="point in pointArr">
-                        <h3>{{ point.pointName }}<a href="javascript:;" ng-click="popDiv(2,'第二课时')">推荐课时</a></h3>
+                    <div class="chapterContent">
+                        <h3>第1章<a href="javascript:popDiv(2,'课时2',$(this).parent());">推荐课时</a></h3>
                         <ul>
-                            <li ng-repeat="video in point.pointContent | limitTo:3" ng-click="popDiv(2,video.name,$(this).parent())">
+                            <li onclick="popDiv(2,'课时1',$(this).parent())">
                                 <div class="videoDiv"><img src="img/videok.jpg"></div>
-                                <p>{{ video.name }}</p>
-                                <p>{{ $last }}</p>
+                                <p>第一课时名</p>
+                            </li>
+                            <li onclick="popDiv(2,'课时2',$(this).parent())">
+                                <div class="videoDiv"><img src="img/videok.jpg"></div>
+                                <p>第二课时名</p>
+                            </li>
+                            <li onclick="popDiv(2,'课时3',$(this).parent())">
+                                <div class="videoDiv"><img src="img/videok.jpg"></div>
+                                <p>第三课时名</p>
+                            </li>
+                            <li onclick="popDiv(2,'课时4',$(this).parent())">
+                                <div class="videoDiv"><img src="img/videok.jpg"></div>
+                                <p>第四课时名</p>
+                            </li>
+                            <li onclick="popDiv(2,'课时5',$(this).parent())">
+                                <div class="videoDiv"><img src="img/videok.jpg"></div>
+                                <p>第五课时名</p>
+                            </li>
+                            <li onclick="popDiv(2,'课时6',$(this).parent())">
+                                <div class="videoDiv"><img src="img/videok.jpg"></div>
+                                <p>第六课时名</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="chapterContent">
+                        <h3>第2章<a href="javascript:popDiv(2,'课时3',$(this).parent());">推荐课时</a></h3>
+                        <ul>
+                            <li onclick="popDiv(2,'课时1',$(this).parent())">
+                                <div class="videoDiv"><img src="img/videok.jpg"></div>
+                                <p>第一课时名</p>
+                            </li>
+                            <li onclick="popDiv(2,'课时2',$(this).parent())">
+                                <div class="videoDiv"><img src="img/videok.jpg"></div>
+                                <p>第二课时名</p>
+                            </li>
+                            <li onclick="popDiv(2,'课时3',$(this).parent())">
+                                <div class="videoDiv"><img src="img/videok.jpg"></div>
+                                <p>第三课时名</p>
+                            </li>
+                            <li onclick="popDiv(2,'课时4',$(this).parent())">
+                                <div class="videoDiv"><img src="img/videok.jpg"></div>
+                                <p>第四课时名</p>
+                            </li>
+                            <li onclick="popDiv(2,'课时5',$(this).parent())">
+                                <div class="videoDiv"><img src="img/videok.jpg"></div>
+                                <p>第五课时名</p>
+                            </li>
+                            <li onclick="popDiv(2,'课时6',$(this).parent())">
+                                <div class="videoDiv"><img src="img/videok.jpg"></div>
+                                <p>第六课时名</p>
                             </li>
                         </ul>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -72,40 +131,37 @@
 
 <!--三级页面-->
 <div class="main page out" id="page2">
-    <div ng-show="ifshow">
-        <video id="v1" class="video" ng-src="{{ videoUrl }}"></video>
-        <div class="videoBar" id="videoBar">
-            <!--进度条-->
-            <div class="speed" id="speedk">
-                <div class="speed_buffer" id="speed_buffer" style="width:0%;"></div>
-                <div class="speed_this" id="speed_this" style="width:0%;"><div class="button"></div></div>
+    <video id="v1" class="video" src="http://images.sohu.com/ytv/SH/Coke/64036020120714021103.mp4"></video>
+    <div class="videoBar" id="videoBar">
+        <!--进度条-->
+        <div class="speed" id="speedk">
+            <div class="speed_buffer" id="speed_buffer" style="width:0%;"></div>
+            <div class="speed_this" id="speed_this" style="width:0%;"><div class="button"></div></div>
+        </div>
+        <!--播放 暂停 等操作部分-->
+        <div class="play" style="margin-top: 0.3rem;">
+            <input type="button" id="stop" class="stop" />
+            <!--<img id="prev" src="img/prev.jpg" />-->
+            <input type="button" id="play" class="play" />
+            <input type="button" id="pause" class="pause" style="display:none;" />
+            <!--<img id="next" src="img/next.jpg" />-->
+        </div>
+        <!--声音-->
+        <div class="full">
+            <div class="timer">
+                <span class="timeThis" id="curTime">00:00</span>/<span id="totalTime">00:00</span>
             </div>
-            <!--播放 暂停 等操作部分-->
-            <div class="play" style="margin-top: 0.3rem;">
-                <input type="button" id="stop" class="stop" />
-                <!--<img id="prev" src="img/prev.jpg" />-->
-                <input type="button" id="play" class="play" />
-                <input type="button" id="pause" class="pause" style="display:none;" />
-                <!--<img id="next" src="img/next.jpg" />-->
-            </div>
-            <!--声音-->
-            <div class="full">
-                <div class="timer">
-                    <span class="timeThis" id="curTime">00:00</span>/<span id="totalTime">00:00</span>
-                </div>
 
-                <input type="button" id="fullScreen" class="fullScreen" onclick="fullScreen($('#v1'));">
-                <div class="volume">
-                    <div class="volume_this" style="width:100%;"><div class="button"></div></div>
-                </div>
-                <span class="volume_icon"></span>
+            <input type="button" id="fullScreen" class="fullScreen" onclick="fullScreen($('#v1'));">
+            <div class="volume">
+                <div class="volume_this" style="width:100%;"><div class="button"></div></div>
             </div>
+            <span class="volume_icon"></span>
         </div>
     </div>
-    <div class="iiheader" style="z-index: 0;" id="iiheader"><div class="l"><a href="#&pageHome" onclick="backClear();" data-rel="back">&laquo;返回</a></div><div class="m" id="AudioclassName">{{ bookName }}</div><div class="r"></div></div>
+    <div class="iiheader" style="z-index: 0;" id="iiheader"><div class="l"><a href="#&pageHome" onclick="backClear();" data-rel="back">&laquo;返回</a></div><div class="m" id="AudioclassName">课时名称</div><div class="r"></div></div>
     <div class="iisection">
-        <div class="videoLoading" ng-hide="ifshow"></div>
-        <div style="margin-top: 11.2rem;" id="videoSection" ng-show="ifshow">
+        <div style="margin-top: 11.2rem;" id="videoSection">
             <div class="message_k">
                 <div class="message_tab">
                     <ul>
@@ -137,9 +193,11 @@
                 </div>
             </div>
             <div class="message_k">
-                <textarea rows="3" cols="20" id="messageContent" ng-model="messageValue" ng-change="checkText()"></textarea>
-                <p>还可输入 <span>{{ 100-messageValue.length }}</span> 个字</p>
+                <textarea rows="3" cols="20" id="messageContent"></textarea>
             </div>
+        </div>
+        <div id="ad">
+            视频结束后弹出
         </div>
     </div>
 </div>
@@ -156,10 +214,39 @@
     loaded('homeSection');
 </script>
 
+<!--跳转页面-->
+<script>
+    function popDiv(index,str,_this){
+        if(_this){
+            _pointid = _this.attr('data-pointid');
+            _unitid = _this.attr('data-unitid');
+            _termid = _this.attr('data-termid');
+            _versionid = _this.attr('data-versionid');
+            _gradeid = _this.attr('data-gradeid');
+        };
+
+        if(index == 1){
+            window.location.href = '#&page1';
+        }else if(index == 2){
+            $('#AudioclassName').html(str);
+            window.location.href = '#&page2';
+            playVideo();
+        }else if(index == 3){
+            window.location.href = '#&page2_2';
+        };
+    };
+
+    function getPointName(unitid,unitname,termid,versionid,gradeid,subjectid,_this) {
+        popDiv(1, unitname);
+        $('#AudiounitName').html(unitname);
+    };
+</script>
+
 
 
 <!--选取课本-->
 <script>
+    childLayout();
     var txTimer = null;
     function childLayout(){
         $('#topBook > li').eq(0).children('p.pic').css({'width':'3.6rem','height':'4.5rem','marginLeft':'-0.675rem','marginTop':'-2.1rem'});

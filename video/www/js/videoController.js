@@ -52,21 +52,27 @@ videoListApp.controller("videoListCtrl",function($scope,$http,$sce) {
             playVideo();
         } else if (index == 3) {
             window.location.href = '#&page2_2';
-        }
-        ;
+        };
     };
 
     //$scope.ifshow = false;
     $scope.ajaxVideo = function (iinum, date){
-        $http({
-            method: 'post',
-            url: 'http://182.48.115.253:71/TSB_ISCHOOL_LCS_SERVER/stulessonwork/getstulessonwork',
-            data: {"iinum": iinum, "date": date}
-        }).success(function (req) {
+        //$http({
+        //    method: 'post',
+        //    url: 'http://182.48.115.253:71/TSB_ISCHOOL_LCS_SERVER/stulessonwork/getstulessonwork',
+        //    data: {"iinum": iinum, "date": date}
+        //}).success(function (req) {
             $scope.videoUrl = $sce.trustAsResourceUrl('http://images.sohu.com/ytv/SH/Coke/64036020120714021103.mp4');
             $scope.ifshow = true;
-            alert(req.code);
-        });
+        //    alert(req.code);
+        //});
+    };
+
+    //限制textarea输入字数
+    $scope.checkText = function (){
+        if ($scope.messageValue.length > 100) {
+            $scope.messageValue = $scope.messageValue.substr(0, 100);
+        };
     };
 });
 
