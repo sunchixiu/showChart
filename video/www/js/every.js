@@ -3,6 +3,7 @@
  */
 document.addEventListener('touchstart', function(){});
 document.documentElement.style.fontSize=document.documentElement.clientWidth/18+'px';
+console.log(document.documentElement.clientWidth);
 document.onselectstart = function(){
     return false;
 };

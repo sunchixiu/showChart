@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="css/css.css">
+	<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript">
+		document.addEventListener('touchstart', function(){});
+		document.documentElement.style.fontSize=document.documentElement.clientWidth/36+'px';
+
+		$(document).ready(function() {
+			$('.inactive').click(function(){
+				if($(this).siblings('ul').css('display')=='none'){
+					$(this).parent('li').siblings('li').removeClass('inactives');
+					$(this).addClass('inactives');
+					$(this).siblings('ul').slideDown(100).children('li');
+					if($(this).parents('li').siblings('li').children('ul').css('display')=='block'){
+						$(this).parents('li').siblings('li').children('ul').parent('li').children('a').removeClass('inactives');
+						$(this).parents('li').siblings('li').children('ul').slideUp(100);
+					}
+				}else{
+					$(this).removeClass('inactives');
+					$(this).siblings('ul').slideUp(100);
+					$(this).siblings('ul').children('li').children('ul').parent('li').children('a').addClass('inactives');
+					$(this).siblings('ul').children('li').children('ul').slideUp(100);
+					$(this).siblings('ul').children('li').children('a').removeClass('inactives');
+				}
+			})
+			$(".pitch").click(function () {
+				$(this).toggleClass("pitch-on")
+			})
+
+			$(".unfold").click(function () {
+				 $(this).parent().parent().toggleClass("regain")
+			})
+
+
+			$(".subtract").on('click',function () {
+				var num = parseInt($(this).siblings('font').html());
+				if(num > 0){
+					$(this).siblings('font').html(num-1);
+				}else{
+					return false;
+				};
+				
+			})
+
+			$(".plus").on('click',function () {
+				var num = parseInt($(this).siblings('font').html());
+				if(num <10){
+					$(this).siblings('font').html(num+1);
+				}else{
+					return false;
+				}
+			});
+		});
+	</script>
+</head>
+<body style="background: #efeff4;">
+	<div class="title">
+		<a class="backtrack" href="javascript:;"></a>
+		筛选试题
+		<a class="right" href="javascript:;">确定</a>
+	</div>
+	<div class="list">
+		<ul class="yiji">
+			<li>
+				<a href="#" class="inactive">第一单元第一节认识生物</a>
+				<ul style="display: none">
+					<li>
+						<a href="#" class="inactive active">课时1生物与环境关系</a>
+						<ul>
+							<li><a class="pitch" href="#"><i></i>第一节生物与环境组成生态系统</a></li>
+							<li><a class="pitch" href="#"><i></i>第一节生物与环境组成生态系统</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="#" class="inactive active">课时1生物与环境关系</a>
+						<ul>
+							<li><a class="pitch" href="#"><i></i>第一节生物与环境组成生态系统</a></li>
+							<li><a class="pitch" href="#"><i></i>第一节生物与环境组成生态系统</a></li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<a href="#" class="inactive">第一单元第一节认识生物</a>
+				<ul style="display: none">
+					<li>
+						<a href="#" class="inactive active">课时1生物与环境关系</a>
+						<ul>
+							<li><a class="pitch" href="#"><i></i>第一节生物与环境组成生态系统</a></li>
+							<li><a class="pitch" href="#"><i></i>第一节生物与环境组成生态系统</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="#" class="inactive active">课时1生物与环境关系</a>
+						<ul>
+							<li><a class="pitch" href="#"><i></i>第一节生物与环境组成生态系统</a></li>
+							<li><a class="pitch" href="#"><i></i>第一节生物与环境组成生态系统</a></li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<a href="#" class="inactive">第一单元第一节认识生物</a>
+				<ul style="display: none">
+					<li>
+						<a href="#" class="inactive active">课时1生物与环境关系</a>
+						<ul>
+							<li><a class="pitch" href="#"><i></i>第一节生物与环境组成生态系统</a></li>
+							<li><a class="pitch" href="#"><i></i>第一节生物与环境组成生态系统</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="#" class="inactive active">课时1生物与环境关系</a>
+						<ul>
+							<li><a class="pitch" href="#"><i></i>第一节生物与环境组成生态系统</a></li>
+							<li><a class="pitch" href="#"><i></i>第一节生物与环境组成生态系统</a></li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<a href="#" class="inactive">第一单元第一节认识生物</a>
+				<ul style="display: none">
+					<li>
+						<a href="#" class="inactive active">课时1生物与环境关系</a>
+						<ul>
+							<li><a class="pitch" href="#"><i></i>第一节生物与环境组成生态系统</a></li>
+							<li><a class="pitch" href="#"><i></i>第一节生物与环境组成生态系统</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="#" class="inactive active">课时1生物与环境关系</a>
+						<ul>
+							<li><a class="pitch" href="#"><i></i>第一节生物与环境组成生态系统</a></li>
+							<li><a class="pitch" href="#"><i></i>第一节生物与环境组成生态系统</a></li>
+							<li><a class="pitch" href="#"><i></i>第一节生物与环境组成生态系统</a></li>
+							<li><a class="pitch" href="#"><i></i>第一节生物与环境组成生态系统</a></li>
+							<li><a class="pitch" href="#"><i></i>第一节生物与环境组成生态系统</a></li>
+							<li><a class="pitch" href="#"><i></i>第一节生物与环境组成生态系统</a></li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+	<div class="type-quantity">
+		<p>
+			试题类型及数量
+			<a class="unfold" href="javascript:;"></a>
+		</p>
+		<ul>
+			<li>
+				<label>简答题</label>
+				<span class="subtract">-</span>
+				<font>5</font>
+				<span class="plus">+</span>
+			</li>
+			<li>
+				<label>简答题</label>
+				<span class="subtract">-</span>
+				<font>0</font>
+				<span class="plus">+</span>
+			</li>
+			<li>
+				<label>简答题</label>
+				<span class="subtract">-</span>
+				<font>0</font>
+				<span class="plus">+</span>
+			</li>
+			<li>
+				<label>简答题</label>
+				<span class="subtract">-</span>
+				<font>0</font>
+				<span class="plus">+</span>
+			</li>
+		</ul>
+	</div>
+</body>
+</html>

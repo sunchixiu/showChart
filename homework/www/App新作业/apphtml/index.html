@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="css/css.css">
+	<link rel="stylesheet" href="css/mobilebone.css">
+	<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+	<script src="js/common.js"></script>
+	<script src="js/base.js"></script>
+	<script src="js/mobilebone.js"></script>
+	<script src="js/Intelligent.js"></script>
+	<script src="js/IntelligentTestPaper.js"></script>
+	<script>
+		//获取地址栏参数
+		$.getUrlParam = function(name){
+			var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");    //正则？？？？！！！
+			var r = window.location.search.substr(1).match(reg);     // substr( ) 抽取字符    match() 匹配
+			if (r!=null) return unescape(r[2]); return null;        //unescape() 函数可对通过 escape() 编码的字符串进行解码。
+		};
+		var apiurl = 'http://103.10.86.21:70';
+		var cloudurl = 'http://cloudso.iischool.com';
+		var testurl = 'http://www.ischool100.com';
+		var publisherid = 'cd87bc381b9e466599f9199c6d08e0cf';
+		var subjectid = '5f6d9d30eaf4477c9c211e9935448ce2';
+		if($.getUrlParam('apiurl')){
+			apiurl = $.getUrlParam('apiurl');
+		};
+		if($.getUrlParam('cloudurl')){
+			apiurl = $.getUrlParam('cloudurl');
+		};
+		if($.getUrlParam('testurl')){
+			apiurl = $.getUrlParam('testurl');
+		};
+		if($.getUrlParam('publisherid')){
+			apiurl = $.getUrlParam('publisherid');
+		};
+	</script>
+</head>
+<body>
+<div class="page out" id="pageHome" style="background: #fff; padding-bottom: 5rem;">
+	<p class="selected border">
+		<a href="javascript:TestPaper.Save(1);">筛选试题</a>
+		<span id="selecttestid" onclick="turnSencondpage();">未筛选</span>
+	</p>
+	<div class="paperbody" style="overflow: auto; position: relative; top: 4.4rem; padding: 1rem; width: 34rem; height: 100%;">
+		<a href="javascript:turnSencondpage();" class="clickAdd">点击添加试题</a>
+	</div>
+	<div style="position: relative; height: 5rem;"></div>
+</div>
+
+<div class="page out" id="pageSecond">
+	<div class="testmask">111</div>
+	<div id="home">
+		<div class="memu-wrap">
+			<ul class="memu clear">
+				<li id="memu-class"><label class="nowrap">年级</label></li>
+				<!--<li id="memu-subject"><label class="nowrap" data-subject="">学科</label></li>-->
+				<li id="memu-edition"><label class="nowrap">版本</label></li>
+			</ul>
+			<div class="memu-con"  >
+				<div class="menu2-left">
+					<p class="current">小学</p>
+					<p>初中</p>
+					<p>高中</p>
+				</div>
+				<div class="menu2-right">
+
+					<ul class="rightul" style="display:block">
+						<li>一年级</li>
+					</ul>
+					<ul class="rightul">
+						<li>七年级</li>
+					</ul>
+					<ul class="rightul">
+						<li>全年级</li>
+					</ul>
+				</div>
+
+			</div>
+			<!--<div class="memu-con pauto">-->
+				<!--&lt;!&ndash;<p  class="tip">请先选择年级</p>&ndash;&gt;-->
+				<!--<ul id="subjectid">-->
+					<!--<li>语文</li>-->
+				<!--</ul>-->
+			<!--</div>-->
+			<div class="memu-con pauto" >
+				<!--<p class="tip">请先选择年级和学科</p>-->
+				<ul id="versionid">
+					<li>人民教育出版社_新课标</li>
+					<li>江苏教育出版社</li>
+					<li>河北教育出版社</li>
+					<li>北京师范大学出版社</li>
+					<li>语文出版社A</li>
+					<li>语文出版社s</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="list">
+		<ul class="yiji">
+			<!--<li>-->
+				<!--<a href="#" class="inactive">第一单元第一节认识生物</a>-->
+				<!--<ul style="display: none">-->
+					<!--<li>-->
+						<!--<a class="inactive" href="#"><i></i>第一节生物与环境组成生态系统</a>-->
+						<!--<ul>-->
+							<!--<li class="three"><a class="pitch" href="#"><i></i>第一节生物与环境组成生态系统</a></li>-->
+							<!--<li class="three"><a class="pitch" href="#"><i></i>第一节生物与环境组成生态系统</a></li>-->
+						<!--</ul>-->
+					<!--</li>-->
+				<!--</ul>-->
+			<!--</li>-->
+		</ul>
+	</div>
+	<div class="type-quantity" id="questiontype">
+		<p>
+			<label onclick="getexampaper();">试题类型及数量</label>
+			<a class="unfold" href="javascript:;"></a>
+		</p>
+		<ul>
+			<!--<li>-->
+				<!--<label>简答题</label>-->
+				<!--<span class="subtract">-</span>-->
+				<!--<font>0</font>-->
+				<!--<span class="plus">+</span>-->
+			<!--</li>-->
+		</ul>
+	</div>
+</div>
+<input id="testName" type="hidden" value="测试组卷名称">
+<script>
+	function turnSencondpage(){
+		window.location.href = '#&pageSecond';
+	};
+	$.ajax({
+		url: apiurl + '/TSB_ISCHOOL_EXAM_SERVER/testpaper/getstudyidentitylist',
+		data: JSON.stringify({"tasktype":"1","publisherid":publisherid}),
+		type: 'post',
+		contentType: "application/json; charset=utf-8",
+		success: function(data){
+			getdata(data.data);
+		}
+	});
+</script>
+
+<script type="text/javascript">
+	$(document).delegate('.inactive','click',function(){
+		if($(this).siblings('ul').css('display')=='none'){
+			$(this).parent('li').siblings('li').children("a").removeClass('inactives');
+			$(this).parent("li").siblings('li').children('ul').slideUp(100).children('li');
+			$(this).addClass('inactives');
+			$(this).siblings('ul').slideDown(100).children('li');
+		}else{
+			$(this).removeClass('inactives');
+			$(this).siblings('ul').slideUp(100);
+		}
+	});
+
+	$(document).delegate(".pitch", 'click', function () {
+		$(this).toggleClass("pitch-on")
+	});
+
+	$(".unfold").click(function () {
+		$(this).parent().parent().toggleClass("regain")
+	})
+
+
+	$(document).delegate(".subtract","click",function () {
+		var num = parseInt($(this).siblings('font').html());
+		if(num > 0){
+			$(this).siblings('font').html(num-1);
+		}else{
+			return false;
+		};
+	})
+
+	$(document).delegate(".plus","click",function () {
+		var num = parseInt($(this).siblings('font').html());
+		var maxmun = parseInt($(this).attr('data-maxnum'));
+		if(num < maxmun){
+			$(this).siblings('font').html(num+1);
+		}else{
+			return false;
+		}
+	});
+</script>
+
+<script>
+	// setheight
+	setmaskheight();
+	function setmaskheight(){
+
+		var idochei=$(document).height();
+		$('.testmask').css("height",idochei);
+	}
+
+	// tab
+	tab('.memu li','.memu-con','.memu-wrap','click',setmaskheight);
+	tab('.menu2-left p','.rightul','.memu-con','click',setmaskheight);
+
+
+	function hidemask(){
+		$('.testmask').hide();
+		$('.memu-con').hide();
+		$('.memu li').removeClass('current');
+	}
+	//点击mask显示
+	$('.memu').click(function() {
+		$('.testmask').show();
+		$('body').css('overflow','hidden');
+
+		//选择年级、学科、版本后，mask隐藏。当前状态收起。
+		$('.memu-con li').click(function () {
+			$('li.current label').html($(this).html());
+			hidemask();
+			$('body').css('overflow','auto');
+			//点击年级加载全年级
+
+			//点击学校、版本提示需要依次选择
+
+		})
+		//点击空白处隐藏。
+		$('.testmask').click(function(){
+			hidemask();
+			$('body').css('overflow','auto');
+		})
+
+	});
+
+	//计算高度
+	var winH = document.documentElement.clientHeight;
+	var winremH = winH/ounit;
+	$('.list').css('max-height',(winremH-23)+'rem');
+
+	//跳转页面时隐藏弹窗
+	window.onpopstate = function(){
+		ischool.layout.hide();
+		$('.PaperLoadLayout').hide();
+		$("#PaperLoadLayoutContainer").hide();
+		if(currentAjax){
+			currentAjax.abort();
+		}
+	};
+</script>
+</body>
+</html>

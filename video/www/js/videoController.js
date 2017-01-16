@@ -3,7 +3,7 @@
  */
 videoListApp.controller("videoListCtrl",function($scope,$http,$sce) {
     $scope.bookArr = [
-        {bookName: '数学0'}, {bookName: '英语1'}, {bookName: '语文2'}, {bookName: '数学3'}
+        {bookName: '数学0',bookurl:'img/book.jpg'}, {bookName: '英语1',bookurl:'img/book.jpg'}, {bookName: '语文2',bookurl:'img/book.jpg'}, {bookName: '数学3',bookurl:'img/book.jpg'}
     ];
 
     $scope.renderFinish = function () {
@@ -55,7 +55,7 @@ videoListApp.controller("videoListCtrl",function($scope,$http,$sce) {
         };
     };
 
-    //$scope.ifshow = false;
+    $scope.ifshow = false;
     $scope.ajaxVideo = function (iinum, date){
         //$http({
         //    method: 'post',
@@ -70,10 +70,13 @@ videoListApp.controller("videoListCtrl",function($scope,$http,$sce) {
 
     //限制textarea输入字数
     $scope.checkText = function (){
-        if ($scope.messageValue.length > 100) {
-            $scope.messageValue = $scope.messageValue.substr(0, 100);
+        var limitWords = 100;
+        if ($scope.messageValue.length > limitWords) {
+            $scope.messageValue = $scope.messageValue.substr(0, limitWords);
         };
     };
+
+    var vm = $scope.vm = {};
 });
 
 //post参数设置

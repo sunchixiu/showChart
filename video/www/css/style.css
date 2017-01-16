@@ -48,7 +48,7 @@ body{width: 100%; height: 100%; overflow: hidden; position: relative; font-famil
 .message_tab ul li{width: auto; height: 1.6rem; text-align: center; line-height: 1.6rem; float: left; padding: 0 0.5rem; font-size: 0.8rem;}
 .message_tab ul li.cur{border: 1px solid #eee; border-bottom: none; background: #fff;}
 .tabcontent{height: 7.4rem; border: 1px solid #eee; padding: 0.4rem 0.5rem; margin-top: -1px; color: #666; font-size: 0.7rem; line-height: 1rem;}
-.tabcontent div{display: none;}
+/*.tabcontent div{display: none;}*/
 .tabcontent div.cur{display: block;}
 .tabcontent div textarea{width: 100%; height: 100%;}
 

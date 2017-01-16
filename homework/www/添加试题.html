@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="css/css.css">
+	<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript">
+		document.addEventListener('touchstart', function(){});
+		document.documentElement.style.fontSize=document.documentElement.clientWidth/36+'px';
+
+		$(document).ready(function() {
+			$(".questions").click(function () {
+				 $(this).css("background" , "#e1f5fd");
+				 $(this).children(".operation").show();
+			})
+		});
+	</script>
+</head>
+<body>
+	<div class="title">
+		<a class="backtrack" href="javascript:;"></a>
+		添加试题
+		<a class="right" href="javascript:;">保存</a>
+	</div>
+	<p class="selected" style="background-color: #f4f4f4">
+		<a href="javascript:;">筛选试题</a>
+		<span>已选<font>3</font>种类型<font>15</font>到试题</span>
+	</p>
+	<div class="testQuestions">
+		<ul>
+			<li class="questions">
+				二级教师，2001年济宁师专数学教育专业毕业，2003年9月参加工作，现从事高中语文教学工作。2003年9月参加工作，现从事高中语文教学工作。 • 2014年湖北省优秀教师 • 2015年优秀青年工作者、优秀班主任、杰出青年 • 2014年湖北省优秀教师 • 2015年优秀青年工作者、优秀班主任、杰出青年
+				<div class="operation">
+					<span>智能换题</span>
+					<span>上移</span>
+					<span>下移</span>
+					<span>删除</span>
+				</div>
+			</li>
+			<li class="questions">
+				<p>二级教师，2001年济宁师专数学教育专业毕业，2003年9月参加工作，现从事高中语文教学工作。2003年9月参加工作，现从事高中语文教学工作。 • 2014年湖北省优秀教师 • 2015年优秀青年工作者、优秀班主任、杰出青年 • 2014年湖北省优秀教师 • 2015年优秀青年工作者、优秀班主任、杰出青年</p>
+				<div class="operation">
+					<span>智能换题</span>
+					<span>上移</span>
+					<span>下移</span>
+					<span>删除</span>
+				</div>
+			</li>
+			<li class="questions">
+				<p>二级教师，2001年济宁师专数学教育专业毕业，2003年9月参加工作，现从事高中语文教学工作。2003年9月参加工作，现从事高中语文教学工作。 • 2014年湖北省优秀教师 • 2015年优秀青年工作者、优秀班主任、杰出青年 • 2014年湖北省优秀教师 • 2015年优秀青年工作者、优秀班主任、杰出青年</p>
+				<div class="operation">
+					<span>智能换题</span>
+					<span>上移</span>
+					<span>下移</span>
+					<span>删除</span>
+				</div>
+			</li>
+			<li class="questions">
+				<p>二级教师，2001年济宁师专数学教育专业毕业，2003年9月参加工作，现从事高中语文教学工作。2003年9月参加工作，现从事高中语文教学工作。 • 2014年湖北省优秀教师 • 2015年优秀青年工作者、优秀班主任、杰出青年 • 2014年湖北省优秀教师 • 2015年优秀青年工作者、优秀班主任、杰出青年</p>
+				<div class="operation">
+					<span>智能换题</span>
+					<span>上移</span>
+					<span>下移</span>
+					<span>删除</span>
+				</div>
+			</li>
+		</ul>
+	</div>
+</body>
+</html>
