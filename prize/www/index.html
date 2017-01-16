@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <title>摇一摇</title>
+    <script>
+        document.addEventListener('touchstart', function(){});
+        document.documentElement.style.fontSize = document.documentElement.clientWidth/36+'px';
+        document.onselectstart = function(){
+            return false;
+        };
+    </script>
+    <style>
+        *{padding: 0; margin: 0;}
+        html,body{height: 100%;}
+        ul li{list-style: none;}
+        a{text-decoration: none; color: #fff;}
+        .bg{width: 100%; height: 100%; background-image: url("images/bg.jpg"); background-size: 100% 100%; background-repeat: no-repeat;}
+        .prize{width: 23.5rem; height: 12rem; display: inline-block; background-image: url("images/prize.png"); background-size: 23.5rem 12rem; background-repeat: no-repeat; margin: 9.2rem 6.2rem 0;}
+        .noprize{width: 23.5rem; height: 12rem; display: inline-block; background-image: url("images/noprize.png"); background-size: 23.5rem 12rem; background-repeat: no-repeat; margin: 9.2rem 6.2rem 0;}
+        .prizeinput{display: inline-block; width: 27rem; height: 8.4rem; background-image: url("images/prizenum.png"); background-repeat: no-repeat; background-size: 27rem 8.4rem; margin: 2.4rem 4.5rem;}
+        .prizebord{display: inline-block; width: 24.8rem; height: 6.2rem; border: 0.1rem solid #fff; margin: 1rem;}
+        .textup{font-size: 32px; line-height: 40px; color: #fff; text-align: center;}
+        .textdown{font-size: 14px; line-height: 24px; color: #fff; text-align: center;}
+        .prompt{width: 20rem; height: auto; margin: -0.8rem 8rem; color: #565656; line-height: 2rem; font-size: 1.2rem; text-align: center;}
+        .ilink{width: 100%; height: 2.8rem;}
+        .ilink span{display: inline-block; width: 10rem; height: 2.8rem; float: left; border-radius: 0.4rem; -webkit-border-radius: 0.4rem; background: #ff8a01; text-align: center; line-height: 2.8rem; color: #ffffff; margin: 3rem 1rem; font-size: 1.4rem;}
+        .ilink span:active{background: #cb6d00;}
+    </style>
+</head>
+<body>
+<div class="bg">
+    <div class="prize" id="prize"></div>
+    <div class="prizeinput">
+        <div class="prizebord">
+            <p class="textup">￥<label id="num">98</label> 权益</p>
+            <p class="textdown"><label id="time">仅限2016年12月12日前使用</label></p>
+        </div>
+    </div>
+    <div class="prompt">
+        温馨提示：此权益自动充入您的账户，和普通权益一样兑换奖品。
+    </div>
+    <div class="ilink">
+        <span><a href="#">超链接1</a></span>
+        <span><a href="#">超链接2</a></span>
+        <span><a href="#">超链接3</a></span>
+    </div>
+</div>
+
+<script>
+    //没有引用jQuery，下面的js是原生js例子
+
+    //如若没中奖
+    //document.querySelector('#prize').className = 'noprize';
+
+    //设置权益数
+    //document.querySelector('#num').innerHTML = 48;
+</script>
+</body>
+</html>

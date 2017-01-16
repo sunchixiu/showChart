@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, target-densityDpi=device-dpi, user-scalable=no"/>
+    <title>可兑换商品</title>
+    <link rel="stylesheet" href="css/bank.css" />
+    <link rel="stylesheet" href="css/index.css" />
+    <link rel="stylesheet" href="css/mobilebone.css" />
+    <link rel="stylesheet" href="css/swiper.min.css" />
+    <link rel="stylesheet" href="css/mepickout.css" />
+    <script src="js\all.js"></script>
+    <script src="js/mobilebone.js"></script>
+    <script src="js/pickout.js"></script>
+</head>
+<body>
+<div class="page out" id="homePage">
+    <div class="tab_fixed" style="display: block;">
+        <div class="city m">
+            <label class="left headleft"><a href="javascript:window.location.href='weixin.html';"><span class="retunpage"></span></a></label>
+            <label>可兑换商品列表</label>
+            <label class="right headright ftz30"><a href="#&changebank">切换银行</a></label>
+        </div>
+    </div>
+    <div class="content_container" style="height: 100%; overflow: scroll;">
+        <div class="swiper-container" style="height:auto; width:1080px; display: block; margin-top: 120px;">
+        </div>
+        <div id="content1-div">
+            <div class="content" id="content1"></div>
+        </div>
+        <div style="height: 80px;"></div>
+    </div>
+
+</div>
+
+<!--包含切换银行js-->
+<script src="js/changebank.js"></script>
+
+</body>
+<script type="text/javascript">
+
+init();
+    function init() {
+        initData();
+    }
+
+    function initData() {
+        var html = "";
+        for (var j=0; j<5; j++) {
+            html += '<div class="content1 shadow" onclick="jumpToDetail()"><img class="content1_img" src="http://www.pptbz.com/pptpic/UploadFiles_6909/201110/20111014111307895.jpg" /><div class="content1_text left"><div class="content1_text_top">商品名称</div><div class="content1_text_bottom"><label>可兑换</label><label style="margin-left: 36px;">￥8权益</label></div></div><div class="content1_btn right">查看详情</div><div class="clear"></div></div>';
+        };
+        $("#content1").html(html);
+    }
+    function jumpToDetail(spusid,gid,aid){
+        jump("detail.html?spusid="+spusid+"&gid="+gid+"&aid="+aid);
+    }
+</script>
+</html>

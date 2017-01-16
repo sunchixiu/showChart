@@ -1,0 +1,260 @@
+body,div,dl,dt,dd,ul,ol,li,form,fieldset,input,button,textarea,p{margin:0; padding:0; -webkit-tap-highlight-color:rgba(0,0,0,0); word-wrap:break-word;}
+fieldset,img,input {border:0; vertical-align:middle;}
+address,caption,cite,code,dfn,em,strong,th,var {font-style:normal; font-weight:normal;}
+ol,ul {list-style:none;}
+a{text-decoration:none;}
+input,textarea,button{outline:none;}
+html{height: 100%; overflow: hidden;}
+body{width: 100%; height: 100%; overflow: hidden; position: relative; font-family: '微软雅黑';}
+#homeSection{width: 100%; height: 100%; overflow: scroll; position: absolute; top: 4.4rem; left: 0;}
+.title{
+	width: 100%;
+	height: 4.4rem;
+	line-height: 4.4rem;
+	font-size: 1.8rem;
+	background: #4a4a4a;
+	color: #fff;
+	text-align: center;
+	position: fixed;
+	top: 0;
+	z-index: 10;
+}
+.title p{
+	padding: 0 5rem;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow:ellipsis;
+}
+.title a{
+	width: 1.3rem;
+	height: 2.5rem;
+	display: inline-block;
+	position: absolute;
+	top: 0.95rem;
+	left: 1.5rem;
+	background: url(../images/backtrack.png) no-repeat center / 1.3rem 2.5rem;
+}
+.textbook,.chapter{
+	width: 100%;
+	height: 4rem;
+	line-height: 4rem;
+	font-size: 1.6rem;
+	color: #4f4f4f;
+	border-top: 1px solid #e7e7ec;
+	border-bottom: 1px solid #e7e7ec;
+	text-indent: 4rem;
+	margin-top: 0.9rem;
+}
+.textbook:active,.chapter:active{background-color: #eee;}
+.textbook{
+	background: #fff url(../images/textbook.png) no-repeat center left 1rem / 2rem;
+	margin-top: 0.9rem;
+}
+.chapter{
+	background: #fff url(../images/chapter.png) no-repeat center left 1rem / 2rem;
+}
+.list{
+	margin-top: 0.9rem;
+	border-top: 1px solid #e7e7ec;
+}
+.list ul li{
+	border-bottom: 2px solid #d8d8d8;
+	padding: 1rem;
+	background: #fff;
+	overflow: hidden;
+}
+.list ul li:active{background: #eee;}
+.list ul li img{
+	width: 14.5rem;
+	height: 8.3rem;
+	float: left;
+	margin-right: 1rem;
+}
+.list ul li .p1{
+	font-size: 1.5rem;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow:ellipsis;
+	margin-bottom: 1rem;
+	color: #4f4f4f;
+}
+.list ul li .p2{
+	font-size: 1.1rem;
+	color: #979a9e;
+}
+.list ul li .p3{
+	font-size: 1.1rem;
+	color: #5dcf78;
+	margin-top: 2.2rem;
+}
+.list ul li .p3 font{
+	color: #979a9e;
+	float: right;
+}
+
+.vedio{
+	margin-top: 4.4rem;
+	height: 27rem;
+	background-color: #000;
+}
+.rate{
+	height: 4.4rem;
+	line-height: 4.4rem;
+	background: #fff;
+	padding: 0 1rem;
+	border-bottom: 1px solid #efeff4;
+}
+.rate .GlobalRate{
+	float: left;
+}
+.rate .GlobalRate span{
+	background: url(../images/rate.png)no-repeat center / 1.6rem;
+	width: 1.6rem;
+	height: 1.6rem;
+	display: inline-block;
+}
+.rate .play{
+	font-size: 1.1rem;
+	color: #5dcf78;
+	float: right;
+}
+.rate .play font{
+	color: #979a9e;
+	margin-left: 2rem;
+}
+
+.xx_con{
+	background: #fff;
+	padding: 1rem;
+	border-bottom: 1px solid #efeff4;
+}
+.xx_con p{
+	line-height: 2.5rem;
+}
+.xx_con p.p1{
+	color: #4a4a4a;
+	font-size: 1.5rem;
+	line-height: 2rem;
+}
+.xx_con p.p2{
+	color: #4f4f4f;
+	font-size: 1.4rem;
+	line-height: 3rem;
+}
+.chapter-com{
+	height: 6rem;
+	line-height: 6rem;
+	background: #fff;
+	padding: 0 1rem;
+	border-bottom: 1px solid #efeff4;
+	font-size: 1.7rem;
+	color: #4a4a4a;
+}
+.chapter-com span{
+	float: right;
+	font-size: 1.4rem;
+}
+.chapterList{
+	border-left: 1px solid #ddd;
+	border-top: 1px solid #ddd;
+	overflow: hidden;
+	margin-right: -1px;
+}
+.chapterList li{
+	width: 25%;
+	height: 5.4rem;
+	line-height: 5.4rem;
+	text-align: center;
+	float: left;
+	border-right: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+	margin-right: -1px;
+}
+.chapterList li label{display: block;}
+.chapterList li span{
+	background: #65c712 url(../images/play.png)no-repeat center / 1rem;
+	width: 3rem;
+	height: 3rem;
+	display: inline-block;
+	border-radius: 50%;
+	margin-top: 1.2rem;
+	/*margin-left: 3rem;*/
+	display: none;
+}
+.chapterList li.active label{display: none;}
+.chapterList li.active span{display: inline-block;}
+
+.selectbook{background-color: #fff; position: absolute; z-index:-1; width: 28rem; max-height: 70%; overflow: auto; margin-top: 10rem; margin-left: 4rem; border-radius: 0.4rem; -webkit-border-radius: 0.4rem; opacity: 0; font-size: 1.6rem; color: #333; transition: .3s all ease-in;}
+.booktitle{font-size: 1.8rem; height: 3rem; line-height: 3rem; padding: 1rem;}
+.selectbook ul{border-top: 1px solid #ccc; margin-bottom: 2rem; font-size: 1.4rem;}
+.selectbook ul li{height: 4rem; line-height: 4rem; border-bottom: 1px solid #ccc; background-color: #fff; padding: 0 1rem;}
+.selectbook ul li:active{background-color: #eee;}
+
+.bookloading{width: 1.8rem; height: 1.8rem; background-image: url("../images/loadding.gif"); background-size: 1.8rem 1.8rem; position: fixed; top: 30rem; left: 50%; margin-left: -0.9rem;}
+
+/*购买弹层*/
+.price{width: 100%; height: 100%; position: absolute; opacity: 0;}
+.price p{width: 23.6rem; margin: 0 auto;}
+.price p.pic{margin-top: 10rem; text-align: center;}
+.price p.txt{margin-top: 3.6rem; font-size: 1.6rem; color: #fff; line-height: 2.4rem;}
+.price p .blue{color: #188bea;}
+.price img{width: 15rem;}
+.price .btnk{margin-top: 7.6rem; text-align: center;}
+.price .btn{width: 10rem; height: 4rem; line-height: 4.2rem; color: #fff; text-align: center; font-size: 1.6rem; background-color: #ff6d27; -webkit-border-radius: 0.4rem; border-radius: 0.4rem; display: inline-block;}
+.price .btn:active{background-color: #da4700;}
+
+/***************************** 全局浮动层样式 ************************************************/
+#globallayoutbg {
+	position:absolute;
+	width:100%;
+	z-index:10000;
+	height:100%;
+	background:#000;
+	filter:alpha(opacity=70);
+	opacity:0.7;
+	top:0;
+	color:#fff;
+}
+#globallayout {
+	z-index:10001;
+	position:absolute;
+	width:26rem;
+	border:1px solid #ccc;
+	-moz-border-radius:0.4rem;
+	-webkit-border-radius:0.4rem;
+	border-radius:0.4rem;
+	margin-left:auto;
+	margin-right:auto;
+	background:#fff;
+	overflow:hidden;
+}
+#globallayout .globallayout_title {
+	padding-top:0.8rem;
+	padding-left:1.5rem;
+	font-size:1.6rem;
+	height:3.2rem;
+	font-weight:bold;
+	background:#efefef;
+	border-bottom:1px solid #ccc;
+	-moz-border-radius:0.4rem;
+	-webkit-border-radius:0.4rem;
+	border-radius:0.4rem;
+	border-bottom-left-radius:0;
+	border-bottom-right-radius:0;
+	color:#000;
+}
+#globallayout .globallayout_title h1 {
+	font-size:1.6rem;
+}
+#globallayout .globallayout_title span {
+	float:right;
+	cursor:pointer;
+	margin-right:1rem;
+}
+#globallayout .globallayout_title span:hover {
+	color:#f00;
+}
+#globallayout .globallayout_content {
+	padding:1.5rem
+	background:#fff;
+}

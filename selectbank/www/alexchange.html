@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, target-densityDpi=device-dpi, user-scalable=no"/>
+    <title>兑换清单</title>
+    <link rel="stylesheet" href="css/bank.css" />
+    <link rel="stylesheet" href="css/index.css" />
+    <link rel="stylesheet" href="css/mobilebone.css" />
+    <link rel="stylesheet" href="css/swiper.min.css" />
+    <link rel="stylesheet" href="css/mepickout.css" />
+    <script src="js\all.js"></script>
+    <script src="js/mobilebone.js"></script>
+    <script src="js/pickout.js"></script>
+</head>
+<body>
+<div class="page out" id="homePage">
+    <div class="tab_fixed" style="display: block;">
+        <div class="city m">
+            <label class="left headleft"><a href="javascript:window.location.href=history.go(-1);"><span class="retunpage"></span></a></label>
+            <label>兑换清单</label>
+            <label class="right headright ftz30"><a href="#&changebank">切换银行</a></label>
+        </div>
+    </div>
+    <div class="content_container" style="height: 100%; overflow: scroll;">
+        <div class="swiper-container" style="height:auto; width:1080px; display: block; margin-top: 120px;">
+        </div>
+        <div id="content2-div">
+            <div class="content" id="content2"></div>
+        </div>
+    </div>
+
+</div>
+
+<!--包含切换银行js-->
+<script src="js/changebank.js"></script>
+
+</body>
+<script type="text/javascript">
+
+init();
+    function init() {
+        initData();
+    }
+
+    function initData() {
+        var html2 = "";
+        for (var j=0; j<4; j++) {
+            html2 += '<div class="content2 shadow" onclick="jumpToDetail()"><img class="content2_img left" src="http://www.pptbz.com/pptpic/UploadFiles_6909/201110/20111014111307895.jpg" /><div class="content2_text left"><div class="content2_text1">商品44</div><div class="content2_text2">点点滴滴</div><div class="content2_text3">￥11权益</div><div class="content2_text4">2016-07-23截止</div></div><div class="content2_btn left" onclick="delDetail($(this));">删除</div><div class="clear"></div></div>';
+        };
+        html2 += '<div class="clear"></div>';
+        $("#content2").html(html2);
+    };
+
+    function delDetail(_this){
+        //ajax删除，success:
+        _this.parent().remove();
+    };
+</script>
+</html>

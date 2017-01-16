@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=9">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+<title>Play</title>
+
+<script type="text/javascript">
+
+function Pause()
+{
+	player.pause();
+}
+</script>
+</head>
+
+<body>
+<!--<div class="videoWrapnew">-->
+	<!--<div id="id_video_container" ></div>-->
+	<!--<div class="video" id="CuPlayer"></div>-->
+<!--</div>-->
+<div id="id_video_container" ></div>
+<script src="js/h5connect.js"></script>
+
+<script type="text/javascript">
+	var fileId = "14651978969257199875";
+	var player;
+	if(fileId!=null&&fileId!=""&&fileId!="null"){
+		(function(){ 
+//			var option ={"auto_play":"0","file_id":fileId,"app_id":"1251972963",disable_full_screen:"1", "width":"800","height":"600"};
+			var option ={"auto_play":"0","file_id":"14651978969265093106","app_id":"1251972963", "width":800,"height":600};
+			player = new qcVideo.Player("id_video_container", option );
+		})();
+	}
+</script>
+
+</body>
+</html>

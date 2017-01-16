@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, target-densityDpi=device-dpi, user-scalable=no"/>
+    <title>扫描二维码</title>
+    <link rel="stylesheet" href="css/index.css" />
+    <script src="js/all.js"></script>
+    <style>
+        *{margin: 0; padding: 0;}
+        .ewm{width: 900px; height: 900px; margin: 240px 90px 100px;}
+        .shadow{box-shadow: 0px 13px 33px #000}
+        .shadowtxt{box-shadow: 0px 13px 10px #333}
+        .ewmtxt{width: 840px; height: 160px; background-color: #fff; margin: 0px 90px; font-size: 42px; padding: 30px; line-height: 81px;}
+        .shm{width: 900px; color: #fff; font-size: 36px; line-height: 54px; margin: 80px 90px;}
+        #globallayoutbg {position:absolute;width:100%;z-index:10000;height:100%;background:#000;filter:alpha(opacity=70);opacity:0.7;top:0;color：#000;}
+        #globallayout {z-index:10001;position:absolute;width:500px;border:1px solid #ccc;-moz-border-radius:4px;-webkit-border-radius:4px;border-radius:4px;margin-left:auto; margin-right:auto;background:#fff;overflow:hidden;}
+        #globallayout .globallayout_title {
+            padding-top:8px;
+            padding-left:15px;
+            font-size:42px;
+            height:56px;
+            font-weight:bold;
+            background:#efefef;
+            border-bottom:1px solid #ccc;
+            -webkit-border-radius:12px;
+            border-radius:12px;
+            border-bottom-left-radius:0;
+            border-bottom-right-radius:0;
+            color:#000;
+        }
+        #globallayout .globallayout_title h1 {
+            font-size:42px;
+        }
+        #globallayout .globallayout_title span {
+            float:right;
+            cursor:pointer;
+            margin-right:30px;
+        }
+        #globallayout .globallayout_title span:hover {
+            color:#f00;
+        }
+        #globallayout .globallayout_content {
+            font-size: 42px;
+            padding:45px;
+            background:#fff;
+        }
+    </style>
+</head>
+<body style="background-color: #666;">
+<div class="page out" id="homePage">
+    <div class="tab_fixed" style="display: block;">
+        <div class="city">
+            <label class="left"><a href="javascript:window.location.href=history.go(-1);"><span class="retunpage"></span></a></label>
+        </div>
+    </div>
+    <div class="content_container">
+        <div class="ewm shadow">
+            <img src="img/ewm.jpg" width="100%" height="100%">
+        </div>
+        <div class="ewmtxt shadowtxt">
+            <p>有效期：2016-08-08</p>
+            <p>领取地点：中国银行方庄支行</p>
+        </div>
+    </div>
+    <div class="shm">
+        <p>申明：商品领取受时间限制，如扫码库存不足请直接和银行大堂经理联系。</p>
+    </div>
+</div>
+<script>
+    var ewm = {};
+    ewm.layout =
+    {
+        ccallback: (function () { }),
+        init: function (opts)
+        {
+            if (typeof opts.title == "undefined") opts.title = "消息提示";
+            if (typeof opts.content == "undefined") opts.content = "";
+            if (typeof opts.width != "number") opts.width = "480";
+            if (typeof opts.height != "number") opts.height = "800";
+            if (typeof opts.callback != "function") opts.callback = (function () { });
+            if (typeof opts.cancelcallback != "function") opts.cancelcallback = (function () { });
+            if (typeof opts.surebuttonname == "undefined") opts.surebuttonname = "确定";
+            if (typeof opts.isshowbutton == "undefined") opts.isshowbutton =false;
+
+            ewm.layout.ccallback = opts.cancelcallback;
+            var html = "<div style=\" \" id=\"globallayoutbg\"></div><div id=\"globallayout\"  style='width:" + opts.width + "px'>" +
+                    "<div class='globallayout_title'><span title='关闭'  id='globallayout_close'>X</span><h1 id='globallayout_title'>" + opts.title + "</h1></div>" +
+                    "<div id='globallayout_infocontent'><div class='globallayout_content' id='globallayout_infocontent_content' style='max-height: "+opts.height+"px; overflow-y: auto'>" + opts.content + "</div>";
+            if (opts.isshowbutton) {
+                html = html + "<div class='globallayout_footer'><button type=\"button\" class=\"btn\"  id=\"globallayoutcancelbtn\">取消</button><button type=\"button\" class=\"btn btn-success\" id='globallayoutsavebtn'>" + opts.surebuttonname + "</button></div>";
+            }
+            html = html + " </div>";
+            html=html+ "<div id='globallayout_infomessage'><div class='globallayout_content ajax'></div>";
+            if (opts.isshowbutton) {
+                html = html + "<div class='globallayout_footer'><button type=\"button\" class=\"btn btn-default\" onclick=\"ewm.layout.hide()\">取消</button><button type=\"button\" class=\"btn btn-success\" id='globallayoutalertsurebutton'>确定</button></div>";
+            };
+
+            html = html + " </div>";
+            //console.log(html);
+            if (!document.getElementById("globallayout"))
+            {
+                $("body").append(html);
+            }
+            else
+            {
+                $("#globallayout_title").html(opts.title);
+                $("#globallayout_infocontent_content").html(opts.content);
+            }
+            $("#globallayout").width( opts.width );
+            if(opts.isshowbutton)
+            {
+                $("#globallayout_infocontent").find(".globallayout_footer").show();
+                $("#globallayoutsavebtn").show();
+                $("#globallayoutsavebtn").html(opts.surebuttonname);
+            }
+            else
+            {$("#globallayout_infocontent").find(".globallayout_footer").hide();}
+
+            $("#globallayout_infomessage").css("display", "none");
+            $("#globallayout_infocontent").css("display", "block");
+            $("#globallayout_close").css("display", "block");
+
+            $("#globallayoutbg").height($(document).height());
+            var top = ( (
+            $(window).height() -$("#globallayout").height())/2 + $(document).scrollTop());
+            if (top < 0)
+                top = 10;
+            $("#globallayout").css("top", top + "px");
+
+            $("#globallayout").css("left", ($(document).width() / 2 - $("#globallayout").width() / 2) + "px");
+            $("#globallayoutbg").fadeIn("slow");
+            $("#globallayout").fadeIn("slow");
+            $("#globallayout_close").unbind();
+            $("#globallayout_close").bind("click", function () { opts.cancelcallback(); ewm.layout.hide(); });
+            $("#globallayoutcancelbtn").unbind();
+            $("#globallayoutcancelbtn").bind("click", function () { opts.cancelcallback(); ewm.layout.hide(); });
+            $("#globallayoutsavebtn").unbind();
+            $("#globallayoutsavebtn").bind("click", function () { opts.callback(); });
+            $("#globallayoutalertsurebutton").unbind();
+            $("#globallayoutalertsurebutton").bind("click", function () { ewm.layout.hide()});
+        },
+        messageinit: function (title)
+        {
+            if (!document.getElementById("globallayout")) {
+                if (typeof title == "undefined") title = "消息提示";
+                ewm.layout.init({ title: title });
+            }
+            else {
+//                $("#globallayout").width(660);
+            }
+            $("#globallayout_title").html(title);
+            $("#globallayoutbg").height($(document).height());
+            var top = (($(window).height() - $("#globallayout").height()) / 2 + $(document).scrollTop());
+            if (top < 0)
+                top = 10;
+            $("#globallayout").css("top", (top-120) + "px");
+            $("#globallayout").css("left", ($(document).width() / 2 - $("#globallayout").width() / 2) + "px");
+
+            $("#globallayout").fadeIn("slow");
+            $("#globallayoutbg").fadeIn("slow");
+            $("#globallayout_close").css("display", "none");
+            $("#globallayout_infomessage").css("display", "block");
+            $("#globallayout_infomessage").find(".globallayout_footer").css("display", "block");
+            $("#globallayout_infocontent").css("display", "none");
+            $("#globallayout_infomessage").find(".globallayout_content").removeClass("ajax");
+            $("#globallayout_infomessage").find(".globallayout_content").removeClass("error");
+            $("#globallayout_infomessage").find(".globallayout_content").removeClass("ok");
+            $("#globallayout_infomessage").find(".globallayout_content").removeClass("info");
+            $("#globallayout_infomessage").find(".globallayout_footer").find("button").eq(0).css("display", "none");
+
+        },
+        success: function (message, url)
+        {
+            if (typeof message == "undefined") message = "操作成功";
+            ewm.layout.messageinit("消息提示");
+            $("#globallayout_infomessage").find(".globallayout_content").html("" + message);
+            url = url || 2000;
+            if (typeof url=="number")
+                setTimeout(ewm.layout.hide, url);
+            else
+                location.href = url;
+        },
+        alert: function (title, message, callback,autodisplay)
+        {
+            if (typeof message == "undefined") message = "";
+            ewm.layout.messageinit(title);
+            $("#globallayout_infomessage").find(".globallayout_content").html(message);
+            $("#globallayoutalertsurebutton").unbind();
+            if (typeof callback != "function") callback = (function () { ewm.layout.hide(); });
+            $("#globallayoutalertsurebutton").bind("click", function () { ewm.layout.hide(); callback(); });
+            if (typeof autodisplay == "number") {
+                //autodisplay = 5000;
+                setTimeout(ewm.layout.hide, autodisplay);
+            }
+        },
+        hide: function ()
+        {
+            $("#globallayout").fadeOut("slow");
+            $("#globallayoutbg").fadeOut("slow");
+
+        }
+    };
+</script>
+
+<script>
+    var timer = null;
+    clearInterval(timer);
+    timer = setInterval(function(){
+        //ajax获取状态，if(吐货完成)
+        clearInterval(timer);
+        ewm.layout.hide();
+        ewm.layout.success('吐货成功',"weixin.html");//吐货成功后跳转页面
+    },2000);
+    ewm.layout.alert('提示','正在吐货...');
+</script>
+</body>
+</html>

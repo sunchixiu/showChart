@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <title>绑定手机</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="js/base.js"></script>
+</head>
+<body>
+<div class="m" style="margin-top: 10rem;">
+    <p><input class="input_txt margin_top" type="text" onkeyup="ifbtndone();" id="inputtxt" placeholder="输入手机号码"></p>
+    <p><input class="btn input_btn input_dis margin_top" disabled="disabled" id="inputbtn" type="button" value="绑定"></p>
+</div>
+
+<script>
+    function ifbtndone(){
+        var otxt = document.getElementById('inputtxt');
+        var obtn = document.getElementById('inputbtn');
+
+        if(checkMobile(otxt.value)){
+            removeClass(obtn,'input_dis');
+            obtn.removeAttribute("disabled");
+        }else{
+            if(!hasClass(obtn,'input_dis')){
+                addClass(obtn,'input_dis');
+                obtn.setAttribute("disabled","disabled");
+            };
+        };
+    };
+
+    function checkMobile(phone){
+        if(!(/^1[3|4|5|7|8]\d{9}$/.test(phone))){
+            return false;
+        }else{
+            return true;
+        };
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=9">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <title>课件资源</title>
+    <script src="cordova.js"></script>
+    <script src="js/jquery-1.11.1.min.js"></script> 
+    <script src="js/subject-setrem.js"></script>
+    <link rel="stylesheet"  href="css/subject-resource.css"/>
+</head>
+<body >
+    <div class="mask"></div>
+    <div id="home">
+        <div class="memu-wrap">
+            <ul class="memu clear">
+                <li id="memu-class"><label class="nowrap">年级</label></li>
+                <li id="memu-subject"><label class="nowrap">学科</label></li>
+                <li id="memu-edition"><label class="nowrap">版本</label></li>
+            </ul>
+            <div class="memu-con"  >
+                <div class="menu2-left">
+                    <p class="current">小学</p>
+                    <p>初中</p>
+                    <p>高中</p>
+                </div>
+                <div class="menu2-right">
+
+                    <ul class="rightul" style="display:block">
+                        <li>一年级</li>
+                        <li>二年级</li>
+                        <li>三年级</li>
+                        <li>四年级</li>
+                        <li>五年级</li>
+                        <li>六年级</li>
+                    </ul>
+                    <ul class="rightul">
+                        <li>七年级</li>
+                        <li>八年级</li>
+                        <li>九年级</li>
+                    </ul>
+                    <ul class="rightul">
+                        <li>全年级</li>
+                    </ul>
+                </div>
+
+            </div>
+            <div class="memu-con pauto">
+                <!--<p  class="tip">请先选择年级</p>-->
+                <ul id="subjectid">
+                    <li>语文</li>
+                    <li>数学</li>
+                    <li>英语</li>
+                    <li>物理</li>
+                    <li>化学</li>
+                    <li>生物</li>
+                </ul>
+            </div>
+            <div class="memu-con pauto" >
+                <!--<p class="tip">请先选择年级和学科</p>-->
+                <ul id="versionid">
+                    <li>人民教育出版社_新课标</li>
+                    <li>江苏教育出版社</li>
+                    <li>河北教育出版社</li>
+                    <li>北京师范大学出版社</li>
+                    <li>语文出版社A</li>
+                    <li>语文出版社s</li>
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="classstar mauto " style="padding-top:5.4rem">
+
+            <div class="marginR clear" id="resouce-list">
+
+                <img class="loadding-img" src="images/loadding.gif" alt="">
+
+            </div>
+        </div>
+    </div>
+
+    <!--<div>-->
+        <!--<iframe name="myframe2" src=""></iframe>-->
+    <!--</div>-->
+	<script>
+        // setheight
+        setmaskheight();
+        function setmaskheight(){
+
+            var idochei=$(document).height();
+            $('.mask').css("height",idochei);
+        }
+
+        // tab
+        tab('.memu li','.memu-con','.memu-wrap','click',setmaskheight);
+        tab('.menu2-left p','.rightul','.memu-con','click',setmaskheight);
+
+
+        function hidemask(){
+            $('.mask').hide();
+            $('.memu-con').hide();
+            $('.memu li').removeClass('current');
+        }
+        //点击mask显示
+        $('.memu').click(function() {
+            $('.mask').show();
+            $('body').css('overflow','hidden');
+
+            //选择年级、学科、版本后，mask隐藏。当前状态收起。 
+            $('.memu-con li').click(function () {
+                $('li.current label').html($(this).html());
+                hidemask();
+                $('body').css('overflow','auto');
+                //点击年级加载全年级   
+
+                //点击学校、版本提示需要依次选择
+
+            })
+            //点击空白处隐藏。
+            $('.mask').click(function(){
+                hidemask();
+                $('body').css('overflow','auto');
+            })
+
+        });
+
+    </script>
+    <script>
+        //获取地址栏参数
+        $.getUrlParam = function(name){
+            var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");    
+            var r = window.location.search.substr(1).match(reg);     
+            if (r!=null) return unescape(r[2]); return null;        
+        };
+        var type='';
+        var filterjson2='';
+        var filterarr=[];
+        var page=1;
+        var nodeid;
+        var datajson;
+        if($.getUrlParam('type')){
+            type = $.getUrlParam('type');
+            filterjson2=$.getUrlParam('filterjson');
+            filterjson2 = JSON.parse(filterjson2);
+            var temparr = [];
+            temparr.push(filterjson2);
+            filterarr.push(temparr);
+            switch (type){
+                case '1':
+                    window.top.setTitleSub('课程资源');
+                    break;
+                case '5':
+                    window.top.setTitleSub('课件资源');
+                    break;
+                case '3':
+                    window.top.setTitleSub('素材资源');
+                    break;
+                default:
+                    window.top.setTitleSub('学科资源');
+                    break;
+            };
+        };
+
+        request();
+        function request(nodeidres,_this){
+            nodeid = nodeidres;
+            if(_this){
+                $('#resouce-list').html('<img class="loadding-img" src="images/loadding.gif" alt="">');
+                getlist(datajson,nodeid,_this);
+            };
+            $.ajax({
+                url:urlapi+'/common/dimresourcequery',
+                type:'post',
+                dataType:'json',
+                timeout: 4000,
+                data:JSON.stringify({
+
+                    "pagesize":"12",
+                    "pageindex":page,
+                    "subjectgrade":filterarr,
+                    'restype':type,
+                    'nodeid':nodeid
+        
+                }),   
+                contentType: "application/json; charset=utf-8",
+                success: function(data){
+                    if(data.code){
+                        if(JSON.stringify(data.data) != '{}'){
+                            var list = data.data[type];
+                            var listhmtl='';
+
+                            for (var i = 0;i<list.length;i++) {
+                                var title = encodeURI(encodeURI(list[i].presname));
+                                 listhmtl+='' +
+                                '<div class="classlist">'+
+                                '<a class="pic" href="detail.html?presid='+list[i].presid+'&title='+title+'" target="secondframe" onclick="window.top.popframe2();"><img src='+list[i].presimg+' alt=""></a>'+
+                                '<p class="name nowrap"><a href="detail.html?presid='+list[i].presid+'&title='+title+'" target="secondframe" onclick="window.top.popframe2();">'+list[i].presname+'</a></p>'+
+                                '<p class="stars"><span class="active"></span><span class="active"></span><span class="active"></span><span class="active"></span><span></span></p>'+
+                                '</div>'+
+                                '';
+
+                            };
+
+                            $('.loadding-img').remove();
+                            $('#resouce-list').append(listhmtl);
+                            page+=1;
+                        }else{
+                            if(page > 1){
+
+                            }else{
+                                $('#resouce-list').html('<img src="images/nodata.png" style="width: 10rem; margin: 10rem 0 1rem 13rem;"><p style="text-align: center; font-size: #999; font-size: 1.4rem;">未找到相关资源</p>');
+                            };
+                        };
+
+
+                    }else{
+                        alert('列表：'+data.errorMessage);
+                    };
+                },
+                error: function(xhr,textStatus){
+                    if(textStatus=='timeout'){
+                        $('#resouce-list').html('<img src="images/nodata.png" style="width: 10rem; margin: 10rem 0 1rem 13rem;"><p style="text-align: center; font-size: #999; font-size: 1.4rem;">未找到相关资源</p>');
+                    };
+                }
+            });
+
+        };
+
+        getchapter();
+        function getchapter() {
+            $.ajax({
+                url: urlapi + '/common/phoneres_chapter',
+                type: 'post',
+                dataType: 'json',
+                data: JSON.stringify(filterjson2),
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    if(data.code){
+                        datajson = data.data;
+                        setinit(datajson);
+                        function setinit(dataarr){
+                            for(var i=0; i<dataarr.length; i++){
+                                if(dataarr[i].nodetypename == '学段'){
+                                    var html = '';
+                                    for(var j=0; j<dataarr[i].children.length; j++){
+                                        html += '<li onclick="request(\''+dataarr[i].children[j].nodeid+'\',$(this));">'+dataarr[i].children[j].nodename+'</li>';
+                                    };
+                                    $('.rightul').eq(i).html(html);
+                                };
+                                if(dataarr[i].selected){
+                                    switch (dataarr[i].nodetypename){
+                                        case '年级':
+                                            $('#memu-class label').html(dataarr[i].nodename);
+                                            var html = '';
+                                            for(var j=0; j<dataarr[i].children.length; j++){
+                                                html += '<li onclick="request(\''+dataarr[i].children[j].nodeid+'\',$(this));">'+dataarr[i].children[j].nodename+'</li>';
+                                            };
+                                            $('#subjectid').html(html);
+                                            break;
+                                        case '学科':
+                                            $('#memu-subject label').html(dataarr[i].nodename);
+                                            var html = '';
+                                            for(var j=0; j<dataarr[i].children.length; j++){
+                                                html += '<li onclick="request(\''+dataarr[i].children[j].nodeid+'\',$(this));">'+dataarr[i].children[j].nodename+'</li>';
+                                            };
+                                            $('#versionid').html(html);
+                                            break;
+                                        case '版本':
+                                            $('#memu-edition label').html(dataarr[i].nodename);
+                                            break;
+                                        default :
+                                            break;
+                                    };
+                                    if(dataarr[i].children.length > 0){
+                                        setinit(dataarr[i].children);
+                                    };
+                                };
+                            };
+                        };
+                    }else{
+                        alert('目录：'+data.errorMessage);
+                    };
+                },
+                error: function (data) {}
+            });
+        };
+        function getlist(dataarr,nodeidres,_this){
+            if(page > 1){
+                page = 1;
+            };
+            nodeid = nodeidres;
+            for(var i=0; i<dataarr.length; i++){
+                if(dataarr[i].nodeid == nodeid){
+                    if(dataarr[i].children.length > 0){
+                        var listarr = dataarr[i].children;
+                        var html = '';
+                        for(var i=0; i<listarr.length; i++){
+                            html += '<li onclick="request(\''+listarr[i].nodeid+'\',$(this));">'+listarr[i].nodename+'</li>';
+                        };
+                        _this.parents('.memu-con').next().find('ul').html(html);
+                        if(_this.parents('.memu-con').next().find('ul').attr('id') == 'subjectid'){
+                            $('#memu-subject label').html('学科');
+                            $('#memu-edition label').html('版本');
+                            $('#versionid').html('');
+                        };
+                        if(_this.parents('.memu-con').next().find('ul').attr('id') == 'versionid'){
+                            $('#memu-edition label').html('版本');
+                        };
+
+                        return false;
+                    }else{
+                        return false;
+                    };
+                }else{
+                    getlist(dataarr[i].children, nodeid, _this);
+                };
+            };
+        };
+
+        window.onscroll = function () {
+            var a = document.documentElement.scrollTop == 0 ? document.documentElement.clientHeight : document.body.clientHeight;
+            var b = document.documentElement.scrollTop == 0 ? document.body.scrollTop : document.documentElement.scrollTop;
+            var c = document.documentElement.scrollTop == 0 ? document.body.scrollHeight : document.documentElement.scrollHeight;
+
+            if (a + b == c) {
+                $('#resouce-list').append('<div class="fixed-loadding"><img class="loadding-img" src="images/loadding.gif" alt=""></div>');
+                var nodeidtemp = nodeid;
+                request(nodeidtemp);
+            }
+        }
+
+    </script>
+</body>
+</html> 

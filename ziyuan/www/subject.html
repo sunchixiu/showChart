@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=9">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <title>学科资源</title>
+    <script src="js/jquery-1.11.1.min.js"></script>
+	<script src="js/hammer.min.js"></script>
+	<script src="js/iscroll4.js"></script>
+    <script src="js/subject-setrem.js"></script>
+    <link rel="stylesheet"  href="css/subject-resource.css"/>
+</head>
+<body > 
+	<!-- 微课程 -->
+    <h2 class="tit mauto">
+    	<a class="more" href="">更多 &gt;
+    	</a>
+    	微课程
+    </h2>
+    <div class="classstar mauto ">
+
+    	<div class="marginR clear">
+    		
+	    	<div class="classlist">
+	    		<a class="pic" href=""><img src="temporary-img/img.png" alt=""></a>
+	    		<p><a class="name nowrap" href="">认识图形的表现形式</a></p>
+	    		<p class="stars">
+					<!-- 默认置灰无class，全星用active,半星用half -->
+	    			<span  class="active"></span><span class="half"></span><span></span><span></span><span></span>
+	    		</p>
+	    	</div>
+	    	<div class="classlist">
+	    		<a class="pic" href=""><img src="temporary-img/img.png" alt=""></a>
+	    		<p class="name nowrap"><a  href="">认识图形的表现形式</a></p>
+	    		<p class="stars"><span></span><span></span><span></span><span></span><span></span></p>
+	    	</div>
+	    	<div class="classlist">
+	    		<a class="pic" href=""><img src="temporary-img/img.png" alt=""></a>
+	    		<p><a class="name nowrap" href="">认识图形的表现形式</a></p>
+	    		<p class="stars"><span></span><span></span><span></span><span></span><span></span></p>
+	    	</div>
+	    	<div class="classlist">
+	    		<a class="pic" href=""><img src="temporary-img/img.png" alt=""></a>
+	    		<p class="name nowrap"><a  href="">认识图形的表现形式</a></p>
+	    		<p class="stars"><span></span><span></span><span></span><span></span><span></span></p>
+	    	</div>
+
+    	</div>
+    </div>
+	<div class="box10"></div>
+	<!-- 课件 -->
+    <h2 class="tit mauto">
+    	<a class="more" href="">更多 &gt;</a>
+    	课件
+    </h2>
+
+    <!-- 滚动特效 -->
+	<div class="courseware" id="courseware">
+		<ul class="clear" id="ulcourseware">
+			<li>
+				<a href=""><img src="images/ppt.png" alt=""></a>
+				<p><a href="">认识图形.ppt</a></p>
+			</li>
+			<li>
+				<a href=""><img src="images/ppt.png" alt=""></a>
+				<p><a href="">认识图形.ppt</a></p>
+			</li>
+			<li>
+				<a href=""><img src="images/ppt.png" alt=""></a>
+				<p><a href="">认识图形.ppt</a></p>
+			</li>
+			<li>
+				<a href=""><img src="images/ppt.png" alt=""></a>
+				<p><a href="">认识图形.ppt</a></p>
+			</li>
+			<li>
+				<a href=""><img src="images/ppt.png" alt=""></a>
+				<p><a href="">认识图形.ppt</a></p>
+			</li>
+			<li>
+				<a href=""><img src="images/ppt.png" alt=""></a>
+				<p><a href="">认识图形.ppt</a></p>
+			</li>
+		</ul>
+	</div>
+
+	<div class="box10"></div>
+	<!-- 素材 -->
+    <h2 class="tit mauto">
+    	<a class="more" href="">更多 &gt;</a>
+    	素材
+    </h2>
+	<div class="mauto">
+    	<div class="marginR clear">
+    		
+	    	<div class="classlist">
+	    		<a class="pic" href=""><img src="temporary-img/img.png" alt=""></a>
+	    		<p><a class="name nowrap" href="">工作中的女孩</a></p>
+	    		<p class="down">下载：2338次</p>
+	    	</div>
+	    	<div class="classlist">
+	    		<a class="pic" href=""><img src="temporary-img/img.png" alt=""></a>
+	    		<p class="name nowrap"><a  href="">工作中的女孩</a></p> 
+	    		<p class="down">下载：2338次</p>
+	    	</div> 
+
+    	</div>
+    </div>
+
+<script>
+	$('#ulcourseware').css('width',$('#ulcourseware').find('li').length*12 + 'rem');
+	loaded('courseware');
+//	var hammerul = new Hammer(document.getElementById("courseware"));
+//	hammerul.on('panleft panright',function(e){
+//		$('#ulcourseware').css('marginLeft', (uLleft+e.deltaX/remC)+'rem');
+//	});
+</script>
+</body>
+</html> 

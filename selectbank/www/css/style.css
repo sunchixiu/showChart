@@ -1,0 +1,12 @@
+body,div,dl,dt,dd,ul,ol,li,form,fieldset,input,button,textarea,p{margin:0; padding:0; -webkit-tap-highlight-color:rgba(0,0,0,0); word-wrap:break-word;}
+fieldset,img,input {border:0; vertical-align:middle;}
+input{-webkit-border-radius: 0.4rem; border-radius: 0.4rem;}
+
+.m{text-align: center;}
+.btn{background-color: #25CA83; color: #fff;}
+.btn:active{background-color: #229b67;}
+.margin_top{margin-top: 2rem;}
+.margin_bottom{margin-bottom: 2rem;}
+.input_txt{width: 16rem; border: 1px solid #999; padding: 0.4rem 1.2rem;}
+.input_btn{width: 8rem; border: 1px solid #999; padding: 0.4rem 1.2rem;}
+.input_dis{background-color: #999;}

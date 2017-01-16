@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <title>通知对象</title>
+    <link href="css/index.css" type="text/css" rel="stylesheet">
+    <link href="js/jstree/themes/default/style.css" type="text/css" rel="stylesheet">
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script>
+        document.addEventListener('touchstart', function(){});
+        document.documentElement.style.fontSize = document.documentElement.clientWidth/36+'px';
+        document.onselectstart = function(){
+            return false;
+        };
+    </script>
+    <script src="js/jstree/jstree.min.js"></script>
+    <script src="js/Notice.js"></script>
+</head>
+<body>
+<div id="globallayout_infocontent">
+    <div class="noticemodelperson">
+        <div class="noticemodelpersoncontent">
+            <div class="noticemodelleft treelist">
+                <div id="AjaxModelTree" class='AjaxModelTree'>
+                </div>
+            </div>
+            <div id="AjaxModelMemberList" class="noticemodelright AjaxModelMemberList">
+            </div>
+        </div>
+        <div id="AjaxModelSelectMemberList" class="AjaxModelSelectMemberList">
+            <p>已选人员<span>（单击移除）</span></p>
+            <ul class="selected-ul">
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+    Notice.init("class");
+    function showHideNotice(type) {
+        var obj = $("#NoticePanel");
+        $(".btnNoticePanel").next().html("已选0人");
+        $(".btnNoticePanel").next().next().html("");
+        if (type == parseInt($("#hidNoticeType").val())) {
+            if (obj.is(':hidden')) {
+                obj.css({"display": 'block'});
+            } else {
+                obj.css({"display": 'none'});
+            }
+        }
+        else {
+            obj.css({"display": 'block'});
+        }
+        $("#hidNoticeType").val(type);
+        $(".btnNoticePanel").unbind();
+        //var title = "发布学校通知"
+        if (type == 3) {
+            var title = "发布班级通知";
+            $(".btnNoticePanel").bind("click", function () {
+                ischool.layout.init({title: title, content: $("#templatenotice").html(), width: 800});
+                Notice.init("class");
+            });
+        }
+        else {
+            var title = "发布学校通知";
+            $(".btnNoticePanel").bind("click", function () {
+                ischool.layout.init({title: title, content: $("#templatenotice").html(), width: 800});
+                Notice.init("school");
+            });
+        }
+        obj.find("h3").html(title);
+    }
+</script>
+</body>
+</html>

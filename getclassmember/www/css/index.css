@@ -1,0 +1,78 @@
+*{padding: 0; margin: 0;}
+ul li{list-style: none;}
+a{text-decoration: none; color: #333;}
+html,body{font-size: 1.4rem;}
+.noticemodelperson{width: 34rem; padding: 1rem;}
+.noticemodelperson .noticemodelpersoncontent {
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+    display: -webkit-flex;
+}
+.noticemodelperson .noticemodelpersoncontent .noticemodelleft {
+    background: #fafafa none repeat scroll 0 0;
+    border: 1px solid #ccc;
+    border-radius: 0.4rem 0 0 0.4rem;
+    height: 180px;
+    overflow: auto;
+    -webkit-flex: 1;
+    flex: 1;
+}
+.noticemodelperson .noticemodelpersoncontent .noticemodelright {
+    background: #fafafa none repeat scroll 0 0;
+    border: 1px solid #ccc;
+    border-radius: 0 0.4rem 0.4rem 0;
+    height: 180px;
+    overflow: auto;
+    -webkit-flex: 0.7;
+    flex: 0.7;
+}
+.noticemodelperson .selected-ul {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 12px 0;
+    margin-top: 12px;
+}
+.noticemodelperson .selected-ul li {
+    line-height: 32px;
+    padding-left: 15px;
+}
+.noticemodelperson .noticemodelpersoncontent .noticemodelright .o-selected-ul li.active b {
+    background-position: 93px 0;
+}
+.noticemodelperson .noticemodelpersoncontent .noticemodelright .o-selected-ul li b {
+    background: rgba(0, 0, 0, 0) url("../js/jstree/themes/default/32px.png") repeat scroll 156px 0;
+    display: inline-block;
+    height: 24px;
+    width: 24px;
+}
+.noticemodelperson .noticemodelpersoncontent .noticemodelright .o-selected-ul li b:hover {
+    background-position: 156px -32px;
+}
+.noticemodelperson .noticemodelpersoncontent .noticemodelright .o-selected-ul li b {
+    background: rgba(0, 0, 0, 0) url("../js/jstree/themes/default/32px.png") repeat scroll 156px 0;
+    display: inline-block;
+    height: 24px;
+    width: 24px;
+}
+.noticemodelperson .label_studies {
+    background: #ffedda none repeat scroll 0 0;
+    border-radius: 0.25em;
+    color: #b25900;
+    display: inline;
+    font-size: 11px;
+    line-height: 1;
+    margin-left: 5px;
+    padding: 0.2em 0.6em 0.3em;
+    text-align: center;
+    vertical-align: baseline;
+    white-space: nowrap;
+}
+
+.selected-ul li span.span-delete {
+    color: #ff0000;
+    cursor: pointer;
+    display: block;
+    float: right;
+    font-size: 10px;
+    margin-right: 15px;
+}

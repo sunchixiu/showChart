@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <title>选择银行</title>
+    <link rel="stylesheet" href="css/pickout.css" />
+    <script src="js/pickout.js"></script>
+    <script type="text/javascript"
+            src="js/all.js"></script>
+</head>
+<body>
+<div class="bank_k">
+    <div class="bank_txt"><label>选择银行：</label></div>
+    <div class="banks m index1" id="rootbank">
+        <!--<select id="rootbank" name="bank" class="bank1 pickout" placeholder="选择银行">-->
+            <!--<option value="gsyh">工1商银行</option>-->
+
+        <!--</select>-->
+    </div>
+</div>
+<div class="bank_btn m"><input class="btn input_btn" type="button" onclick="getbankid();" value="进入"></div>
+
+<script>
+    var rootorg ;
+    var currorg;
+    var orgindex = {};
+
+    function getbankStr(index, indexbank){
+        if(index != 0){
+            currorg = orgindex[String(index)+String(indexbank)];
+        };
+
+        var currchilds = currorg.childs;
+        if(currchilds.length == 0){
+            return '';
+        };
+        var selstr = '<select name="bank" class="bank'+(index+1)+' pickout" placeholder="选择机构">';
+        for(var i=0;i<currchilds.length;i++){
+            var child = currchilds[i];
+            selstr = selstr + '<option value="'+child.orgsid+'">'+child.orgname+'</option>';
+        }
+        selstr = selstr + '</select>';
+        return selstr;
+    };
+
+    //ajax获取支行列表
+    function getBanks(indexnum, indexbank){
+//        currorg = currorg.childs[indexbank];
+        if(!orgindex[String(indexnum)+String(indexbank)]){
+            for(var i=0; i<currorg.childs.length; i++){
+                orgindex[String(indexnum)+String(i)] = currorg.childs[i];
+            };
+        };
+
+        var index = parseInt(indexnum);
+        var num = document.querySelectorAll('.banks').length;
+        if(index < num){
+            for(var i=0; i<num; i++){
+                if(i+1 > index){
+                    removeElement(document.querySelectorAll('.banks')[index]);
+                };
+            };
+        };
+
+        //ajax获取的银行列表
+        // var banks = '<select name="bank" class="bank'+(index+1)+' pickout" placeholder="继续选择支行"><option value="nyyh">农业银行</option><option value="zgyh">中国银行</option><option value="jsyh">建设银行</option><option value="bjyh">北京银行</option><option value="gsyh">工商银行</option><option value="zsyh">招商银行</option></select>';
+        var banks = getbankStr(index, indexbank);
+
+        var newdiv = document.createElement("div");
+        newdiv.className = 'banks m index'+(index+1);
+        newdiv.innerHTML = banks;
+        document.querySelector('.bank_k').appendChild(newdiv);
+        pickout.to({
+            el:'.bank'+(index+1),
+            theme: 'dark'
+        });
+    };
+
+    function removeElement(_element){
+        var _parentElement = _element.parentNode;
+        if(_parentElement){
+            _parentElement.removeChild(_element);
+        }
+    };
+
+
+    //add
+
+    var openid;
+
+    $(function(){
+        //	openid = getParameterByName("openid");
+        //	if(openid == null || openid == "" || openid == "null"){
+        //		getopenid();
+        //	}else{
+        //		judgeuser(openid);
+        //	}
+        queryorg();
+    });
+
+    function getParameterByName(name) {
+        var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location);
+        return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+    }
+
+    //判断用户是否已绑定
+    function judgeuser(openid){
+
+        $.ajax({
+            type: "POST",
+            url: "../../../weixin/wxisbind_user.action",
+            dataType: "json",
+            data:{
+                openid:openid
+            },
+            success: function (jsonResult) {
+                var code = jsonResult.code;
+                if(code == 1){
+                    var isbind =  jsonResult.data.isbind;
+                    if(isbind != 1){
+                        window.location.href = "phonebind.html?openid="+openid;
+                    }
+
+                }else{
+                    alert("查询数据出错！"+jsonResult.errorMessage);
+                    window.location.href = "error.html";
+                }
+            }
+        });
+    }
+
+    function getopenid(){
+
+        var code = getParameterByName("code");
+        $.ajax({
+            type: "POST",
+            url: "../../../weixin/wgetOpenidAction_getopenid.action",
+            dataType: "json",
+            data:{
+                code:code
+            },
+            success: function (jsonResult) {
+                var code = jsonResult.code;
+                if(code == 1){
+                    openid = jsonResult.data;
+                    judgeuser(openid);
+
+                }else{
+                    alert("查询数据出错！"+jsonResult.errorMessage);
+                    window.location.href = "error.html";
+                }
+            }
+        });
+    }
+
+    //查询机构
+    function queryorg(){
+        var  jsonResult = {"code":1,"data":{"childs":[{"childs":[{"childs":[{"childs":[{"childs":[],"orgname":"工行知春路网点","orgsid":"2C863D8E7A834F84AA8A56D13C578412","orgtypename":"网点","parentnode":null,"psid":"3ACAF61002E241809320377314DDE9E2","select":false},{"childs":[],"orgname":"工行大运村网点","orgsid":"A6E7E32C680E453086312053058A3EAC","orgtypename":"网点","parentnode":null,"psid":"3ACAF61002E241809320377314DDE9E2","select":false}],"orgname":"工行海淀支行","orgsid":"3ACAF61002E241809320377314DDE9E2","orgtypename":"支行","parentnode":null,"psid":"E9D4F590AEF04A378B11124B6A6B835D","select":false},{"childs":[],"orgname":"工行昌平支行","orgsid":"21EFB51CC87E40198913887D4CC582CC","orgtypename":"支行","parentnode":null,"psid":"E9D4F590AEF04A378B11124B6A6B835D","select":false}],"orgname":"工行北京分行","orgsid":"E9D4F590AEF04A378B11124B6A6B835D","orgtypename":"分行","parentnode":null,"psid":"4744CF363CE44A0B8EBE64E4D51A00E4","select":false}],"orgname":"中国工商银行","orgsid":"4744CF363CE44A0B8EBE64E4D51A00E4","orgtypename":"总行","parentnode":null,"psid":"00000000000000000000000000000000","select":false}],"orgname":"--选择银行--","orgsid":"00000000000000000000000000000000","orgtypename":"所有银行","parentnode":null,"psid":"","select":false},"errorCode":0,"errorMessage":""};
+        var code = jsonResult.code;
+        if(code == 1){
+            currorg = jsonResult.data;
+            rootorg = jsonResult.data;
+
+            var bstr = getbankStr(0, 0);
+            $("#rootbank").html(bstr);
+            pickout.to({
+                el:'.bank1',
+                theme: 'dark',
+                search: false
+            });
+
+
+
+        }else{
+            alert("查询数据出错！"+jsonResult.errorMessage);
+            window.location.href = "error.html";
+        }
+    }
+
+//获取最终选择银行id
+    function getbankid(){
+        var bankoption = document.querySelectorAll('.banks select option');
+        var selectoption = [];
+        for(var i=0; i<bankoption.length; i++){
+            if(bankoption[i].getAttribute('selected') == 'selected'){
+                selectoption.push(bankoption[i].value);
+            };
+        };
+        var bankid = '';
+        bankid = selectoption[selectoption.length-1];
+        alert(bankid)
+    };
+</script>
+</body>
+</html>

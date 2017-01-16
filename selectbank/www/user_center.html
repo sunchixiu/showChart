@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, target-densityDpi=device-dpi, user-scalable=no"/>
+    <title>个人中心</title>
+    <link rel="stylesheet" href="css/index.css" />
+    <link rel="stylesheet" href="css/mobilebone.css" />
+    <script src="js\all.js"></script>
+    <script src="js/mobilebone.js"></script>
+</head>
+<body>
+<div class="page out" id="homePage" style="background-color: #eee;">
+    <div class="tab_fixed" style="display: block;">
+        <div class="city m">
+            <label class="left headleft"><a href="javascript:window.location.href='weixin.html';"><span class="retunpage"></span></a></label>
+            <label>个人中心</label>
+            <label class="right headright ftz30">　</label>
+        </div>
+    </div>
+
+    <div class="content_container" style="height: 100%; overflow: scroll;">
+        <div class="swiper-container" style="height:auto; width:1080px; display: block; margin-top: 140px;"></div>
+        <div class="person_container">
+            <ul>
+                <li onclick="toDetailed();"><label class="left">当前权益：</label><span class="icoqy"></span><label>55</label><span class="right"><label class="red">收支明细</label><span class="arrowright"></span></span></li>
+                <li><label class="left">昵称：</label><label>bank</label></li>
+                <li><label class="left">电话：</label><label>13910010036</label></li>
+            </ul>
+
+            <ul>
+                <li onclick="toRecord();"><label class="left">兑换记录：</label><span class="right"><label class="red">8</label><span class="arrowright"></span></span></li>
+                <li onclick="window.location.href='alexchange.html';"><label class="left">兑换清单：</label><span class="right"><label class="red">3</label><span class="arrowright"></span></span></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="page out" id="dhRecord" style="background-color: #eee;">
+    <div class="tab_fixed" style="display: block;">
+        <div class="city m">
+            <label class="left headleft"><a href="#&homePage" data-rel="back"><span class="retunpage"></span></a></label>
+            <label>兑换记录</label>
+            <label class="right headright ftz30">　</label>
+        </div>
+    </div>
+    <div class="content_container" style="height: 100%; overflow: scroll;">
+        <div class="swiper-container" style="height:auto; width:1080px; display: block; margin-top: 120px;">
+        </div>
+        <div id="content2-div">
+            <div class="content" id="content2"></div>
+        </div>
+    </div>
+    <script>
+        function toRecord(){
+            window.location.href = '#&dhRecord';
+
+            var html2 = "";
+            for (var j=0; j<8; j++) {
+                html2 += '<div class="contentrecord shadow"><img class="contentrecord_img left" src="http://www.pptbz.com/pptpic/UploadFiles_6909/201110/20111014111307895.jpg" /><div class="content2_text left"><div class="content2_text1">商品名</div><div class="content2_text3">使用11权益</div><div class="content2_text4">兑换日期：2016-07-23</div></div><div class="clear"></div></div>';
+            };
+            html2 += '<div class="clear"></div>';
+            $("#content2").html(html2);
+        };
+    </script>
+</div>
+
+<div class="page out" id="detailedPage" style="background-color: #eee;">
+    <div class="tab_fixed" style="display: block;">
+        <div class="city m">
+            <label class="left headleft"><a href="#&homePage" data-rel="back"><span class="retunpage"></span></a></label>
+            <label>收支明细</label>
+            <label class="right headright ftz30">　</label>
+        </div>
+    </div>
+
+    <div class="content_container" style="height: 100%; overflow: scroll;">
+        <div class="swiper-container" style="height:auto; width:1080px; display: block; margin-top: 140px;"></div>
+        <div class="person_container">
+            <ul>
+                <li><label class="left">累计获得权益：</label><span class="icoqy"></span><label>288</label></li>
+            </ul>
+
+            <ul class="fnz14">
+                <li><label class="left">2016-08-04：</label><label class="fund">购买工商银行依基金购买工商银行依基金</label><span class="right"><label class="red">+80</label><label>权益</label></span></li>
+                <li><label class="left">2016-08-04：</label><label class="fund">购买工商银行依基金购买工商银行依基金</label><span class="right"><label class="red">+80</label><label>权益</label></span></li>
+                <li><label class="left">2016-08-04：</label><label class="fund">购买工商银行依基金购买工商银行依基金</label><span class="right"><label class="red">+80</label><label>权益</label></span></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+    function toDetailed(){
+        window.location.href = '#&detailedPage';
+    };
+</script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+.week_con_down.borderBgGray ul li em{background: #efefef; border-color: #efefef;}
+.week_con_down.borderBgGray ul li.active em{ background: #dcf4f7; border: 1px solid #83d8e4; border-radius: 50%; -webkit-border-radius: 50%;}
+
+.per_content_k{width: 16.8rem; margin: 1rem 0.5rem; background: #fff; border: 0.05rem solid #d8d8d8; border-radius: 0.2rem; -webkit-border-radius: 0.2rem;}
+.per_content_k h2{width: 96%; margin: 0 2%; font-size: 0.8rem; color: #666; line-height: 1rem; text-align: center; border-bottom: 0.05rem solid #ccc; padding: 1rem 0;}
+.per_content_k ul{margin: 1.2rem 0;}
+.per_content_k ul li{margin-left: 1.2rem; margin-right: 1.2rem; position: relative; height: auto; padding-bottom:0.6rem;}
+/*.per_content_k ul li:first-child{padding-top: 0;}*/
+/*.per_content_k ul li:last-child{padding-bottom: 0;}*/
+.per_content_k ul li span{display: inline-block; vertical-align: middle;}
+.per_content_k ul li span.bgPot{width: 0.1rem; height: 100%; background: #c9c9c9; position: absolute;}
+.per_content_k ul li:first-child span.bgPot{height: 100%; margin-top: 0.8rem;}
+.per_content_k ul li:last-child span.bgPot{height: 0.8rem; margin-top: 0rem;}
+.per_content_k ul li span.pot{width: 0.4rem; height: 0.4rem; border-radius: 50%; -webkit-border-radius: 50%; background: #c9c9c9; margin-left: -0.15rem;}
+.per_content_k ul li span.pot em{display: inline-block; width: 0.2rem; height: 0.2rem; background: #999; border-radius: 50%; -webkit-border-radius: 50%; position: absolute; margin: 0.1rem;}
+.per_content_k ul li span.typeIcon{width: 1.5rem; height: 1.5rem; background-image: url("../images/pic_map.png"); background-size: 18rem 15rem; margin-left: 0.5rem;}
+.per_content_k ul li span.lx{background-position: 0 -5.55rem;}
+.per_content_k ul li span.cs{background-position: -1.8rem -5.55rem;}
+.per_content_k ul li span.xx{background-position: -3.6rem -5.55rem;}
+.per_content_k ul li span.text{font-size: 0.6rem; color: #333; margin-top: 0rem; line-height: 1.4rem; vertical-align: top; margin-left: 0.1rem;}
+.per_content_k ul li span.text p.title{font-size: 0.8rem;}
+.per_content_k ul li span.text p.last{margin-top: 0.3rem;}
+.per_content_k ul li span.text p span{width: 2.75rem; height: 1.8rem; background-image: url("../images/pic_map.png"); background-size: 18rem 15rem; background-position: 0 -3.75rem; margin-right: 0.5rem;}
+.per_content_k ul li span.text p span.pdf{background-position: 0 -3.75rem;}
+.per_content_k ul li span.text p span.doc{background-position: -3rem -3.75rem;}
+.per_content_k ul li span.text p span.mp4{background-position: -6rem -3.75rem;}
+.per_content_k ul li span.text p span.ppt{background-position: -9rem -3.75rem;}
+.per_content_k ul li span.text p span.xls{background-position: -12rem -3.75rem;}
+.per_content_k ul li span.text p span.xlsx{background-position: -12rem -3.75rem;}
+.per_content_k ul li span.text p span.jpg{background-position: -15rem -3.75rem;}
+.per_content_k ul li span.text p span.mp3{background-position: 0 -7.5rem;}
+.per_content_k ul li span.text p span.swf{background-position: -3rem -7.5rem;}
+.per_content_k ul li span.text p span.avi{background-position: -6rem -7.5rem;}
+.per_content_k ul li span.text p span.zip{background-position: -9rem -7.5rem;}
+.per_content_k ul li span.text p span.rar{background-position: -12rem -7.5rem;}
+.per_content_k ul li span.text p span.tbk{background-position: -15rem -7.5rem;}
+
+/*进度条*/
+.progress_bg{position: fixed; width: 100%; height: 100%; background: rgba(0,0,0,0.6); text-align: center; display: none; z-index: 1001;}
+.progress_k{width: 90%; height: 1.2rem; position: fixed; top: 50%; margin-top: -2rem; left: 5%;}
+.progress {
+    height: 2rem;
+    background: #ebebeb;
+    border-left: 1px solid transparent;
+    border-right: 1px solid transparent;
+    border-radius: 1rem;
+}
+.progress > span {
+    position: relative;
+    float: left;
+    margin: 0 -1px;
+    min-width: 3rem;
+    height: 1.9rem;
+    line-height: 1.9rem;
+    text-align: right;
+    background: #cccccc;
+    border: 1px solid;
+    border-color: #bfbfbf #b3b3b3 #9e9e9e;
+    border-radius: 1rem;
+    background-image: -webkit-linear-gradient(top, #f0f0f0 0%, #dbdbdb 70%, #cccccc 100%);
+    background-image: -moz-linear-gradient(top, #f0f0f0 0%, #dbdbdb 70%, #cccccc 100%);
+    background-image: -o-linear-gradient(top, #f0f0f0 0%, #dbdbdb 70%, #cccccc 100%);
+    background-image: linear-gradient(to bottom, #f0f0f0 0%, #dbdbdb 70%, #cccccc 100%);
+    -webkit-box-shadow: inset 0 1px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 1px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+.progress > span > span {
+    padding: 0 0.3rem;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #404040;
+    color: rgba(0, 0, 0, 0.7);
+    text-shadow: 0 1px rgba(255, 255, 255, 0.4);
+}
+.progress > span:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    height: 1.9rem;
+    background: url("../images/progress.png") 0 0 repeat;
+    border-radius: 1rem;
+}
+.progress .green {
+    background: #85c440;
+    border-color: #78b337 #6ba031 #568128;
+    background-image: -webkit-linear-gradient(top, #b7dc8e 0%, #99ce5f 70%, #85c440 100%);
+    background-image: -moz-linear-gradient(top, #b7dc8e 0%, #99ce5f 70%, #85c440 100%);
+    background-image: -o-linear-gradient(top, #b7dc8e 0%, #99ce5f 70%, #85c440 100%);
+    background-image: linear-gradient(to bottom, #b7dc8e 0%, #99ce5f 70%, #85c440 100%);
+}

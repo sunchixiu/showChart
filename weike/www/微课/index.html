@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+	<title>Document</title>
+	<link rel="stylesheet" href="css/mobilebone.css">
+	<link rel="stylesheet" href="css/css.css">
+
+	<script src="js/jquery-1.11.1.min.js"></script>
+	<script src="js/iscroll4.js"></script>
+	<script src="js/every.js"></script>
+	<script src="js/h5connect.js"></script>
+</head>
+<body style="background: #efeff4;">
+<div class="page out" id="pageHome">
+	<div class="title">书房</div>
+	<div id="homeSection">
+		<div class="scroll">
+			<div class="textbook" ontouchstart="popbook(this);" id="subjectid"><label id="subjectname"></label>&nbsp;&nbsp;<label id="gradetype"></label><label id="gradename"></label>&nbsp;&nbsp;<label id="versionname"></label></div>
+			<div class="chapter" id="unitid" ontouchstart="popunit(this);"></div>
+			<div class="list">
+				<ul id="pointid">
+					<div class="bookloading"></div>
+					<!--<li onclick="turnpage();">-->
+						<!--<a href="javascript:;"><img src="images/1.png"></a>-->
+						<!--<p class="p1">我我我我我我我我我我我我我我我我</p>-->
+						<!--<p class="p2">2016年7月28</p>-->
+						<!--<p class="p3"><font>播放22次</font>已学习5人</p>-->
+					<!--</li>-->
+				</ul>
+				<div style="height: 6rem;"></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="page out" id="pagevideo">
+	<div class="title">
+		<p class="pointnameclass">书房书房书房书房书房书房书房书房</p>
+		<a href="javascript:;" onclick="returnhome();" data-rel="back"></a>
+	</div>
+	<div class="vedio" id="id_video_container"></div>
+	<div class="rate">
+		<p class="play">已学习5人<font>播放22次</font></p>
+		<p class="GlobalRate">
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+		</p>
+	</div>
+	<div class="xx_con">
+		<p class="p1" id="videonameid">视频名称</p>
+		<p class="p2">作者：<label class="creatornameclass">好孩子</label></p>
+	</div>
+	<div class="chapter-com">
+		<span>第<label class="pointindex">2</label>课时/共<label class="pointnums">12</label>课时</span>
+		<p>课时</p>
+	</div>
+	<ul class="chapterList">
+		<!--<li onclick="showvideo('5b3c364eb89743e891cc750abd6d8e1e','0');"><span></span><label>1</label></li>-->
+	</ul>
+</div>
+
+<!--选择课本-->
+<div class="selectbook" id="selectbook">
+	<div class="booktitle">选取课本</div>
+	<ul>
+		<!--<li><label class="bookname">数学</label>&nbsp;&nbsp;<label class="booktype">小学</label><label class="gradename">3年级</label>&nbsp;&nbsp;<label class="versionname">(人教版)</label></li>-->
+	</ul>
+</div>
+
+<!--选择章节-->
+<div class="selectbook" id="selectunit">
+	<div class="booktitle">选取章节</div>
+	<ul>
+		<!--<li>第1章</li>-->
+	</ul>
+</div>
+
+<div class="price" id="price">
+	<p class="pic"><img src="images/price.png"></p>
+	<p class="txt">
+		该功能<label class="blue">需要订购</label><br>
+		智慧教育和校园8元套餐 才能使用哦！
+	</p>
+	<p class="btnk">
+		<a class="btn" href="javascript:hideWindow('price');">知道了</a>
+		<a class="btn" href="javascript:;">去订购</a>
+	</p>
+</div>
+
+<script src="js/mobilebone.js"></script>
+
+<!--测试书皮接口-->
+<script>
+	showWindow('price');
+	var urlapi = 'http://103.10.86.21:70';
+	var teacherid = 'cd87bc381b9e466599f9199c6d08e0cf';
+	var player;
+	var jsonarr = [];
+	$.ajax({
+		url:urlapi+'/TSB_ISCHOOL_LCS_SERVER/tchmyroom/getgradecourseunitlist',
+		type:'post',
+		dataType:'json',
+		data:JSON.stringify({"teacherid":teacherid}),
+		contentType: "application/json; charset=utf-8",
+		success:function(data){
+			jsonarr = data.data.courselist;
+			for(var i=0; i<jsonarr.length; i++){
+				var classid = jsonarr[i].classid;
+				var subjectid = jsonarr[i].subjectid;
+				var gradenum = jsonarr[i].gradenum;
+				var termtype = jsonarr[i].termtype;
+				var versionid = jsonarr[i].versionid;
+				var index = i;
+				var lihtml = '<li onclick="getunits(\''+classid+'\', \''+subjectid+'\', \''+gradenum+'\', \''+termtype+'\', \''+versionid+'\', '+index+');hideWindow(\'selectbook\');"><label class="bookname">'+jsonarr[i].subjectname+'</label>&nbsp;&nbsp;<label class="booktype">'+getgradetype(jsonarr[i].gradetype)+'</label><label class="gradename">'+jsonarr[i].gradename+'</label>&nbsp;&nbsp;<label class="versionname">('+jsonarr[i].versionname+')</label></li>';
+				$('#selectbook ul').append(lihtml);
+			};
+
+			$('#selectbook ul li').eq(0).click();
+		},
+		error:function(data){
+			alert('shibai');
+		}
+	});
+
+	function getunits(classid, subjectid, gradenum, termtype, versionid, index){
+		$('#pointid').html('<div class="bookloading"></div>');
+		var subjectname = jsonarr[index].subjectname;
+		var gradetype = getgradetype(jsonarr[index].gradetype);
+		var gradename = jsonarr[index].gradename;
+		var versionname = '('+jsonarr[index].versionname+')';
+
+		$('#subjectname').html(subjectname);
+		$('#gradetype').html(gradetype);
+		$('#gradename').html(gradename);
+		$('#versionname').html(versionname);
+
+		var unitarr = jsonarr[index].unitlist;
+		$('#selectunit ul').html('');
+		for(var i=0; i<unitarr.length; i++){
+			var lihtml = '<li onclick="getlessons(\''+classid+'\', \''+subjectid+'\', \''+gradenum+'\', \''+termtype+'\', \''+versionid+'\', \''+unitarr[i].unitid+'\');hideWindow(\'selectunit\');">第'+unitarr[i].unitid+'章</li>';
+			$('#selectunit ul').append(lihtml);
+		};
+		getlessons(classid, subjectid, gradenum, termtype, versionid, unitarr[0].unitid);
+	};
+
+	function getlessons(classid, subjectid, gradenum, termtype, versionid, unitid){
+		$('#unitid').html('第'+unitid+'章');
+		$('#pointid').html('<div class="bookloading"></div>');
+		$.ajax({
+			url:urlapi+'/TSB_ISCHOOL_LCS_SERVER/tchmyroom/getunitpointlist',
+			type:'post',
+			dataType:'json',
+			data:JSON.stringify({"teacherid":teacherid,"classid":classid,"subjectid":subjectid,"gradenum":gradenum,"termtype":termtype,"versionid":versionid,"unitid":unitid}),
+			contentType: "application/json; charset=utf-8",
+			success: function(data){
+				$('#pointid').html('');
+				$('.chapterList').html('');
+				for(var i=0; i<data.data.length; i++){
+					for(var j=0; j<data.data[i].unitcontentlist.length; j++){
+						if(data.data[i].unitcontentlist[j].type == '1'){
+							var pointname = data.data[i].pointname;
+							var lessonid = data.data[i].unitcontentlist[j].typeid;
+							var html = '';
+							html = '<li onclick="turnpage(\''+lessonid+'\',\'0\',\''+pointname+'\','+i+');"><img src="images/1.png"><p class="p1">'+pointname+'</p><p class="p2">2016年7月28</p><p class="p3"><font>播放22次</font>已学习5人</p></li>';
+							$('#pointid').append(html);
+							var lessonlist = '<li onclick="showvideo(\''+lessonid+'\',\'0\');"><span></span><label>'+(i+1)+'</label></li>';
+							$('.chapterList').append(lessonlist);
+							break;
+						}
+					};
+				};
+				loaded('homeSection');
+			},
+			error: function(data){
+				alert('shibai');
+			}
+		});
+	};
+
+	function getgradetype(num){
+		switch(num){
+			case 1:
+				return '小学';
+			break;
+			case 2:
+				return '初中';
+			break;
+			case 3:
+				return '高中';
+			break;
+			default :
+				return '小学';
+		};
+	};
+</script>
+<script>
+
+	function turnpage(lessonid,lessontype,pointname,index){
+		$('.pointnameclass').html(pointname);
+		$('.pointindex').html(index+1);
+		$('.pointnums').html($('.chapterList li').length);
+		$('.chapterList li').removeClass('active');
+		$('.chapterList li').eq(index).addClass('active');
+		showvideo(lessonid,lessontype);
+		window.location.href = '#&pagevideo';
+	};
+
+	function showvideo(lessonid,lessontype){
+		$.ajax({
+			url:urlapi+'/TSB_ISCHOOL_MOOC_SERVER/studylessonresult/getexperimentdetail',
+			type:'post',
+			dataType:'json',
+			data:JSON.stringify({"lessonid":lessonid,"lessontype":lessontype}),
+			contentType: "application/json; charset=utf-8",
+			success: function(data){
+				$('.creatornameclass').html(data.data[0].creatorname);
+				$('.pointnameclass').html(data.data[0].kpname);
+				$('#videonameid').html(data.data[0].lessonname);
+				var txid = data.data[0].txid;
+
+				var option ={"auto_play":"1","file_id":txid,"app_id":"1251972963", "width":"800","height":"600"};
+				player = new qcVideo.Player("id_video_container", option );
+			},
+			error: function(data){
+				alert('shibai');
+			}
+		});
+	};
+
+	$('.chapterList').delegate('li','click',function(){
+		$('.pointindex').html($(this).index()+1);
+		$('.pointnums').html($('.chapterList li').length);
+		$(this).addClass('active').siblings('li').removeClass('active');
+	});
+
+	function returnhome(){
+		player.pause();
+		player = null;
+//		window.location.href = '#&pageHome';
+	};
+
+	function popbook(_this){
+		showWindow('selectbook');
+		_this.addEventListener('touchend', function(e){
+			e.preventDefault();
+		});
+	};
+	function popunit(_this){
+		showWindow('selectunit');
+		_this.addEventListener('touchend', function(e){
+			e.preventDefault();
+		});
+	};
+</script>
+</body>
+</html>

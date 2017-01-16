@@ -1,0 +1,435 @@
+<style type="text/css">
+    .nowrap{white-space:nowrap;overflow: hidden;text-overflow:ellipsis;}
+    .clear { zoom:1;clear: both;}
+    .clear:after { content:'';display:block;clear:both;}
+
+    /*.m-nav-wrap {height:50px;background:#3c4749;}*/
+    /*.nav-main{width: 1080px;margin: 0 auto;height: 51px;}*/
+    /*.nav-main .new-logo{display: block;width: 110px;height: 50px;float: left;margin-right: 20px;background: url(/Public/static/commontopfoot/images/logo-white.png) no-repeat;}*/
+    /*.nav-main .nav{float: left;line-height:50px;}*/
+    /*.nav-main .nav a {font-size:14px;display:inline-block;padding:0 15px; color:#cccccc;}*/
+    /*.nav-main .nav a:hover{color: #65c612;}*/
+    /*.nav-main .nav li {float:left;}*/
+    /*.nav-main .nav li.current a{color: #65c612;font-weight: 600;}*/
+    /*.nav-main .unload-icon a{font-size:12px;display: block;width: 64px;height:40px;float: left;color: #cccccc;line-height: 34px;text-indent: 30px;}*/
+    /*.nav-main .unload-icon a.login{background: url(/Public/static/commontopfoot/images/login.png) no-repeat 7px 7px;}*/
+    /*.nav-main .unload-icon a.regist{background: url(/Public/static/commontopfoot/images/regist.png) no-repeat 7px 7px;}*/
+    /*.nav-main .unload-icon a:hover{color: white;}*/
+
+
+
+    /*.nav-main .HeaderInfo{width: 180px;padding-top: 10px;color: #ccc;position: relative;}*/
+    /*.nav-main .HeaderInfo .search-ico{display:block;width:40px;height: 23px;float: left;background: url(/Public/static/commontopfoot/images/search-ico.png) no-repeat center center;border-right: 1px solid #777f80;margin-right: 10px;cursor: pointer;margin-top: 5px;}*/
+    /*.nav-main .HeaderInfo .search-ico:hover{background: url(/Public/static/commontopfoot/images/search-ico-hover.png) no-repeat center;}*/
+
+    /*.nav-main .islogin-info{width: 128px;float: left;}*/
+    /*.nav-main .islogin-info p{font-size: 12px;}*/
+    /*.nav-main .HeaderInfo .user{display: block;width: 45px;height: 40px;float: left;cursor: pointer;}*//**/
+    /*.nav-main .islogin-info:hover .user{background: url(/Public/static/commontopfoot/images/user-hover.png) no-repeat center bottom;}*/
+    /*.nav-main .HeaderInfo .user .user-img{float: left;border-radius:50%;width: 35px;height: 35px;}*/
+    /*.nav-main .header-other-link  { width: 480px;position: absolute;right: 0;top:45px;*/
+    /*transition:.2s;*/
+    /*transform:scale(0.2,0.2)  ;*/
+    /*opacity:0;*/
+    /*filter:Alpha(opacity=0);*/
+    /*z-index: -1;*/
+    /*display:none\9;*/
+    /*}*/
+    /*.nav-main .header-other-link.scaleshow{*/
+    /*transform:scale(1,1)  ;*/
+    /*opacity:1;*/
+    /*filter:Alpha(opacity=100);*/
+    /*z-index:1000;*/
+
+    /*display:block\9;*/
+
+
+    /*}*/
+
+    /*.nav-main .header-other-link .dt-ico{height: 5px;}*/
+    /*.nav-main .header-other-link .dt-ico img{display: block;width: 8px;height:5px;float: right;margin-right: 105px;  }*/
+    /*.nav-main .header-other-link .ul-wrap{box-shadow: 0 5px 15px #ccc;box-shadow: 0 1px 5px rgba(0,0,0,.3);}*/
+    /*.nav-main .header-other-link ul{width: 120px;height: 180px;float: left;background:white url(/Public/static/commontopfoot/images/line.png) no-repeat left 30px;}*/
+    /*.nav-main .header-other-link li{text-align: center;height: 30px;line-height: 30px;}*/
+    /*.nav-main .header-other-link li.icon{height: 30px;padding-top: 15px;}*/
+    /*.nav-main .header-other-link li a{color: #333;}*/
+    /*.nav-main .header-other-link li a:hover{color: #65c612;}*/
+    /*.nav-main .HeaderInfo .identity-header{color: #eb772a;}*/
+    /*search-con*/
+    /*.m-nav-wrap .search-con{position:absolute;top:50px;width: 100%;height: 100px;background:white url(/Public/static/commontopfoot/images/transparent.png);display: none;box-shadow: 0 1px 5px #999;box-shadow: 0 1px 5px rgba(0,0,0,.3);z-index: 999;}*/
+    /*.search-main{width: 1080px;margin:0 auto;position: relative;}*/
+    /*.search-main .center-search{width: 600px;margin: 0 auto}*/
+    /*.center-search .searchSub{height: 30px;padding-top: 10px;line-height: 30px;}*/
+    /*.center-search .searchSub span,.searchSub span a{font-size: 13px;color: #999;display:block;float:left;width: 30px;margin-right:15px;text-align: center;}*/
+    /*.center-search .searchSub a:hover,.center-search .searchSub a.current{color:#333; background: url(/Public/static/commontopfoot/images/current-now.png) no-repeat center bottom;}*/
+    /*.center-search  input{height: 40px;line-height: 40px;float: left;}*/
+    /*.center-search .u-txt{width: 498px;border: 1px solid #ccc;height: 38px;background: white;color: #999;text-indent: 10px;font-size: 14px;}*/
+    /*.center-search .u-btn{width: 100px;background: #65c612;font-size: 16px;text-align: center;color: #fff;cursor: pointer;}*/
+    /*.search-main .close-search{position:absolute;right: 140px;top: 35px;display:block;width: 30px;height: 30px;background: url(/Public/static/commontopfoot/images/close-search.png) no-repeat;}*/
+    /*.search-main .close-search:hover{background: url(/Public/static/commontopfoot/images/close-search-gray.png) no-repeat;}*/
+
+    /*区域展开*/
+    #headerCity {
+        position: absolute;
+        display: none;
+        z-index: 1000;
+
+    }
+    #headerCity a{color:#333; padding:0; display:block; margin:0;}
+    #headerCity .headercity {
+        list-style: none;
+        border: 1px solid #ccc;
+        background: #fff;
+    }
+    #headerCity .headerarea {
+        position: absolute;
+        left: 150px;
+        border: 1px solid #ccc;
+        width: 150px;
+        top: 10px;
+        background: #fff;
+    }
+
+    #headerCity .headerschool {
+        position: absolute;
+        left: 150px;
+        border: 1px solid #ccc;
+        top: 10px;
+        height: 300px;
+        width: 300px;
+        overflow-y: auto;
+        background: #fff;
+    }
+    #headerCity .headercity li, #headerCity .headerarea li, #headerCity .headerschool li {
+        padding: 5px;
+        text-align: left;
+        float: none;
+        position: relative;
+        background:url(/Public/static/commontopfoot/images/icon_arrow-right.png) no-repeat center right;
+        line-height: 30px;
+    }
+    #headerCity .headercity li a, #headerCity .headerarea li a, #headerCity .headerschool li a{
+        height: auto;
+        width: auto;
+        font-size: 14px;
+    }
+    #headerCity .headercity li:hover, #headerCity .headerarea li:hover {
+        background: #ededed url(/Public/static/commontopfoot/images/icon_arrow-right.png) no-repeat center right;
+    }
+    #headerCity .headerschool li{
+        background: none;
+    }
+    #headerCity .headerschool li:hover {
+        background: #ededed;
+    }
+
+
+
+    /*之前头部样式中，其他页面用到的公用属性保留*/
+    .f-cb:after,.f-cbli li:after{display:block;clear:both;visibility:hidden;height:0;overflow:hidden;content:".";}
+    .f-cb after,.f-cbli li after{display:block;clear:both;visibility:hidden;height:0;overflow:hidden;content:".";}
+    .f-cb,.f-cbli li{zoom:1; clear: both;}
+    .f-fl{float:left;}
+    .f-fr{float:right;}
+
+    /*用clear 清除浮动的与其他页面设置的overflow:hidden属性冲突，所以用到clear的容器，给原标签加上清浮动的属性*/
+    .header-other-link,..m-nav-wrap .search-con,.nav-main{
+        clear: both;
+    }
+    .header-other-link:after,..m-nav-wrap .search-con:after,.nav-main:after{
+        content: '';display: block;clear: both;
+    }
+
+</style>
+<div class="m-nav-wrap">
+    <div class="nav-main">
+        <!-- logo -->
+        <a href="/" class="new-logo"></a>
+        <!-- nav -->
+        <div class="nav">
+
+            <ul>
+                <li <eq name='colum' value='index'>class="current"</eq>><a class="nav-index" href="/Home/Index/newindex">首页</a></li>
+                <li <eq name='colum' value='space'>class="current"</eq>><a class="nav-space" href="/Home/Space/index">空间</a></li>
+                <li <eq name='colum' value='tribe'>class="current"</eq>><a class="nav-action" href="/Tribe/Tribe/index">活动</a></li>
+                <eq name="islogin" value="1">
+                    <li  <eq name='colum' value='resource'>class="current"</eq>><a class="nav-res" href="http://<php>echo RESOURCE_INTERFACE_SERVER;</php>/newjspui/topFoot/index.jsp">资源</a></li>
+                    <else />
+                    <li  <eq name='colum' value='resource'>class="current"</eq>><a class="nav-res" href="http://<php>echo RESOURCE_INTERFACE_SERVER;</php>/newjspui/home/index.jsp">资源</a></li>
+                </eq>
+                <li <eq name='colum' value='teachingindex'>class="current"</eq>><a class="nav-jiaoyan" href="/Teaching/Teachingindex/index">教研</a></li>
+                <li <eq name='colum' value='TalentShow'>class="current"</eq>><a class="nav-jiaoyan" href="/TalentChallenge/TalentShow/index">才艺秀</a></li>
+                <li <eq name='colum' value='Lovechallenge'>class="current"</eq>><a class="nav-jiaoyan" href="/TalentChallenge/Lovechallenge/index">爱挑战</a></li>
+                <!--<li <eq name='colum' value='forum' style="display: none;">class="current"</eq>><a class="nav-summer" href="/Bookroom/Holidaytaskhome/index">暑假作业</a></li>-->
+                <li <eq name='colum' value='app'>class="current"</eq>><a class="nav-app" href="/AppStore/AppStore/index">应用</a></li>
+                <!--<li <eq name='colum' value='area'>class="current"</eq> ><a class="nav-area" href="/Home/Area/getarea">区域</a> </li>-->
+                <li <eq name='colum' value='area'>class="current"</eq> onmouseover='$("#headerCity").show()' onmouseout='$("#headerCity").hide()'><a class="nav-area" href="/Home/Area/getarea">区域</a><div id="headerCity" style=""></div></li>
+                <li ><a  href="http://help.iischool.com/" target="_blank">帮助</a></li>
+            </ul>
+
+
+        </div>
+
+
+
+        <div class="HeaderInfo pull-right">
+
+            <span class="search-ico" onclick="showSearch()"></span>
+            <eq name="islogin" value="1">
+                <div class="islogin-info">
+					<span class="user">
+						<img class="user-img" src="{$headimg_s|default='__PUBLIC__/static/commontopfoot/images/headimg_36x36.jpg'}?<php>echo time();</php>">
+						
+					</span>
+                    <p class="user-name nowrap" title="{$userinfo['lgnname']}"   style="width:80px;cursor:pointer;"><php>echo mb_substr($userinfo['lgnname'],0,13,'utf-8');</php></p>
+                    <p class="identity-header" style="cursor:pointer;">{$usertypename}</p>
+                    <!--header-other-link-->
+                    <div  class="header-other-link">
+                        <div class="dt-ico"><img src="__PUBLIC__/static/commontopfoot/images/user-hover.png"/></div>
+                        <div class="ul-wrap clear">
+
+                            <ul>
+                                <li class="icon"><img src="__PUBLIC__/static/commontopfoot/images/h-o-l-icon1.png"/></li>
+                                <li><a href="/Space/My/index" target="_blank">我的空间</a></li>
+
+                                <php>if($usercompanycode==SCHOOLID){</php>
+                                <li><a href="/Home/Index/newindex">空间门户</a></li>
+                                <php>}elseif($userinfo['domain']!=''){</php>
+                                <li><a href="http://<php>echo $userinfo['domain'];</php>">空间门户</a></li>
+                                <php>}else{</php>
+                                <li><a href="/Home/Home/index/homeid/{$usercompanycode}">空间门户</a></li>
+                                <php>}</php>
+                                <li><a href="/Space/Index/index/uid/{$user_sid}" target="_blank">我的主页</a></li>
+                                <li><a href="http://<php>echo RESOURCE_ADDR;</php>/newjspui/mydspace" target="_blank">我的资源</a></li>
+
+                                <php>if($userinfo['occupation'] == 12 || $this->userinfo['multipleoccupations']['isdeveloper']==true){</php>
+                                <li><a href="/Appstore/Appstore/developerAppList">应用管理</a></li>
+                                <php>}</php>
+
+                            </ul>
+                            <ul>
+                                <li class="icon"><img src="__PUBLIC__/static/commontopfoot/images/h-o-l-icon2.png"/></li>
+                                <li><a href="/Space/Notice/index">系统消息</a></li>
+                                <li><a href="/Space/My/notice">通知公告</a></li>
+                            </ul>
+                            <ul>
+                                <li class="icon"><img src="__PUBLIC__/static/commontopfoot/images/h-o-l-icon3.png"/></li>
+                                <li><a href="/Space/My/myibi">i币：{$coin}</a></li>
+                                <li><a href="/Space/My/myscore">积分：{$score}</a></li>
+                                <php>if($userinfo['occupation'] < 9){</php>
+                                <li><a href="javascript:;">学分：{$credittotal}</a></li>
+                                <php>}</php>
+                            </ul>
+                            <ul>
+                                <li class="icon"><img src="__PUBLIC__/static/commontopfoot/images/h-o-l-icon4.png"/></li>
+                                <li><a href="/Member/Personalset/info">个人设置</a></li>
+                                <neq name='is_super'  value='1'>
+                                    <li><a href="/Member/Member/identityselection">身份认证</a></li>
+                                </neq>
+                                <li><a href="/Member/Personalset/safe">账号安全</a></li>
+                                <li><a href="/Home/Index/logout">退出登录</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!--header-other-link-->
+                </div>
+                <else />
+                <p class="unload-icon">
+                    <a class="login" href="{$cas_service}">登录</a>
+                    <a class="regist"  href="/Member/Member/registration"> 注册</a>
+                </p>
+            </eq>
+        </div>
+
+
+
+    </div>
+    <div class="search-con">
+        <!-- search -->
+        <div class="search-main" >
+
+            <div class="center-search ">
+                <div class="searchSub">
+                    <span><a href="javascript:void(0);"  <empty name="searchfrom">class="current"  </empty> <eq name="searchfrom" value="1">class="current"</eq> scope='1'>文章</a></span>
+                    <span><a href="javascript:void(0);" scope='2' <eq name="searchfrom" value="2">class="current"  </eq> >资讯</a></span>
+                    <span><a href="javascript:void(0);" scope='3' <eq name="searchfrom" value="3">class="current"  </eq> >学校</a></span>
+                    <span><a href="javascript:void(0);" scope='4' <eq name="searchfrom" value="4">class="current"  </eq> >机构</a></span>
+                    <span><a href="javascript:void(0);" scope='5'>资源</a></span>
+                    <span><a href="javascript:void(0);" scope='6' <eq name="searchfrom" value="6">class="current"  </eq> >用户</a></span>
+                    <span><a href="javascript:void(0);" scope='7' <eq name="searchfrom" value="7">class="current"  </eq> >应用</a></span>
+                </div>
+
+                <input type="hidden" id="searchType" value="<empty name='searchfrom'>1<else />{$searchfrom}</empty>">
+                <input type="hidden" id="isThisHtml" value="{$isThisHtml}">
+
+                <input class="u-txt" type="text" placeholder="请输入要搜索的资源" id="SearchText"   value="{$sub}">
+                <input class="u-btn" type="button" value="搜索" onclick="search();">
+            </div>
+            <a href="javascript:;"  class="close-search" onclick="hideSearch();"></a>
+        </div>
+        <!-- search end -->
+    </div>
+</div>
+<!-- header -->
+
+<script type="text/javascript">
+    /*headerCity memu*/
+    function getinitcity(code) {
+        $.ajax({
+            url: "/Home/Index/ajax_getArea/id/" + code,
+            dataType: "json",
+            success: function (data) {
+                var html = "<ul class='headercity'>";
+                for (var i = 0; i < data.msg.length; i++) {
+                    html = html + "<li data-value='" + data.msg[i].id + "'><a href='javascript:void(0)'  onclick=\"getinitarea(this,'" + code + "','" + data.msg[i].id + "')\"  >" + data.msg[i].name + "</a></li>";
+                }
+                html = html+"</ul>";
+                $("#headerCity").html(html);
+
+            }
+
+        })
+    }
+    function getinitarea(obj,pcode, code) {
+        $.ajax({
+            url: "/Home/Index/ajax_getArea/id/" + code,
+            dataType: "json",
+            success: function (data) {
+                $(".headerarea").remove();
+                $(".headerschool").remove();
+
+                var html = "<ul class='headerarea'>";
+                for (var i = 0; i < data.msg.length; i++) {
+                    html = html + "<li data-value='" + data.msg[i].id + "'><a href='javascript:void(0)' onclick=\"getinitschool(this,'"+pcode+"','"+code+"','" + data.msg[i].id + "')\" >" + data.msg[i].name + "</a></li>";
+                }
+                html = html + "</ul>";
+
+                $(obj).parent().append(html);
+
+            }
+
+        })
+    }
+    function getinitschool(obj, pcode, ccode,code) {
+        $.ajax({
+            url: "/Home/Index/ajax_getareaschool",
+            // data: "provinceid=" + pcode + "&cityid=" + code + "&areaid=" + code,
+            data: { provinceid: +pcode, cityid: ccode, areaid: code },
+            type:"post",
+            dataType: "json",
+            success: function (data) {
+                $(".headerschool").remove();
+                var html = "<ul class='headerschool'>";
+                for (var i = 0; i < data.msg.length; i++) {
+                    html = html + "<li><a href='" + data.msg[i].portal_url + "'>" + data.msg[i].deptname + "</a></li>";
+                }
+                html = html + "</ul>";
+
+                $(obj).parent().append(html);
+
+            }
+
+        })
+    }
+    getinitcity(420000);
+
+
+    //search
+    var onoff=true;
+    function showSearch(){
+        if(onoff){
+            $('.m-nav-wrap .search-con').stop(true, false).slideDown();
+            onoff=false;
+        }
+        else{
+            hideSearch();
+            onoff=true;
+        }
+
+    }
+    function hideSearch(){
+        $('.m-nav-wrap .search-con').stop(true, false).slideUp();
+        onoff=true;
+
+    }
+    //user-show
+    $('.islogin-info').hover(function(){
+        $('.header-other-link').addClass('scaleshow');
+    },function(){
+        $('.header-other-link').removeClass('scaleshow');
+    })
+
+
+
+
+    //search
+    $(function(){
+        $('.searchSub span a').bind('click hover', function(){
+            $(".searchSub span a").removeClass('current');
+            $(this).addClass('current');
+            var type = $(this).attr('scope');
+            $("#searchType").val(type);
+        });
+    })
+
+    function search(){
+        var searchtext = $("#SearchText").val();
+        var searchType = $("#searchType").val() * 1;
+        var isThisHtml = $("#isThisHtml").val() * 1;
+        switch(searchType){
+            case 1:
+                if(isThisHtml == 1){
+                    window.location.href = '/Home/Search/article/sub/'+searchtext;
+                }else{
+                    window.open('/Home/Search/article/sub/'+searchtext);
+                }
+                break;
+            case 2:
+                if(isThisHtml == 1){
+                    window.location.href = '/Home/Search/information/sub/'+searchtext;
+                }else{
+                    window.open('/Home/Search/information/sub/'+searchtext, '_blank');
+                }
+                break;
+            case 3:
+                if(isThisHtml == 1){
+                    window.location.href = '/Home/Search/schoolOrOrganization/type/school/sub/'+searchtext;
+                }else{
+                    window.open('/Home/Search/schoolOrOrganization/type/school/sub/'+searchtext, '_blank');
+                }
+                break;
+            case 4:
+                if(isThisHtml == 1){
+                    window.location.href = '/Home/Search/schoolOrOrganization/type/org/sub/'+searchtext;
+                }else{
+                    window.open('/Home/Search/schoolOrOrganization/type/org/sub/'+searchtext, '_blank');
+                }
+                break;
+            case 5:
+                window.open('http://<php>echo RESOURCE_ADDR;</php>/newjspui/home/searchlist.jsp?query='+encodeURI(encodeURI(searchtext)), '_blank');
+                break;
+            case 6:
+                if(isThisHtml == 1){
+                    window.location.href = '/Home/Search/user/sub/'+searchtext;
+                }else{
+                    window.open('/Home/Search/user/sub/'+searchtext, '_blank');
+                }
+                break;
+            case 7:
+                if(isThisHtml == 1){
+                    window.location.href = '/Home/Search/app/sub/'+searchtext;
+                }else{
+                    window.open('/Home/Search/app/sub/'+searchtext, '_blank');
+                }
+                break;
+            default:
+                if(isThisHtml == 1){
+                    window.location.href = '/Home/Search/errordefault/sub/'+searchtext;
+                }else{
+                    window.open('/Home/Search/errordefault/sub/'+searchtext, '_blank');
+                }
+                break;
+        }
+    }
+
+</script>

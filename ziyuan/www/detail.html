@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=9">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0"/>
+    <title>课件资源</title>
+    <script src="cordova.js"></script>
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/hammer.min.js"></script>
+    <script src="js/iscroll4.js"></script>
+    <script src="js/subject-setrem.js"></script>
+    <script src="js/h5connect.js"></script>
+    <script src="js/doc_reader_v2.js"></script>
+
+    <link rel="stylesheet" href="css/subject-resource.css"/>
+</head>
+<body>
+<div id="resouce-wrap">
+    <img class="loadding-img" src="images/loadding.gif" alt="">
+
+</div>
+
+
+<h3 class="detail-tit pauto">
+    <p style="float:right" class="stars">
+        <span class="active"></span><span class="active"></span><span class="active"></span><span class="active"></span><span></span>
+    </p>
+    <span id="resourcename" class="nowrap"></span>
+</h3>
+<p class="detail-person pauto">贡献者：</p>
+<p class="detail-time pauto">贡献时间：</p>
+<div class="detail-con pauto">
+
+    <p class="tit">简介：</p>
+    <div class="text">
+    </div>
+</div>
+
+<script>
+    function setTitleSub(title,state) {
+        try
+        {
+
+            if (cordova == null || cordova.plugins == null || cordova.plugins.traceclass == null) {
+                document.addEventListener('deviceready', function () {
+                        cordova.plugins.traceclass.setsubjectTitle(function success(arg) {
+                            }, function error(arg) {
+                            }, [title,state]);
+
+                }, false);
+            } else {
+                    cordova.plugins.traceclass.setsubjectTitle(function success(arg) {
+                        }, function error(arg) {
+                        }, [title,state]);
+            }
+
+        }
+        catch (e)
+        {
+        }
+    };
+    function intentInfo(intro) {
+        try
+        {
+
+            if (cordova == null || cordova.plugins == null || cordova.plugins.traceclass == null) {
+                document.addEventListener('deviceready', function () {
+                        cordova.plugins.traceclass.intentInfo(function success(arg) {
+                            }, function error(arg) {
+                            }, [intro]);
+
+                }, false);
+            } else {
+                    cordova.plugins.traceclass.intentInfo(function success(arg) {
+                        }, function error(arg) {
+                        }, [intro]);
+            }
+
+        }
+        catch (e)
+        {
+        }
+    };
+
+function gohtmlback(){
+    if(document.webkitIsFullScreen){
+        document.webkitCancelFullScreen();
+        return false;
+    };
+    window.history.go(-1);
+};
+
+var sharejson = {};
+function getshare(){
+    if(player){
+        player.pause();
+    };
+    window.top.intentInfo(JSON.stringify(sharejson));
+};
+
+var iwinwidth=$(window).width();
+var player = null;
+
+    (function () {
+        var option = {
+            docId: 'ddoc-givy9qdx53yk2dp',
+//            token: 'TOKEN',
+            host: 'BCEDOC',
+            width: 830, //文档容器宽度
+            height:480,
+            pn: 1,  //定位到第几页，可选
+            ready: function (handler) {  // 设置字体大小和颜色, 背景颜色（可设置白天黑夜模式）
+                handler.setFontSize(3);
+                handler.setBackgroundColor('#000');
+                handler.setFontColor('#fff');
+            },
+            flip: function (data) {    // 翻页时回调函数, 可供客户进行统计等
+                console.log(data.pn);
+            },
+            fontSize:'big',
+            toolbarConf: {
+                page: true, //上下翻页箭头图标
+                pagenum: true, //几分之几页
+                full: true, //是否显示全屏图标,点击后全屏
+                copy: true, //是否可以复制文档内容
+                position: 'center',// 设置 toolbar中翻页和放大图标的位置(值有left/center)
+            } //文档顶部工具条配置对象,必选
+        };
+        new Document('resouce-wrap', option);
+    })();
+
+//获取地址栏参数
+//$.getUrlParam = function(name){
+//    var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+//    var r = window.location.search.substr(1).match(reg);
+//    if (r!=null) return unescape(r[2]); return null;
+//};
+//
+//var presid='';
+//var title = '资源详情';
+//
+//if($.getUrlParam('presid')){
+//    presid = $.getUrlParam('presid');
+//    title = decodeURI($.getUrlParam('title'));
+//};
+//if(title != '1'){
+//    window.top.setTitleSub(title,'1');
+//};
+//
+//    $.ajax({
+//        url:urlapi+'/common/resourcedetail',
+//        type:'post',
+//        dataType:'json',
+//        data:JSON.stringify({'presid':presid}),
+//        contentType: "application/json; charset=utf-8",
+//        success: function(data){
+//        //alert(data.data.doctype);
+//            if(data.code){
+//                $('#resourcename').html( data.data.resourcename);
+//                $('.detail-person').html('贡献者：'+data.data.submitterName);
+//                $('.detail-time').html('贡献时间：'+data.data.uploadTime);
+//                $('.detail-con .text').html( data.data.abstr );
+//
+//                title = data.data.resourcename;
+//
+//                /*
+//                资源名称：data.data.resourcename
+//                贡献者：data.data.submitterName
+//                贡献时间data.data.uploadTime,
+//
+//                简介：data.data.abstr
+//                 */
+//                 //分享
+//                var picurl = data.data.coverpath;
+//                var intro = data.data.abstr;
+//
+//                sharejson.title = title;
+//                sharejson.picurl = picurl;
+//                sharejson.intro = intro;
+//                sharejson.presid = presid;
+//
+//
+                var videoarr = ['mp4','flv'];
+                if(videoarr.indexOf(data.data.doctype) > -1){
+
+
+                    $('#resouce-wrap').html('');
+                    (function(){
+                        var option ={"auto_play":"0","file_id":data.data.fileid,"app_id":"1251972963",'width':iwinwidth,'height':290};
+                        player = new qcVideo.Player("resouce-wrap", option);
+                    })();
+
+
+                };
+                var pptarr = ['pptx','doc','ppt','xls','xlsx','vsd','pot','pps','rtf','wps','et','dps','pdf','txt','epub'];
+                if(pptarr.indexOf(data.data.doctype) > -1){
+
+                    //alert('docId: '+data.data.docid +'token: '+data.data.token+'host:'+data.data.host);
+                    $('#resouce-wrap').html('');
+                    (function () {
+                        var option = {
+                            docId: data.data.docid,
+                            token: data.data.token,
+                            host: data.data.host,
+                            width: 830, //文档容器宽度
+                            height:480,
+                            pn: 1,  //定位到第几页，可选
+                            ready: function (handler) {  // 设置字体大小和颜色, 背景颜色（可设置白天黑夜模式）
+                                handler.setFontSize(3);
+                                handler.setBackgroundColor('#000');
+                                handler.setFontColor('#fff');
+                            },
+                            flip: function (data) {    // 翻页时回调函数, 可供客户进行统计等
+                                console.log(data.pn);
+                            },
+                            fontSize:'big',
+                            toolbarConf: {
+                                    page: true, //上下翻页箭头图标
+                                    pagenum: true, //几分之几页
+                                    full: true, //是否显示全屏图标,点击后全屏
+                                    copy: true, //是否可以复制文档内容
+                                    position: 'center',// 设置 toolbar中翻页和放大图标的位置(值有left/center)
+                            } //文档顶部工具条配置对象,必选
+                        };
+                        new Document('resouce-wrap', option);
+                    })();
+                };
+//
+//                //images
+//                var picarr = ['jpegjpg','jpeg','jpg','png','gif'];
+//                if(picarr.indexOf(data.data.doctype) > -1){
+//
+//                    var html="";
+//                    html+='<img class="detail-img" src='+data.data.playaddress+' style="vertical-align: middle;" alt="">'
+//                    $('#resouce-wrap').html(html);
+//
+//                };
+//
+//
+//
+//
+//            }else{
+//                alert('详情页：'+data.errorMessage);
+//            };
+//        },
+//        error: function(data){
+//
+//        }
+//    });
+
+
+
+
+</script>
+</body>
+</html> 

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Cache-Control" content="no-cache"/>
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=1080, target-densityDpi=device-dpi, user-scalable=no"/>
+    <title>商品详情页</title>
+    <link rel="stylesheet" href="css/bank.css" />
+    <link rel="stylesheet" href="css/detail.css" />
+    <link rel="stylesheet" href="css/loading.css" />
+    <link rel="stylesheet" href="css/swiper.min.css" />
+    <link rel="stylesheet" href="css/index.css" />
+    <script src="js\all.js"></script>
+</head>
+<body>
+<div class="main">
+    <div class="tab_fixed" style="display: block;">
+        <div class="city m">
+            <label class="left headleft"><a href="javascript:window.location.href=history.go(-1);"><span class="retunpage"></span></a></label>
+            <label>商品详情</label>
+            <label class="right headright">　</label>
+        </div>
+    </div>
+    <div class="swiper-container" style="height:1080px; width:1080px;" id="banner-container">
+        <div class="swiper-wrapper" id="banner-wrapper"></div>
+        <div class="swiper-pagination" id="banner-pagination"></div>
+    </div>
+    <div class="content">
+        <div class="text1 left" id="name">商品名称</div>
+        <div class="text2 right" id="time">
+            <div class="left text3">还剩</div><div class="left text3"><label id="endday">2</label>天</div><div class="left text4" id="endhour">02</div><div class="left text5">:</div><div class="left text4" id="endminute">12</div><div class="left text5">:</div><div class="left text4" id="endsecond">30</div><div class="left text6">结束</div><div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+        <div class="left text7" id="rprice">￥22.00</div>
+        <div class="left text8" id="price">￥33.00</div>
+        <div class="clear"></div>
+        <div>
+            <div class="left text9">库存：<label>12件</label></div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="line"></div>
+    <div class="space"></div>
+    <div class="line"></div>
+    <div class="content">
+        <div id="fet-div">
+            <div class="text10" id="fet">
+                <div class="fet-name-default" id="fet-name-default">商品详情</div>
+                <div class="clear"></div>
+            </div>
+            <div class="line"></div>
+            <div class="space marginheight">
+                <p>商品详情内容</p>
+            </div>
+            <div class="clear"></div>
+            <div class="line"></div>
+        </div>
+        <div class="" id="dims"></div>
+    </div>
+    <div class="line"></div>
+    <div class="space"></div>
+    <div class="line"></div>
+    <div class="content">
+        <div class="text10">产品参数</div>
+        <div class="space">
+            <p>重量：1kg</p>
+            <p>颜色：红色</p>
+        </div>
+    </div>
+    <div class="line"></div>
+    <div class="space"></div>
+    <div class="line"></div>
+    <div class="content" id="comments"></div>
+</div>
+<div class="getbtn">
+    <input type="button" class="buy" value="立即兑换">
+    <input type="button" class="join" value="加入兑换清单">
+</div>
+<!--<div class="get get-grey">不可兑换</div>-->
+</body>
+<script>
+    $(document).ready(function(){
+        var timerD=null;
+        function uptime(){
+            getcountdown('2016.8.15');
+        };
+        setInterval(uptime,1000);
+        uptime();
+    });
+</script>
+
+
+<script type="text/javascript">
+    var window_height = $(window).height();
+    var imgs = ['http://www.pptbz.com/pptpic/UploadFiles_6909/201204/2012041411433867.jpg','http://www.pptbz.com/pptpic/UploadFiles_6909/201204/2012041411433867.jpg','http://www.pptbz.com/pptpic/UploadFiles_6909/201204/2012041411433867.jpg'];
+    initBanner();
+    function initBanner(){
+        var html = "";
+        for (var i=0; i<imgs.length; i++) {
+            html += '<img class="swiper-slide" src="'+imgs[i]+'"/>';
+        }
+        $("#banner-wrapper").html(html);
+        var swiper = new Swiper('#banner-container', {
+            pagination: '#banner-pagination',
+            paginationClickable: true,
+            autoplayDisableOnInteraction: false,
+            loop: true,
+            autoplay: 4000
+        });
+    }
+</script>
+
+<!--倒计时-->
+<script>
+    function getcountdown(endtime){
+        var timearr = endtime.split('.');
+
+
+        var oDateEnd=new Date();
+        var oDateNow=new Date();
+
+        var iRemain=0;
+
+        var iDay=0;
+        var iHour=0;
+        var iMin=0;
+        var iSec=0;
+
+        oDateEnd.setFullYear(parseInt(timearr[0]));
+        oDateEnd.setMonth(parseInt(timearr[1])-1);
+        oDateEnd.setDate(parseInt(timearr[2]));
+        oDateEnd.setHours(0);
+        oDateEnd.setMinutes(0);
+        oDateEnd.setSeconds(0);
+
+        iRemain=(oDateEnd.getTime()-oDateNow.getTime())/1000;
+
+        if(iRemain<=0)
+        {
+            clearInterval(timerD);
+            iRemain=0;
+            alert('倒计时结束');
+        }
+
+        iDay=parseInt(iRemain/86400);
+        iRemain%=86400;
+
+        iHour=parseInt(iRemain/3600);
+        iRemain%=3600;
+
+        iMin=parseInt(iRemain/60);
+        iRemain%=60;
+
+        iSec=iRemain;
+
+        $('#endday').html(iDay);
+        $('#endhour').html(fillZero(iHour,2));
+        $('#endminute').html(fillZero(iMin,2));
+        $('#endsecond').html(fillZero(iSec,2));
+    };
+
+    function fillZero(num, digit)
+    {
+        var str=''+num;
+
+        while(str.length<digit)
+        {
+            str='0'+str;
+        }
+
+        return str;
+    }
+</script>
+</html>
