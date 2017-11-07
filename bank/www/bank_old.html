@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <title>签到墙</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/common.js"></script>
+    <style>
+        body{background-color: #FEEED4;}
+        .sortnum{width: 36rem; height: 35rem; background-image: url("images/signinbg.png"); background-repeat: no-repeat; background-size: 100% auto; color: #fff;}
+        .sortnum div{display: inline-block; text-align: center; width: 7.2rem;}
+        .columnleft{margin-left: 4.1rem; margin-top: 22.3rem;}
+        .columnmiddle{margin-left: 3rem; margin-top: 22.3rem;}
+        .columnright{margin-left: 3.2rem; margin-top: 22.3rem;}
+        .jianpan{width: 36rem; height: 9.8rem; background-image: url("images/jianpan.png"); background-repeat: no-repeat; background-size: cover; text-align: center; color: #fff; font-size: 1.6rem;}
+        .jianpan p{padding-top: 5.2rem; width: 22rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block;}
+    </style>
+</head>
+<body>
+<div class="sortnum">
+    <div class="columnleft">
+        <p style="font-size: 1rem;">签到人数</p>
+        <p style="font-size: 2.4rem; margin-top: 0.4rem" id="signcoutid">0</p>
+    </div>
+    <div class="columnmiddle">
+        <p style="font-size: 1rem;">当前摇动次数</p>
+        <p style="font-size: 2.4rem; margin-top: 0.4rem" id="wavecontid">0</p>
+    </div>
+    <div class="columnright">
+        <p style="font-size: 1rem;">摇中奖品数量</p>
+        <p style="font-size: 2.4rem; margin-top: 0.4rem" id="awardcountid">0</p>
+    </div>
+</div>
+<div id="prizeid" style="margin-top: -1px;">
+    <div class="jianpan">
+        <p>纪念奖</p>
+    </div>
+    <div class="jianpan">
+        <p>一等奖</p>
+    </div>
+    <div class="jianpan">
+        <p>二等奖</p>
+    </div>
+    <div class="jianpan">
+        <p>三等奖</p>
+    </div>
+</div>
+<script>
+    var activityid = '1';
+
+    //获取地址栏参数
+    $.getUrlParam = function (name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    };
+
+    if ($.getUrlParam('activityid')) {
+        activityid = $.getUrlParam('activityid');
+    };
+
+    getprizewall();
+    var params = {
+        "activityid": activityid
+    };
+    function getprizewall(state){
+        $.ajax({
+            url: urlapi + 'cactivity_signwall.action',
+            data: params,
+            type: 'post',
+            dataType: 'json',
+            success: function(data){
+                if(data.code == 1){
+                    $('#signcoutid').html(data.data.signcout);
+                    $('#wavecontid').html(data.data.wavecont);
+                    $('#awardcountid').html(data.data.awardcont);
+                    if(!state){
+                        $('#prizeid').html();
+                        var html = '';
+                        for(var i=0; i<data.data.prize.length; i++){
+                            html += '<div class="jianpan"><p>'+data.data.prize[i].prizelevel+data.data.prize[i].prizenum+'名('+data.data.prize[i].prizename+')</p></div>';
+                        };
+                        $('#prizeid').html(html);
+                    };
+                }else{
+                    alert(data.errorMessage);
+                };
+            },
+            error: function(data){
+                alert('网络错误');
+            }
+        });
+    };
+
+    var timer = null;
+    setInterval(function(){
+        getprizewall(1);
+    },2000);
+</script>
+</body>
+</html>

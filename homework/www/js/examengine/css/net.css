@@ -1,0 +1,985 @@
+.examengine {
+    font-family: "Microsoft YaHei";
+    color: #333;
+    background: #f0f0f0;
+}
+
+.examengine .btn {
+    height: 30px;
+    line-height: 30px;
+    background: #e45c40;
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+}
+
+
+.examengine .btn:hover {
+    background: #f66a49;
+}
+
+.examengine .btn_white{
+    border: 1px solid #e45c40;
+    background: #fff;
+    color: #e45c40;
+}
+
+.examengine .btn_white:hover{
+    color: #fff;
+}
+
+.examengine .btn_green {
+    background: #47ad76;
+    color: #fff;
+}
+
+.examengine .btn_green:hover {
+    background: #5dbb88;
+}
+
+.examengine em {
+    font-style: normal;
+}
+
+.selectitem li .select_i, .examengine .examentimer i,
+.examengine .equestion .subquestion .analyse .analysebox span i,
+.diffcontainer u {
+    background: url(../img/ep_icon.png) no-repeat;
+}
+
+.diffcontainer u {
+    background-position: -19px -203px;
+    display: block;
+    float: left;
+    margin-right: 8px;
+    width: 16px;
+    height: 16px;
+    margin-top: 5px;
+}
+
+.diffcontainer u.active {
+    background-position: 0px -203px;
+}
+
+.examengine .examheader {
+    background: #fff;
+    border: 1px solid #e0e3e9;
+    border-radius: 3px;
+    position: relative;
+}
+
+.examengine .examheader h1 {
+    font-size: 24px;
+    font-family: "Microsoft Yahei";
+    border-bottom: #e5e5e5 dashed 1px;
+    line-height: 30px;
+    text-align: center;
+    padding-top: 50px;
+    padding-bottom: 25px;
+    margin: 0 30px;
+}
+
+.examengine .examheader h1 input {
+    width: 100%;
+    font-size: 24px;
+    font-family: "Microsoft Yahei";
+    text-align: center;
+    font-weight: bold;
+    border: 2px solid #f66a49;
+}
+
+.examengine .examheader .info {
+    text-align: left;
+    font-size: 14px;
+    line-height: 25px;
+    padding: 25px 0 15px 0;
+    color: #666;
+    margin: 0 30px;
+}
+
+.examengine .examcontainer {
+    margin: 15px 0;
+    position: relative;
+}
+
+.examengine .examcontainer::after {
+    clear: both;
+    content: " ";
+    display: block;
+    font-size: 0;
+    height: 0;
+    visibility: hidden;
+    overflow: hidden;
+}
+
+.examengine .examcontainer .exambody {
+    width: 73%;
+    position: relative;
+}
+
+.examengine .examsections .examsections_title {
+    padding: 15px 30px;
+    background: #fff9e9;
+    border: 1px solid #ffeec4;
+    border-radius: 2px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.examengine .examcontainer .answersheet {
+    width: 265px;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.examengine .examcontainer .answersheet .ascontainer {
+    background: #fff;
+    border: 1px solid #e0e3e9;
+    border-radius: 3px;
+}
+
+.examengine .examentimer {
+    height: 58px;
+    line-height: 58px;
+    padding-left: 15px;
+    color: #999;
+    overflow: hidden;
+}
+
+.examengine .examentimer .timer_left {
+    float: left;
+}
+
+.examengine .examentimer .timer_right {
+    float: right;
+    margin-right: 15px;
+    border-left: 1px solid #f0f0f0;
+    padding-left: 15px;
+}
+
+.examengine .examentimer i {
+    width: 20px;
+    height: 20px;
+    display: block;
+    float: left;
+    margin: 20px 5px 0 0;
+    background-position: -53px 0;
+}
+
+.examengine .examentimer .timer_left em {
+    color: #e45c40;
+    font-size: 16px;
+}
+
+.examengine .examentimer .timer_right a {
+    color: #666;
+    display: block;
+}
+
+.examengine .examentimer .timer_right a:hover {
+    color: #f66a49;
+}
+
+.examengine .examentimer .timer_right a i {
+    width: 9px;
+    height: 16px;
+    background-position: -63px -72px;
+    margin-right: 10px;
+    -webkit-transition: all .2s;
+}
+
+.examengine .examentimer .timer_right a:hover i {
+    background-position: -63px -91px;
+}
+
+.examengine .examcontainer .answersheet .ascontainer .astitle {
+    background-color: #f9f9f9;
+    border: #f0f0f0 solid 1px;
+    border-width: 1px 0;
+    line-height: 50px;
+    font-size: 16px;
+    padding-left: 15px;
+}
+
+.examengine .examcontainer .answersheet .ascontainer .asbtn {
+    padding: 20px 15px 15px 15px;
+}
+
+.examengine .examcontainer .answersheet .ascontainer .asbtn .btn {
+    display: block;
+}
+
+.examengine .examcontainer .answersheet .ascontainer .asbtn p:first-child {
+    padding-bottom: 15px;
+}
+
+.examengine .examcontainer .answersheet .ascontainer .astitle span {
+    font-size: 12px;
+    color: #F06000;
+    margin-left: 10px;
+}
+
+.examengine .examcontainer .answersheet .ascontainer .ascontent {
+    overflow: auto;
+    min-height: 100px;
+    background: #fff;
+}
+
+.examengine .examcontainer .answersheet .ascontainer .ascontent dl {
+    padding: 0 10px 0px 0;
+    display: inline-block;
+    width: 96%;
+}
+
+.examengine .examcontainer .answersheet .ascontainer .ascontent dl:first-child {
+    padding-top: 15px;
+}
+
+.examengine .examcontainer .answersheet .ascontainer .ascontent dl dt {
+    border-left: 3px solid #f06000;
+    padding-left: 15px;
+    line-height: 14px;
+    font-size: 100%;
+    color: #666;
+}
+
+.examengine .examcontainer .answersheet .ascontainer .ascontent dl dd {
+    margin: 5px 0 0 15px;
+    overflow: hidden;
+}
+
+.examengine .examcontainer .answersheet .ascontainer .ascontent a {
+    float: left;
+    cursor: pointer;
+    margin: 0 3px 5px 0;
+    width: 25px;
+    height: 25px;
+    line-height: 24px;
+    border: 1px solid #e6e8ec;
+    border-radius: 2px;
+    outline: none;
+    text-align: center;
+    font-size: 12px;
+    font-family: 'Arial';
+    display: block;
+}
+
+.examengine .examcontainer .answersheet .ascontainer .ascontent a:hover {
+    text-decoration: none;
+    border: 0;
+    padding: 1px;
+    background: #f66a49;
+    color: #fff;
+}
+
+.examengine .examcontainer .answersheet .ascontainer .ascontent a.this {
+    color: #fff;
+    background: #b1b6bf;
+    border: 0;
+    padding: 1px;
+}
+
+.examengine .examcontainer .answersheet .ascontainer .ascontent a.error {
+    color: #fff;
+    background: #e45c40;
+    border: 0;
+    padding: 1px;
+}
+
+.examengine .examcontainer .answersheet .ascontainer .ascontent a.right {
+    color: #fff;
+    background: #47ad76;
+    border: 0;
+    padding: 1px;
+}
+
+.examengine .examcontainer .answersheet .ascontainer .ascontent a.noda {
+    background: #fff;
+    border-color: #dbdbdb;
+}
+
+.examengine .examcontainer .answersheet .ascontainer .ascontent a.noda:hover {
+    background: #f66a49;
+    color: #fff;
+}
+
+.examengine .examcontainer .answersheet .ascontainer .ascontent_color {
+    padding: 20px 0 0 35px;
+    border-top: 1px dotted #dbdbbd;
+    margin: 20px 15px 0 15px;
+}
+
+.examengine .examcontainer .answersheet .ascontainer .ascontent_color em {
+    display: inline-block;
+    height: 18px;
+    line-height: 18px;
+    *line-height: 20px;
+}
+
+.examengine .examcontainer .answersheet .ascontainer .ascontent_color i {
+    margin-left: 5px;
+    margin-right: 10px;
+    width: 12px;
+    height: 12px;
+    display: inline-block;
+    vertical-align: -1px;
+    #vertical-align:0px;
+    overflow: hidden;
+    border-radius: 2px;
+}
+
+.examengine .examcontainer .answersheet .ascontainer .ascontent_color i.error {
+    background: #e45c40;
+}
+
+.examengine .examcontainer .answersheet .ascontainer .ascontent_color i.right {
+    background: #47ad76;
+}
+
+.examengine .examcontainer .answersheet .ascontainer .ascontent_color i.normal {
+    background: #fff;
+    border: 1px solid #d9dcdf;
+}
+
+.examengine .examcontainer .answersheet .ascontainer .ascontent_color i.doit {
+    background: #b1b6bf;
+}
+
+.examengine .equestion {
+    border: 1px solid #e0e3e9;
+    margin-bottom: 15px;
+    background: #fff;
+    font-size: 16px;
+    line-height: 26px;
+    position: relative;
+}
+
+.examengine .equestion .title {
+    background: #fafafa;
+    padding: 10px 30px 20px 55px;
+}
+
+.examengine .equestion .subquestion .subtitle {
+    padding: 10px 30px;
+    line-height: 24px;
+    background: #f9f9fa;
+    color: #151515;
+    position: relative;
+}
+
+.examengine .equestion rt, .examengine .equestion rp {
+    display: inline;
+    font-size: 100%;
+}
+
+.examengine .equestion .subquestion {
+}
+
+.examengine .equestion .subquestion .subtitle em {
+    font-size: 20px;
+    color: #e45c40;
+    margin-right: 10px;
+    float: left;
+    font-style: normal;
+    font-weight: normal;
+}
+
+.examengine .equestion .subquestion .linecontainer {
+    overflow: hidden;
+    position:relative;
+    cursor:pointer;
+}
+
+.examengine .equestion .subquestion .linecontainer .linecontainer_right {
+    width: 28%;
+    float: right;
+    padding-right:10px;
+}
+
+.examengine .equestion .subquestion .linecontainer .linecontainer_left {
+    width: 28%;
+    float: left;
+    padding-left:10px;
+}
+
+.examengine .equestion .subquestion .linebox {
+    border: 1px solid #d8d8d8;
+    width: 73%;
+    padding: 5px;
+    font-size: 14px;
+    padding-left: 35px;
+    position: relative;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    height:80px;
+    overflow:hidden;
+    font-size:13px;
+    -webkit-box-shadow: 1px 1px 1px 1px #d8d8d8;
+    -moz-box-shadow: 1px 1px 1px 1px #d8d8d8;
+    box-shadow: 1px 1px 1px 1px #d8d8d8;
+    border-radius: 4px;
+}
+
+.examengine .equestion .subquestion .linebox .linebox_item {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    background: #999;
+    display: inline-block;
+    padding: 0px 5px;
+    font-size:12px;
+    color: #fff;
+}
+
+.examengine .equestion .subquestion .selectitem {
+    padding: 15px 50px 25px 65px;
+    clear: both;
+}
+/*
+.examengine .equestion .subquestion .viewquestion li:hover {
+    background: none;
+    cursor: text;
+}
+
+.examengine .equestion .subquestion .viewquestion i {
+    display: none;
+}*/
+
+.examengine .equestion .subquestion .selectitem li {
+    display: block;
+    padding: 6px 0 6px 45px;
+    margin-left: -20px;
+    line-height: 24px;
+    color: #151515;
+    position: relative;
+    cursor: pointer;
+}
+
+.examengine .equestion .subquestion .selectitem li:hover {
+    background: #f8f8f8;
+    border: none;
+}
+
+.examengine .equestion .subquestion .selectitem .select_i {
+    width: 21px;
+    height: 21px;
+    display: block;
+    background-position: -28px -114px;
+    position: absolute;
+    top: 9px;
+    left: 5px;
+}
+
+.examengine .equestion .subquestion .selectitem .select_i.checked {
+    background-position: -51px -114px;
+}
+
+.examengine .equestion .subquestion .selectitem .select_i.checkbox {
+    background-position: -23px -138px;
+}
+
+.examengine .equestion .subquestion .selectitem .select_i.checkbox.checked {
+    background-position: -51px -138px;
+}
+
+.examengine .equestion .subquestion .selectitem span {
+    color: #999;
+    margin-right: 5px;
+}
+
+.examengine .equestion .subquestion .replycontainer {
+}
+.examengine .equestion .subquestion .replycontainer .exam_praise{
+    display:inline-block;
+    background:url(../img/icon_zan.png) no-repeat;
+    background-position: -30px 0;
+    cursor:pointer;
+    float:right;
+    height:24px;
+    width:24px;
+}
+.examengine .equestion .subquestion .replycontainer .exam_praise:hover,
+.examengine .equestion .subquestion .replycontainer .exam_praise.active{
+    background-position: 0 0;
+}
+.examengine .equestion .subquestion .replycontainer_content {
+    padding: 20px 30px 18px 30px;
+}
+
+.examengine .equestion .subquestion .replycontainer .btn {
+    display: normal;
+}
+
+.examengine .equestion .subquestion .replycontainer textarea {
+    width: 96%;
+    height: 60px;
+    border-radius: 3px;
+    -moz-box-shadow: 1px 3px 3px #eee inset;
+    -webkit-box-shadow: 1px 3px 3px #eee inset;
+    box-shadow: 1px 3px 3px #eee inset;
+    padding: 2%;
+}
+
+.examengine .equestion .subquestion .replycontainer .replyinfo {
+    position: relative;
+    margin-top: 10px;
+
+}
+.examengine .equestion .subquestion  .replycontainer_comment {
+    position: relative;
+    margin-top: 10px;
+    padding-left:50px;
+    padding-right:50px;
+
+}
+.examengine .equestion .subquestion  .replycontainer_comment div{
+    line-height:22px;
+    border-bottom:1px solid #d8d8d8;
+    margin-bottom:6px
+}
+.examengine .equestion .subquestion  .replycontainer_comment p{
+    font-size:12px;
+    color:#333;
+}
+.examengine .equestion .subquestion .replycontainer_comment p.exam_comment_time {
+    color:#999;
+}
+.examengine .equestion .subquestion .analyse {
+    border: 1px solid #e0e3e9;
+    border-width: 1px 0;
+    padding: 20px;
+}
+
+.examengine .equestion .subquestion .analyse .analysebox {
+    margin-bottom: 10px;
+    clear: both;
+    overflow: hidden;
+}
+
+.examengine .equestion .subquestion .analyse .analysebox span {
+    float: left;
+    color: #999;
+    line-height: 18px;
+    font-size: 14px;
+    padding: 4px 15px 4px 30px;
+    position: relative;
+    background: #eee;
+    margin-right: 10px;
+}
+
+.examengine .equestion .subquestion .analyse .analysebox span i {
+    background-position: -58px -218px;
+    width: 15px;
+    height: 15px;
+    display: block;
+    position: absolute;
+    top: 5px;
+    left: 12px;
+}
+.examengine .equestion .subquestion .analyse .analysebox img{ width:100px; height:100px; cursor:pointer; border:2px solid #fff;
+}
+.examengine .equestion .subquestion .analyse .analysebox img:hover{  border:2px solid #f66a49;
+}
+.examengine .equestion .subquestion .analyse .analysebox.ans_diff span i {
+    background-position: -58px -258px;
+}
+
+.examengine .equestion .subquestion .analyse .analysebox.ans_analysis span i {
+    background-position: -58px -272px;
+}
+
+.examengine .equestion .subquestion .analyse .analysebox.ans_knowledges span i {
+    background-position: -58px -195px;
+}
+
+.examengine .equestion .subquestion .analyse .analysebox div {
+    float: left;
+    width: 77%;
+    line-height: 25px;
+}
+
+.examengine .equestion .subquestion .answerline {
+    background: #f9f9f9;
+    border-top: 1px dashed #d8d8d8;
+    padding: 15px 20px 15px 30px;
+}
+/***菜单显示***/
+.questionmenu {
+    cursor: pointer;
+    position: absolute;
+    z-index: 999;
+    top: -30px;
+    right: 0;
+    display: none;
+}
+
+.questionmenu a {
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 8px;
+    margin-left: 2px;
+    font-size: 14px;
+    font-family: "Microsoft YaHei";
+    /*  background-color: #1887e3;*/
+    background-color: #27ae61;
+    color: #fff;
+}
+
+.questionmenu a:hover {
+    background: #e45c40;
+    text-decoration: none;
+    color: #fff;
+}
+/*********单题模式***********/
+.singleexam {
+    width: 100%;
+}
+
+.singleexam .ascontainer {
+    display: none;
+}
+
+.singleexam .examsections_title {
+    display: none;
+}
+
+.singleexam .equestion {
+    display: none;
+}
+/********试卷编辑模式*********/
+.editexam {
+    background: #fff;
+}
+
+.editexam .equestion {
+    border: 0;
+}
+
+.editexam .examsections .examsections_title {
+    background: none;
+    border: 0;
+    font-size: 18px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+.editexam .equestion .title {
+    background: none;
+    border: 0;
+}
+
+.editexam .equestion .subquestion .subtitle {
+    background: none;
+    border: 0;
+}
+
+.editexam .equestion .subquestion .answerline {
+    display: none;
+}
+
+.editexam .equestion .subquestion .selectitem i {
+    display: none;
+}
+
+.editexam .changequestionloading {
+    width: 100%;
+    height: 100%;
+    background: #f2f2f2;
+    position: absolute;
+    left: 0;
+    top: 0;
+    text-align: center;
+}
+
+.editexam .equestion .subquestion .analyse {
+    border: 0;
+}
+
+.editexam .examentimer {
+    line-height: normal;
+    padding: 0;
+    height: initial;
+}
+
+.editexam .examentimer h2 {
+    height: 40px;
+    line-height: 40px;
+    color: #fff;
+    border: 1px solid #249f59;
+    font-size: 16px;
+    background-color: #27ae61;
+    text-align: center;
+}
+
+.editexam .examentimer a {
+    display: block;
+    float: left;
+    border: 1px solid #d8d8d8;
+    padding: 5px 8px;
+    margin-right: 10px;
+}
+
+.editexam .examentimer div {
+    padding: 10px;
+    overflow: hidden;
+}
+
+.editquestion {
+    border: solid 4px #f66a49;
+    background: #fff;
+    font-size: 16px;
+    position: relative;
+    padding: 10px;
+    line-height: 28px;
+}
+/*************弹层******************/
+.examlayoutbg {
+    width: 100%;
+    left: 0;
+    top: 0;
+    position: absolute;
+    background: #000;
+    z-index: 99901;
+    display: block;
+    opacity: 0.3;
+    display: none;
+}
+
+.examlayoutbox {
+    position: fixed;
+    _position: absolute;
+    text-align: left;
+    padding: 10px;
+    background: url(../img/layer_bg.png) repeat scroll 0 0 transparent;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    z-index: 99902;
+    top: 50px;
+    display: none;
+}
+
+.examlayoutbox .examlayoutbox_title {
+    position: relative;
+    width: 100%;
+    height: 42px;
+    line-height: 42px;
+    overflow: hidden;
+    background-color: #27ae61;
+    border-radius: 5px 5px 0 0;
+    -webkit-border-radius: 5px 5px 0 0;
+    -moz-border-radius: 5px 5px 0 0;
+    -ms-border-radius: 5px 5px 0 0;
+    -o-border-radius: 5px 5px 0 0;
+}
+
+.examlayoutbox .examlayoutbox_title h2 {
+    position: relative;
+    left: 20px;
+    font-size: 14px;
+    color: #fff;
+}
+
+.examlayoutbox .examlayoutbox_title span {
+    position: absolute;
+    right: 20px;
+    top: 0px;
+    font-size: 15px;
+    color: #fff;
+    overflow: hidden;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.examlayoutbox .examlayoutbox_content {
+    background: #fff;
+    padding: 10px;
+    font-size: 14px;
+}
+
+.examlayoutbox .examlayoutbox_btn {
+    background: #fff;
+    text-align: right;
+    padding: 10px;
+}
+
+.examlayoutbox .examlayoutbox_btn .btn {
+    display: inline;
+    height: 20px;
+    line-height: 20px;
+    margin-right: 10px;
+    background: #e45c40;
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+}
+.examlayoutbox .examlayoutbox_btn .btn:hover{
+    background: #f66a49;
+}
+.examlayoutbox .examlayoutbox_btn .btn.btn_white{
+    border: 1px solid #ddd;
+    background: #efefef;
+    color: #000;
+}
+
+.examlayoutbox .examlayoutbox_btn .btn.btn_white:hover {
+
+    background: #eee;
+
+}
+
+.examlayoutbox .examlayoutbox_content .examlayout_questionlist {
+}
+
+.examlayoutbox .examlayoutbox_content .examlayout_questionlist_number {
+    overflow: hidden;
+    padding: 10px;
+}
+
+.examlayoutbox .examlayoutbox_content .examlayout_questionlist_number a {
+    display: inline-block;
+    float: left;
+    margin-right: 10px;
+    border: 1px solid #d8d8d8;
+    padding: 4px 8px;
+}
+
+.examlayoutbox .examlayoutbox_content .examlayout_questionlist_number a:hover,
+.examlayoutbox .examlayoutbox_content .examlayout_questionlist_number a.active {
+    border: 1px solid #e45c40;
+    background: #e45c40;
+    color: #fff;
+}
+
+.examlayoutbox .examlayoutbox_content .examlayout_questionlist_content {
+    clear: both;
+    overflow-y: auto;
+    height: 300px;
+}
+
+.examlayoutbox .examlayoutbox_content .examloadding {
+    background: url(../img/ajax-loader.gif) no-repeat left center;
+    padding-left: 50px;
+    height: 40px;
+    padding-top: 20px;
+}
+/************/
+
+.examuploadfilecontainer{width: 100px;
+    height: 75px;
+    position: relative;
+    overflow:hidden; float:left; margin-right:15px;
+
+}
+.examuploadfilecontainer img{width: 100px;
+    height: 75px;}
+.examuploadfilecontainer span{cursor:pointer; position:absolute; right:0; top:0; background:url(../img/p_del.png) no-repeat;width:20px; height:20px;}
+.examuploadfile {
+    width: 100px;
+    height: 75px;
+    display: block;
+    background:url(../img/p_addphoto.jpg) no-repeat;
+    position: relative;
+    overflow:hidden;
+}
+
+.examuploadfile input {
+    position:absolute;bottom:0;left:0;font-size:100px;height:130%;width:100%;z-index:1;opacity:0;filter:alpha(opacity=0);
+}
+/*******************分数****************/
+.exam_score {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: url(../img/totalscore.png) no-repeat right bottom;
+    width: 200px;
+    height: 102px;
+}
+
+.exam_score span {
+    display: block;
+    float: right;
+    height: 92px;
+    width: 70px;
+}
+
+.exam_score span.a0 {
+    background: url(../img/totalscore.png) no-repeat scroll -5px 0px transparent;
+    width: 41px;
+}
+
+.exam_score span.a1 {
+    background: url(../img/totalscore.png) no-repeat scroll -44px 0px transparent;
+    width: 24px;
+}
+
+.exam_score span.a2 {
+    background: url(../img/totalscore.png) no-repeat scroll -69px 0 transparent;
+    width: 55px;
+}
+
+.exam_score span.a3 {
+    background: url(../img/totalscore.png) no-repeat scroll -122px 0 transparent;
+    width: 46px;
+}
+
+.exam_score span.a4 {
+    background: url(../img/totalscore.png) no-repeat scroll -172px 0 transparent;
+    width: 42px;
+}
+
+.exam_score span.a5 {
+    background: url(../img/totalscore.png) no-repeat scroll 0 -91px transparent;
+    width: 46px;
+}
+
+.exam_score span.a6 {
+    background: url(../img/totalscore.png) no-repeat scroll -50px -91px transparent;
+    width: 30px;
+}
+
+.exam_score span.a7 {
+    background: url(../img/totalscore.png) no-repeat scroll -87px -91px transparent;
+    width: 40px;
+}
+
+.exam_score span.a8 {
+    background: url(../img/totalscore.png) no-repeat scroll -128px -91px transparent;
+    width: 40px;
+}
+
+.exam_score span.a9 {
+    background: url(../img/totalscore.png) no-repeat scroll -174px -81px transparent;
+    width: 28px;
+}
+
+.exam_score span.a10 {
+    background: url(../img/totalscore.png) no-repeat scroll -240px -90px transparent;
+    width: 28px;
+}
+
+#exam_word_source .active {
+    border: 2px solid #f66a49;
+    font-size: 16px;
+}
+/********************************************************************/
+.linepoint {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    overflow: hidden;
+    background: #f66a49 ;
+}
+
+.mylinepoint {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    overflow: hidden;
+    background: #FFFF37;
+}

@@ -1,0 +1,281 @@
+if (examengine.issingledisplay) {
+            $(".equestion").hide();
+            $(".subquestion").hide();
+            $(".equestion").eq(examengine.singleindex).show();
+            $(".subquestion").eq(examengine.singleindex).show();
+            $('.examparts').css({'position': 'relative', 'height': $('body').height()+'px'});
+            $('.examsections').css({'position': 'absolute', 'height': $('body').height()+'px'});
+            $('.equestion').css({'display':'block', 'height':$('body').height()+'px','width':'36rem', 'position':'absolute'});
+            $('.subquestion').css({'display':'block','width':'36rem','position':'absolute'});
+
+            var subwidth = document.documentElement.clientWidth;
+            var oDiv;
+            var oDivnext;
+            var oDivprev;
+            var isprevnext = false;
+            listentouch(isprevnext);
+
+            function listentouch(prevnextstate){
+                //显示试卷分数
+                $('.examheader').show().children().hide();
+                $('.exam_score').show().css({'z-index': 1000, '-webkit-transform':'scale(0.5,0.5)', 'transform':'scale(0.4,0.4)', 'position':'absolute', 'top': 0, 'right': '-30px'});
+
+                $('body').css({'overflow': 'hidden','position':'fixed','width':'100%','height':'100%'});
+                $('html').css({'overflow': 'hidden','position':'fixed','width':'100%'});
+
+                $('.subquestion').eq(examengine.singleindex).css('margin-left','0');
+                var subparents = $('.subquestion').eq(examengine.singleindex).parents('.examsections');
+                var subparent = $('.subquestion').eq(examengine.singleindex).parent();
+                $('.examparts').css('height', (subparent.find('.title').height() + $('.subquestion').eq(examengine.singleindex).height() + 24) + 'px');
+                subparent.css('height', (subparent.find('.title').height() + $('.subquestion').eq(examengine.singleindex).height() + 24) + 'px');
+                var nextstate = false;
+                var prevstate = false;
+                $('.examsections').hide();
+                $('.equestion').hide();
+                $('.subquestion').hide();
+                subparent.css({'display': 'block'});
+                subparents.css({'display': 'block'});
+                $('.subquestion').eq(examengine.singleindex).show();
+                oDiv = document.querySelectorAll('.subquestion')[examengine.singleindex].parentNode;
+                if(prevnextstate){
+                    oDiv.style.marginTop = 0;
+                };
+                if($('.subquestion').length > 0){
+                    var _bigid = $(".subquestion").eq(examengine.singleindex).parent().attr("data-id");
+                    var _newbigid = $(".subquestion").eq(examengine.singleindex+1).parent().attr("data-id");
+                    if(examengine.singleindex == $('.subquestion').length-1){
+                        oDivnext = null;
+                    }else{
+                        if(_bigid == _newbigid){
+                            oDivnext = $('.subquestion').eq(examengine.singleindex + 1);
+                        }else{
+                            nextstate = true;
+                            oDivnext = $('.subquestion').eq(examengine.singleindex + 1).parent();
+                            $('.subquestion').eq(examengine.singleindex + 1).parents('.examsections').show();
+                            oDivnext.find('.subquestion').eq(0).show();
+                        };
+                        oDivnext.css({'display': 'block', 'margin-left': subwidth + 'px'});
+                    };
+
+                    if(examengine.singleindex > 0){
+                        var _bigid = $(".subquestion").eq(examengine.singleindex).parent().attr("data-id");
+                        var _newbigid = $(".subquestion").eq(examengine.singleindex-1).parent().attr("data-id");
+                        if(_bigid == _newbigid){
+                            oDivprev = $('.subquestion').eq(examengine.singleindex - 1);
+                        }else{
+                            prevstate = true;
+                            oDivprev = $('.subquestion').eq(examengine.singleindex - 1).parent();
+                            $('.subquestion').eq(examengine.singleindex - 1).parents('.examsections').show();
+                            oDivprev.find('.subquestion').eq(oDivprev.find('.subquestion').length -1).show();
+                        };
+                        oDivprev.css({'display': 'block', 'margin-left': '-'+subwidth+'px'});
+                    }else{
+                        oDivprev = null;
+                    };
+                };
+                var tX = 0;
+                var tY = 0;
+                function fnStart(ev){
+                    var disX = ev.targetTouches[0].clientX - tX;
+                    var disY = ev.targetTouches[0].clientY - tY;
+                    var moveleftright = false;
+                    var moveupdown = false;
+                    var oldtY = oDiv.offsetTop;
+                    function fnMove(ev){
+                        tX = ev.targetTouches[0].clientX - disX;
+                        tY = ev.targetTouches[0].clientY - disY;
+                        if(moveupdown){
+                            tX = 0;
+                        };
+                        if(moveleftright){
+                            tY = 0;
+                        };
+                        if(Math.abs(tY) < Math.abs(tX)){
+                            if(moveupdown){
+                                return;
+                            }else{
+                                moveleftright = true;
+                                if(tX < 0) {
+                                    if (nextstate) {
+                                        oDiv.style.marginLeft = tX + 'px';
+                                    } else {
+                                        $('.subquestion').eq(examengine.singleindex)[0].style.marginLeft = tX + 'px';
+                                    };
+                                    if (oDivnext) {
+                                        oDivnext[0].style.marginLeft = subwidth + tX + 'px';
+                                    };
+                                }else{
+                                    if(prevstate){
+                                        oDiv.style.marginLeft = tX + 'px';
+                                    }else{
+                                        $('.subquestion').eq(examengine.singleindex)[0].style.marginLeft = tX + 'px';
+                                    };
+                                    if(oDivprev){
+                                        oDivprev[0].style.marginLeft = '-' + (subwidth - tX) +'px';
+                                    };
+                                };
+                            };
+                        }else{
+                            if(moveleftright){
+                                return;
+                            }else{
+                                moveupdown = true;
+                                if(tY < -20) {
+                                    oDiv.style.marginTop = (oldtY+tY) + 'px';
+                                };
+                                if(tY > 20){
+                                    oDiv.style.marginTop = (oldtY+tY) + 'px';
+                                };
+                            };
+                        };
+                    };
+                    function fnEnd(){
+                        if(Math.abs(tX) > 0){
+                            if(tX < -100){
+                                var oDivend = oDiv;
+                                if(!nextstate){
+                                    oDivend = $('.subquestion').eq(examengine.singleindex)[0];
+                                };
+                                if(oDivnext){
+                                    startMove('x', oDivend, tX, '-'+subwidth, true);
+                                    startMove('x', oDivnext[0], (subwidth+tX), 0);
+
+                                    examengine.singleindex = examengine.singleindex + 1;
+                                    isprevnext = true;
+                                }else{
+                                    startMove('x', oDivend, tX, 0, true);
+                                    isprevnext = false;
+                                };
+                                oDiv.removeEventListener('touchstart',fnStart,false);
+                            }else if(tX < -0){
+                                var oDivend = oDiv;
+                                if(!nextstate){
+                                    oDivend = $('.subquestion').eq(examengine.singleindex)[0];
+                                };
+                                if(oDivnext){
+                                    startMove('x', oDivend, tX, 0, true);
+                                    startMove('x', oDivnext[0], (subwidth+tX), subwidth);
+                                }else{
+                                    startMove('x', oDivend, tX, 0, true);
+                                };
+                                isprevnext = false;
+                                oDiv.removeEventListener('touchstart',fnStart,false);
+                            }else if(tX > 100){
+                                var oDivendpre = oDiv;
+                                if(!prevstate){
+                                    oDivendpre = $('.subquestion').eq(examengine.singleindex)[0];
+                                };
+                                if(oDivprev){
+                                    startMove('x', oDivendpre, tX, subwidth, true);
+                                    startMove('x', oDivprev[0], (-subwidth+tX), 0);
+
+                                    examengine.singleindex = examengine.singleindex - 1;
+                                    isprevnext = true;
+                                }else{
+                                    startMove('x', oDivendpre, tX, 0, true);
+                                    isprevnext = false;
+                                };
+                                oDiv.removeEventListener('touchstart',fnStart,false);
+                            }else if(tX > 0){
+                                var oDivendpre = oDiv;
+                                if(!prevstate){
+                                    oDivendpre = $('.subquestion').eq(examengine.singleindex)[0];
+                                };
+                                if(oDivprev){
+                                    startMove('x', oDivendpre, tX, 0, true);
+                                    startMove('x', oDivprev[0], (-subwidth+tX), -subwidth);
+                                }else{
+                                    startMove('x', oDivendpre, tX, 0, true);
+                                };
+                                isprevnext = false;
+                                oDiv.removeEventListener('touchstart',fnStart,false);
+                            };
+
+                            oDiv.removeEventListener('touchmove',fnMove,false);
+                            oDiv.removeEventListener('touchend',fnEnd,false);
+                            tX = 0;
+                            tY = 0;
+                        }else{
+                            isprevnext = false;
+                            var documentheight = $('#testpaper').height();
+                            var windowheight = $('body').height();
+                            if(windowheight >= documentheight){
+                                startMove('y', oDiv, tY, 0);
+                            }else{
+                                if(oDiv.offsetTop > 0){
+                                    //oDiv.style.marginTop = 0;
+                                    startMove('y', oDiv, tY, 0);
+                                }else{
+                                    if(oDiv.offsetTop <= (windowheight-documentheight)){
+                                        var currentY = oDiv.offsetTop;
+                                        //oDiv.style.marginTop = (windowheight-documentheight) + 'px';
+                                        startMove('y', oDiv, currentY, (windowheight-documentheight-60));
+                                    };
+                                };
+                            };
+
+                            oDiv.removeEventListener('touchstart',fnStart,false);
+                            oDiv.removeEventListener('touchmove',fnMove,false);
+                            oDiv.removeEventListener('touchend',fnEnd,false);
+                            tX = 0;
+                            tY = 0;
+                            listentouch(isprevnext);
+                        };
+                    }
+                    oDiv.addEventListener('touchmove',fnMove,false);
+                    oDiv.addEventListener('touchend',fnEnd,false);
+                    //ev.preventDefault();
+                };
+                oDiv.addEventListener('touchstart',fnStart,false);
+
+                function startMove(isxy, obj, starttX, iTarget, touchstate){
+                    clearTimeout(obj.timer);
+                    var count = Math.floor(1000/120);
+                    var start = starttX;
+                    var dis = iTarget-start;
+                    var n = 0;
+
+                    movetime();
+
+                    function movetime(){
+                        n++;
+                        var a = 1-n/count;
+                        starttX = start+dis*(1-Math.pow(a,3));
+
+                        if(isxy == 'x'){
+                            if(starttX < 0){
+                                obj.style.marginLeft = starttX + 'px';
+                            }else{
+                                obj.style.marginLeft = starttX + 'px';
+                            };
+                            obj.timer = setTimeout(movetime, 30);
+                            if(n == count){
+                                clearTimeout(obj.timer);
+                                if(touchstate){
+                                    listentouch(isprevnext);
+                                };
+                            };
+                        }else{
+                            if(starttX < 0){
+                                obj.style.marginTop = starttX + 'px';
+                            }else{
+                                obj.style.marginTop = starttX + 'px';
+                            };
+                            obj.timer = setTimeout(movetime, 30);
+                            if(n == count){
+                                clearTimeout(obj.timer);
+                                if(touchstate){
+                                    listentouch(isprevnext);
+                                };
+                            };
+                        };
+                    };
+                };
+
+                //监听subquestion高度
+                $('.subquestion').resize(function(){
+                    $('.examparts').css('height', (subparent.find('.title').height() + $('.subquestion').eq(examengine.singleindex).height() + 24) + 'px');
+                    subparent.css('height', (subparent.find('.title').height() + $('.subquestion').eq(examengine.singleindex).height() + 24) + 'px');
+                });
+            };
+        }

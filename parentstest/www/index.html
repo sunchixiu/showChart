@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+	<style type="text/css">
+		#list li{
+			line-height: 50px;
+			font-size: 24px;
+		}
+		a{
+			color: #333;
+		}
+	</style>
+</head>
+<body>
+	<ul id="list"></ul>
+</body>
+<script type="text/javascript">
+	var apiurl = 'http://182.48.117.90:70';
+	var testurl = 'http://www.ischool100.com';
+	var publisherid = '1c0eb4bbe12d4ffe9877adfee4b9d7fe'; //学生
+//	var publisherid = '3eddb78bc6264584af2bf5281d6c9829'; //家长
+	var role = 3;  //家长2 学生3
+
+	if (role == 3) {
+		$.ajax({
+	        url: apiurl+"/TSB_ISCHOOL_EXAM_SERVER/stuexam/getstuexamlist",
+	        data: JSON.stringify({'stuid':publisherid, 'flag':1, 'curpage':1, 'pagesize':100}),
+	        type:'post',
+	        dataType:'json',
+	        contentType: "application/json; charset=utf-8",
+	        success: function(data){
+	            if(data.code == 1){
+	            	var dataarr = data.data.stuExamList.dataList;
+		            var l = dataarr.length;
+		            var html = "";
+		            for (var i = 0; i < l; i++) {
+		            	var span = "";
+		            	var span1 = "";
+		            	if (dataarr[i].examtype == 1) {
+		            		span = '教师';
+		            	}else if (dataarr[i].examtype == 2) {
+		            		span = '家长';
+		            	}else if (dataarr[i].examtype == 3) {
+		            		span = '学生';
+		            	};
+		            	if (dataarr[i].status == 0) {
+		            		span1 = '未做';
+		            	}else if (dataarr[i].status == 1) {
+		            		span1 = '已做';
+		            	}else if (dataarr[i].status == 2) {
+		            		span1 = '已批阅';
+		            	};
+		            	html += '<li><a href="dohomework_play.html?apiurl='+apiurl+'&testurl='+testurl+'&role='+role+'&paperid='+dataarr[i].paperid+'&stuid='+publisherid+'&dopaperid='+dataarr[i].dopaperid+'&examtype='+dataarr[i].examtype+'">'+dataarr[i].title+'</a><span>  '+span+'</span><span>  '+span1+'</span></li>';
+		            };
+		            $("#list").append(html);
+	            }else{
+	                alert('接口返回错误');
+	            };
+	        },
+	        error: function(data){
+	            alert('接口error');
+	        }
+	    });
+	}else if (role == 2){
+		$.ajax({
+	        url: apiurl+"/TSB_ISCHOOL_EXAM_SERVER/testpaper/getparenttestlist",
+	        data: JSON.stringify({'publisherid':publisherid, 'curpage':1, 'pagesize':100, 'state':2}),
+	        type:'post',
+	        dataType:'json',
+	        contentType: "application/json; charset=utf-8",
+	        success: function(data){
+	            if(data.code == 1){
+	            	var dataarr = data.data.dataList;
+		            var l = dataarr.length;
+		            var html = "";
+		            for (var i = 0; i < l; i++) {
+		            	html += '<li><a href="list_1.html?apiurl='+apiurl+'&testurl='+testurl+'&role='+role+'&paperid='+dataarr[i].paperid+'&stuid='+publisherid+'&submitsum='+dataarr[i].submitsum+'&examtype=2">'+dataarr[i].title+'</a></li>';
+		            };
+		            $("#list").append(html);
+	            }else{
+	                alert('接口返回错误');
+	            };
+	        },
+	        error: function(data){
+	            alert('接口error');
+	        }
+	    });
+	};
+</script>
+</html>

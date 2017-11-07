@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>排行榜</title>
+    <link rel="stylesheet" href="style/css.css">
+    <link rel="stylesheet" href="style/mobilebone.css">
+    <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="js/mobilebone.js"></script>
+    <script>
+        document.addEventListener('touchstart', function(){});
+        document.documentElement.style.fontSize=document.documentElement.clientWidth/36+'px';
+    </script>
+</head>
+<body>
+<div id="home" class="page in">
+    <div class="ranktop">
+        <ul>
+            <li class="active">本校排行</li>
+            <li>全国排行</li>
+        </ul>
+    </div>
+    <div class="rankbody">
+        <ul>
+            <li>
+                <span class="ranking" style="background: none;">123</span>
+                <span class="rankimg"><img src="" onerror="javascript:this.src='images/error.gif'"></span>
+                <span class="rankname">用户名</span>
+                <span class="rankvalue">888</span>
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <a>
+                    <span class="ranking"></span>
+                    <span class="rankimg"><img src="" onerror="javascript:this.src='images/error.gif'"></span>
+                    <span class="rankname">用户名</span>
+                    <span class="rankvalue">888</span>
+                </a>
+            </li>
+            <li>
+                <a>
+                    <span class="ranking"></span>
+                    <span class="rankimg"><img src="" onerror="javascript:this.src='images/error.gif'"></span>
+                    <span class="rankname">用户名</span>
+                    <span class="rankvalue">888</span>
+                </a>
+            </li>
+            <li>
+                <a>
+                    <span class="ranking"></span>
+                    <span class="rankimg"><img src="" onerror="javascript:this.src='images/error.gif'"></span>
+                    <span class="rankname">用户名</span>
+                    <span class="rankvalue">888</span>
+                </a>
+            </li>
+            <li>
+                <a>
+                    <span class="ranking">4</span>
+                    <span class="rankimg"><img src="" onerror="javascript:this.src='images/error.gif'"></span>
+                    <span class="rankname">用户名</span>
+                    <span class="rankvalue">888</span>
+                </a>
+            </li>
+            <li>
+                <a>
+                    <span class="ranking">5</span>
+                    <span class="rankimg"><img src="" onerror="javascript:this.src='images/error.gif'"></span>
+                    <span class="rankname">用户名</span>
+                    <span class="rankvalue">888</span>
+                </a>
+            </li>
+            <li>
+                <a>
+                    <span class="ranking">6</span>
+                    <span class="rankimg"><img src="" onerror="javascript:this.src='images/error.gif'"></span>
+                    <span class="rankname">用户名</span>
+                    <span class="rankvalue">888</span>
+                </a>
+            </li>
+            <li>
+                <a>
+                    <span class="ranking">7</span>
+                    <span class="rankimg"><img src="" onerror="javascript:this.src='images/error.gif'"></span>
+                    <span class="rankname">用户名</span>
+                    <span class="rankvalue">888</span>
+                </a>
+            </li>
+            <li>
+                <a>
+                    <span class="ranking">8</span>
+                    <span class="rankimg"><img src="" onerror="javascript:this.src='images/error.gif'"></span>
+                    <span class="rankname">用户名</span>
+                    <span class="rankvalue">888</span>
+                </a>
+            </li>
+            <li>
+                <a>
+                    <span class="ranking">9</span>
+                    <span class="rankimg"><img src="" onerror="javascript:this.src='images/error.gif'"></span>
+                    <span class="rankname">用户名</span>
+                    <span class="rankvalue">888</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<script type="text/javascript" src="js/router.js"></script>
+<script>
+    $('.ranktop ul li').on('click',function(){
+        $(this).addClass('active').siblings().removeClass('active');
+    });
+</script>
+</body>
+</html>

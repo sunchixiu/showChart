@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <title>Document</title>
+    <script src="cordova.js"></script>
+    <link rel="stylesheet" href="css/css.css">
+    <link rel="stylesheet" href="css/mobilebone.css">
+    <link rel="stylesheet" href="js/examengine/css/examengine.css">
+    <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/base.js"></script>
+    <script src="js/mobilebone.js"></script>
+    <script src="js/examengine/examengine.js"></script>
+    <script src="js/json.js"></script>
+</head>
+<body style="overflow-y: auto;">
+
+<div>
+    <div id="testpaper" style="">
+
+    </div>
+</div>
+
+<script>
+
+		function notifyAppToData(title,state) {
+            try
+            {
+                if (cordova == null || cordova.plugins == null || cordova.plugins.traceclass == null) {
+                    document.addEventListener('deviceready', function () {
+                            cordova.plugins.traceclass.notifyAppToData(function success(arg) {
+                                }, function error(arg) {
+                                }, [title,state]);
+
+                    }, false);
+                } else {
+                        cordova.plugins.traceclass.notifyAppToData(function success(arg) {}, function error(arg) {}, [title,state]);
+                }
+
+            }
+            catch (e)
+            {
+            }
+        };
+
+	function turnSencondpage(){};
+
+    dohomework(homeworkjson);
+
+	function dohomework(jsonstring){
+		examengine.status = "edit";
+		examengine.isdisplayanswersheet = false;
+		examengine.issingledisplay = false;
+		examengine.useridentity = "teacher";
+		examengine.init(jsonstring);
+		<!--alert($('#testpaper').html());-->
+	};
+
+    function setWorkResult(title,state) {
+        try
+        {
+            if (cordova == null || cordova.plugins == null || cordova.plugins.traceclass == null) {
+                document.addEventListener('deviceready', function () {
+                        cordova.plugins.traceclass.setWorkResult(function success(arg) {
+                            }, function error(arg) {
+                            }, [title,state]);
+
+                }, false);
+            } else {
+                    cordova.plugins.traceclass.setWorkResult(function success(arg) {}, function error(arg) {}, [title,state]);
+            }
+
+        }
+        catch (e)
+        {
+        }
+    };
+
+    function getexamjson(){
+        if($('#examheader_title').find('input').length > 0){
+                    $('#examheader_title').find('input').blur();
+        };
+
+        if($.trim($('#examheader_title').html()) == ''){
+            examengine.layout.alert('提示','试卷名称不能为空！');
+            $('#examheader_title').find('input').focus();
+            return false;
+        };
+
+        examengine.layout.loadding('正在保存试卷...');
+        setTimeout(function(){
+            var json = examengine.getexamjson();
+            var subquestionnum = $('.subquestionnum').length;
+            json.numbers = subquestionnum;
+            examengine.layout.close();
+            setWorkResult(json);
+        },100);
+    };
+
+	notifyAppToData();
+
+
+</script>
+
+</body>
+</html>

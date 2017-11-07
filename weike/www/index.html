@@ -1,474 +1,577 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
-	<title>书房</title>
-	<link rel="stylesheet" href="css/mobilebone.css">
-	<link rel="stylesheet" href="css/css.css">
-	<!--<script src="cordova.js"></script>-->
-	<script src="js/jquery-1.11.1.min.js"></script>
-	<script src="js/iscroll4.js"></script>
-	<script src="js/every.js"></script>
-	<script src="js/h5connect.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0"/>
+    <title>书房</title>
+    <link rel="stylesheet" href="css/mobilebone.css">
+    <link rel="stylesheet" href="css/css.css">
+    <!--<script src="cordova.js"></script>-->
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/iscroll4.js"></script>
+    <script src="js/every.js"></script>
+    <script src="js/h5connect.js"></script>
 </head>
 <body style="background: #efeff4;">
+<input type="button" value="返回" onclick="returnhome();" style="position: fixed; z-index: 9999;">
 <div class="page out" id="pageHome">
-	<!--<div class="title">书房</div>-->
-	<div id="homeSection">
-		<div class="scroll">
-			<div class="textbook" ontouchstart="popbook(this);" id="subjectid"><label id="subjectname"></label>&nbsp;&nbsp;<label id="gradetype"></label><label id="gradename"></label>&nbsp;&nbsp;<label id="versionname"></label></div>
-			<div class="chapter" id="unitid" ontouchstart="popunit(this);"></div>
-			<div class="list">
-				<ul id="pointid">
-					<div class="bookloading"></div>
-					<li onclick="turnpage();">
-						<a href="javascript:;"><img src="images/1.png"></a>
-						<p class="p1">我我我我我我我我我我我我我我我我</p>
-						<p class="p2">2016年7月28</p>
-						<p class="p3"><font>播放22次</font>已学习5人</p>
-					</li>
-				</ul>
-				<div style="height: 6rem;"></div>
-			</div>
-		</div>
-	</div>
+    <!--<div class="title">书房</div>-->
+    <div id="homeSection">
+        <div class="scroll">
+            <div class="textbook" id="subjectid"><label id="subjectname"></label>&nbsp;&nbsp;<label
+                    id="gradetype"></label><label id="gradename"></label>&nbsp;&nbsp;<label id="versionname"></label>
+            </div>
+            <div class="chapter" id="unitid"></div>
+            <div class="list">
+                <ul id="pointid">
+                    <div class="bookloading"></div>
+                    <!--<li onclick="turnpage();">-->
+                    <!--<a href="javascript:;"><img src="images/1.png"></a>-->
+                    <!--<p class="p1">我我我我我我我我我我我我我我我我</p>-->
+                    <!--<p class="p2">2016年7月28</p>-->
+                    <!--<p class="p3"><font>播放22次</font>已学习5人</p>-->
+                    <!--</li>-->
+                </ul>
+                <div style="height: 6rem;"></div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="page out" id="pagevideo">
-	<!--<div class="title">-->
-		<!--<p class="pointnameclass">书房书房书房书房书房书房书房书房</p>-->
-		<!--<a href="javascript:;" ontouchstart="returnhome(this);"></a>-->
-	<!--</div>-->
-	<div class="vedio" id="id_video_container"></div>
-	<div class="rate">
-		<p class="play">已学习<em id="clearusernum">0</em>人<font>播放<em id="playnumber">0</em>次</font></p>
-		<p class="GlobalRate" id="globalrateid">
-			<!--<span></span>-->
-			<!--<span></span>-->
-			<!--<span></span>-->
-			<!--<span></span>-->
-			<!--<span></span>-->
-		</p>
-	</div>
-	<div class="xx_con">
-		<p class="p1" id="videonameid">视频名称</p>
-		<p class="p2">作者：<label class="creatornameclass">好孩子</label></p>
-	</div>
-	<div class="chapter-com">
-		<span>第<label class="pointindex">2</label>课时/共<label class="pointnums">12</label>课时</span>
-		<p>课时</p>
-	</div>
-	<ul class="chapterList">
-		<!--<li onclick="showvideo('5b3c364eb89743e891cc750abd6d8e1e','0');"><span></span><label>1</label></li>-->
-	</ul>
+    <!--<div class="title">-->
+    <!--<p class="pointnameclass">书房书房书房书房书房书房书房书房</p>-->
+    <!--<a href="javascript:;" ontouchstart="returnhome(this);"></a>-->
+    <!--</div>-->
+    <div class="vedio" id="id_video_container"></div>
+    <div class="rate">
+        <p class="play">已学习<em id="clearusernum">0</em>人<font>播放<em id="playnumber">0</em>次</font></p>
+
+        <p class="GlobalRate" id="globalrateid">
+            <!--<span></span>-->
+            <!--<span></span>-->
+            <!--<span></span>-->
+            <!--<span></span>-->
+            <!--<span></span>-->
+        </p>
+    </div>
+    <div class="xx_con">
+        <p class="p1" id="videonameid">视频名称</p>
+
+        <p class="p2">作者：<label class="creatornameclass">好孩子</label></p>
+    </div>
+    <div class="chapter-com">
+        <span>第<label class="pointindex">2</label>课时/共<label class="pointnums">12</label>课时</span>
+
+        <p>课时</p>
+    </div>
+    <ul class="chapterList">
+        <!--<li onclick="showvideo('5b3c364eb89743e891cc750abd6d8e1e','0');"><span></span><label>1</label></li>-->
+    </ul>
 </div>
 
 <!--选择课本-->
 <div class="selectbook" id="selectbook">
-	<div class="booktitle">选取课本</div>
-	<ul>
-		<!--<li><label class="bookname">数学</label>&nbsp;&nbsp;<label class="booktype">小学</label><label class="gradename">3年级</label>&nbsp;&nbsp;<label class="versionname">(人教版)</label></li>-->
-	</ul>
+    <div class="booktitle">选取课本</div>
+    <ul>
+        <!--<li><label class="bookname">数学</label>&nbsp;&nbsp;<label class="booktype">小学</label><label class="gradename">3年级</label>&nbsp;&nbsp;<label class="versionname">(人教版)</label></li>-->
+    </ul>
 </div>
 
 <!--选择章节-->
 <div class="selectbook" id="selectunit">
-	<div class="booktitle">选取章节</div>
-	<ul>
-		<!--<li>第1章</li>-->
-	</ul>
+    <div class="booktitle">选取章节</div>
+    <ul>
+        <!--<li>第1章</li>-->
+    </ul>
 </div>
 <!--
-<div class="price" id="price">
-	<p class="pic"><img src="images/price.png"></p>
-	<p class="txt">
-		该功能<label class="blue">需要订购</label><br>
-		智慧教育和校园8元套餐 才能使用哦！
-	</p>
-	<p class="btnk">
-		<a class="btn" href="javascript:;" onlick="hideWindow('price');return false;">知道了</a>
-		<a class="btn" href="javascript:cordova.plugins.traceclass.orderTaocan();">去订购</a>
-	</p>
-</div>
--->
+ <div class="price" id="price">
+ <p class="pic"><img src="images/price.png"></p>
+ <p class="txt">
+ 该功能<label class="blue">需要订购</label><br>
+ 智慧教育和校园8元套餐 才能使用哦！
+ </p>
+ <p class="btnk">
+ <a class="btn" href="javascript:;" onlick="hideWindow('price');return false;">知道了</a>
+ <a class="btn" href="javascript:cordova.plugins.traceclass.orderTaocan();">去订购</a>
+ </p>
+ </div>
+ -->
 <script>
-	window.onpopstate = function(){
-		alert($('#pagevideo').css('display'));
-	};
-	function turnpage(){
-		window.location.href = '#&pagevideo';
-	};
+    function creatprice() {
+        var html = '<div class="price" id="price"><p class="pic"><img src="images/price.png"></p><p class="txt">该功能需要为孩子订购<br><label class="blue">智慧教育和校园18元套餐</label> 才能使用哦！</p><p class="btnk"><a class="btn" href="javascript:cordova.plugins.traceclass.orderTaocan();">去订购</a></p></div>';
+        $('body').append(html);
+    };
+    function removeprice() {
+        $('.price').remove();
+    };
 </script>
 
 <script>
-	function creatprice(){
-		var html = '<div class="price"><p class="pic"><img src="images/price.png"></p><p class="txt">该功能<label class="blue">需要订购</label><br>智慧教育和校园8元套餐 才能使用哦！</p><p class="btnk"><a class="btn" href="javascript:;" onclick="removeprice();">知道了</a> <a class="btn" href="javascript:cordova.plugins.traceclass.orderTaocan();">去订购</a></p></div>';
-		$('body').append(html);
-	};
-	function removeprice(){
-		$('.price').remove();
-	};
+    function creatpricestudent() {
+        var html = '<div class="price" id="price_student"><p class="pic"><img src="images/price.png"></p><p class="txt">该功能需要通知家长订购<br><label class="blue">智慧教育和校园18元套餐</label> 才能使用哦！</p></div>';
+        $('body').append(html);
+    };
+    function removeprice() {
+        $('.price_student').remove();
+    };
 </script>
 
 <script src="js/mobilebone.js"></script>
 
 <!--测试书皮接口-->
-<!--<script>-->
-	<!--var state = '0';						//购买资格，0为没有购买-->
-	<!--var urlapi = 'http://103.10.86.21:70';-->
-	<!--var idinterface = 'tchmyroom';-->
-	<!--var typeoptions = {};-->
-	<!--//获取地址栏参数-->
-	<!--$.getUrlParam = function(name){-->
-		<!--var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");-->
-		<!--var r = window.location.search.substr(1).match(reg);-->
-		<!--if (r!=null) return unescape(r[2]); return null;-->
-	<!--};-->
+<script>
+    var state = '0';						//购买资格，0为没有购买
+    //    var urlapi = 'http://111.11.183.25:70';
+    var idinterface = 'tchmyroom';
+    //    var idinterface = 'stumyroom';
+    var typeoptions = {};
+    //获取地址栏参数
+    $.getUrlParam = function (name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    };
 
-	<!--var userid = '41f850aad16e4190b1338e33245dd527';-->
-	<!--var type = 'teacher';-->
+//    var urlapi = 'http://182.48.115.246:70';
+//    var userid = '5416a932a1764db2a325052fc1e3b1c6';
+//    var type = 'teacher';
 
-	<!--if($.getUrlParam('userid')){-->
-		<!--userid = $.getUrlParam('userid');-->
-	<!--};-->
-	<!--if($.getUrlParam('type')){-->
-		<!--type = $.getUrlParam('type');-->
-	<!--};-->
-	<!--if($.getUrlParam('api')){-->
-		<!--urlapi = $.getUrlParam('api');-->
-	<!--};-->
-	<!--if($.getUrlParam('state')){-->
-		<!--state = $.getUrlParam('state');-->
-	<!--};-->
+    var urlapi = 'http://111.40.226.65:1935';
+    var userid = '9367984';
+    var type = 'student';
 
-	<!--if(type == 'teacher'){-->
-		<!--idinterface = 'tchmyroom';-->
-		<!--typeoptions = {"teacherid":userid};-->
-	<!--}else if(type == 'student'){-->
-		<!--idinterface = 'stumyroom';-->
-		<!--typeoptions = {"studentid":userid};-->
-	<!--};-->
-	<!--var player;-->
-	<!--var jsonarr = [];-->
-	<!--$.ajax({-->
-		<!--url:urlapi+'/TSB_ISCHOOL_LCS_SERVER/'+idinterface+'/getgradecourseunitlist',-->
-		<!--type:'post',-->
-		<!--dataType:'json',-->
-		<!--data:JSON.stringify(typeoptions),-->
-		<!--contentType: "application/json; charset=utf-8",-->
-		<!--success:function(data){-->
-			<!--if(type == 'teacher'){-->
-				<!--jsonarr = data.data.courselist;-->
-			<!--}else{-->
-				<!--jsonarr = data.data.subjectlist;-->
-			<!--};-->
 
-			<!--if(jsonarr.length > 0){-->
-				<!--for(var i=0; i<jsonarr.length; i++){-->
-					<!--var classid = jsonarr[i].classid;-->
-					<!--var subjectid = jsonarr[i].subjectid;-->
-					<!--var gradenum = jsonarr[i].gradenum;-->
-					<!--var termtype = jsonarr[i].termtype;-->
-					<!--var versionid = jsonarr[i].versionid;-->
-					<!--var index = i;-->
-					<!--var lihtml = '<li onclick="getunits(\''+classid+'\', \''+subjectid+'\', \''+gradenum+'\', \''+termtype+'\', \''+versionid+'\', '+index+');hideWindow(\'selectbook\');"><label class="bookname">'+jsonarr[i].subjectname+'</label>&nbsp;&nbsp;<label class="booktype">'+getgradetype(jsonarr[i].gradetype)+'</label><label class="gradename">'+jsonarr[i].gradename+'</label>&nbsp;&nbsp;<label class="versionname">('+jsonarr[i].versionname+')</label></li>';-->
-					<!--$('#selectbook ul').append(lihtml);-->
-				<!--};-->
 
-				<!--$('#selectbook ul li').eq(0).click();-->
-			<!--}else{-->
-				<!--$('#pointid').html('<div style="text-align: center; margin-top: 5rem; font-size: 16px;">没有数据！</div>');-->
-			<!--};-->
+    if ($.getUrlParam('userid')) {
+        userid = $.getUrlParam('userid');
+    };
+    if ($.getUrlParam('type')) {
+        type = $.getUrlParam('type');
+    };
+    if ($.getUrlParam('api')) {
+        urlapi = $.getUrlParam('api');
+    };
+    if ($.getUrlParam('state')) {
+        state = $.getUrlParam('state');
+    };
 
-		<!--},-->
-		<!--error:function(data){-->
-			<!--alert('网络异常');-->
-		<!--}-->
-	<!--});-->
+    if (urlapi.substring(0, 7) != "http://") {
+        urlapi = 'http://' + urlapi;
+    };
 
-	<!--function getunits(classid, subjectid, gradenum, termtype, versionid, index){-->
-		<!--$('#pointid').html('<div class="bookloading"></div>');-->
-		<!--var subjectname = jsonarr[index].subjectname;-->
-		<!--var gradetype = getgradetype(jsonarr[index].gradetype);-->
-		<!--var gradename = jsonarr[index].gradename;-->
-		<!--var versionname = '('+jsonarr[index].versionname+')';-->
-		<!--var teacherid = '';-->
-		<!--if(type == "student"){-->
-			<!--teacherid = jsonarr[index].teacherid;-->
-		<!--};-->
+    if (type == 'teacher') {
+        idinterface = 'tchmyroom';
+    } else if (type == 'student') {
+        idinterface = 'stumyroom';
+    };
+    var player;
+    var jsonarr = [];
 
-		<!--$('#subjectname').html(subjectname);-->
-		<!--$('#gradetype').html(gradetype);-->
-		<!--$('#gradename').html(gradename);-->
-		<!--$('#versionname').html(versionname);-->
+    showpage(userid,state);
+//    setTimeout(function(){
+//        showpage('c63b7d06ca8749d2b752932bde2bafc3','0');
+//    },2000);
+    function showpage(id,_state){
+        if (type == 'teacher') {
+            typeoptions = {"teacherid": id};
+            userid = id;
+        }else{
+            typeoptions = {"studentid": id};
+            userid = id;
+        };
 
-		<!--var unitarr = jsonarr[index].unitlist;-->
-		<!--$('#selectunit ul').html('');-->
-		<!--for(var i=0; i<unitarr.length; i++){-->
-			<!--var lihtml = '<li onclick="getlessons(\''+classid+'\', \''+subjectid+'\', \''+gradenum+'\', \''+termtype+'\', \''+versionid+'\', \''+unitarr[i].unitid+'\', \''+gradename+'\', \''+teacherid+'\');hideWindow(\'selectunit\');">第'+unitarr[i].unitid+'章</li>';-->
-			<!--$('#selectunit ul').append(lihtml);-->
-		<!--};-->
-		<!--if(type == "teacher"){-->
-			<!--getlessons(classid, subjectid, gradenum, termtype, versionid, unitarr[0].unitid);-->
-		<!--}else{-->
-			<!--getlessons(classid, subjectid, gradenum, termtype, versionid, unitarr[0].unitid, gradename, teacherid);-->
-		<!--};-->
-	<!--};-->
+        state = _state;
 
-	<!--function getlessons(classid, subjectid, gradenum, termtype, versionid, unitid, gradename, teacherid){-->
-		<!--$('#unitid').html('第'+unitid+'章');-->
-		<!--$('#pointid').html('<div class="bookloading"></div>');-->
-		<!--var lessonoptions = {};-->
-		<!--if(type == 'teacher'){-->
-			<!--lessonoptions = {"teacherid":userid,"classid":classid,"subjectid":subjectid,"gradenum":gradenum,"termtype":termtype,"versionid":versionid,"unitid":unitid};-->
-		<!--}else if(type == 'student'){-->
-			<!--lessonoptions = {"studentid":userid,"subjectid":subjectid,"gradename":gradename,"termtype":termtype,"versionid":versionid,"unitid":unitid,"teacherid":teacherid};-->
-		<!--};-->
-		<!--$.ajax({-->
-			<!--url:urlapi+'/TSB_ISCHOOL_LCS_SERVER/'+idinterface+'/getunitpointlist',-->
-			<!--type:'post',-->
-			<!--dataType:'json',-->
-			<!--data:JSON.stringify(lessonoptions),-->
-			<!--contentType: "application/json; charset=utf-8",-->
-			<!--success: function(data){-->
-				<!--$('#pointid').html('');-->
-				<!--$('.chapterList').html('');-->
-				<!--if(type == 'teacher'){-->
-					<!--for(var i=0; i<data.data.length; i++){-->
-						<!--for(var j=0; j<data.data[i].unitcontentlist.length; j++){-->
-							<!--if(data.data[i].unitcontentlist[j].type == '1'){-->
-								<!--var pointname = data.data[i].pointname;-->
-								<!--var lessonid = data.data[i].unitcontentlist[j].typeid;-->
-								<!--var html = '';-->
-								<!--html = '<li ontouchstart="turnpage(\''+lessonid+'\',\'0\',\''+pointname+'\','+i+',\''+state+'\',this,arguments[0]);"><img src="images/1.png"><p class="p1">'+pointname+'</p><p class="p2">2016年7月28</p><p class="p3"><font>播放22次</font>已学习5人</p></li>';-->
-								<!--$('#pointid').append(html);-->
-								<!--var lessonlist = '<li onclick="showvideo(\''+lessonid+'\',\'0\');"><span></span><label>'+(i+1)+'</label></li>';-->
-								<!--$('.chapterList').append(lessonlist);-->
-								<!--break;-->
-							<!--}-->
-						<!--};-->
-					<!--};-->
-				<!--}else{-->
-					<!--for(var i=0; i<data.data.unitcourselist.length; i++){-->
-						<!--for(var j=0; j<data.data.unitcourselist[i].pointcontentlist.length; j++){-->
-							<!--if(data.data.unitcourselist[i].pointcontentlist[j].type == '1'){-->
-								<!--var pointname = data.data.unitcourselist[i].pointname;-->
-								<!--var lessonid = data.data.unitcourselist[i].pointcontentlist[j].typeid;-->
-								<!--var html = '';-->
-								<!--html = '<li ontouchstart="turnpage(\''+lessonid+'\',\'0\',\''+pointname+'\','+i+',\''+state+'\',this,arguments[0]); return false;"><img src="images/1.png"><p class="p1">'+pointname+'</p><p class="p2">2016年7月28</p><p class="p3"><font>播放22次</font>已学习5人</p></li>';-->
-								<!--$('#pointid').append(html);-->
-								<!--var lessonlist = '<li onclick="showvideo(\''+lessonid+'\',\'0\');"><span></span><label>'+(i+1)+'</label></li>';-->
-								<!--$('.chapterList').append(lessonlist);-->
-								<!--break;-->
-							<!--}-->
-						<!--};-->
-					<!--};-->
-				<!--};-->
+        $.ajax({
+            url: urlapi + '/TSB_ISCHOOL_LCS_SERVER/' + idinterface + '/getgradecourseunitlist',
+            type: 'post',
+            dataType: 'json',
+            data: JSON.stringify(typeoptions),
+            contentType: "application/json; charset=utf-8",
+//            headers: {"Accept-Language": "zh-CN"},
+            success: function (data) {
+                if (type == 'teacher') {
+                    jsonarr = data.data.courselist;
+                    //alert(JSON.stringify(data.data.courselist));
+                } else {
+                    jsonarr = data.data.subjectlist;
+                }
+                ;
+                if (jsonarr.length > 0) {
+                    $('#selectbook ul').html('');
+                    for (var i = 0; i < jsonarr.length; i++) {
+                        var classid = jsonarr[i].classid;
+                        var subjectid = jsonarr[i].subjectid;
+                        var gradenum = jsonarr[i].gradenum;
+                        var termtype = jsonarr[i].termtype;
+                        var versionid = jsonarr[i].versionid;
+                        var index = i;
+                        var lihtml = '<li onclick="getunits(\'' + classid + '\', \'' + subjectid + '\', \'' + gradenum + '\', \'' + termtype + '\', \'' + versionid + '\', ' + index + ');hideWindow(\'selectbook\');"><label class="bookname">' + jsonarr[i].subjectname + '</label>&nbsp;&nbsp;<label class="booktype">' + getgradetype(jsonarr[i].gradetype) + '</label><label class="gradename">' + jsonarr[i].gradename + '</label>&nbsp;&nbsp;<label class="versionname">(' + jsonarr[i].versionname + ')</label></li>';
+                        $('#selectbook ul').append(lihtml);
+                    }
+                    ;
 
-				<!--loaded('homeSection');-->
-			<!--},-->
-			<!--error: function(data){-->
-				<!--alert('shibai');-->
-			<!--}-->
-		<!--});-->
-	<!--};-->
+                    $('#selectbook ul li').eq(0).click();
+                } else {
+                    $('#pointid').html('<div style="text-align: center; margin-top: 5rem; font-size: 16px;">教师还未下发微课！</div>');
+                }
+                ;
 
-	<!--function getgradetype(num){-->
-		<!--switch(num){-->
-			<!--case 1:-->
-				<!--return '小学';-->
-			<!--break;-->
-			<!--case 2:-->
-				<!--return '初中';-->
-			<!--break;-->
-			<!--case 3:-->
-				<!--return '高中';-->
-			<!--break;-->
-			<!--default :-->
-				<!--return '小学';-->
-		<!--};-->
-	<!--};-->
-<!--</script>-->
-<!--<script>-->
-	<!--function turnpage(lessonid,lessontype,pointname,index,state,_this,ev){-->
-		<!--var tX = 0;-->
-		<!--var tY = 0;-->
+            },
+            error: function (data) {
+                alert(urlapi + '/TSB_ISCHOOL_LCS_SERVER/' + idinterface + '/getgradecourseunitlist'+'参数:'+JSON.stringify(typeoptions));
+            }
+        });
+    };
 
-		<!--var disX=ev.targetTouches[0].pageX;-->
-		<!--var disY=ev.targetTouches[0].pageY;-->
 
-		<!--function fnMove(ev){-->
-			<!--tX=ev.targetTouches[0].pageX-disX;-->
-			<!--tY=ev.targetTouches[0].pageY-disY;-->
-		<!--}-->
-		<!--_this.addEventListener('touchmove',fnMove,false);-->
+    function getunits(classid, subjectid, gradenum, termtype, versionid, index) {
+        $('#pointid').html('<div class="bookloading"></div>');
+        var subjectname = jsonarr[index].subjectname;
+        var gradetype = getgradetype(jsonarr[index].gradetype);
+        var gradename = jsonarr[index].gradename;
+        var versionname = '(' + jsonarr[index].versionname + ')';
+        var teacherid = '';
+        if (type == "student") {
+            teacherid = jsonarr[index].teacherid;
+        }
+        ;
 
-		<!--function fnEnd(){-->
-			<!--if(Math.abs(tX) < 6 && Math.abs(tY) < 6){-->
-				<!--if(state == '0'){-->
-					<!--creatprice();-->
-					<!--return false;-->
-				<!--};-->
+        $('#subjectname').html(subjectname);
+        $('#gradetype').html(gradetype);
+        $('#gradename').html(gradename);
+        $('#versionname').html(versionname);
 
-				<!--setTitle(pointname);-->
-				<!--$('.pointnameclass').html(pointname);-->
-				<!--$('.pointindex').html(index+1);-->
-				<!--$('.pointnums').html($('.chapterList li').length);-->
-				<!--$('.chapterList li').removeClass('active');-->
-				<!--$('.chapterList li').eq(index).addClass('active');-->
-				<!--showvideo(lessonid,lessontype);-->
-				<!--window.location.href = '#&pagevideo';-->
-			<!--};-->
-			<!--_this.removeEventListener('touchmove',fnMove,false);-->
-			<!--_this.removeEventListener('touchend',fnEnd,false);-->
-		<!--};-->
-		<!--_this.addEventListener('touchend',fnEnd,false);-->
-		<!--ev.preventDefault();-->
-	<!--};-->
+        var unitarr = jsonarr[index].unitlist;
+        $('#selectunit ul').html('');
+        for (var i = 0; i < unitarr.length; i++) {
+            var lihtml = '<li onclick="getlessons(\'' + classid + '\', \'' + subjectid + '\', \'' + gradenum + '\', \'' + termtype + '\', \'' + versionid + '\', \'' + unitarr[i].unitid + '\', \'' + gradename + '\', \'' + teacherid + '\');hideWindow(\'selectunit\');">第' + unitarr[i].unitid + '章</li>';
+            $('#selectunit ul').append(lihtml);
+        }
+        ;
+        if (type == "teacher") {
+            getlessons(classid, subjectid, gradenum, termtype, versionid, unitarr[0].unitid);
+        } else {
+            getlessons(classid, subjectid, gradenum, termtype, versionid, unitarr[0].unitid, gradename, teacherid);
+        }
+        ;
+    };
 
-	<!--function showvideo(lessonid,lessontype){-->
-		<!--$('#playnumber').html(0);-->
-		<!--$('#clearusernum').html(0);-->
-		<!--player = null;-->
-		<!--$('#id_video_container').html('');-->
+    function getlessons(classid, subjectid, gradenum, termtype, versionid, unitid, gradename, teacherid) {
+        $('#unitid').html('第' + unitid + '章');
+        $('#pointid').html('<div class="bookloading"></div>');
+        var lessonoptions = {};
+        if (type == 'teacher') {
+            lessonoptions = {
+                "teacherid": userid,
+                "classid": classid,
+                "subjectid": subjectid,
+                "gradenum": gradenum,
+                "termtype": termtype,
+                "versionid": versionid,
+                "unitid": unitid
+            };
+        } else if (type == 'student') {
+            lessonoptions = {
+                "studentid": userid,
+                "subjectid": subjectid,
+                "gradename": gradename,
+                "termtype": termtype,
+                "versionid": versionid,
+                "unitid": unitid,
+                "teacherid": teacherid
+            };
+        };
+        $.ajax({
+            url: urlapi + '/TSB_ISCHOOL_LCS_SERVER/' + idinterface + '/getunitpointlist',
+            type: 'post',
+            dataType: 'json',
+            data: JSON.stringify(lessonoptions),
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                //$('#pointid').html('');
+                $('#pointid').html('<div style="text-align: center; margin-top: 5rem; font-size: 16px;">教师还未下发微课！</div>');
+                $('.chapterList').html('');
+                if (type == 'teacher') {
+                    if (data.data.length > 0) {
+                        $('#pointid').html('');
+                    }
+                    ;
+                    for (var i = 0; i < data.data.length; i++) {
+                        for(var j=0; j<data.data[i].unitcontentlist.length; j++){
+                            if(data.data[i].unitcontentlist[j].type == 1){
+                                var pointname = data.data[i].pointname;
+                                var lessonid = data.data[i].unitcontentlist[j].typeid;
+                                var html = '';
+                                html = '<li ontouchstart="turnpage(\'' + lessonid + '\',\'0\',\'' + pointname + '\',' + i + ',\'1\',this,arguments[0]); return false;"><img src="images/1.png"><p class="p1">' + pointname + '</p><p class="p2">2016年7月28</p><p class="p3"><font>播放22次</font>已学习5人</p></li>';
+                                $('#pointid').append(html);
+                                var lessonlist = '<li onclick="showvideo(\'' + lessonid + '\',\'0\');"><span></span><label>' + (i + 1) + '</label></li>';
+                                $('.chapterList').append(lessonlist);
+                            };
+                        };
+                    };
+                } else {
+                    if (data.data.unitcourselist.length > 0) {
+                        $('#pointid').html('');
+                    };
+                    for (var i = 0; i < data.data.unitcourselist.length; i++) {
+                        for(var j=0; j<data.data.unitcourselist[i].pointcontentlist.length; j++){
+                            if(data.data.unitcourselist[i].pointcontentlist[j].type == 1){
+                                var pointname = data.data.unitcourselist[i].pointname;
+                                var lessonid = data.data.unitcourselist[i].pointcontentlist[j].typeid;
+                                var html = '';
+                                html = '<li ontouchstart="turnpage(\'' + lessonid + '\',\'0\',\'' + pointname + '\',' + i + ',\'' + state + '\',this,arguments[0]); return false;"><img src="images/1.png"><p class="p1">' + pointname + '</p><p class="p2">2016年7月28</p><p class="p3"><font>播放22次</font>已学习5人</p></li>';
+                                $('#pointid').append(html);
+                                var lessonlist = '<li onclick="showvideo(\'' + lessonid + '\',\'0\');"><span></span><label>' + (i + 1) + '</label></li>';
+                                $('.chapterList').append(lessonlist);
+                            };
+                        };
+                    };
+                };
 
-		<!--//写入播放记录-->
-		<!--$.ajax({-->
-			<!--url:urlapi+'/TSB_ISCHOOL_MOOC_SERVER/studylessonresult/addstudylog',-->
-			<!--type:'post',-->
-			<!--dataType:'json',-->
-			<!--data:JSON.stringify({"busiid":lessonid,"type":4}),-->
-			<!--contentType: "application/json; charset=utf-8",-->
-			<!--success: function(data){},-->
-			<!--error: function(data){-->
-				<!--alert('写入失败');-->
-			<!--}-->
-		<!--});-->
-		<!--//获取播放次数-->
-		<!--$.ajax({-->
-			<!--url:urlapi+'/TSB_ISCHOOL_MOOC_SERVER/studylessonresult/selectstudylogcount',-->
-			<!--type:'post',-->
-			<!--dataType:'json',-->
-			<!--data:JSON.stringify({"busiid":lessonid,"type":4}),-->
-			<!--contentType: "application/json; charset=utf-8",-->
-			<!--success: function(data){-->
-				<!--var count = data.data.count;-->
-				<!--$('#playnumber').html(count);-->
-			<!--},-->
-			<!--error: function(data){-->
-				<!--alert('获取播放次数失败');-->
-			<!--}-->
-		<!--});-->
-		<!--//获取学习人数-->
-		<!--$.ajax({-->
-			<!--url:urlapi+'/TSB_ISCHOOL_MOOC_SERVER/studylessonresult/selectstudylogcount',-->
-			<!--type:'post',-->
-			<!--dataType:'json',-->
-			<!--data:JSON.stringify({"busiid":lessonid,"type":1}),-->
-			<!--contentType: "application/json; charset=utf-8",-->
-			<!--success: function(data){-->
-				<!--var count = data.data.count;-->
-				<!--$('#clearusernum').html(count);-->
-			<!--},-->
-			<!--error: function(data){-->
-				<!--alert('获取学习人数失败');-->
-			<!--}-->
-		<!--});-->
+                loaded('homeSection');
+            },
+            error: function (data) {
+                alert('接口访问失败');
+            }
+        });
+    };
 
-		<!--//获取视频播放-->
-		<!--$.ajax({-->
-			<!--url:urlapi+'/TSB_ISCHOOL_MOOC_SERVER/studylessonresult/getexperimentdetail',-->
-			<!--type:'post',-->
-			<!--dataType:'json',-->
-			<!--data:JSON.stringify({"lessonid":lessonid,"lessontype":lessontype}),-->
-			<!--contentType: "application/json; charset=utf-8",-->
-			<!--success: function(data){-->
-				<!--$('.creatornameclass').html(data.data[0].creatorname);-->
-				<!--$('.pointnameclass').html(data.data[0].kpname);-->
-				<!--$('#videonameid').html(data.data[0].lessonname);-->
-				<!--var txid = data.data[0].txid;-->
-				<!--if(!txid){-->
-					<!--alert('视频还没有上传成功！');-->
-					<!--return false;-->
-				<!--};-->
-				<!--var ratenum = parseInt(data.data[0].avgcount);-->
-				<!--var option ={"auto_play":"1","file_id":txid,"app_id":"1251972963", "width":"800","height":"600"};-->
-				<!--player = new qcVideo.Player("id_video_container", option );-->
+    function getgradetype(num) {
+        switch (num) {
+            case 1:
+                return '小学';
+                break;
+            case 2:
+                return '初中';
+                break;
+            case 3:
+                return '高中';
+                break;
+            default :
+                return '小学';
+        }
+        ;
+    };
+</script>
+<script>
+    function turnpage(lessonid, lessontype, pointname, index, state, _this, ev) {
+        var tX = 0;
+        var tY = 0;
 
-				<!--//星级显示-->
-				<!--var starshtml = '';-->
-				<!--for(var i=0; i<ratenum; i++){-->
-					<!--starshtml = starshtml + '<span></span>';-->
-				<!--};-->
-				<!--$('#globalrateid').html(starshtml);-->
-			<!--},-->
-			<!--error: function(data){-->
-				<!--alert('shibai');-->
-			<!--}-->
-		<!--});-->
-	<!--};-->
+        var disX = ev.targetTouches[0].pageX;
+        var disY = ev.targetTouches[0].pageY;
 
-	<!--$('.chapterList').delegate('li','click',function(){-->
-		<!--$('.pointindex').html($(this).index()+1);-->
-		<!--$('.pointnums').html($('.chapterList li').length);-->
-		<!--$(this).addClass('active').siblings('li').removeClass('active');-->
-	<!--});-->
+        function fnMove(ev) {
+            tX = ev.targetTouches[0].pageX - disX;
+            tY = ev.targetTouches[0].pageY - disY;
+        }
 
-	<!--function returnhome(){-->
-        <!--//window.location.href = '#&pageHome';-->
+        _this.addEventListener('touchmove', fnMove, false);
 
-        <!--window.history.go(-(window.history.length - 1));-->
-        <!--setTitle('微课');-->
-        <!--player.pause();-->
-        <!--player = null;-->
-	<!--};-->
+        function fnEnd() {
 
-	<!--function popbook(_this){-->
-		<!--showWindow('selectbook');-->
-		<!--_this.addEventListener('touchend', function(e){-->
-			<!--e.preventDefault();-->
-		<!--});-->
-	<!--};-->
-	<!--function popunit(_this){-->
-		<!--showWindow('selectunit');-->
-		<!--_this.addEventListener('touchend', function(e){-->
-			<!--e.preventDefault();-->
-		<!--});-->
-	<!--};-->
-<!--</script>-->
-<!--<script>-->
-    <!--function setTitle(title) {-->
-	<!--try-->
-	<!--{-->
-	<!--/*-->
-	    <!--setTimeout(function()-->
-	    <!--{-->
-            <!--cordova.plugins.traceclass.setTitle(function success(arg) {-->
-                <!--}, function error(arg) {-->
-                <!--}, [title]);-->
-        <!--}, 1500);-->
-        <!--*/-->
+            hideorshow(1);
 
-        <!--if (cordova == null || cordova.plugins == null || cordova.plugins.traceclass == null) {-->
-            <!--document.addEventListener('deviceready', function () {-->
-                    <!--cordova.plugins.traceclass.setTitleWeike(function success(arg) {-->
-                        <!--}, function error(arg) {-->
-                        <!--}, [title]);-->
+            if (Math.abs(tX) < 6 && Math.abs(tY) < 6) {
+                if (state == '0') {
+                    creatprice();
+                    return false;
+                };
 
-            <!--}, false);-->
-        <!--} else {-->
-                <!--cordova.plugins.traceclass.setTitleWeike(function success(arg) {-->
-                    <!--}, function error(arg) {-->
-                    <!--}, [title]);-->
-        <!--}-->
+                if (state == '2') {
+                    creatpricestudent();
+                    return false;
+                };
 
-	<!--}-->
-	<!--catch (e)-->
-	<!--{-->
-	<!--}-->
+                setTitle(pointname);
+                $('.pointnameclass').html(pointname);
+                $('.pointindex').html(index + 1);
+                $('.pointnums').html($('.chapterList li').length);
+                $('.chapterList li').removeClass('active');
+                $('.chapterList li').eq(index).addClass('active');
+                showvideo(lessonid, lessontype);
+                window.location.href = '#&pagevideo';
+            }
+            ;
+            _this.removeEventListener('touchmove', fnMove, false);
+            _this.removeEventListener('touchend', fnEnd, false);
+        };
+        _this.addEventListener('touchend', fnEnd, false);
+        ev.preventDefault();
+    };
 
-<!--}-->
-<!--</script>-->
+    function showvideo(lessonid, lessontype) {
+        $('#playnumber').html(0);
+        $('#clearusernum').html(0);
+        player = null;
+        $('#id_video_container').html('');
+
+        //写入播放记录
+        $.ajax({
+            url: urlapi + '/TSB_ISCHOOL_MOOC_SERVER/studylessonresult/addstudylog',
+            type: 'post',
+            dataType: 'json',
+            data: JSON.stringify({"busiid": lessonid, "type": 4}),
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+            },
+            error: function (data) {
+                alert('写入失败');
+            }
+        });
+        //获取播放次数
+        $.ajax({
+            url: urlapi + '/TSB_ISCHOOL_MOOC_SERVER/studylessonresult/selectstudylogcount',
+            type: 'post',
+            dataType: 'json',
+            data: JSON.stringify({"busiid": lessonid, "type": 4}),
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                var count = data.data.count;
+                $('#playnumber').html(count);
+            },
+            error: function (data) {
+                alert('获取播放次数失败');
+            }
+        });
+        //获取学习人数
+        $.ajax({
+            url: urlapi + '/TSB_ISCHOOL_MOOC_SERVER/studylessonresult/selectstudylogcount',
+            type: 'post',
+            dataType: 'json',
+            data: JSON.stringify({"busiid": lessonid, "type": 1}),
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                var count = data.data.count;
+                $('#clearusernum').html(count);
+            },
+            error: function (data) {
+                alert('获取学习人数失败');
+            }
+        });
+
+        //获取视频播放
+        $.ajax({
+            url: urlapi + '/TSB_ISCHOOL_MOOC_SERVER/studylessonresult/getexperimentdetail',
+            type: 'post',
+            dataType: 'json',
+            data: JSON.stringify({"lessonid": lessonid, "lessontype": lessontype}),
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                $('.creatornameclass').html(data.data[0].creatorname);
+                $('.pointnameclass').html(data.data[0].kpname);
+                $('#videonameid').html(data.data[0].lessonname);
+                var txid = data.data[0].txid;
+                if (!txid) {
+                    alert('视频还没有上传成功！');
+                    return false;
+                }
+                ;
+                var ratenum = parseInt(data.data[0].avgcount);
+                var option = {
+                    "auto_play": "1",
+                    "file_id": txid,
+                    "app_id": "1251972963",
+                    "width": "800",
+                    "height": "600"
+                };
+                player = new qcVideo.Player("id_video_container", option);
+
+                //星级显示
+                var starshtml = '';
+                for (var i = 0; i < ratenum; i++) {
+                    starshtml = starshtml + '<span></span>';
+                }
+                ;
+                $('#globalrateid').html(starshtml);
+            },
+            error: function (data) {
+                alert('shibai');
+            }
+        });
+    };
+
+    $('.chapterList').delegate('li', 'click', function () {
+        $('.pointindex').html($(this).index() + 1);
+        $('.pointnums').html($('.chapterList li').length);
+        $(this).addClass('active').siblings('li').removeClass('active');
+    });
+
+    function returnhome() {
+        alert(history.length);
+        if(window.history.length == 1){
+            alert('b');
+            setTitle('微课',0);
+        }else{
+            alert('a');
+            setTitle('微课',1);
+            player.pause();
+            player = null;
+            window.history.go(-1);
+        };
+    };
+
+    $('#subjectid').on('touchstart',function(e){
+        e.preventDefault();
+        showWindow('selectbook');
+    });
+    $('#unitid').on('touchstart',function(e){
+        e.preventDefault();
+        showWindow('selectunit');
+    });
+</script>
+<script>
+    function setTitle(title,state) {
+        try {
+            /*
+             setTimeout(function()
+             {
+             cordova.plugins.traceclass.setTitle(function success(arg) {
+             }, function error(arg) {
+             }, [title]);
+             }, 1500);
+             */
+
+            if (cordova == null || cordova.plugins == null || cordova.plugins.traceclass == null) {
+                document.addEventListener('deviceready', function () {
+                    cordova.plugins.traceclass.setTitleWeike(function success(arg) {
+                    }, function error(arg) {
+                    }, [title,state]);
+
+                }, false);
+            } else {
+                cordova.plugins.traceclass.setTitleWeike(function success(arg) {
+                }, function error(arg) {
+                }, [title,state]);
+            }
+
+        }
+        catch (e) {
+        }
+
+    };
+
+    function hideorshow(state) {
+
+        try
+        {
+            if (cordova == null || cordova.plugins == null || cordova.plugins.traceclass == null) {
+                document.addEventListener('deviceready', function () {
+                    cordova.plugins.traceclass.showOfvisible(function success(arg) {}, function error(arg) {}, [state]);}, false);
+            } else {
+                cordova.plugins.traceclass.showOfvisible(function success(arg) {}, function error(arg) {}, [state]);
+            }
+
+        }
+        catch (e)
+        {
+        }
+
+    };
+</script>
 </body>
 </html>

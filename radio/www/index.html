@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Capture Photo</title>
+
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    <script type="text/javascript" charset="utf-8">
+
+        var pictureSource;		//图片来源
+        var destinationType;		//设置返回值的格式
+
+        // 等待PhoneGap连接设备
+        document.addEventListener("deviceready",onDeviceReady,false);
+
+        // PhoneGap准备就绪，可以使用！
+        function onDeviceReady() {
+            pictureSource=navigator.camera.PictureSourceType;
+            destinationType=navigator.camera.DestinationType;
+        }
+
+        // 当成功获得一张照片的Base64编码数据后被调用
+        function onPhotoDataSuccess(imageData) {
+
+            // 取消注释以查看Base64编码的图像数据
+            alert('摄像头: '+imageData);
+            // 获取图像句柄
+            var smallImage = document.getElementById('smallImage');
+
+            // 取消隐藏的图像元素
+            smallImage.style.display = 'block';
+
+            // 显示拍摄的照片
+            // 使用内嵌CSS规则来缩放图片
+            //smallImage.src = "data:image/jpeg;base64," + imageData;
+            smallImage.src = imageData;
+        }
+
+        // 当成功得到一张照片的URI后被调用
+        function onPhotoURISuccess(imageURI) {
+
+            // 取消注释以查看图片文件的URI
+            alert('相册: '+imageURI);
+            // 获取图片句柄
+            var largeImage = document.getElementById('largeImage');
+
+            // 取消隐藏的图像元素
+            largeImage.style.display = 'block';
+
+            // 显示拍摄的照片
+            // 使用内嵌CSS规则来缩放图片
+            largeImage.src = imageURI;
+        }
+
+        // “Capture Photo”按钮点击事件触发函数
+        function capturePhoto() {
+
+            // 使用设备上的摄像头拍照，并获得Base64编码字符串格式的图像
+            //navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50, destinationType: 0 });//base64
+            navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50 });
+        }
+
+        // “Capture Editable Photo”按钮点击事件触发函数
+        function capturePhotoEdit() {
+
+            // 使用设备上的摄像头拍照，并获得Base64编码字符串格式的可编辑图像
+            navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 20, allowEdit: true });
+        }
+
+        //“From Photo Library”/“From Photo Album”按钮点击事件触发函数
+        function getPhoto(source) {
+            // 从设定的来源处获取图像文件URI
+            navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50,
+                destinationType: destinationType.FILE_URI,sourceType: source });
+        }
+
+        // 当有错误发生时触发此函数
+        function onFail(mesage) {
+            alert('Failed because: ' + message);
+        }
+
+
+        // 录制音频
+        function recordAudio() {
+            var src = "myrecording.mp3";
+            var mediaRec = new Media(src, onSuccess, onError);
+
+            // 开始录制音频
+            mediaRec.startRecord();
+
+            // 10秒钟后停止录制
+            var recTime = 0;
+            var recInterval = setInterval(function() {
+                recTime = recTime + 1;
+                setAudioPosition(recTime + " sec");
+                if (recTime >= 5) {
+                    clearInterval(recInterval);
+                    mediaRec.stopRecord();
+                }
+            }, 1000);
+        };
+
+        // 创建Media对象成功后调用的回调函数
+        function onSuccess() {
+            alert("recordAudio():Audio Success");
+        };
+
+        // 创建Media对象出错后调用的回调函数
+        function onError(error) {
+            alert('code: '    + error.code    + '\n' +
+            'message: ' + error.message + '\n');
+        };
+
+        // 暂停音频播放
+        function pauseAudio() {
+            if (my_media) {
+                my_media.pause();
+            }
+        };
+
+        // 停止音频播放
+        function stopAudio() {
+            if (my_media) {
+                my_media.stop();
+            }
+            clearInterval(mediaTimer);
+            mediaTimer = null;
+        };
+
+        // 创建Media对象成功后调用的回调函数
+        function onSuccess() {
+            alert("recordAudio():Audio Success");
+        };
+
+        // 创建Media对象出错后调用的回调函数
+        function onError(error) {
+            alert('code: '    + error.code    + '\n' +
+            'message: ' + error.message + '\n');
+        };
+
+        // 设置音频播放位置
+        function setAudioPosition(position) {
+            document.getElementById('audio_position').innerHTML = position;
+        };
+
+        // 音频播放器
+        var my_media = null;
+        var mediaTimer = null;
+
+        // 播放音频
+        function playAudio(src) {
+            // 从目标文件创建Media对象
+            my_media = new Media(src, onSuccess, onError);
+
+            // 播放音频
+            my_media.play();
+        };
+    </script>
+</head>
+<body>
+<button onclick="capturePhoto();">拍照</button>
+<button onclick="capturePhotoEdit();">拍照并裁切</button>
+<button onclick="getPhoto(pictureSource.PHOTOLIBRARY);">从相册选择</button><br>
+
+<button onclick="recordAudio();">录音</button>
+<button onclick="playAudio('myrecording.mp3');">播放</button>
+<img style="display:none;width:160px;height:160px;" id="smallImage" src="" />
+<img style="display:none; width: 160px; height: 160px;" id="largeImage" src="" />
+<p id="audio_position"></p>
+
+</body>
+</html>

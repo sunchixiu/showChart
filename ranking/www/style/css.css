@@ -1,0 +1,24 @@
+*{margin: 0; padding: 0;}
+body{background: #fff;}
+ul, dl, ol {
+    list-style: none;
+}
+a{text-decoration: none;}
+.ranktop{width: 100%; height: 10rem; background-image: url("../images/ranklisttop.jpg"); background-size: 100% 10rem;}
+.ranktop ul li{width: 8.2rem; margin: 1.5rem 4.5rem; color: #fff; padding: 1rem 0; text-align: center; font-size: 18px; opacity: 0.6; filter:alpha(opacity=60); float: left; cursor: pointer;}
+.ranktop ul li.active{ opacity: 1; filter:alpha(opacity=100); border-bottom: 1px solid #fff;}
+.rankbody ul{background: #f2f2f2;}
+.rankbody ul li{height: 40px; line-height: 40px; padding: 12px; border-bottom: 1px solid #e9e9e9; font-size: 14px; cursor: pointer; background: #fff;}
+.rankbody ul li span{display: block; float: left;}
+.rankbody ul li span.ranking{color: #666; width: 38px; height: 40px; text-align: center;}
+.rankbody ul li:nth-child(1) span.ranking{background-image: url("../images/first.png"); background-size: 16px 28px; background-position: center 6px; background-repeat: no-repeat;}
+.rankbody ul li:nth-child(2) span.ranking{background-image: url("../images/second.png"); background-size: 16px 28px; background-position: center 6px; background-repeat: no-repeat;}
+.rankbody ul li:nth-child(3) span.ranking{background-image: url("../images/third.png"); background-size: 16px 28px; background-position: center 6px; background-repeat: no-repeat;}
+.rankbody ul li span.rankimg{width: 40px; height: 40px;}
+.rankbody ul li span.rankimg img{width: 40px; height: 40px; border-radius: 2px; -webkit-border-radius: 2px;}
+.rankbody ul li span.rankname{color: #333; margin-left: 12px;}
+.rankbody ul li span.rankvalue{color: #999; float: right;}
+.rankbody ul.ulrankdown{padding: 10px 0 26px;}
+
+.coureseloading{width: 20px; height: 20px; position: fixed; top: 50%; left: 50%; background-image: url("../images/loadding.gif"); background-size: 20px 20px; margin-left: -10px; margin-right: -40px;}
+.scrollloading{text-align: center; font-size: 14px; color: #999; height: 26px; line-height: 26px; position: fixed; bottom: 0; width: 100%; background: #f8f8f8;}

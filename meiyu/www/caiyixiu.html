@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="css/meiyucommon.css">
+    <link rel="stylesheet" href="css/css.css">
+    <link rel="stylesheet" href="css/mobilebone.css">
+    <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="js/mobilebone.js"></script>
+    <script type="text/javascript" src="js/vue.js"></script>
+    <script src="../cordova.js"></script>
+    <script type="text/javascript">
+        document.addEventListener('touchstart', function(){});
+        document.documentElement.style.fontSize=document.documentElement.clientWidth/36+'px';
+        setTitle('甘肃美育',1);
+        //设置title
+        function setTitle(title,state) {
+            try {
+                if (cordova == null || cordova.plugins == null || cordova.plugins.traceclass == null) {
+                    document.addEventListener('deviceready', function () {
+                        cordova.plugins.traceclass.setmeiyuTitle(function success(arg) {
+                        }, function error(arg) {
+                        }, [title,state]);
+
+                    }, false);
+                } else {
+                    cordova.plugins.traceclass.setmeiyuTitle(function success(arg) {
+                    }, function error(arg) {
+                    }, [title,state]);
+                }
+            }catch (e) {
+
+            };
+        };
+        //销毁
+        function destroypage(state) {
+            try {
+                if (cordova == null || cordova.plugins == null || cordova.plugins.traceclass == null) {
+                    document.addEventListener('deviceready', function () {
+                        cordova.plugins.traceclass.page_finish(function success(arg) {
+                        }, function error(arg) {
+                        }, [state]);
+
+                    }, false);
+                } else {
+                    cordova.plugins.traceclass.page_finish(function success(arg) {
+                    }, function error(arg) {
+                    }, [state]);
+                }
+            }catch (e) {
+
+            };
+        };
+
+        //分享
+        function share(shareurl) {
+            try {
+                if (cordova == null || cordova.plugins == null || cordova.plugins.traceclass == null) {
+                    document.addEventListener('deviceready', function () {
+                        cordova.plugins.traceclass.setshare(function success(arg) {
+                        }, function error(arg) {
+                        }, [shareurl]);
+
+                    }, false);
+                } else {
+                    cordova.plugins.traceclass.setshare(function success(arg) {
+                    }, function error(arg) {
+                    }, [shareurl]);
+                }
+            }catch (e) {
+
+            };
+        };
+    </script>
+</head>
+<body>
+    <!-- <input type="button" style="position: fixed; z-index: 10;" value="返回" onclick="goback();"> -->
+    <!-- 首页 -->
+    <div id="home" class="page out" data-title="甘肃美育">
+        <!-- <div class="Search clear" style="background:#fff;">
+            <a href="javascript:;" class="search-test pull-left" onclick="gonextpage('搜索','search',0)">
+                <i class="search-btn"></i>
+                <span>请输入关键字...</span>
+            </a>
+            <div class="screen"><span class="nowrap">筛选项目</span><i></i></div>
+            <ul class="ItemsList">
+                <li @click="queryall('0')">全部分类</li>
+                <li v-for="classifytype in classifydata" v-html="classifytype.title" @click="queryall(classifytype.categoryid)"></li>
+            </ul>
+        </div>
+ -->
+
+
+        <div class="topBar clear">
+            <div class="select pull-right" >
+                <span class="nowrap">筛选项目</span>
+            </div>
+            <a href="javascript:;" class="search-home"  onclick="gonextpage('搜索','search',0)">
+                请输入您参赛项目关键字
+            </a>
+            <ul class="ItemsList">
+                <li @click="queryall('0')">全部分类</li>
+                <li v-for="classifytype in classifydata" v-html="classifytype.title" @click="queryall(classifytype.categoryid)"></li>
+            </ul>
+        </div>
+        <div class="z-shade" onclick="closeoselect()"></div>
+        <div class="banner"></div>
+        <div class="loading" v-if="loading"></div>
+        <div v-else="loading">
+            <div class="empty" v-if="empty"></div>
+            <ul class="eventUl clear paddingBot5" v-else="empty">
+                <li v-for="videotype in videodata">
+                    <a href="javascript:;" @click="govideodetail(videotype.videoid)" onclick="gonextpage($(this).children('h3').html(),'videodetail',0)">
+                        <div class="vedioCover">
+                            <img :src="url+videotype.videoimg" onerror="javascript:this.src='images/1.gif'">
+                            <p class="tit nowrap" v-html='videotype.catagoryname'></p>
+                        </div>
+                        <h3 class="nowrap" v-html="videotype.title"></h3>
+                        <p class="p1 clear">
+                            <span class="s2 pull-right nowrap" v-html='videotype.forename'></span>
+                            <span class="s1 nowrap" v-html="videotype.schoolname"></span>
+                        </p>
+                        <p class="p2 clear">
+                            <span class="s1 pull-left"><i></i><label v-html="videotype.videopraisecount+'次'"></label></span>
+                            <span class="s2 pull-right"><i></i><label v-html="videotype.clicks+'次'"></label></span>
+                        </p>
+                    </a>
+                </li>
+                <p class="noMore clear" v-if="noMore">没有更多了...</p>
+            </ul>
+        </div>
+
+        <!-- navBar -->
+        <div class="navBar">  
+            <a href="index.html?" :data-imgurl="imgurl"  :data-apiurl="apiurl"  :data-rowserurl="rowserurl" onclick="goIndex(this);">爱挑战</a>
+            <a href="javascript:;"  class="active" >才艺秀</a>              
+            <a href="meiyu.html"   :data-imgurl="imgurl"  :data-apiurl="apiurl"  :data-rowserurl="rowserurl"  onclick="goMY(this);">美育资源</a>  
+        </div>
+    </div>
+    <!-- 搜索 -->
+    <div id="search" class="page out">
+        <div class="Search clear">
+            <div class="search-test pull-right">
+                <a href="javascript:;" class="search-btn" onclick="gosearch()"></a>
+                <form>
+                <input type="search" placeholder="请输入关键字..." v-model="keyword"/>
+                </form>
+            </div>
+            <div class="searchtype pull-left">
+                <span class="nowrap">视频名称</span><i></i>
+                <ul>
+                    <i></i>
+                    <li @click="setname('title');">视频名称</li>
+                    <li @click="setname('forename');">参赛者姓名</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- 搜索结果 -->
+    <div id="searchResult" class="page out" style="background:#fff;">
+        <div class="loading" v-if="loading"></div>
+        <div v-else="loading">
+            <div class="empty" style="margin-top: 50%;" v-if="empty"></div>
+            <ul class="eventUl clear" v-else="empty">
+                <li v-for="videotype in videodata">
+                    <a href="#videodetail" @click="govideodetail(videotype.videoid)" onclick="gonextpage($(this).children('h3').html(),'videodetail',0)">
+                        <div class="vedioCover">
+                            <img :src="url+videotype.videoimg" onerror="javascript:this.src='images/1.gif'">
+                            <p class="tit nowrap" v-html='videotype.catagoryname'></p>
+                        </div>
+                        <h3 class="nowrap" v-html="videotype.title"></h3>
+                        <p class="p1 clear">
+                            <span class="s2 pull-right nowrap" v-html='videotype.forename'></span>
+                            <span class="s1 nowrap" v-html="videotype.schoolname"></span>
+                        </p>
+                        <p class="p2 clear">
+                            <span class="s1 pull-left"><i></i><label v-html="videotype.videopraisecount+'次'"></label></span>
+                            <span class="s2 pull-right"><i></i><label v-html="videotype.clicks+'次'"></label></span>
+                        </p>
+                    </a>
+                </li>
+            </ul>
+            <p class="noMore clear" v-if="noMore">没有更多了...</p>
+        </div>
+    </div>
+    <!-- 视频详情 -->
+    <div id="videodetail" class="page out">
+            <div style="background:black; height: 30rem;text-align:center;">
+                <video :src="url+detaildata.videorul" id="Video" controls="controls"  style="width:100%;height:100%" ></video>
+
+            </div>
+         
+        <div class="box whitebg">
+            <div class="box-div">
+                <img src="images/ico1.png">
+                <span v-html="detaildata.clicks+'次'"></span>
+            </div>
+            <!-- <div class="box-div">
+                <img src="images/ico2.png">
+                <span v-html="commentdata.totalRecord"></span>
+            </div> -->
+            <!-- <div class="box-div">
+                <img src="images/ico3.png">
+                <span v-html='detaildata.videopraisecount'></span>
+            </div> -->
+            <!-- <div class="box-div">
+                <img src="images/ico4.png" > 
+                <span v-html="detaildata.videotreadcount"></span>
+            </div> -->
+            <div class="box-div" :data-rowserurl="rowserurl" :data-vid="detaildata.videoid" onclick="share($(this).attr('data-rowserurl')+'/Talentchallenge/Talentshow/detail/videoid/'+$(this).attr('data-vid'))">
+                <img src="images/share.png">
+                <br/>
+                <span>分享</span>
+            </div>
+        </div>
+        <div class="context whitebg marb10">
+            <div class="name clear">
+                <span class="btn-span pull-right "></span>
+                <p class="nowrap">
+                    <label v-html="detaildata.catagoryname+'/'"></label>
+                    <span class="three" v-html="detaildata.title"></span>
+                </p>
+            </div>
+            <p class="creat">上传者姓名：<label v-html="detaildata.forename"></label></p>
+            <div class="textp">
+                <p>发布时间：<label>{{detaildata.createtime |  substr(0,10)}}</label></p>
+                <p>地级市：<label v-html="detaildata.cityname"></label></p>
+                <p>上传者学校：<label v-html="detaildata.schoolname"></label></p>
+                <p>视频简介：</p>
+                <p v-html="detaildata.remarks"></p>
+            </div>
+        </div>
+        <!-- <div class="video whitebg marb10">
+            <h2 class="tit pad10">相关视频</h2>
+            <div class="videolist clear" v-for="relatedtype in relateddata">
+                <a href="javascript:;" @click="govideodetail(relatedtype.videoid)" onclick="gonextpage($(this).children('.con').children('.nowrap').html(),'videodetail',0)">
+                    <img :src="url+relatedtype.videoimg" onerror="javascript:this.src='images/1.gif'">
+                    <div class="con">
+                        <p class="nowrap font14 color333" v-html="relatedtype.title"></p>
+                        <p v-html="'播放：'+relatedtype.clicks+'次'"></p>
+                    </div>
+                </a>
+            </div>
+        </div> -->
+    </div>
+</body>
+
+<script src="js/setmodal.js"></script> 
+<script type="text/javascript">
+	 $('.select').click(function() {
+	    $(this).siblings('.ItemsList').toggle();
+	    $('.z-shade').toggle();
+	    if($(".z-shade").is(":hidden")){
+
+	        $('.page').css('overflow', 'visible');
+
+        	$('body').css('overflow', 'visible');
+	    }else{
+
+        	$('body').css('overflow', 'hidden');
+	        $('.page').css('overflow', 'hidden');
+	    };
+	});
+
+    $(document).delegate(".ItemsList li","click",function() {
+        var html = $(this).html();
+         $(this).addClass('current').siblings().removeClass('current');
+        $(this).parent().siblings('.select').find('span').html(html);
+        closeoselect();
+    });
+    function closeoselect() {
+        $('.z-shade').hide();
+        $('.ItemsList').hide();
+
+        $('body').css('overflow', 'visible');
+        $('.page').css('overflow', 'visible');
+    };
+    $('.searchtype').click(function() {
+        $(this).find('ul').toggle();
+    });
+    $('.searchtype ul li').click(function(event) {
+        var html = $(this).html();
+        $(this).parent().siblings('span').html(html);
+        $(this).parent().hide();
+        event.stopPropagation();
+    });  
+    // 返回
+    
+    //浏览器点击回退按钮时触发的事件
+    window.onpopstate = function(){
+        $('#Video')[0].pause();
+        $('.searchtype ul').hide();
+        $('.context').css('height','60px');
+        $('.btn-span').removeClass('close');
+        closeoselect();
+    };
+    function goIndex(obj){   
+        var _this=$(obj);
+        var apiurl=_this.attr('data-apiurl');
+        var imgurl=_this.attr('data-imgurl');
+        var rowserurl=_this.attr('data-rowserurl');
+
+        window.location.href = 'index.html?apiurl='+apiurl+'&imgurl='+imgurl+'&rowserurl='+rowserurl;
+    }
+    function goMY(obj){   
+        var _this=$(obj);
+        var apiurl=_this.attr('data-apiurl');
+        var imgurl=_this.attr('data-imgurl');
+        var rowserurl=_this.attr('data-rowserurl');
+
+        window.location.href = 'meiyu.html?apiurlhref='+apiurl+'&imgurl='+imgurl+'&rowserurl='+rowserurl;
+    }
+</script>
+<script type="text/javascript">
+    $('.btn-span').click(function(){
+        var _this=$(this);
+        var owrap=_this.parents('.context');
+        if(!_this.hasClass('close')){
+            owrap.css('height','auto');
+            _this.addClass('close');
+        }else{
+            owrap.css('height','60px');
+            _this.removeClass('close');
+        }
+    })
+</script>
+</html>

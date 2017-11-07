@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=9">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0"/>
+    <title>课件资源</title>
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/subject-setrem.js"></script>
+    <script src="js/h5connect.js"></script>
+    <script src="js/doc_reader_v2.js"></script>
+    <link rel="stylesheet" href="css/subject-resource.css"/>
+    <style>
+        #resouce-wrap,#resouce-wrap iframe{height: 29.6rem !important;}
+    </style>
+</head>
+<body>
+<div id="resouce-wrap">
+    <img class="loadding-img" src="images/loadding.gif" alt="">
+
+</div>
+
+
+<h3 class="detail-tit pauto">
+    <p style="float:right" class="stars">
+        <span class="active"></span><span class="active"></span><span class="active"></span><span class="active"></span><span></span>
+    </p>
+    <span id="resourcename" class="nowrap"></span>
+</h3>
+<p class="detail-person pauto">贡献者：</p>
+<p class="detail-time pauto">贡献时间：</p>
+<div class="detail-con pauto">
+
+    <p class="tit">简介：</p>
+    <div class="text">
+    </div>
+</div>
+
+<script>
+
+var iwinwidth=$(window).width();
+
+//获取地址栏参数
+$.getUrlParam = function(name){ 
+    var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");     
+    var r = window.location.search.substr(1).match(reg);      
+    if (r!=null) return unescape(r[2]); return null;
+};
+
+var presid='';
+var title = '资源详情';
+var urlapi = '';
+if($.getUrlParam('presid')){
+    presid = $.getUrlParam('presid');
+    title = decodeURI($.getUrlParam('title'));
+};
+if($.getUrlParam('urlapi')){
+    urlapi = $.getUrlParam('urlapi');
+};
+//if(title != '1'){
+    //window.top.setTitleSub(title,'1');
+//};
+
+    $('#resourcename').html('');
+    $('.detail-person').html('贡献者：');
+    $('.detail-time').html('贡献时间：');
+    $('.detail-con .text').html('');
+    $.ajax({
+        url:urlapi+'/common/resourcedetail',
+        //url:urlapi+'/rest/assemble/resourceDetail',
+        type:'post',
+        dataType:'json',
+        data:JSON.stringify({'presid':presid}),
+        //data:JSON.stringify({'itemid':presid}),
+        contentType: "application/json; charset=utf-8",
+        success: function(data){
+        //alert(data.data.doctype);
+            if(data.code){
+                $('#resourcename').html( data.data.resourcename);
+                $('.detail-person').html('贡献者：'+data.data.submitterName);
+                $('.detail-time').html('贡献时间：'+data.data.uploadTime);
+                $('.detail-con .text').html( data.data.abstr );
+
+                title = data.data.resourcename;
+                if(title != '1'){
+                    window.top.setTitleSub(title,'1');
+                };
+
+                /*
+                资源名称：data.data.resourcename
+                贡献者：data.data.submitterName
+                贡献时间data.data.uploadTime,
+
+                简介：data.data.abstr
+                 */
+                 //分享
+                var picurl = data.data.coverpath;
+                var intro = data.data.abstr;
+
+                window.top.sharejson.title = title;
+                window.top.sharejson.picurl = picurl;
+                window.top.sharejson.intro = intro;
+                window.top.sharejson.presid = presid;
+
+
+                var videoarr = ['mp4','flv'];
+                if(videoarr.indexOf(data.data.doctype) > -1){
+
+
+                    $('#resouce-wrap').html('');
+                    (function(){
+                        var option ={"auto_play":"0","file_id":data.data.fileid,"app_id":"1251972963",'width':iwinwidth,'height':290,'full':true};
+                        window.top.player = new qcVideo.Player("resouce-wrap", option);
+                    })();
+
+
+                };
+                var pptarr = ['pptx','doc','ppt','xls','xlsx','vsd','pot','pps','rtf','wps','et','dps','pdf','txt','epub'];
+                if(pptarr.indexOf(data.data.doctype) > -1){
+
+                    //alert('docId: '+data.data.docid +'token: '+data.data.token+'host:'+data.data.host);
+                    $('#resouce-wrap').html('');
+                    (function () {
+                        var option = {
+                            docId: data.data.docid,
+                            token: data.data.token,
+                            host: data.data.host,
+                            width: 830, //文档容器宽度
+                            height:290,
+                            pn: 1,  //定位到第几页，可选
+                            ready: function (handler) {  // 设置字体大小和颜色, 背景颜色（可设置白天黑夜模式）
+                                handler.setFontSize(3);
+                                handler.setBackgroundColor('#000');
+                                handler.setFontColor('#fff');
+                            },
+                            flip: function (data) {    // 翻页时回调函数, 可供客户进行统计等
+                                console.log(data.pn);
+                            },
+                            fontSize:'big',
+                            toolbarConf: {
+                                    page: true, //上下翻页箭头图标
+                                    pagenum: true, //几分之几页
+                                    full: true, //是否显示全屏图标,点击后全屏
+                                    copy: true, //是否可以复制文档内容
+                                    position: 'center'// 设置 toolbar中翻页和放大图标的位置(值有left/center)
+                            } //文档顶部工具条配置对象,必选
+                        };
+                        new Document('resouce-wrap', option);
+                    })();
+                };
+
+                //images
+                var picarr = ['jpegjpg','jpeg','jpg','png','gif'];
+                if(picarr.indexOf(data.data.doctype) > -1){
+
+                    var html="";
+                    html+='<img class="detail-img" src='+data.data.playaddress+' style="vertical-align: middle;" alt="">'
+                    $('#resouce-wrap').html(html);
+
+                };
+
+
+
+
+            }else{
+                alert('请求失败，请重试！');
+            };
+        },
+        error: function(data){
+
+        }
+    });
+
+
+
+
+</script>
+</body>
+</html> 

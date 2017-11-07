@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+	<title>Document</title>
+	<link rel="stylesheet" href="css/css.css">
+	<link rel="stylesheet" href="css/mobilebone.css">
+	<link rel="stylesheet" href="js/examengine/css/examengine.css">
+	<script src="cordova.js"></script>
+	<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+	<script src="js/common.js"></script>
+	<script src="js/base.js"></script>
+	<script src="js/mobilebone.js"></script>
+	<script src="js/examengine/examengine.js"></script>
+</head>
+<body style="overflow-y: auto;">
+
+<div id="testpaper" style="overflow: auto; position: relative; padding: 1rem; width: 34rem; height: 100%;">
+
+</div>
+
+
+<script>
+
+	function showImage(index,array) {
+		try
+		{
+			if (cordova == null || cordova.plugins == null || cordova.plugins.traceclass == null) {
+				document.addEventListener('deviceready', function () {
+						cordova.plugins.traceclass.showImage(function success(arg) {
+							}, function error(arg) {
+							}, [index,array]);
+
+				}, false);
+			} else {
+					cordova.plugins.traceclass.showImage(function success(arg) {}, function error(arg) {}, [index,array]);
+			}
+
+		}
+		catch (e)
+		{
+		}
+	};
+
+
+
+
+	function notifyAppToData(title,state) {
+		try
+		{
+			if (cordova == null || cordova.plugins == null || cordova.plugins.traceclass == null) {
+				document.addEventListener('deviceready', function () {
+						cordova.plugins.traceclass.notifyAppToData(function success(arg) {
+							}, function error(arg) {
+							}, [title,state]);
+
+				}, false);
+			} else {
+					cordova.plugins.traceclass.notifyAppToData(function success(arg) {}, function error(arg) {}, [title,state]);
+			}
+
+		}
+		catch (e)
+		{
+		}
+	};
+
+	//获取地址栏参数
+	$.getUrlParam = function(name){
+		var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");    //正则？？？？！！！
+		var r = window.location.search.substr(1).match(reg);     // substr( ) 抽取字符    match() 匹配
+		if (r!=null) return unescape(r[2]); return null;        //unescape() 函数可对通过 escape() 编码的字符串进行解码。
+	};
+	var testurl = 'http://10.0.10.110';
+
+	examengine.layout.loadding('正在展示作业...');
+	//setTimeout(function(){
+	//	dohomework();
+	//},10);
+
+	var homeworkjson = {};
+
+	function turnSencondpage(){};
+
+	function dohomeworkanswer(jsonstring,url,answerbin){
+		testurl = url;
+		examengine.status = "do";
+		examengine.issingledisplay = true;
+		examengine.useridentity = "student";
+		if(answerbin){
+			examengine.studentanswerjson = answerbin;
+		};
+		examengine.init(jsonstring);
+		examengine.layout.close();
+		//图片预览
+		$('.subquestion .addphoto').delegate('img.show', 'click', function(){
+			var aimg = $(this).parent().parent().find('img.show');
+			var index = $(this).parent().index('.lishow');
+			var imgarr = [];
+			for(var i=0; i<aimg.length; i++){
+				imgarr.push(aimg.eq(i).attr('src'));
+			};
+			alert(index+','+imgarr);
+		});
+	};
+
+	notifyAppToData();
+
+	function getexamjson(){
+		examengine.layout.loadding('正在保存答案...');
+		setTimeout(function(){
+			var answerbin = examengine.getbookroommyanswerjson();
+			answerbin = JSON.parse(answerbin);
+
+			var anstuid = '';
+			var aname = '';
+			var anuuid = '';
+			if($.getUrlParam('anstuid')){
+				anstuid = $.getUrlParam('anstuid');
+			};
+			if($.getUrlParam('aname')){
+				aname = $.getUrlParam('aname');
+			};
+			if($.getUrlParam('anuuid')){
+				anuuid = $.getUrlParam('anuuid');
+			};
+			answerbin.anstuid = anstuid;
+			answerbin.aname = decodeURI(aname);
+			answerbin.anuuid = anuuid;
+
+			var finishstatus = true;
+			$('.subquestion').each(function(i){
+				if($(this).find('i.select_i').length > 0){
+					if($(this).find('i.checked').length == 0){
+						finishstatus = false;
+						return;
+					};
+				}else if($(this).find('textarea').length > 0){
+					if($(this).find('textarea').val() == ''){
+						finishstatus = false;
+						return;
+					};
+				};
+			});
+
+			setWorkResult(answerbin, finishstatus);
+			examengine.layout.close();
+		},10);
+
+	};
+
+				function setWorkResult(title,state) {
+				try
+				{
+					if (cordova == null || cordova.plugins == null || cordova.plugins.traceclass == null) {
+						document.addEventListener('deviceready', function () {
+								cordova.plugins.traceclass.setWorkResult(function success(arg) {
+									}, function error(arg) {
+									}, [title,state]);
+
+						}, false);
+					} else {
+							cordova.plugins.traceclass.setWorkResult(function success(arg) {}, function error(arg) {}, [title,state]);
+					}
+
+				}
+				catch (e)
+				{
+				}
+			};
+
+	//拍照
+	var pictureSource;		//图片来源
+	var destinationType;		//设置返回值的格式
+
+	// 等待PhoneGap连接设备
+	document.addEventListener("deviceready", onDeviceReady, false);
+
+	// PhoneGap准备就绪，可以使用！
+	function onDeviceReady() {
+		pictureSource = navigator.camera.PictureSourceType;
+		destinationType = navigator.camera.DestinationType;
+	};
+
+	var obj = null;
+	function capturePhoto(_this) {
+		obj = _this;
+		// 使用设备上的摄像头拍照，并获得Base64编码字符串格式的图像
+		//navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50, destinationType: 0 });//base64
+		if($(".equestion").eq(examengine.singleindex).find('.addphoto li').length > 9){
+			alert('最多上传9张图片！');
+			return false;
+		};
+
+		navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50 });
+	};
+
+
+	function onPhotoDataSuccess(imageData) {
+		// 取消注释以查看Base64编码的图像数据
+
+		var liid = new Date().getTime();
+		var lihtml = '<li id="'+liid+'" style="background: none;"><p class="imgloadding"></p></li>';
+		obj.parent().prepend(lihtml);
+		uploadPhoto(imageData, liid);
+	}
+	// 当有错误发生时触发此函数
+	function onFail(mesage) {
+		alert('Failed because: ' + message);
+	};
+
+	//上传图片
+	function uploadPhoto(imageURI, id) {
+		var options = new FileUploadOptions();
+		options.fileKey="uploadfile";
+		options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1);
+		options.mimeType="image/jpeg";
+
+		var params = new Object();
+		params.userid = "36cd5422826e4c80846b0206be2503c9";
+
+		options.params = params;
+
+		var ft = new FileTransfer();
+		ft.upload(imageURI, testurl + "/Home/Interface/uploadfile", win, fail, options);
+
+		function win(r) {
+			var imgurl = JSON.parse(r.response).data.url;
+			$('#'+id).addClass('lishow').html('<span onclick="$(this).parent().remove();"></span><img class="show" src="'+imgurl+'">');
+		}
+
+		function fail(error) {
+			$('#'+id).remove();
+			alert("上传失败"+error);
+		};
+	};
+</script>
+
+</body>
+</html>

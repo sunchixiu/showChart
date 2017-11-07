@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <title>签到墙</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/common.js"></script>
+    <style>
+        body{background-color: #FEEED4; width: 100%; overflow-x: hidden;}
+        .sortnum{width: 36rem; height: 35rem; background-image: url("images/signinbg.png"); background-repeat: no-repeat; background-size: 100% auto; color: #fff;}
+        .columnleft{margin-left: 3.35rem; position: relative; width: 8.7rem; height: 28.8rem; text-align: center; float: left;}
+        .columnmiddle{margin-left: 1.66rem; position: relative; width: 8.7rem; height: 28.8rem; text-align: center; float: left;}
+        .columnright{margin-left: 2.2rem; position: relative; width: 8.7rem; height: 28.8rem; text-align: center; float: left;}
+        .jianpan{width: 36rem; height: 9.8rem; background-image: url("images/jianpan.png"); background-repeat: no-repeat; background-size: cover; text-align: center; color: #fff; font-size: 1.6rem;}
+        .jianpan p{padding-top: 5.2rem; width: 22rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block;}
+        .leftup{width: 8.7rem; position: absolute; left: 0; bottom: 2.7rem;}
+        .lefttop{width: 8.7rem; height: 5.5rem; background-image: url("images/redtop.png"); background-size: 8.7rem 5.5rem; position: relative; z-index: 9;}
+        .leftmiddle{width: 8.7rem; min-height: 4.6rem; background-image: url("images/redmiddle.png"); background-size: 8.7rem 100%; margin-top: -1rem; position: relative; z-index: 8;}
+        .leftbottom{width: 8.7rem; height: 2.7rem; position: absolute; left: 0; bottom: 0; background-image: url("images/redbottom.png"); background-size: 8.7rem 2.7rem;}
+
+        .middletop{width: 8.7rem; height: 5.5rem; background-image: url("images/bluetop.png"); background-size: 8.7rem 5.5rem; position: relative; z-index: 9;}
+        .middlemiddle{width: 8.7rem; min-height: 4.6rem; background-image: url("images/bluemiddle.png"); background-size: 8.7rem 100%; margin-top: -1rem; position: relative; z-index: 8;}
+        .middlebottom{width: 8.7rem; height: 2.7rem; position: absolute; left: 0; bottom: 0; background-image: url("images/bluebottom.png"); background-size: 8.7rem 2.7rem;}
+
+        .righttop{width: 8.7rem; height: 5.5rem; background-image: url("images/yellowtop.png"); background-size: 8.7rem 5.5rem; position: relative; z-index: 9;}
+        .rightmiddle{width: 8.7rem; min-height: 4.6rem; background-image: url("images/yellowmiddle.png"); background-size: 8.7rem 100%; margin-top: -1rem; position: relative; z-index: 8;}
+        .rightbottom{width: 8.7rem; height: 2.7rem; position: absolute; left: 0; bottom: 0; background-image: url("images/yellowbottom.png"); background-size: 8.7rem 2.7rem;}
+
+        .counttext{position: absolute; bottom: 0; width: 8.7rem; height: 3rem;}
+    </style>
+</head>
+<body>
+<div class="sortnum">
+    <div class="columnleft">
+        <div class="leftup">
+            <div class="lefttop"></div>
+            <div class="leftmiddle">
+                <div class="counttext">
+                    <p style="font-size: 1rem;">签到人数</p>
+                    <p style="font-size: 2.4rem; margin-top: 0.2rem" id="signcoutid">0</p>
+                </div>
+            </div>
+        </div>
+        <div class="leftbottom"></div>
+    </div>
+    <div class="columnmiddle">
+        <div class="leftup">
+            <div class="middletop"></div>
+            <div class="middlemiddle">
+                <div class="counttext">
+                    <p style="font-size: 1rem;">当前摇动次数</p>
+                    <p style="font-size: 2.4rem; margin-top: 0.2rem" id="wavecontid">0</p>
+                </div>
+            </div>
+        </div>
+        <div class="middlebottom"></div>
+    </div>
+    <div class="columnright">
+        <div class="leftup">
+            <div class="righttop"></div>
+            <div class="rightmiddle">
+                <div class="counttext">
+                    <p style="font-size: 1rem;">摇中奖品数量</p>
+                    <p style="font-size: 2.4rem; margin-top: 0.2rem" id="awardcountid">0</p>
+                </div>
+            </div>
+        </div>
+        <div class="rightbottom"></div>
+    </div>
+</div>
+<div id="prizeid" style="margin-top: -1px;">
+    <div class="jianpan">
+        <p>纪念奖</p>
+    </div>
+    <div class="jianpan">
+        <p>一等奖</p>
+    </div>
+    <div class="jianpan">
+        <p>二等奖</p>
+    </div>
+    <div class="jianpan">
+        <p>三等奖</p>
+    </div>
+</div>
+<script>
+    var activityid = '1';
+
+    //获取地址栏参数
+    $.getUrlParam = function (name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    };
+
+    if ($.getUrlParam('activityid')) {
+        activityid = $.getUrlParam('activityid');
+    };
+
+    getprizewall();
+    var params = {
+        "activityid": activityid
+    };
+    function getprizewall(state){
+        $.ajax({
+            url: urlapi + 'cactivity_signwall.action',
+            data: params,
+            type: 'post',
+            dataType: 'json',
+            success: function(data){
+                if(data.code == 1){
+                    $('#signcoutid').html(data.data.signcout).parent().parent().attr('data-num',data.data.signcout);
+                    $('#wavecontid').html(data.data.wavecont).parent().parent().attr('data-num',data.data.wavecont);
+                    $('#awardcountid').html(data.data.awardcont).parent().parent().attr('data-num',data.data.awardcont);
+                    sortcoulmn();   //改变柱形图高度
+                    if(!state){
+                        $('#prizeid').html();
+                        var html = '';
+                        for(var i=0; i<data.data.prize.length; i++){
+                            html += '<div class="jianpan"><p>'+data.data.prize[i].prizelevel+data.data.prize[i].prizenum+'名('+data.data.prize[i].prizename+')</p></div>';
+                        };
+                        $('#prizeid').html(html);
+                    };
+                }else{
+                    alert(data.errorMessage);
+                };
+            },
+            error: function(data){
+                alert('网络错误');
+            }
+        });
+    };
+
+    function sortcoulmn(){
+        var ldiv = $('#signcoutid').parent().parent();
+        var mdiv = $('#wavecontid').parent().parent();
+        var rdiv = $('#awardcountid').parent().parent();
+
+        var lnum = parseInt(ldiv.attr('data-num'));
+        var mnum = parseInt(mdiv.attr('data-num'));
+        var rnum = parseInt(rdiv.attr('data-num'));
+
+        var max = 0;
+        var sigleem = 0;
+        if(lnum >= mnum){
+            max = lnum;
+            if(max < rnum){
+                max = rnum;
+            };
+        }else{
+            max = mnum;
+            if(max < rnum){
+                max = rnum;
+            };
+        };
+
+        if(max > 0){
+            sigleem = 10/max;
+            if(sigleem > 0.2){
+                sigleem = 0.2;
+            };
+            ldiv.css('height',(4.6+lnum*sigleem)+'rem');
+            mdiv.css('height',(4.6+mnum*sigleem)+'rem');
+            rdiv.css('height',(4.6+rnum*sigleem)+'rem');
+        };
+    };
+
+    var timer = null;
+    setInterval(function(){
+        getprizewall(1);
+    },2000);
+</script>
+</body>
+</html>

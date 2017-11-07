@@ -55,13 +55,24 @@ a:link,a:visited{text-decoration: none;}
 	height: 4.4rem;
 	line-height: 4.4rem;
 	border-bottom:1px solid #ececec;
+	padding-right: 2.8rem;
 }
 .list ul li .inactive{
-	background:url(../images/off.png) no-repeat right 1.3rem center / 1.2rem 0.7rem;
+	background-image: url(../images/off.png);
+	background-repeat: no-repeat;
+	background-position: 33.3rem center;
+	background-size: 1.2rem 0.7rem;
 }
 .list ul li .inactives{
-	background: #e7f8ff url(../images/on.png) no-repeat right 1.3rem center / 1.2rem 0.7rem;
+	background-color: #e7f8ff;
+	background-image: url(../images/on.png);
+	background-repeat: no-repeat;
+	background-position: 33.3rem center;
+	background-size: 1.2rem 0.7rem;
 	border: none;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 } 
 .list ul li ul{
 	display: none;
@@ -79,17 +90,29 @@ a:link,a:visited{text-decoration: none;}
 .list .three a{
 	padding-left:0rem;
 	margin-left: 3.7rem;
-	background:url(../images/pitch.png) no-repeat right 1.3rem center / 1.5rem 1.5rem;
+	/*background:url(../images/pitch.png) no-repeat right 1.3rem center / 1.5rem 1.5rem;*/
+	background-image: url(../images/pitch.png);
+	background-repeat: no-repeat;
+	background-position: 29.5rem center;
+	background-size: 1.5rem 1.5rem;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	padding-right: 2.8rem;
 }
 .list .three a.pitch-on{
 	padding-left:0rem;
 	margin-left: 3.7rem;
-	background:url(../images/pitch-on.png) no-repeat right 1.3rem center / 1.5rem 1.5rem;
+	/*background:url(../images/pitch-on.png) no-repeat right 1.3rem center / 1.5rem 1.5rem;*/
+	background-image: url(../images/pitch-on.png);
+	background-repeat: no-repeat;
+	background-position: 29.5rem center;
+	background-size: 1.5rem 1.5rem;
 }
-.list .three:last-child a{
-	padding-left:3.7rem;
-	margin-left: 0rem;
-}
+/*.list .three:last-child a{*/
+	/*padding-left:3.7rem;*/
+	/*margin-left: 0rem;*/
+/*}*/
 .list .three a i{
 	width: 0.7rem;
 	height: 0.7rem;
@@ -107,12 +130,14 @@ a:link,a:visited{text-decoration: none;}
 	overflow: hidden;
 	width: 100%;
 	background: #fff;
-	position: fixed;
+	position: absolute;
 	bottom: 0;
+	left: 0;
 	z-index: 9;
 	box-shadow: -1px 0 8px 2px #efeff4;
 	-webkit-box-shadow: -1px 0 8px 2px #efeff4;
 }
+.type-quantity ul{max-height: 320px; overflow: auto;}
 .regain{
 	max-height: none;
 }
@@ -130,7 +155,24 @@ a:link,a:visited{text-decoration: none;}
 	float: right;
 	display: inline-block;
 	margin-top: 1.3rem;
-	background: url(../images/unfold.png) no-repeat center / 1.7rem 1.1rem;
+	/*background: url(../images/unfold.png) no-repeat center / 1.7rem 1.1rem;*/
+	background-image: url(../images/unfold.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 1.7rem 1.1rem;
+	display: none;
+}
+.type-quantity.regain p a{
+	width: 1.7rem;
+	height: 1.1rem;
+	float: right;
+	display: inline-block;
+	margin-top: 1.3rem;
+	/*background: url(../images/unfold.png) no-repeat center / 1.7rem 1.1rem;*/
+	background-image: url(../images/unfolddown.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 1.7rem 1.1rem;
 }
 .type-quantity ul{
 	margin-top: 1.5rem;
@@ -155,6 +197,7 @@ a:link,a:visited{text-decoration: none;}
 	width: 6.2rem;
 	border: 2px solid #c2c2c2;
 	border-radius: 0.5rem 0 0 0.5rem;
+	cursor: pointer;
 }
 .type-quantity ul li span:active{
 	background: #ddd;
@@ -245,21 +288,26 @@ a:link,a:visited{text-decoration: none;}
 }
 
 /*menu*/
-.testmask{width: 100%;background: black ;position: absolute;z-index: 10;opacity: 0.3;display: none;}
+.testmask{width: 36rem;background: rgba(0,0,0,0.3) ;position: absolute;z-index: 10;display: none;}
 .memu-wrap{position: relative;z-index: 11;}
 .memu{background: #F4F4F4;padding:0.6rem 0;position: fixed;width: 100%;height: 3.3rem;overflow: hidden;}
 .memu li{width:50%;float: left;height: 3.2rem;border-right: 0.1rem solid #E8E8E8;line-height: 3.2rem;text-align: center;
 	box-sizing:border-box;
 	-moz-box-sizing:border-box;
 	font-size: 1.4rem;
-	background: url(../images/def-ico.png) no-repeat right 0.5rem center ;
+	background-image: url(../images/def-ico.png);
+	background-repeat: no-repeat;
+	background-position: 16.2rem center;
 	background-size: 1.2rem 0.9rem;
+	cursor: pointer;
 }
-.memu li label{display: inline-block; width: 13.8rem; height: 3.2rem; line-height: 3.2rem;}
+.memu li label{display: inline-block; width: 13.8rem; height: 3.2rem; line-height: 3.2rem; cursor: pointer;}
 .memu li.current{
-	background: url(../images/active-ico.png) no-repeat right 0.5rem center;
+	background-image: url(../images/active-ico.png);
+	background-repeat: no-repeat;
+	background-position: 16.2rem center;
 	background-size: 1.2rem 0.9rem;
-	/*color:#4A90E2;*/
+	cursor: pointer;
 }
 
 .memu-con{width:100%;position: fixed;top:4.4rem;background: white;display: none;min-height: 21.6rem;max-height: 25rem;overflow-y:auto; }
@@ -460,3 +508,77 @@ a:link,a:visited{text-decoration: none;}
 	padding: 2px 6px;
 	border: none;
 }
+
+/*拍照上传答案*/
+.addphoto ul li{width: 8rem; height: 6rem; background-image: url("../images/addphoto.jpg"); background-size: 8rem 6rem; margin: 0.6rem 1rem 0 0; float: left; position: relative;}
+.addphoto ul li span{position: absolute; width: 2rem; height: 2rem; background-image: url("../images/i_del.png"); background-size: 2rem 2rem; display: inline-block; right: -0.5rem; top: -0.5rem; text-align: center; line-height: 2rem; font-size: 1.2rem;}
+.addphoto ul li img{width: 8rem; height: 6rem;}
+.subquestion .replycontainer .replyinfo{height: auto !important; overflow: hidden;}
+.addphoto ul li p.imgloadding{width: 8rem; height: 6rem; background-image: url("../images/loadding.gif"); background-size: 2rem 2rem; background-color: rgba(0,0,0,0.4); background-repeat: no-repeat; background-position: center;}
+
+
+/*改为蓝色背景*/
+.questionmenu a{background-color: #2591eb !important;}
+.examlayoutbox .examlayoutbox_title{background-color: #2591eb !important;}
+
+/*拍照、录音、文本输入*/
+/*.radiophoto{margin: 26px 30px 12px;}*/
+.radiophoto{margin: 26px 30px 12px;}
+.radiophoto p{max-width: 26rem; min-height: 14px; padding: 8px; color: #333; font-size: 14px; line-height: 14px; position: relative; background: #82db70; border-radius: 4px; -webkit-border-radius: 4px; display: inline-block; margin-bottom: 26px;  word-wrap: break-word;}
+.radiophoto p i{display: inline-block; position: absolute;}
+.radiophoto p span{display: inline-block; position: absolute;}
+.radiophoto p i.del{width: 24px; height: 24px; background-image: url("../images/i_del.png"); background-size: 24px 24px; top: -16px; right: -20px;}
+.radiophoto p i.del:active{opacity: 0.6;}
+.radiophoto p.voice{width: 100px;}
+.radiophoto span{display: inline-block;}
+.radiophoto span.voicestop{cursor: pointer; width: 100%; height: 90%;}
+.radiophoto span.voiceplay{cursor: pointer; width: 100%; height: 90%;}
+.radiophoto span.voicestop span{width: 14px; height: 14px; background-image: url("../images/voicestop.png"); background-size: 14px 14px;}
+.radiophoto span.voiceplay span{width: 14px; height: 14px; background-image: url("../images/voiceplay.gif"); background-size: 14px 14px;}
+.radiophoto p.voice i.voicetime{right: 8px; color: #fff; font-size: 12px; font-weight: 100; padding-right: 4px;}
+
+.radiophoto div.gooddiv{margin-bottom: 18px;}
+.radiophoto span.good{display: inline-block; width: 24px; height: 23px; background-image: url("../images/icon_good.png"); background-size: 24px 23px;}
+
+/*组卷标题样式*/
+.examengine .examheader h1{border: 1px dashed #ddd; width: 18rem; font-weight: 200 !important; text-align: left !important; padding-left: 36px; font-size: 16px !important; background-image: url("../images/edit_title.png"); background-size: 20px 18px; background-position: 7px; background-repeat: no-repeat; color: #666; margin: 0 !important; padding-top: 0 !important; margin-top: 20px !important; padding-bottom: 0 !important; display: inline-block; height: 30px; overflow: hidden; white-space: normal; text-overflow: ellipsis;}
+.examengine .examheader h1 input{border: none !important; text-align: left !important; padding-left: 0px; font-weight: 200 !important; font-size: 16px !important; width: 200px; outline:0px;}
+
+/*限制图片最宽为26rem*/
+.subquestion{overflow-x: hidden;}
+.subquestion img{max-width: 26rem;}
+
+/*loadding*/
+.loadding{width: 20px; height: 20px; display: inline-block; background-image: url("../images/loadding.gif"); background-size: 20px 20px; position: absolute; top: 180px; left: 50%; margin-left: -10px;}
+
+/*按钮颜色，修改插件默认*/
+.ui-body-c .ui-link{color: #fff !important;}
+
+/*做作业倒计时*/
+.examtime_text{text-align: center; font-size: 14px; color: #666;}
+
+/*试卷标题左移20px*/
+.examengine .examheader h1{margin-left: 0px !important;}
+
+/*批阅试卷时图片显示*/
+.analyse .analysebox img{max-width: 100%; height: auto !important;}
+
+/*为了移动端试题解析、评分等不换行*/
+.examengine .equestion .subquestion .analyse .analysebox div{width: 60% !important;}
+
+/*我的答案错误显示红色*/
+.ans_answer .error{color: red;}
+
+/*学生自己批阅完顶部显示一段提示*/
+.errorlabel{color: red; font-size: 14px; text-align: center; width: 100%; height: 26px; line-height: 26px; background: #fff; position: relative; z-index: 1000; float: left;}
+.errorlabel label{display: inline-block; height: 26px; line-height: 26px;}
+.errorlabel span{display: inline-block; width: 20px; height: 20px; background-image: url("../images/text_del.png"); background-size: 20px 20px; margin-left: 20px; vertical-align: middle;}
+
+/*填空题左边留白*/
+.examengine .equestion .subquestion .selectitem li {
+	width: 100% !important;
+}
+
+.examengine .equestion .subquestion .linecontainer {width: 35rem;}
+.examengine .equestion .subquestion .linecontainer .linecontainer_right {padding-right: 1.6rem !important;}
+

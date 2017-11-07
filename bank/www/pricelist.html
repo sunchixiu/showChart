@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <title>获奖名单</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link rel="stylesheet" type="text/css" href="css/swiper.min.css">
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/swiper.min.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/shake.js"></script>
+    <style>
+        body{background-color: #FEEED4; background-image: url("images/toubg.png"); background-repeat: no-repeat; background-size: 100% auto;}
+        .swiper-container {
+            width: 100%;
+            padding-top: 1.3rem;
+            padding-bottom: 3rem;
+        }
+        .swiper-slide {
+            background-position: center;
+            background-size: cover;
+            width: 31.4rem;
+            height: 17rem;
+            border-radius: 0.8rem;
+            -webkit-border-radius: 0.8rem;
+        }
+        .desdiv{width: 31.4rem; background-color: #fff; margin: 0 auto; box-shadow: 0px -6px 20px #ccc; -webkit-box-shadow: 0px -6px 20px #ccc; -webkit-border-radius: 0.6rem; border-radius: 0.6rem; position: relative;}
+
+        .destitle{width: 16rem; height: 2.6rem; line-height: 2.6rem; background: -webkit-linear-gradient(left, #FF4732, #FF9E26); background: linear-gradient(left, #FF4732, #FF9E26); text-align: center; color: #fff; font-size: 12px; border-radius: 1.3rem; -webkit-border-radius: 1.3rem; margin-top: -1.2rem; display: inline-block; margin-left: 7.7rem; box-shadow: 0px 0px 20px #ccc; -webkit-box-shadow: 0px 0px 10px #999;}
+        .desline{padding: 1.7rem; font-size: 12px; color: #5B5B5B; line-height: 30px;}
+        .namelist{width: 31.4rem; margin: 0 auto; margin-top: -0.6rem; text-align: center; background: -webkit-linear-gradient(#D52F4B 10%, #FB6579 85%, #FB6076 5%); background: linear-gradient(#D52F4B 10%, #FB6579 85%, #FB6076 5%); padding: 2rem 0; color: #fff; line-height: 24px; margin-bottom: 4.8rem;}
+        .pricetitle{font-size: 12px; color: #FFDD88;}
+        .pricediv{margin-top: 1.2rem;}
+
+        .noprice{width: 32.8rem; height: 21.6rem; background-image: url("images/noprice.png"); background-size: 32.8rem 21.6rem; position: fixed; top: 50%; left: 50%; margin-left: -16.4rem; margin-top: -12rem; z-index: 9999; display: none;}
+        .maskbg{position: fixed; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 9998; top: 0; left: 0; display: none;}
+        .signbtn{width: 10.2rem; height: 3.85rem; line-height: 3.85rem; background-image: url("images/button.png"); background-size: 10.2rem 3.85rem; color: #fff; font-size: 18px; display: inline-block; -webkit-border-radius: 0.6rem; border-radius: 0.6rem; margin-top: 2.4rem;}
+        .textbtn{text-align: center; font-size: 16px; color: #fff; margin-top: 11.4rem;}
+        .closebtn{width: 3rem; height: 3rem; display: inline-block; float: right; margin-top: 6.2rem; margin-right: 0.8rem;}
+        .yesclosebtn{width: 3rem; height: 3rem; display: inline-block; float: right; margin-top: 0.8rem; margin-right: 0.8rem;}
+        .yesprice{width: 32rem; height: 45.6rem; background-image: url("images/yesprice.png"); background-size: 32rem 45.6rem; position: fixed; top: 50%; left: 50%; margin-left: -16rem; margin-top: -24rem; z-index: 9999; display: none;}
+        .pricearea{width: 15rem; height: 15.4rem; margin-top: 23rem; margin-left: 8.3rem; text-align: center;}
+        .desline p{overflow: hidden;}
+        .desline span{display: block; float: left;}
+        .desline span.desleft{width: 6rem;}
+        .desline span.desright{width: 21rem;}
+        .morelist{margin-top: 2rem;}
+        .morebtn{width: 9rem; height: 2.2rem; line-height: 2.2rem; border: 1px solid #fff; text-align: center; color: #fff; display: inline-block; border-radius: 1.2rem; font-size: 12px;}
+        .name{white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+        .pic{margin-top: 0.8rem; width: 100%; height: 13rem;}
+        .pic img{max-width: 100%; max-height: 100%;}
+        .yyydiv{width: 100%; height: 9rem; background-image: url(images/lda.png); background-repeat: no-repeat; background-size: 10rem 9rem; background-position: right 4rem center; position: relative; z-index: 6; margin-top: -2rem; margin-bottom: 1rem; color: red; font-size: 2rem; line-height: 9rem; text-indent: 9rem;}
+    </style>
+</head>
+<body>
+<div class="swiper-container">
+    <div class="swiper-wrapper">
+        <div class="swiper-slide" style="background-image:url(images/temp/pic1.jpg)"></div>
+        <div class="swiper-slide" style="background-image:url(images/temp/pic1.jpg)"></div>
+        <div class="swiper-slide" style="background-image:url(images/temp/pic1.jpg)"></div>
+    </div>
+    <!--<div class="swiper-pagination"></div>-->
+</div>
+<div class="yyydiv">
+    摇一摇抽奖！
+</div>
+<div class="desdiv">
+    <div class="destitle"></div>
+    <div class="desline">
+        <p class="activetime">
+            <span class="desleft">活动时间：</span>
+            <span class="desright">
+
+            </span>
+        </p>
+        <p class="activeaddress">
+            <span class="desleft">活动地点：</span>
+            <span class="desright">
+
+            </span>
+        </p>
+        <p class="activecondition">
+            <span class="desleft">参与条件：</span>
+            <span class="desright">
+
+            </span>
+        </p>
+        <p class="activeset">
+            <span class="desleft">奖品设置：</span>
+            <span class="desright">
+
+            </span>
+        </p>
+        <p class="activesec">
+            <span class="desleft">活动介绍：</span>
+            <span class="desright">
+
+            </span>
+        </p>
+    </div>
+</div>
+<div class="namelist">
+    <p class="pricetitle">———  中奖名单  ———</p>
+
+    <div class="pricelist">
+        <div class="pricediv">
+            <p>王五    手机号 138xxxx1540</p>
+            <p>纪念奖 手机</p>
+        </div>
+        <div class="pricediv">
+            <p>王五    手机号 138xxxx1540</p>
+            <p>纪念奖 手机</p>
+        </div>
+        <div class="pricediv">
+            <p>王五    手机号 138xxxx1540</p>
+            <p>纪念奖 手机</p>
+        </div>
+    </div>
+
+    <p class="morelist">
+        <a href="javascript:turnpage();" class="morebtn">更多中奖名单</a>
+    </p>
+</div>
+<div class="bottommenu">
+    <a href="javascript:;" class="active"><label class="home">首页</label></a>
+    <a href="javascript:;"><label class="shop">逛商城</label></a>
+    <a href="javascript:;"><label class="buycat">购物车</label></a>
+    <a href="javascript:gomy();"><label class="my">我的</label></a>
+</div>
+
+<!--没中奖-->
+<div class="noprice">
+    <a href="javascript:closepop();" class="closebtn"></a>
+    <div class="textbtn">
+        <p>很遗憾，没有中奖，下次再战吧！</p>
+        <p>
+            <a href="javascript:closepop();" class="signbtn">确定</a>
+        </p>
+    </div>
+</div>
+
+<!--中奖-->
+<div class="yesprice">
+    <a href="javascript:closepop();" class="yesclosebtn"></a>
+    <div class="pricearea">
+        <p class="name">一等奖</p>
+        <p class="pic"><img src=""></p>
+    </div>
+</div>
+<div class="maskbg"></div>
+
+<!--摇一摇声音-->
+<div style="display: none;">
+    <audio id="yyy">
+        <source src="mp3/yyy.mp3" >
+    </audio>
+    <audio controls id="jg">
+        <source src="mp3/jg.mp3" >
+    </audio>
+</div>
+<script>
+    function closepop(){
+        $('.yesprice').hide();
+        $('.noprice').hide();
+        $('.maskbg').hide();
+    };
+
+    function popyesprice(){
+        $('.yesprice').show();
+        $('.maskbg').show();
+    };
+    function popnoprice(){
+        $('.noprice').show();
+        $('.maskbg').show();
+    };
+</script>
+<script>
+    var woriid = 'gh_50a7026bdd67';
+    var openid = 'odAcOvwqlUlTY7CVUPcf38sCKLu4';
+    var activityid = '1';
+
+    //获取地址栏参数
+    $.getUrlParam = function (name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    };
+
+    if ($.getUrlParam('woriid')) {
+        woriid = $.getUrlParam('woriid');
+    };
+    if ($.getUrlParam('openid')) {
+        openid = $.getUrlParam('openid');
+    };
+    if ($.getUrlParam('activityid')) {
+        activityid = $.getUrlParam('activityid');
+    };
+
+    //活动介绍
+    var params = {
+        "activityid": activityid
+    };
+    $.ajax({
+        url: urlapi + 'cactivity_activitydetail.action',
+        data: params,
+        type: 'post',
+        dataType: 'json',
+        success: function(data){
+            if(data.code == 1){
+                //轮播图
+                if(data.data.activitypic.length > 0){
+                    $('.swiper-wrapper').html('');
+                    var html = '';
+                    for(var i=0; i<data.data.activitypic.length; i++){
+                        html += '<div class="swiper-slide" style="background-image:url('+data.data.activitypic[i]+')"></div>';
+                    };
+                    $('.swiper-wrapper').html(html);
+                    var swiper = new Swiper('.swiper-container', {
+                        pagination: '.swiper-pagination',
+                        effect: 'coverflow',
+                        grabCursor: true,
+                        centeredSlides: true,
+                        slidesPerView: 'auto',
+                        autoplay: 4000,
+                        coverflow: {
+                            rotate: 39,
+                            stretch: 0,
+                            depth: 80,
+                            modifier: 1,
+                            slideShadows : true
+                        }
+                    });
+                };
+
+                $('.destitle').html(data.data.name);
+                $('.activetime span.desright').html(data.data.starttime + ' - '+ data.data.endtime);
+                $('.activeaddress span.desright').html(data.data.address);
+                $('.activecondition span.desright').html(data.data.condition);
+
+                //奖品设置
+                var pricearr = data.data.prize;
+                var prizehtml = '';
+                for(var i=0; i<pricearr.length; i++){
+                    if(i != pricearr.length - 1){
+                        prizehtml += pricearr[i].prizelevel + pricearr[i].prizenum + '名（' + pricearr[i].prizename + '）<br>';
+                    }else{
+                        prizehtml += pricearr[i].prizelevel + pricearr[i].prizenum + '名（' + pricearr[i].prizename + '）';
+                    };
+                };
+                $('.activeset span.desright').html(prizehtml);
+                $('.activesec span.desright').html(data.data.activitydesc);
+            }else{
+                alert(data.errorMessage);
+            };
+        },
+        error: function(data){
+            alert('网络错误');
+        }
+    });
+
+    //中奖列表
+    var curpage = 1;
+    getlist();
+    function getlist(){
+        var paramslist = {
+            "activityid": activityid,
+            "pagesize": 10,
+            "curpage": curpage
+        };
+        $.ajax({
+            url: urlapi + 'cactivity_winprizelist.action',
+            data: paramslist,
+            type: 'post',
+            dataType: 'json',
+            success: function(data){
+                if(data.code == 1){
+                    if(curpage == 1){
+                        $('.pricelist').html('');
+                        var html = '';
+                        for(var i=0; i<data.data.length; i++){
+                            html += '<div class="pricediv"><p>手机号 '+data.data[i].telno+'</p><p>'+data.data[i].prizename+'</p></div>';
+                        };
+                        $('.pricelist').html(html);
+                    }else{
+                        if(data.data.length > 0){
+                            var html = '';
+                            for(var i=0; i<data.data.length; i++){
+                                html += '<div class="pricediv"><p>手机号 '+data.data[i].telno+'</p><p>'+data.data[i].prizename+'</p></div>';
+                            };
+                            $('.pricelist').append(html);
+                        }else{
+                            curpage = curpage - 1;
+                            alert('没有更多...');
+                        };
+                    };
+                }else{
+                    alert(data.errorMessage);
+                };
+            },
+            error: function(data){
+                alert('网络错误');
+            }
+        });
+    };
+
+    function turnpage(){
+        curpage += 1;
+        getlist();
+    };
+
+    //摇奖
+    var yyytimer = null;
+    var yyystate = true;
+    function alertFunc(){
+        if(yyystate){
+            getprize();
+            yyystate = false;
+            yyytimer = setTimeout(function(){
+                yyystate = true;
+            },1000);
+        };
+    };
+    addShake(alertFunc,0.8);
+    function getprize(){
+        document.getElementById("yyy").play();
+        var params = {
+            "woriid": woriid,
+            "openid": openid,
+            "activityid": activityid
+        };
+        $.ajax({
+            url: urlapi + 'cactivity_wave.action',
+            data: params,
+            type: 'post',
+            dataType: 'json',
+            success: function(data){
+                if(data.code == 1){
+                    if(data.data.winflag == 1){
+                        document.getElementById("jg").play();
+                        popyesprice();
+                        $('.pricearea p.name').html(data.data.prizename);
+                        $('.pricearea p.pic img').attr('src',data.data.prizepic);
+                    }else if(data.data.winflag == 0){
+                        document.getElementById("jg").play();
+                        popnoprice();
+                    }else if(data.data.winflag == 2){
+                        alert('活动未开始');
+                    }else if(data.data.winflag == 3){
+                        alert('活动已结束');
+                    };
+                }else{
+                    alert(data.errorMessage);
+                };
+            },
+            error: function(data){
+                alert('网络错误');
+            }
+        });
+    };
+    function gomy() {
+        window.location.href = 'my.html?woriid='+woriid+'&openid='+openid+'&activityid='+activityid;
+    }
+</script>
+</body>
+</html>

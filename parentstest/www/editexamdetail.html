@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="css/css.css">
+	 <link rel="stylesheet" href="css/mobilebone.css"> 
+	<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+	<script src="js/common.js"></script>
+    <script src="../cordova.js"></script>
+	<script src="js/base.js"></script>
+	<!-- <script src="js/mobilebone.js"></script> -->
+	<link rel="stylesheet" href="http://center.iischool.com/mobileapp/static/examengine/css/examengine.css">
+	<script src="http://center.iischool.com/mobileapp/static/examengine/examengine.js"></script>
+	<script>
+		function getexamjson(){
+			examengine.layout.loadding('正在保存试卷...');
+			setTimeout(function(){
+				var json = examengine.getexamjson();
+				var subquestionnum = $('.subquestionnum').length;
+				json.numbers = subquestionnum;
+				examengine.layout.close();
+				alert(JSON.stringify(json));
+			},0);
+		};
+	</script>
+	<script>
+		var apiurl = '';
+		var testurl = '';
+		var role = '';
+		var paperid = '';
+		var publisherid = '';
+
+		var subjectid = '';
+		var vertionid = '';
+		var gradeid = '';
+		var scoresum = 0;
+		var paperbean = '';
+		var schoolid = '';
+    	var useridlist = [];
+		//获取地址栏参数
+		$.getUrlParam = function(name){
+			var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");    //正则？？？？！！！
+			var r = window.location.search.substr(1).match(reg);     // substr( ) 抽取字符    match() 匹配
+			if (r!=null) return unescape(r[2]); return null;        //unescape() 函数可对通过 escape() 编码的字符串进行解码。
+		};
+		if ($.getUrlParam('apiurl')) {
+		    apiurl = 'http://'+($.getUrlParam('apiurl'));
+		};
+		if ($.getUrlParam('testurl')) {
+		    testurl = 'http://'+($.getUrlParam('testurl'));
+		};
+		if ($.getUrlParam('role')) {
+		    role = ($.getUrlParam('role'));
+		};
+		if ($.getUrlParam('paperid')) {
+		    paperid = ($.getUrlParam('paperid'));
+		};
+		if ($.getUrlParam('publisherid')) {
+		    publisherid = ($.getUrlParam('publisherid'));
+		};
+        //销毁
+        function destroypage(state) {
+            try {
+                if (cordova == null || cordova.plugins == null || cordova.plugins.traceclass == null) {
+                    document.addEventListener('deviceready', function () {
+                        cordova.plugins.traceclass.page_finish(function success(arg) {
+                        }, function error(arg) {
+                        }, [state]);
+
+                    }, false);
+                } else {
+                    cordova.plugins.traceclass.page_finish(function success(arg) {
+                    }, function error(arg) {
+                    }, [state]);
+                }
+            }catch (e) {
+
+            };
+        };
+    </script>
+</head>
+<body style="overflow:auto">
+<!--<input type="button" value="出卷" onclick="showMask();" style="position: fixed; left: 0; z-index: 999" />-->
+
+<div id="pageSecond">
+	<div style="overflow: auto; position: relative; width: 100%; height: 100%;">
+		<div id="testpaper" class="paperbody" style="padding: 1rem;"></div>
+	</div>
+</div>
+<!-- 弹窗 -->
+<div class="tck" id="tck" onclick="tckclose()">
+    <div class="cons">
+        <div class="filter-req" id="chooseChild">
+        	<p>选择孩子</p>
+        	<div class="check clear" id="child">
+            </div>
+        </div>
+        <div class="filter-req">
+        	<p>设置作答时间</p>
+        	<div class="check clear">
+                <input class="ReplyTime" id="limittime" oninput="ReplyTime($(this))" type="text" />分钟
+            </div>
+        </div>
+        <div class="filter-req">
+        	<p>设置截止时间</p>
+        	<div class="check clear">
+                <span class="deadline_w"><input class="deadline" id="endtime" type="datetime-local" /></span>
+            </div>
+        </div>
+        <div class="filter-req">
+        	<div class="check clear">
+                <span class="btn-w draft"><a href="javascript:confirm(1);">保存草稿</a></span>
+                <span class="btn-w"><a href="javascript:confirm(2);" class="primary">确定</a></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+	document.addEventListener("backbutton", goback, false);
+	function goback() {
+		destroypage(1);
+	};
+	$.ajax({
+        url: apiurl+"/TSB_ISCHOOL_EXAM_SERVER/testpaper/gettestpaperjson",
+        data: JSON.stringify({'paperid':paperid}),
+        type:'post',
+        dataType:'json',
+        contentType: "application/json; charset=utf-8",
+        success: function(data){
+            if(data.code == 1){
+            	console.log(JSON.stringify(data));
+            	examengine.isdisplayanswersheet = false;    //不显示答题卡
+                examengine.ischangequestion = false;
+            	examengine.init(data.data.paperbean);
+            	subjectId = data.data.subjectId;
+            	versionId = data.data.versionId;
+            	paperbean = data.data.paperbean;
+            	gradeid = data.data.gradeid;
+            	$('#examheader_title').bind('click',function() {
+					$(this).find('input').attr('disabled','disabled');
+				});
+            }else{
+                alert('接口返回错误');
+            };
+        },
+        error: function(data){
+            alert('接口error');
+        }
+    });
+	//弹窗
+    function showMask(){
+    	useridlist = [];
+        $('#tck').show();
+		$("#child").html('');
+    	var html = "";
+        $.ajax({
+            url: apiurl+"/TSB_ISCHOOL_SNS_SERVER/family/findchildrenlist",
+            data: JSON.stringify({'stuid':publisherid}),
+            type:'post',
+            dataType:'json',
+            contentType: "application/json; charset=utf-8",
+            success: function(data){
+                if(data.code == 1){
+                	var dataarr = data.data;
+                	var length = dataarr.length;
+                	schoolid = dataarr[0].schoolid;
+                	for (var i = 0; i < length; i++) {
+                		if(i == 0){
+							html += '<sapn class="box"><a href="javascript:;" data-userid="'+dataarr[i].stuid+'" class="active">'+dataarr[i].name+'</a></sapn>';
+                		}else{
+                			html += '<sapn class="box"><a href="javascript:;" data-userid="'+dataarr[i].stuid+'">'+dataarr[i].name+'</a></sapn>';
+                		};
+                	};
+                	$("#child").append(html);
+                	$('#child').find('a').bind('click',function(){
+                		$(this).toggleClass("active");
+                		if($('#child').find('a.active').length == 0){
+                			$(this).addClass("active");
+                		};
+                	});
+                }else{
+                    alert('接口返回错误');
+                };
+            },
+            error: function(data){
+                alert('接口error');
+            }
+        });
+    };
+    // 关闭弹窗
+    function tckclose(){
+        $('#tck').hide();
+    };
+    // 阻止冒泡
+    $(".cons").click(function(event) {
+        event.stopPropagation();
+    });
+    // 设置时长
+    function ReplyTime(_this) {
+    	var minute = _this.val();
+    	var patrn = /[^\d]/;
+    	if(minute == 0){
+    		_this.val('');
+    	}else if(minute.match(patrn)){
+    		_this.val('');
+    	};
+    };
+    // 保存
+    function confirm(num) {
+    	var paperType = $('#paperType').attr('type-id');
+    	var title = $('#examheader_title').html();
+    	var limittime = $('#limittime').val();
+    	var endtime = $('#endtime').val();
+    	endtime = endtime.replace('T',' ').replace('Z','');
+    	if (role == 2) {
+	    	for(var i=0; i<$('#child').find('a.active').length; i++){
+	    		useridlist.push($('#child').find('a.active').eq(i).attr('data-userid'));
+	    	};
+		};
+    	if (limittime == '') {
+    		alert('请设置作答时间');
+    		return;
+    	}else{
+    		paperbean.answertime = limittime;
+    	};
+    	if (endtime == '') {
+    		alert('请设置截止时间');
+    		return;
+    	};
+    	var params = {
+            id: paperid,
+            publisherid: publisherid,
+            schoolid: schoolid,
+            scoresum: scoresum,
+            paperType: paperType,
+            taskType: role,
+            title: title,
+            remark: '',
+            state: num,
+            subjectId: subjectid,
+            versionId: vertionid,
+            gradeid: gradeid,
+            // starttime: ,
+            endtime: endtime,
+            paperSource: 1,
+            limittime: limittime,
+            paperbean: paperbean,
+            // classidlist: classid,
+            useridlist: useridlist
+        };
+        $.ajax({
+	    	url: apiurl+"/TSB_ISCHOOL_EXAM_SERVER/testpaper/savedraft",
+	        data: JSON.stringify(params),
+	        type:'post',
+	        dataType:'json',
+	        contentType: "application/json; charset=utf-8",
+	        success: function(data){
+	            if(data.code == 1){
+	            	alert('保存成功！');
+	            	destroypage(1);
+	            	// tckclose();
+	            }else{
+	                alert('接口返回错误');
+	            };
+	        },
+	        error: function(data){
+	            alert('接口error');
+	        }
+	    });
+	};
+</script>
+</body>
+</html>

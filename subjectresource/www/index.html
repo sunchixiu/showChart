@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=9">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <title>各科资源</title>
+	<script src="cordova.js"></script>
+    <script src="js/jquery-1.11.1.min.js"></script>
+	<script src="js/hammer.min.js"></script>
+	<script src="js/iscroll4.js"></script>
+    <script src="js/subject-setrem.js"></script>
+    <link rel="stylesheet"  href="css/subject-resource.css"/>
+
+	<script>
+		function setTitleSub(title,state) {
+
+				try
+				{
+					if (cordova == null || cordova.plugins == null || cordova.plugins.traceclass == null) {
+						document.addEventListener('deviceready', function () {
+								cordova.plugins.traceclass.setsubjectTitle(function success(arg) {
+									}, function error(arg) {
+									}, [title,state]);
+
+						}, false);
+					} else {
+							cordova.plugins.traceclass.setsubjectTitle(function success(arg) {
+								}, function error(arg) {
+								}, [title,state]);
+					}
+
+				}
+				catch (e)
+				{
+				}
+			};
+
+		function intentInfo(intro) {
+			try
+			{
+				if (cordova == null || cordova.plugins == null || cordova.plugins.traceclass == null) {
+					document.addEventListener('deviceready', function () {
+							cordova.plugins.traceclass.intentInfo(function success(arg) {
+								}, function error(arg) {
+								}, [intro]);
+
+					}, false);
+				} else {
+						cordova.plugins.traceclass.intentInfo(function success(arg) {
+							}, function error(arg) {
+							}, [intro]);
+				}
+
+			}
+			catch (e)
+			{
+			}
+		};
+
+		function exit(intro) {
+			try
+			{
+				if (cordova == null || cordova.plugins == null || cordova.plugins.traceclass == null) {
+					document.addEventListener('deviceready', function () {
+							cordova.plugins.traceclass.exitActivity(function success(arg) {
+								}, function error(arg) {
+								}, [intro]);
+
+					}, false);
+				} else {
+						cordova.plugins.traceclass.exitActivity(function success(arg) {
+							}, function error(arg) {
+							}, [intro]);
+				}
+
+			}
+			catch (e)
+			{
+			}
+		};
+	</script>
+</head>
+<body >
+<input type="button" value="返回" onclick="gohtmlback();" style="position: fixed; z-index: 10000;">
+	<div id="home">
+		<!-- 微课程 -->
+		<h2 class="tit mauto">
+			<a class="more" id="small-class" href="courseware.html" target="myframe" onclick="popframe('学科资源');">更多 &gt;
+			</a>
+			微课程
+		</h2>
+		<div class="classstar mauto"  >
+
+			<div class="clear" id="smallclass">
+				<img class="loadding-img" src="images/loadding.gif" alt="">
+
+			</div>
+		</div>
+		<div class="box10"></div>
+		<h2 class="tit mauto">
+			<a class="more" id="courseware-more" href="courseware.html" target="myframe" onclick="popframe('学科资源');">更多 &gt;</a>
+			课件
+		</h2>
+
+		<div class="courseware mauto" id="courseware">
+			<ul class="clear" id="ulcourseware">
+
+				<img   class="loadding-img" src="images/loadding.gif" alt="">
+
+
+			</ul>
+		</div>
+
+		<div class="box10"></div>
+		<!-- 素材 -->
+		<h2 class="tit mauto">
+			<a class="more" id="material-more"  href="courseware.html" target="myframe" onclick="popframe('学科资源');">更多 &gt;</a>
+			素材
+		</h2>
+		<div class="mauto">
+			<div class="clear" id="material">
+				<img class="loadding-img" src="images/loadding.gif" alt="">
+			</div>
+		</div>
+	</div>
+
+	<div id="secondpage">
+		<iframe name="myframe" src=""></iframe>
+		<iframe name="secondframe" src=""></iframe>
+	</div>
+<script>
+	function creatprice() {
+		var html = '<div class="price" id="price"><p class="pic"><img src="images/price.png"></p><p class="txt">该功能需要为孩子订购<br><label class="blue">“智慧教育和校园18元套餐”</label><br>才能使用哦！</p><p class="btnk"><a class="btn" href="javascript:cordova.plugins.traceclass.orderTaocan();">去订购</a></p></div>';
+		$('body').append(html);
+	};
+	function removeprice() {
+		$('.price').remove();
+	};
+
+</script>
+
+<script>
+	function creatpricestudent() {
+		var html = '<div class="price" id="price_student"><p class="pic"><img src="images/price.png"></p><p class="txt">该功能需要通知家长订购<br><label class="blue">“智慧教育和校园18元套餐”</label><br>才能使用哦！</p></div>';
+		$('body').append(html);
+	};
+	function removeprice() {
+		$('.price_student').remove();
+	};
+
+</script>
+<script>
+	var player = null;
+	var pretitle = '学科资源';
+	function popframe(pretitletemp){
+		$('#secondpage iframe[name="myframe"]').css({'z-index':'1','opacity':'1'});
+		pretitle = pretitletemp;
+	};
+	function popframe2(pretitletemp){
+		$('#secondpage iframe[name="secondframe"]').css({'z-index':'2','opacity':'1'});
+		pretitle = pretitletemp;
+	};
+	setTitleSub('各科资源');
+	document.addEventListener("backbutton", gohtmlback, false);
+	function gohtmlback(){
+		if($('.price').length > 0){
+			$('.price').remove();
+			return;
+		};
+		if($('#secondpage iframe[name="secondframe"]').css('z-index') == '-1' && $('#secondpage iframe[name="myframe"]').css('z-index') == '-1'){
+			exit();
+		};
+		if(window.frames["secondframe"].document.webkitIsFullScreen){
+			window.frames["secondframe"].document.webkitExitFullscreen();
+//			window.frames["secondframe"].document.webkitCancelFullScreen();
+			return false;
+		}else if(player){
+			player.pause();
+		};
+		if($('#secondpage iframe[name="secondframe"]').css('z-index') != '-1'){
+			$('#secondpage iframe[name="secondframe"]').css({'opacity':'0'});
+			//$('#secondpage iframe[name="secondframe"]').css({'z-index':'-1'});
+			setTimeout(function(){
+				$('#secondpage iframe[name="secondframe"]').css({'z-index':'-1'});
+			},200);
+		}else if($('#secondpage iframe[name="myframe"]').css('z-index') != '-1'){
+			$('#secondpage iframe[name="myframe"]').css({'opacity':'0'});
+			//$('#secondpage iframe[name="myframe"]').css({'z-index':'-1'});
+			setTimeout(function(){
+				$('#secondpage iframe[name="myframe"]').css({'z-index':'-1'});
+			},200);
+		};
+		if($('#secondpage iframe[name="secondframe"]').css('z-index') == '-1' && $('#secondpage iframe[name="myframe"]').css('z-index') == '-1'){
+			setTitleSub('各科资源');
+		}else{
+			setTitleSub(pretitle);
+		};
+	};
+
+	var sharejson = {};
+	function getshare(){
+		if(player){
+			player.pause();
+		};
+		intentInfo(JSON.stringify(sharejson));
+	};
+
+	//获取地址栏参数
+	$.getUrlParam = function(name){
+		var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");    //正则？？？？！！！
+		var r = window.location.search.substr(1).match(reg);     // substr( ) 抽取字符    match() 匹配
+		if (r!=null) return unescape(r[2]); return null;        //unescape() 函数可对通过 escape() 编码的字符串进行解码。   
+	};
+	
+	var subject = [{"grade":"7","gradename":"一年级","kcname":"语文","subject":"18","version":28,"versionname":"人民教育出版社_新课标"}];
+	//subject = [{"grade":"1","subject":"14","urlapi":"http://182.48.117.90:88/newjspui","version":28}];
+	//subject = [{"grade":"2","subject":"14","urlapi":"http://so.gs10086edu.com/newjspui","version":28}];
+	subject = [{"grade":"2","subject":"0","urlapi":"http://218.205.37.155:808/newjspui","version":0},{"grade":"2","subject":"329","urlapi":"http://218.205.37.155:808/newjspui","version":28},{"grade":"2","subject":"14","urlapi":"http://218.205.37.155:808/newjspui","version":28},{"grade":"2","subject":"14","urlapi":"http://218.205.37.155:808/newjspui","version":28},{"grade":"2","subject":"14","urlapi":"http://218.205.37.155:808/newjspui","version":28},{"grade":"2","subject":"26","urlapi":"http://218.205.37.155:808/newjspui","version":28},{"grade":"2","subject":"19","urlapi":"http://218.205.37.155:808/newjspui","version":322}];
+	var state = 1;
+	var usertype = 'teacher';
+	var urlapi = '';
+	if($.getUrlParam('subject')){
+		subject = $.getUrlParam('subject');
+		subject=JSON.parse(subject);
+	};
+	if($.getUrlParam('state')){
+		state = $.getUrlParam('state');
+		state = parseInt(state);
+	};
+	if($.getUrlParam('usertype')){
+		usertype = $.getUrlParam('usertype');
+	};
+	var filterjson = subject[0];
+	urlapi = filterjson.urlapi;
+	filterjson = JSON.stringify(filterjson);
+	$('#small-class').attr('href','courseware.html?type=1&filterjson='+filterjson+'&urlapi='+urlapi);
+	$('#courseware-more').attr('href','courseware.html?type=5&filterjson='+filterjson+'&urlapi='+urlapi);
+	$('#material-more').attr('href','courseware.html?type=3&filterjson='+filterjson+'&urlapi='+urlapi);
+
+	var subjectarr = [];
+	subjectarr.push(subject);       //真实数据
+
+	var indexoption = {
+		"pagesize":"8",
+		"pageindex":"1",
+		"subjectgrade":subjectarr
+	};
+
+
+	$.ajax({
+		url:urlapi+'/common/dimresourcequery',
+		type:'post',
+		dataType:'json',
+		data:JSON.stringify(indexoption),
+		contentType: "application/json; charset=utf-8",
+		success: function(data){
+			if(data.code){
+				var smallclass = data.data['1'];
+				var courseware = data.data['5'];
+				var material = data.data['3'];
+				//微课程
+				var smallclasshtml = '';
+				if(smallclass){
+					for(var i=0; i<smallclass.length; i++){
+						var url = '<a class="pic" href="detailframe.html?presid='+smallclass[i].presid+'&urlapi='+urlapi+'" target="secondframe" onclick="popframe2(\'学科资源\');"><img src='+smallclass[i].presimg+' alt=""></a>';
+						if(state == 0){
+							if(usertype == 'student'){
+								url = '<a class="pic" href="javascript:creatpricestudent();"><img src='+smallclass[i].presimg+' alt=""></a>';
+							}else if(usertype == 'parents'){
+								url = '<a class="pic" href="javascript:creatprice();"><img src='+smallclass[i].presimg+' alt=""></a>';
+							};
+						};
+						if(i<4){
+							var title = encodeURI(encodeURI(smallclass[i].presname));
+							smallclasshtml += '' +
+							'<div class="classlist">'+
+							url+
+							'<p class="name nowrap"><a href="detailframe.html?presid='+smallclass[i].presid+'&urlapi='+urlapi+'" target="secondframe" onclick="popframe2(\'学科资源\');">'+smallclass[i].presname+'</a></p>'+
+							'<p class="stars"><span class="active"></span><span class="active"></span><span class="active"></span><span class="active"></span><span></span></p>'+
+							'</div>'+
+							'';
+						}
+
+					};
+				};
+				$('#smallclass').addClass('marginR').html(smallclasshtml);
+
+				//课件
+				var ulcoursewarehtml = '';
+				if(courseware){
+					for(var i=0; i<courseware.length; i++){
+						var title = encodeURI(encodeURI(courseware[i].presname));
+						var url = '<a href="detailframe.html?presid='+courseware[i].presid+'&urlapi='+urlapi+'" target="secondframe" onclick="popframe2(\'学科资源\');"><img src='+courseware[i].presimg+' alt=""></a>';
+						if(state == 0){
+							if(usertype == 'student'){
+								url = '<a class="pic" href="javascript:creatpricestudent();"><img src='+courseware[i].presimg+' alt=""></a>';
+							}else if(usertype == 'parents'){
+								url = '<a class="pic" href="javascript:creatprice();"><img src='+courseware[i].presimg+' alt=""></a>';
+							};
+						};
+						if(courseware[i].docid){
+							ulcoursewarehtml +=''+
+							'<li>'+
+							url+
+							'<p class="nowrap"><a href="detailframe.html?presid='+courseware[i].presid+'&urlapi='+urlapi+'" target="secondframe" onclick="popframe2(\'学科资源\');">'+courseware[i].presname+'</a></p>'+
+							'</li>';
+						};
+					};
+				};
+				$('#ulcourseware').html(ulcoursewarehtml);
+				$('#ulcourseware').css('width',($('#ulcourseware').find('li').length*12-2) + 'rem');
+				loaded('courseware');
+
+				//素材
+				var materialhtml = '';
+				if(material){
+					for(var i=0; i<material.length; i++){
+						if(i<4){
+							var title = encodeURI(encodeURI(material[i].presname));
+							var url = '<a class="pic" href="detailframe.html?presid='+material[i].presid+'&urlapi='+urlapi+'" target="secondframe" onclick="popframe2(\'学科资源\');"><img src='+material[i].playAddress+' alt=""></a>';
+							if(state == 0){
+								if(usertype == 'student'){
+									url = '<a class="pic" href="javascript:creatpricestudent();"><img src='+material[i].playAddress+' alt=""></a>';
+								}else if(usertype == 'parents'){
+									url = '<a class="pic" href="javascript:creatprice();"><img src='+material[i].playAddress+' alt=""></a>';
+								};
+							};
+							materialhtml += ''+
+							'<div class="classlist">'+
+							url+
+							'<p class="nowrap"><a class="name " href="detailframe.html?presid='+material[i].presid+'&urlapi='+urlapi+'" target="secondframe" onclick="popframe2(\'学科资源\');">'+material[i].presname+'</a></p>'+
+							'<p class="stars"><span class="active"></span><span class="active"></span><span class="active"></span><span class="active"></span><span></span></p>'+
+							'</div>'+
+							'';
+						}
+
+					};
+				};
+				$('#material').addClass('marginR').html(materialhtml);
+
+			}else{
+				alert('请求失败，请重试！');
+			};
+		},
+		error: function(data){}
+	});
+</script>
+</body>
+</html> 

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="css/css.css">
+	<link rel="stylesheet" href="css/mobilebone.css">
+	<link rel="stylesheet" href="js/examengine/css/examengine.css">
+	<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+	<script src="js/common.js"></script>
+	<script src="js/base.js"></script>
+	<script src="js/mobilebone.js"></script>
+	<script src="js/Intelligent.js"></script>
+	<script src="js/examengine/examengine.js"></script>
+	<!--<script src="js/IntelligentTestPaper.js"></script>-->
+	<script>
+		function getdatajson(){
+			examengine.layout.loadding('正在保存试卷...');
+			setTimeout(function(){
+				var json = examengine.getexamjson();
+				var subquestionnum = $('.subquestionnum').length;
+				json.numbers = subquestionnum;
+				examengine.layout.close();
+				alert(JSON.stringify(json));
+			},0);
+		};
+	</script>
+	<script>
+		//获取地址栏参数
+		$.getUrlParam = function(name){
+			var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");    //正则？？？？！！！
+			var r = window.location.search.substr(1).match(reg);     // substr( ) 抽取字符    match() 匹配
+			if (r!=null) return unescape(r[2]); return null;        //unescape() 函数可对通过 escape() 编码的字符串进行解码。
+		};
+//		var apiurl = 'http://103.10.86.21:70';
+		var apiurl = 'http://10.0.10.110:70';
+		var cloudurl = 'http://cloudso.iischool.com';
+//		var testurl = 'http://www.ischool100.com';
+		var testurl = 'http://10.0.10.110';
+//		var publisherid = 'cd87bc381b9e466599f9199c6d08e0cf';
+		var publisherid = '36cd5422826e4c80846b0206be2503c9';
+		var subjectid = '231e7a833ee646f5b42c53236c585769';
+		var gradejson = {
+			'一年级': '3111fe6432114c9bbe754e04151f8c7b'
+		};
+
+		var options = {};
+		if($.getUrlParam('options')){
+			options = $.getUrlParam('options');
+		};
+		if(options.apiurl){
+			apiurl = options.apiurl;
+		};
+		if(options.cloudurl){
+			cloudurl = options.cloudurl;
+		};
+		if(options.testurl){
+			testurl = options.testurl;
+		};
+		if(options.publisherid){
+			publisherid = options.publisherid;
+		};
+		if(options.gradejson){
+			gradejson = options.gradejson;
+		};
+	</script>
+</head>
+<body>
+<div class="page out" id="pageHome" style="background: #fff; padding-bottom: 5rem;">
+	<div class="testmask"></div>
+	<div id="home">
+		<div class="memu-wrap">
+			<ul class="memu clear">
+				<li id="memu-class"><label class="nowrap">年级</label></li>
+				<!--<li id="memu-subject"><label class="nowrap" data-subject="">学科</label></li>-->
+				<li id="memu-edition"><label class="nowrap">版本</label></li>
+			</ul>
+			<div class="memu-con pauto">
+				<ul id="gradeid">
+					<li>一年级</li>
+				</ul>
+			</div>
+			<!--<div class="memu-con pauto">-->
+			<!--&lt;!&ndash;<p  class="tip">请先选择年级</p>&ndash;&gt;-->
+			<!--<ul id="subjectid">-->
+			<!--<li>语文</li>-->
+			<!--</ul>-->
+			<!--</div>-->
+			<div class="memu-con pauto" >
+				<!--<p class="tip">请先选择年级和学科</p>-->
+				<ul id="versionid">
+					<li>人民教育出版社_新课标</li>
+					<li>江苏教育出版社</li>
+					<li>河北教育出版社</li>
+					<li>北京师范大学出版社</li>
+					<li>语文出版社A</li>
+					<li>语文出版社s</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="list">
+		<ul class="yiji">
+			<!--<li>-->
+			<!--<a href="#" class="inactive">第一单元第一节认识生物</a>-->
+			<!--<ul style="display: none">-->
+			<!--<li>-->
+			<!--<a class="inactive" href="#"><i></i>第一节生物与环境组成生态系统</a>-->
+			<!--<ul>-->
+			<!--<li class="three"><a class="pitch" href="#"><i></i>第一节生物与环境组成生态系统</a></li>-->
+			<!--<li class="three"><a class="pitch" href="#"><i></i>第一节生物与环境组成生态系统</a></li>-->
+			<!--</ul>-->
+			<!--</li>-->
+			<!--</ul>-->
+			<!--</li>-->
+		</ul>
+	</div>
+	<div class="type-quantity" id="questiontype">
+		<p>
+			<label onclick="/*getexampaper();*/dohomework();">试题类型及数量</label>
+			<a class="unfold" href="javascript:;"></a>
+		</p>
+		<ul>
+			<!--<li>-->
+			<!--<label>简答题</label>-->
+			<!--<span class="subtract">-</span>-->
+			<!--<font>0</font>-->
+			<!--<span class="plus">+</span>-->
+			<!--</li>-->
+		</ul>
+	</div>
+</div>
+
+<div class="page out" id="pageSecond">
+	<div id="testpaper" class="paperbody" style="overflow: auto; position: relative; padding: 1rem; width: 34rem; height: 100%;">
+
+	</div>
+	<div style="position: relative; height: 5rem;"></div>
+	<script>
+		var homeworkjson = {"id":"","title":"2017年1月12日数学随堂练习","desc":"","type":"","examparts":[{"title":"","examsections":[{"title":"一、填空题","index":0,"questions":[{"id":"1123005","innerid":"","index":1,"typeid":"e487b4e564cf4589849ada35a453141f","typename":"填空题","content":"<ruby style=\"ruby-align:center\">看<rp>(</rp><rt style=\"font-size:10.0pt;font-family: 黑体;layout-grid-mode:line\">kàn</rt><rp>)</rp></ruby><ruby style=\"ruby-align:center\">图<rp>(</rp><rt style=\"font-size:10.0pt;font-family:黑体;layout-grid-mode:line\">tú</rt><rp>)</rp></ruby><ruby style=\"ruby-align:center\">填<rp>(</rp><rt style=\"font-size:10.0pt;font-family: 黑体;layout-grid-mode:line\">tián</rt><rp>)</rp></ruby><ruby style=\"ruby-align:center\">上<rp>(</rp><rt style=\"font-size:10.0pt;font-family:黑体;layout-grid-mode:line\">shàng</rt><rp>)</rp></ruby><ruby style=\"ruby-align:center\">前<rp>(</rp><rt style=\"font-size:10.0pt;font-family: 黑体;layout-grid-mode:line\">qián</rt><rp>)</rp></ruby><ruby style=\"ruby-align:center\">和<rp>(</rp><rt style=\"font-size:10.0pt;font-family:黑体;layout-grid-mode:line\">hé</rt><rp>)</rp></ruby><ruby style=\"ruby-align:center\">后<rp>(</rp><rt style=\"font-size:10.0pt;font-family: 黑体;layout-grid-mode:line\">hòu</rt><rp>)</rp></ruby>。 <br>  <br><img style=\"vertical-align:middle\" src=\"data:image/gif;base64,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\" align=\"absmiddle\"><br><br>","subquestions":[{"id":"1123005","innerid":"","index":1,"typeid":"e487b4e564cf4589849ada35a453141f","typename":"","isobjective":false,"content":"小冬跑在最（　　）面。<br><br>","score":"1","selectitems":[],"answer":"前","diff":"3","analysis":"","extend":{"knowledges":[{"id":"119210","name":"相对位置（上下、左右、前后）"}],"testingpoints":[],"chapters":[{"id":"96871","name":"1.上、下、前后"}],"abilitytest":[],"dispower":0,"totaltime ":0}},{"id":"1123005","innerid":"","index":2,"typeid":"e487b4e564cf4589849ada35a453141f","typename":"","isobjective":false,"content":"小利跑在最（　　）面。<br><br>","score":"1","selectitems":[],"answer":"后","diff":"3","analysis":"","extend":{"knowledges":[{"id":"119210","name":"相对位置（上下、左右、前后）"}],"testingpoints":[],"chapters":[{"id":"96871","name":"1.上、下、前后"}],"abilitytest":[],"dispower":0,"totaltime ":0}},{"id":"1123005","innerid":"","index":3,"typeid":"e487b4e564cf4589849ada35a453141f","typename":"","isobjective":false,"content":"小冬在小青的（　　）面。<br><br>","score":"1","selectitems":[],"answer":"前","diff":"3","analysis":"","extend":{"knowledges":[{"id":"119210","name":"相对位置（上下、左右、前后）"}],"testingpoints":[],"chapters":[{"id":"96871","name":"1.上、下、前后"}],"abilitytest":[],"dispower":0,"totaltime ":0}},{"id":"1123005","innerid":"","index":4,"typeid":"e487b4e564cf4589849ada35a453141f","typename":"","isobjective":false,"content":"小青在小利的（　　）面。","score":"1","selectitems":[],"answer":"前","diff":"3","analysis":"","extend":{"knowledges":[{"id":"119210","name":"相对位置（上下、左右、前后）"}],"testingpoints":[],"chapters":[{"id":"96871","name":"1.上、下、前后"}],"abilitytest":[],"dispower":0,"totaltime ":0}}],"score":4,"answer":"","diff":0,"analysis":"","extend":{}}]},{"title":"二、单选题","index":0,"questions":[{"id":"1123017","innerid":"","index":2,"typeid":"7f88297d5a78455d8973aba19f38ccf8","typename":"单选题","content":"","subquestions":[{"id":"1123017","innerid":"","index":5,"typeid":"7f88297d5a78455d8973aba19f38ccf8","typename":"","isobjective":true,"content":"请仔细想一想下面的星星挡住了几？下列四个选项正确的是(&nbsp;&nbsp;&nbsp; ) <br><img style=\"vertical-align:middle\" src=\"data:image/gif;base64,R0lGODdhrQBJAHcAACH+GlNvZnR3YXJlOiBNaWNyb3NvZnQgT2ZmaWNlACwAAAAArQBJAIcAAAAuLi47OzsxMTE4ODg/Pz88PDwmJiYsLCwtLS05OTknJycyMjIhISE9PT0+Pj4zMzMiIiIjIyMlJSUwMDAgICArKys2NjYkJCQ3NzcpKSkoKCgqKio1NTUvLy80NDQ6OjpbW1tdXV1SUlJfX19MTExFRUVAQEBCQkJcXFxZWVlKSkpeXl5TU1NQUFBaWlpGRkZDQ0NYWFhNTU1HR0dUVFRPT09XV1dJSUlBQUFEREROTk5RUVFVVVVWVlZLS0tISEh7e3t9fX1xcXFubm5kZGR4eHhvb29wcHBgYGBsbGx0dHR/f39oaGhtbW1nZ2dycnJlZWV1dXVmZmZqamp5eXl3d3dra2tjY2NpaWl+fn5zc3NiYmKUlJSbm5uKioqFhYWVlZWEhISYmJiPj4+NjY2dnZ2MjIyDg4OZmZmcnJyBgYGTk5OGhoaWlpaAgICQkJCfn5+RkZGenp6SkpKHh4eOjo6JiYmXl5eIiIiampq3t7eurq6+vr6lpaW5ubm/v7+tra28vLyzs7O0tLSsrKy9vb2mpqajo6O6urqnp6e4uLirq6uysrK2trapqamwsLCgoKChoaGkpKS7u7u1tbWxsbGvr6+oqKiqqqrd3d3CwsLU1NTKysrJycnW1tbLy8vPz8/FxcXe3t7Y2NjX19fQ0NDNzc3T09PR0dHc3NzAwMDb29vMzMzIyMjHx8fGxsbBwcHV1dXZ2dna2trDw8POzs7f39/S0tLExMTj4+Po6Ojn5+fl5eXm5ubp6enh4eHk5OTr6+vg4OD///8BAgMBAgMBAgMBAgMBAgMBAgMBAgMBAgMBAgMBAgMBAgMBAgMBAgMBAgMBAgMBAgMBAgMBAgMBAgMBAgMBAgMBAgMBAgMBAgMBAgMBAgMBAgMBAgMBAgMBAgMBAgMBAgMBAgMBAgMBAgMBAgMBAgMBAgMBAgMBAgMBAgMBAgMBAgMBAgMBAgMBAgMBAgMBAgMBAgMBAgMBAgMBAgMBAgMBAgMBAgMBAgMBAgMBAgMBAgMI/wCJCRxIsKDBgwgTKlzIsKHDhxAjSpxIsaLFixgzatyoUdMejgX5gBxJsqTDICG6BBACso8ALyIGmKS4iUABPzNzHuQ0olMnTyQMcDzgs9OfA590PkTgqdMQBEqjJmha9IsCjYD+gCoKKEGoqAsXiNraKRADsDOJBOo0ilRRQQ0yEi2li2ynIqbQHiwxqNOpopsQoNI70kEnUrtSFQUFKq7FB4RO7VJltxNUwgQhdEq1K1TRThA+Ytbop9MuXmTJ8oFgMQKoXrsqg9okYTQxE6tMx7YrKoJtjBM6ldrF6vNWUEYKVARj2tfnTowDJRjdQPguUseLFpr+uyKFTqx2tf/yeZxxJwYnKESIUKGBcoZhoO8yVZk8ihQQJDTYb0GpmE6/xGacT2MQoMIRQxzhEAADAcCgQA9CFCFESBjSCTC/PMdYanaB4sp7Cg3AWIYbLmYieaAkccFDDko04i7QPQfdK7DscQgiYKyAQSIJPehgixBOuNCPErFQAXShtFJfiTGiCIsiCSkhQAuMmQKdbANmV8GCQD5kwYioNHkiliseBCSDXRKTZo9EOuRCAy8sIuaV5NEpYyeLrHKQBCcw0pRsHQb62ZYNtclQIxIsAIN5JZrXJJPQLeGIQWumuaZClx6UQAyuoDhnnZ6aCAoTBZ0wARn10enogCbGIkOhhib/tAABZWyY3ZxY1omCmUJWKiSbCw3RVyehyBLMLrOI2eGdRXmSwUCGxOcTJ7r4AqOjqS5W2QKwqvnrQKQ0Ucifp5Dyl52f3umIE7wW5CuXC30H3Si90OIWs1dm24kKpAzUgijk9TLKLH/diq9xZjzCEJGZChQAWbDtMl+dqx7cyQwIvUtQw5R+SxApGvSR7536PmfEYARFwIitFuMLiiNedOttQk/UQjKuFj/xVbsb9+pxxwydocErjFq8rE+QkHFQBWic2LK2nbQA64+xFrSBIDKWzGwhQQDbs7s/g92QLRKkwWrWMVYWxi0IQUCDcdlVrKFPhExN9c98bMBIlqkd/7xVDZj6LLbMDSUAg5wuZ+kTLFAkdAgEiKQ9t9NFYSARxwKVokEKr6SrtU8rBN7g3aNzGXZBgFBgw9NO76pQFA8coqHWjAEeEeYDqcHBGp4sSTmdbIzCpo+kz7xw8Q4d6TeztivERiGsP9fF5acTFIkG6LY8mySi96jTkafgIrm25V3ZBkNsyJnho30DqtMMoFhZNLN2gZix1zNVF0opN8dt3iR/WEgX3GAaUTWKfKC4QU460AnUlCdXnnIdpu6nEwYQixZyQ1F9/CCahHjhDQVMm76yM4KcbABASgIVyY5jgu4wpCekGIWdtpKLBvynYhxcSCNYYJqKbaUIIhCVT/+kNhMOmOYU/oMOwDQIOhcypBOyENBiYBGXIkRACn0DAyUYogBQ7AIXfevEC8ZQiQiwAGvkeUUIcpIB09Bnfh7AwQcM4b8cOHEhTJDMuRgDCMsRZAISQEETYMCBhkigE8LghQhboAOCnKABH3jBEAg1EzjkYhfOYRIFLCGQDESACBv6g0zumJAjSawoU6BARrywhlCIxyevwIAhXFgAVOzCFuTxBLcQ0jhSKmQDjjDFLv6ihBhsBAGg0IUsQIEIx7jQlDDqhCsaMClfUiQBPiGDBHamESpUohOXWEAaSCkDnyhmBw+wpkUq8YEMuIEkOLgAD2phTQJ4oQoTiIM698n/T4IUYpb9DKhAB0rQghr0oAhNqEIXytCG9lMJLjBJBrq2TwLwyKEFMYAcXHGCZ3FkCEXoxBwoecc22AAUdHAmRq1Ah6IMQgMc6cFnbPAEUqKgWQM4A0aJ8YDnxKI2GZGp5K6ABSdKoFNkeUUB6uDQAWwCFLzQxGdAUAiMLOpYTeJDFrqjiDgkM5o+0YIEFZoCttzyOUCtSAJigYtdfOI5JrDFb4giTFZUZgRQUigj9tCKXfQCbqKYgEWMyAsBOcoTHBiGbaDQCWuN7zyzUCgGQIEYTqRqEh6ARCyIwbaHkEIRXhyGwTrRBwRUghar2AQ9ozKA3u0iGCrsxCYsUInV/xq0J5p4JavaUAYmpOAFNiDAAkSykCvIxzN3soMZ2vCEHshAABOIWU6+Y4tdcIJZdFBDG7CgAhsYYAJoCOgNYNGJYfw1ep1g10IMIB/WkcUMG8iJJeIH1ps9pw5N8B7VgqQTD1TAgvZFF6M8gQiE4KACCTiCCLE1N0eRlCMjaMAFOHQ0uH0mvmYK0n5xR0GF4EACKiDa/LLG4ONg4iAWWAHiRgapFW7FN1NjSCAmQING3Ipls2MSKHKBMaCd6cemw1wMfJCLBRvtgD75AUGuoAM5fGaPSSQxecBgN47J4AeZWEzBtKcsJfBsQkA+3n4RUoA/kQIYEqNFunBVtFcAYf8gWwDEhoYhsV88UFUua0y3xmwQQPjEFsMI0G5C1agKB4BngzNe4Kr3AfLgghW2SOGaGWUwAhBEBIkgCytwMR4RhkpZMdpqoUb3LUpQwiet2PR4cCxEBndiBLlA9Ma+tmgON+AQN3ax3BhTwoIcwAoZfJSwoXYHijRsAWdAYOIE1UtZQyjRGUNeKWHBat/ZilF4QEgFaiDlSWvL2GFrABlUdW20Se4SHQQarUtnOoZ84AQAS9UIi8KIRiAkExG4xORiy6rmSeh0RDhAafDMuk2YAX+KJt6/G3KIBUTBFcH+3U9woBAG4ODUFPucTwp5u+oRgxUEyIEjsvU5AeDvbmH/hpdD/NCATrmXPI1UiCwuEAIBt4wIHYcILQzAw7MdTAVeQ3mEOLzuhhxpWYBCl6idV+RzeYrkoKjEwvmLPp84nXVwGJ63isdhhnmcIOALk9E+o7SFsMESISxZffLAImk7zyew9fmn+cDJaE9QzEQviAZAsb81oy2HCsEDG0I4Jin3Gu9VS0gkEtFAjdvFEOP0nt1z0tNHn61zdzpEug+CCCb0kM3mPnxJCDGGvjKLKqECROQlD22T8JAWt7gTHBywAvJWBhGbN0gifOBFJVXGEwLowFpUKPqSKMEUJHrOIgbggdL0TRB6EKghXFmxMrwnBw1YA+Y7EVGGGHEyt4KFxR+z0IAVeGFDYGBqTiTgRVzaRRF+xDcPVkEWItg7oD3woti3YgQME2QFFdAedcMQCNAHu2BndRIB1TQQkGABAcgFSmFKwOAovWEQN9AAAZgJA1UBoHAsKRQBh5ARjNADfaUYoGAFKrVYoBBFsgAdXNAfDuUDktAJalYJfqQRRGELuEQB9tMdQ9AJnBAKoGAAQLdTDSAKsLADu7QRcdAGyPFgLtQAlwAKawCFDtUDSVASJsVPTTAC6rdTYBiGYjiGZFiGCBEQADs=\" align=\"absmiddle\">","score":"1","selectitems":[[{"itemname":"A","content":"（1）2&nbsp; 3&nbsp; 5&nbsp; （2）3&nbsp; 4&nbsp; 1","issure":false},{"itemname":"B","content":"（1）2&nbsp; 5&nbsp; 3&nbsp; （2）4&nbsp; 3&nbsp; 1","issure":false},{"itemname":"C","content":"（1）2&nbsp; 3&nbsp; 5&nbsp; （2）4&nbsp; 1&nbsp; 3","issure":false},{"itemname":"D","content":"（1）2&nbsp; 3&nbsp; 5&nbsp; （2）4&nbsp; 3&nbsp; 1","issure":false}]],"answer":"C","diff":"1","analysis":"","extend":{"knowledges":[{"id":"118840","name":"10以内数的认识"}],"testingpoints":[],"chapters":[{"id":"96874","name":"1  1～5的认识"}],"abilitytest":[],"dispower":0,"totaltime ":0}}],"score":1,"answer":"","diff":0,"analysis":"","extend":{}},{"id":"1123020","innerid":"","index":3,"typeid":"7f88297d5a78455d8973aba19f38ccf8","typename":"单选题","content":"","subquestions":[{"id":"1123020","innerid":"","index":6,"typeid":"7f88297d5a78455d8973aba19f38ccf8","typename":"","isobjective":true,"content":"请比较下列每两个叶子上的数哪个最大？下列四个选项正确的是(&nbsp;&nbsp;&nbsp; ) <br><img style=\"vertical-align:middle\" src=\"data:image/gif;base64,R0lGODdh3AB4AHcAACH+GlNvZnR3YXJlOiBNaWNyb3NvZnQgT2ZmaWNlACwAAAAA3AB4AIAAAAD///8C/4yPqcvtD6OctNqLM0g7+9YZ4UdSIzCWX5paaIdeLSdv76zmyh3ELoRz+F4kWM+3QB6VO+KBSRvqpsKnLajkgZwibMy4si6boRPoiWY6y9R2sttt2dCiM33M+bI1PYT5zlXHcDIn2OdHF+TGd9hoeHiFOJi392imKAQl+UfztrOZqbnooTXpOIODCrqFaYpZ+HjXOQuX6ThadPSg5vnpW/d6K9Fau2tqPIybQ6wLdFyVXMEsnCQnKhkxrYyc7WzdHW0yBRWYu22uUt68/EPF4n6Ozo6tox07OC2noR8f5jzxrt0zcaEA/gKojlo/aQUN0gJS6iFBfMxUmYgoayGGVP8JB96zpU7bNzIVPdqqJlHjwXVNHK60U4zlRys3OHZMmZGVqJr2tvHcVRLmMFQ/hYIkpqhizX8qjQIN1yvbNXpR8cWkyKMowqdNt2yFmFUr0Jszr1qV2a2nn1ZTNbbN80PtWogmSS6NJjcOuK456TJUOFTqS6x3weVFW9eti55gNgYVs/gv4Gow8vE169elvTVK9daYONnu5sOkGBfmVpYyWZSkXfZt05qRz8GwX9dLvCz2PmWpeBPCuCKpbppvz4ktIrze6ar7kA4fXjvd29WuvbUufh3W5SrFUXsNHhruEpHU15aniXm7+PNxureXNuTwZlKS1W+sLxCqPO6kG3v/t1+dHe6xph99gl2HGHMA7vUUgt3FFlIZleUSCWYDLqgJEl+Eh0yFaLEHFhEe9tFfIzwdtyBCJ3KhnQyGbIgibPqUOFKKMn5CY0sAtvgXdDbex+EZPtYmX5A/juJfXEciUuSQSzLU5JPA0OeklMlEKSWP4lRppTdUWqmlQ1x2KeSXWRrpyZhkvoHlkmGKuWY8b+L15JxXxmkcmpOoaSCCeuLZjp98uphaOIN2WYlsh7oGoW2AKpqOoyolyciiZ/7pio0jBmdpnZiWqSk8j7oxZKejnopqqqquymqrrr4Ka6yyzkprrbbeimuuuu7Ka6++/gpssMIOS2yxxh6LbLLK/y7LbLPOPgtttNJOq6KkiqVXp4QYzmXmhQlie9SnfEXi7bfmngWiK8BBBkdSLE1VoaklaHtNFm9OyK5dhTJ4hTWJYgGITGtYe+QeIZloGycRatfmQRIGFFUpiXYi72cAJxLIxehZAupi7p6iIDV/CFfupGT5Z9FgIzfUozFs4ZZvmmRSKt5/+9ppJ8wx14VUgAUHxhROQtMGDYPfmRe0zT9a5rKOSodctHRk3IaocjVGih/WBGf98zhDy+az00nreVPFhOr02L5T6wwze/wM1ZHZZ4tWIHlx70ZRgUaKSI7cc5tXXsqGqWH3eyTpHSQhlPSrqR59D9gbv79V9jG8m//iZpqAoU62nFNUZabjx2Od+2LpXBPdVT7rztJY4WN/3cx0P8V4dO32Qd7W7LTrG7XYhK2+p2NA3565Qf2xRZRUJ8L59+uTCs889Fx9LhhBasWH+EJyuTcxfPptP5/agHO/XeGQb70x+XhExuhFnZ/k1mgXQqy8txv65jupqRt39SLdKwe/G6VuTJZD0uRKlr+zzAt42nvfZ6qHHAaKK4Goy8/mpDa9/YwlXTXrnccQKCcJOq+DH5wft+BmN9xRL0UaSmEK61Mi0LAve2sKH5DCdsOm+SNtgAqKg2h4upY4qDOPelDOrANEuDlNCjlqIUqKmLx2TRAS63hcbsKShSmNwmJFIgQTFzWkxRfxrYv6y9GxjsgdME2QZsFi453O1LBiuTEtaoyjHNc4xdnYkVhoDB4czYSsPrKpjn1KliBxdKki5RFWc/SSp2Lot6WFcZH6y+MhbdVIOnZNUMbK5D8iuUR0gJBVYPQH6frBiUIK63+EAiXFsObK8onvk6Ea5QlXSUlwjUtUfORlCQoAADs=\" align=\"absmiddle\">","score":"1","selectitems":[[{"itemname":"A","content":"5&nbsp; 3&nbsp; 4&nbsp; 5","issure":false},{"itemname":"B","content":"4&nbsp; 3&nbsp; 4&nbsp; 5","issure":false},{"itemname":"C","content":"5&nbsp; 3&nbsp; 2&nbsp; 5","issure":false},{"itemname":"D","content":"5&nbsp; 3&nbsp; 4&nbsp; 3","issure":false}]],"answer":"A","diff":"1","analysis":"","extend":{"knowledges":[{"id":"118840","name":"10以内数的认识"}],"testingpoints":[],"chapters":[{"id":"96875","name":"2  比大小"}],"abilitytest":[],"dispower":0,"totaltime ":0}}],"score":1,"answer":"","diff":0,"analysis":"","extend":{}},{"id":"1123027","innerid":"","index":4,"typeid":"7f88297d5a78455d8973aba19f38ccf8","typename":"单选题","content":"","subquestions":[{"id":"1123027","innerid":"","index":7,"typeid":"7f88297d5a78455d8973aba19f38ccf8","typename":"","isobjective":true,"content":"看图找出填入括号的数字正确的一项是(&nbsp;&nbsp;&nbsp; )<br><img style=\"vertical-align:middle\" src=\"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/wAALCABMARUBAREA/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/9oACAEBAAA/APfqo6hrOl6SYhqWpWdkZs+WLmdY9+MZxuIzjI6eorkNY+LGiWDzQ2EU2ozIp2umEhZgxBXeee2dwUggjBNYR+NNxtGPDcRbuDqBx/6KrV0f4vaXeSwQanYXFhJKxUyq4lhj9NzfK3P+5gZ5OMkdlL4j0OHyfN1nTo/PCmHddIPM3AFdvPOQQRjrkVoo6SxrJGyujAMrKcgg9CDTqK4vXvifoGiX8mnp59/dx7llW2ClYmHZmJA65B27iCDkA1zCfGm5MiiTw3EqZG4rqJJA74HlDP51tD4w+H9jN9j1MbWAZTHHlQTgN9/oTxxzkjOMio7X4w6NI6Ld2F9BufBdAsiIv948hvXgKTXcaVrGna5ZC80y8huoCcFo2yVbAO1h1VgCMqcEZ5FXaKrahqFppVhNfX9wlvbQjLyOcAc4H1JJAAHJJAFeYa98YH3LH4dskIDndcX6HDKMgbY1YHng5YgjoVz05S4+Ivi+a4klj1t4EdiRFHbQlUHoNyE4+pJq1ZfFHxXZwuj3VreuzAh7u2Hyj0AjKfrmu48OfFfStS2QayqaVdEcyPJm3JH/AE0ONp46MAOQASa9Bqlq2ojSdLnvzaXV2IQGMNqgeRhkA7VJGcdfoDXkN58YNelvJW0620xLMufJ8+F3dkz8pJWQDJGOg6+vWsGHx34rga5aLWpV86VpACokEYJJ2r5m7AGSB7ADtVjTfiN4p0/Uri7kv1v0nj2tb3K/IrhAquu3G3BGSowGy3QkMO58N/FawfSA/iaeGzu0IT9ykku/AUFjtTgs24gDOBgfX0O1uYry0huoCxhmjWRCylSVIyMggEcHoRmpaK8s+Jeg6o2qW93b6lqMml6lIlpdWUZmmWLAJLiFMhlKqcjA+YD+8SuBbfCKyu7U3UerwxwLnd9o0doWXHXIdwR68jp9a8/+x2DlmhgheEsfLcwhS6Z+VsdsjBx2zitax1vVdNEK2Op3lvHC4dIop2WPIxjKA7SOAMEEY4r6A8Has2ueENL1CWUyzvCEnkKhd0qfJIcDAxvVugrgfiT8QNYsNUl0HRomtUU+VcXzD5ixRXIjPbCuuT1y4+58pby2Q3M9693MHlEmVe6lYu8kgC/KWPJwpXOT/EtR20xmV9wAKyMvHcAkA/pU1FbvhHUp7C8l06CNJVvDvjRgOGUEso6feXcck4UgnBzg9T4S+Iml6Bqd9p17YPY2V1fylZU+bypFUJgxqvAbymYkE4ZumMsPWdM1Oz1jTob/AE+dZ7WYEpIARnBwQQeQQQQQeQRiqPiyfWLbwvfS6DF5mpKg8obQxALAMwU9WC7iBzkgDB6H5mW3uEBt4YpTOsjecjDDRBMtIGB5BVVbOeeD3qxVTc5gjlcESG2l3AjuImkHHs6Kfwq3XQ+EPFd54X1iArc7NLnnT7bC+Nm0/KZOhKlQckjqFAOcDH0TRXnXxR0q/wBbvfDWmxXCW1jcXMyyTOqsEnERaLjIY5USrwcc884FcZD8MNe+16alw0fkXIDXjxSLm0wSWUZ+8SuACAw3ZzhcVmXvgnXtPt7Pz4Aby4uzbJawjzDINpPmBwcKuQPvYOCSduDXOwyiaJZACAegOP6U+vVPhL4plkZ/DF48knlRmaxkdhhYxgGH1+XIK9eCRwFFeqsAylTnBGODivEfEHg3RIvibp+nLJO1nIrXN6bl3cK0riJEV1YSFmkkQtuORuViSCRW/Z+DfA09oJZ7ZYJFlkglQ6pPhZY2KOoJcEgMODgZBBwM15vq+hyab4hurC0Q3KSzPJaJbSNclojkqF5LEhQcg85BPIway722lCSW8kciSleFMZLHPAO3qwJH0PuK+lvC081x4U0qS4sTYzm1jElr5PlCJgoBUJ/CARwPTFa1FchHqEet+LlvtNeC9sLK3+y/aYJgVDS/vJORnfgRW2MYx5jcnGBtzwRXVvLbzxrJDKhSRGGQykYII9CK8e8ReDTH4wex0LT5prSKyilaBJufMZpPkMj52bljJ3NkZAHG8VyWrQJpmo3duZA0UIRw4z914lkA5AJwHxnAzjOFzge/+AtOOl+BNHt3EiyNbieRJFwyPKTIy47YZyPXitXUtF0zWEVdRsLe52AhGljBZAcZ2nqM4HT0FcbY+GdDj1TVLSXS4pIY9V/0ZQpkEW6zhLbsZ2g4P3uM7D121pW/grw3DaQQPomnXBiQL5s9pEzuQOWY7eWPUn1ryi88J7vGeraLpSTfZbIxiNN6F2LoHWNS5AA2+Z8x3YERzuJAOVrWkyaJqMdpKTve3WcoZRIYiXdChcKoYgxnkKBzjnG4yeHNPt9U1r7NdQSXCiFikKWrz7mJC7mVFOFAJBJxgspByMjvbjwZaWXhvxDeeIdILyW8IuIryOVYZZphGQ5XyywRCwVvmGNzMWUhQa5HwB8QNT8LSLpdxafa9PlnGyCJmeZGc/8ALMEk8kE7DyWJwRnn6HrjvEAl1zXYLGxijkTTnAvjcpmErIF3RAc7nMTN2wN4yeajvPAHhe+dWl0lI9owFt5XgUdB0jYDtXmN94NXRdZ1yL/R4xaxNcaZJey7Iijgkkln2uRIUhw7bf3u5lIwpwtUls5tbv5NODfYWlzAWjKbhtXcQp+6C24gcYBGABgCm9tLfL9jgG6e5IgiXP3nc7VH4kivqyiuc8cAr4XmnSxlu5bWSO6jWMoNjxMJFZi5GFyuGIycE4FUNT1yw0aLUmfW4mnicTTxSSoz2yFRgBFGQMAHkE/MTmtSwa7likF0CAfukjaffpXhVz4cu5NYv/7I8Oapb2IkIgSS2m/1a4UEM4yd2CwXqN2O1QWOg6xqN+9jbaTfG5RVZ0kt3j2BiQpYsAADg4z6H0Ndn4O8D+JNL8baTf3umGK0t3kaSXz4mABhkUcBiTywHSvZ64bw7p8wvNZ1CLUrlL+4vrm3uhK3m7ESZ/JChvuFY2BUfdxJkqwK46GztI7G2EMWSN7yMzYy7uxZ2OMDJZieABzwBXNeN47bT7J9eOhRanLDF5Mwad4yICwLfdVgU7tnA27gcgkHl/A3h2/8R+JbDxDfQPFpGm28MVolx85l8uPEeGwu8BmaQyY+8VA6Hb7LRRXFeCna30mbRrgst5plxLC8T5GIzIxiKg8+WUwFPTCkDpXS1R1YWLWQTULp7eFnVQyXTwMWJwFDIwJJPGAea4Lw38N7y58VNreqKsemC9mvILeUv50uZGeIuDgqBlWIY7sjDAc163RXm2kahZ/D7QZNO1y1uLCC1uJdl2lo8kM8bSNskLRBlRmGPkJBHYAYrZtvG/hq4gEra7pcOWYBZL6LOASAfvcZGDg8jPIByKI73w/dHVtW0/WbXf8AZkW7urSeOTyUTeysR8wBAZ+oOce1eaXfhTxX4p1u41GCxM1vPcPHFd3NwiKsaOyqGXO9CMcrsBDFsgHNeoeDfAtl4SjeYzfbNSlBSS6KbAEyCEVcnaOATyST1OAAOrrLsfDWg6Xci50/RNNtJwColt7VI2weoyADWpWDfaPfwXtzqGizwCW5+ee1ugfLlkCKiuHGWQhVUEYYEKMBSS1Ziatqdgby71uwuLW0UgLJJJaxwRDOB8xmLFiWxk7QcLhVOc4/iDxdYax4H1QaVHJe3E8Ulq9oBiaAsTGTJGMuoHJxjOB+NcJo/g2WSFZ9Wa7mhkC7V03bDKhyQdyXCcj7vOVPXg8V6r4Z8IeEoEttX0m2aZwMJPNJIx3LlSSjHCsCDkbRgg8DFdfRUc8EVzbyQTxJLDKpSSORQyupGCCDwQR2rkdQ+HtndxttunmbcnlpqIa4iRFcuEIVkaRdxyBIzheQAASDysXjfxAnh+11+/n0610u5jnCN/ZkjyieIvmIx/aONyxuQ2cZUg7eCd+8/tKGWCTxXcS22lyskayabI8IRzjH2grl4wTkZWQoOjE5BrtrSytLCIxWdrDbRli5SGMICx6nA7n1qeisTUvC9lf3Ul5DPd6feSmPzbixm8tpQhBAcHKt0AyRnb8uccVwn9u+Lo9U1eG0TSmgiu5EiPkySFsPt+ZjMFHyjohbBG0hDkChc+Nr+71e8sNU0UCDyi0Vs14RG8kfmnax2xkpIsbEh9y4AyMNivVdCNq2g2ElkLf7NLAksZtoDDGwYbtyxnlQc5weRnmtCiisnWNH0i6DahfokEkER3XgfymWNckq78boxkko2UPUg15daazqel3Sy6dqOt3cEjO7xanHHcK4LEKQxkjeL5ADtCfKWIO7HEk2qald63/asizwTxrtt/LvIJRADkHy/MsyUyCQSDlhgEkAY7/wVq02p6Ckd/dG41O2Oy6ZgoLEklWAVVG0jpgcYK5YqTXSUUUyWWOCF5ppFjijUs7ucBQOSST0FeB3Gpm9ltdd1K2Sb7SXmSV8yyWkbeZMEB25KqCFGMfTtW7o3iO/0IWerRW16vhyeaOOeWcCO3VJX/1oVyGTBk3bgu18kEnhl9ioooorlviAsc/hlbF/v3d5bxoueTtlWRse4RHP4VylnL5mp3ljPZMotylwkskxlDl2fBXPK429OMEkAYAJqXlwdCv1dZpzZlftE6SyNMBErqJmUt8ysqMGABIO1gEB5PqGj6VDoumrYwSyyoJJZd8pBYtJI0jdAB1Y446Vfoorm/Ht7JZeC9RaF40klVYMu23CuwVypBHzBCzD3Ga828WRXc9n4Z8HujJKmkxmY7flNzNiFTg4+YES5Jx98+9elWP2kahe+HNbmXUIZ7bzbaWSIL50P+rkjcDgsvyFm4DedwqgYqTwvdXKpe6LfyGS60qUQrK8hd7iAqGilYkDLEZVj0Lxvj0G/RXP+L9ak0jRvKs5FXVL1vs1kDyQ56yYwQQi7nORg7cdxXDzxXOm3Nl9ks7m8tkjk81Y5U3mUkEOxdl3E7pSxySSwJz1HPrpniLUNSHiCw0W+FhdPFeIVlgEjx7YMfL5mclElGP9vHc12/wyvryC1k0S9fMKp9p0zfJvcWxcjyyRnOwGPnJ4kAHAr0GiiuA8c609xfpodtIRDCFmvWU9WzmOLI6YxvYcHBj6qxFcBeG50ySO7aeebTopJJrlERWlVCrk7SzKCoJXC9eOvGK7Kbw9cxQq6WepTMSMxpHbgj67pwP1rM8HyvpXxNuY/s13Al1iznjmZFPm+SJVdgjOpAVVVfm6yt0yQfX6KK5r4gTvD4G1REC5ukWzJPO0TOsRb3wHJx7V51K0UVu7SlFhRCXLfdCgc59sVdGyf4L3NvfLcxR2jbIvtUJTzESYNAAHA3KV8tcng8iuq+HevjUtOvNImuWuLzSJFheRzlniYboyTjGQMoeST5e4/ers6KKK4nxfJ9p8UaRaCRjHaQTXcka9FdtscTH6qbgAex9KwtWjs7aW01W5hgZLaePzzKow0JJRtxPVVEjOB6qKm1fQtK0/xKsFtp1rDDqenyLNHFCqKRG6g8ADO4T4P+4tdb4Jnkn8IWKysWe28yz3k5LiGRogx92CZPua6CiivNfi/PHeaVa6JC4N7Izz7S3CJ5bxgtjkZL8cc7G/u1yusa3da54ltNal0+C2e3e0zElyZNywzGU/MUXBO4jGPxrovE/jfTdTs7Jkt9QtruzmW8W4izui2EB1j2ht7OrsgVwEILFiMYrq/D8UcfiC9kOr3Gp3E1jbM0kqRgLEHmMZBjVVO4s+MA/c5PIrp6K8817Zqvjt5XDNFo0CwQ5AAWeUb5SO5/dmEZ6fM3vRLNHAEMjbQ8iRLxnLOwRR+LMB+NaGhXD6J4DibUYXh/sq2kikBBBZINyBwPRlQMPZu9ZHhy3/ALE17w3Bu8//AEaTTN2Nv/LMS7+//PtjH+3nPGD6VRVbUb6HTNMu9QuSwgtYXmkKjJ2qCxwO/Arxu1NzKsl5fZ+3Xjm4ufmLASNjKjJPyqAFAzwFFJfJDJp9ylxu8homEm0Enbg5xjnpXpPhm4vLrw1p02oBTdNCvmOsiyLLjgSBl+UhgAwx/erznVL2Iaxfay6sq2+rLcTAcnbbSqjbfcpCfqSexr2uiiuE8bpc+IoLnR4sJYxzwWsrBSZJLiUrtK9CFhDpMcfe27cqA+ZvG3hbRZ/DLW8Wn21o1xeWluZ7aBEkRZLmJG2tjg4Y1S0bwk2r+GH0+61Sf7Da3d7b2sCopAVJZYo/N3Z8zZgMgG1QVXIO0VFoV3C+nW1hfyR6VfaZFJJp12x/dxxxttmgYkjesJXynBb51VJAQSGXsvDupz6vokF5cRKsjFl3xgiOYAkCWPPOxsblz2I5IwTq0UV5h8VkOk32leIIry4tBK39nzvAwJYk74yVYFSqjzjnGcsOvbnvL1CO8g1Aapcz3loGNsZhGqozDB4VADlcrkg4DEjnBqDWfEM3iW1bWrmK4sRZWbGO2trh0cB0SYkyAKTlfKwMYGO/b2jRLObT9Dsra68j7WkS/aWt0CI8xGZGAAA+ZyzdB16VfoqK6uYbK0mu7mRYoII2kkkboqqMkn6AV8/Nq0Ot6pe6qZYGur2TzZFjdWKKAAiEr12qFXPcgnvUtFdn8LtZsLCS48NH7NBJI7XdoFwrT5/1i4A5K4BBJyVIAGEJr06ivOfEUVjB45nGp2Ny9jPBDM9za38ls0bM4h3MqyIHRMKXcAsodAeMY5h9Hls9ZkS5vtTtfs+ou6Frlp9sKzExkJKWUnZtIJBOQD1ro9ftLvQdDh8N/a2ura6jnEt1dZeWaNnbcud3DAOoLd8nAHa34S0yDzfDUqvdS3tvpC3N6J53cB5lAV8sx+clJgAAQAXyV+UN39FZ2u6PFr2kS6fNK8Su8cgdMZDI6uvXqMqMj0zyOteSvpmrQa5f6Vcarp8U9tKix5sXHno0e9WXMo9HGBnHltzWhb6DOyst/eRzDIKm3haFlYEEMDvYggjIIwQcEdKjs7rxFpk39mm+8qK7uD/phQSykhSVCM7sSfLiGd6HBJwSMYfaeFre78Q6bpklxd3VpMJZLy2kkAEkSodzs4AckyvFn5ju3nIIzj1yiis270OzucPEv2S5WY3CXFuqh1lKMhfkFWO12HzA9fYV5ddareX1pCmueJ7iDS7/AFgJZvciKBmtYf3yzh1jjb52RAGUgL5i8k1p2es2OmeNtCsfD/iKK40q/mnbUYTfJdYkMYEZLsWkUs+0fewTgYy3Pd6f4c0rTYPJgtS6i5N2DcyvcMsxGC4aQsQcZ5B7n1NatFFFeZfHFWbwXZhQSRek8e1tOaxq5mVfM8OXEG8p59vp8G4dt9napn3+9X0ZRRRXN/EC8t7H4e+IJrmTZG1jLCDgn55FKIOPVmA/HmuUtdJ8Kap41tbS08OWyLDp1xLPDPozQDLSQiNiska5+7KAfZq6XwVpmn6ZaXNvFYW9pfLc3LOiwiOQQNdTeUTwDsKr8vbA4rqqKK8z+L2mTXsWkSxvHskF1YsjLkkyRb1YemDB+tc34n1CaS41fVYGCrf6XBqtv3MYeAoFOeDgw5/4FXWfEFxJrWgTId0L2t0FdeVJJgI56cgEj6Gl+GMtxdzX1xO+Uj07S7WIYPAFsJTyTyd0xr0OiivKvifZx23izQtYSTypkjzJJgH93FKgYA9QPLuJmb1CA/w1rVm6nE8l/ozKMiO8Zm9h5Eo/mRU+k3qv8R9JitZ0fFreRXCoQxX/AFLYb05C/wCTXpVFUtX1S30XSLvU7vf9ntYmlk8tdzYA7CuE1f4g6pbalo0doukxQao0kccdzId0ciEblmYsghYBlymHYMGUZOAaKxeKfCVzpF1qg05rWyjkgMsCSOJTKwZzJKXBMh8oMXZAhZ+hbGLOoeN38QTWlvpFpFdT21ykzQRl7hSwOFEmwfIuTkMwIVgrdVr0DSdTt9Z0yG/td3lSbhhsZDKSrDIJBwQRkEg4yCQQau0UVV1K+j0vSrzUJkkeK1ged0iGWYKpYhQcZPHFeJ+LPHr+L45NG/smB7ZVZnWK82TwyAlVIcoQMqWRl2HGT8wyDUEmsC2t4mkdXOWE7yoLdVxjBT533A89Sp4HHPFLSr/y5I76GN77TNMNpPeNbrjAt44VBEpOwE+SG2Hls7QQcNX0SpDKGGcEZ5GKWis/W7W/vdKlt9Nvfsdw+P3oX5tvcKSCFJHG7Dbc52mvLvEXw+8S3ejxR77q/dGIaGbVPtuV25BxKkIGWC5OTgcgHoMW48E/ExZvt5e7uLxIzEsia0Uk2EglQcqMZAOM9q7HwL4Z8Vabrw1LUby7W3khaO6h1CbzpJCP9XsZZXGBzycEZIAOcj0qiivIPiJ421G60DUrey0YLZW+oLAL2SQybpIZQSpRFOwl4wBuYEgg8bhXL2eqXN54bhsfsenI9tbSItw9y7G5RmZliQrG2Fj3FQGYDnggZrQ1PxbqWq2GkI+j21t/Z8ZVt98WLfIF5xHgdM9TXdfCSaK48JzSRziZlnjhkKphA0VtDF8pydwxGDu45JGOMnvaKiurmGytJru5kWKCCNpJJG6KqjJJ+gFeXePPHGga14YntbG3u7+R4ZJYZlheNI2ClCGy8b8qzLgZyGPDDKnCn8SJfW9tfNo3hjXMl4Z9QvoWVWcRllHnvbRRJyCNpJJLgcDmrlzq3hy1l/tbSDZ6Xc20EpjttOi06SaWUrhQjRrMyg4YHIxh8lhjB9H8NWOkSWNvqNld3GqOQxS9vZWllUn7wG7/AFfQAqoUcDI4roKKKyZPDWjvaRWyWKW8UP8AqBaM0BgJJJMZjIMZO45K4LAkHIqSLQrKBdsb3ozjJN9MSxAAySXyTgAZPPFQx+F9JEMsE8M97BKAHh1C7lu4zg5HyyswBz3ArYooopksUc8LwzRrJFIpV0cZDA8EEHqKy7fwvo9lIWsbRrFSMGKyme3iJ/vGONgpbgDdjOABnApf+Eb01YJIY/tkKSNubyL6eIk+uVcHPFEHhnSYWjZ7eS7aKRZYmv7iS7MTjoyGVmKH3XHataiiiiiiiiiorm2hvIDDcRrJGSGwexBBUj0IIBBHIIBHIrFfwZoc0bJc20t6CCF/tC4kvBGf7yrOzqp9wKrj4feGEvFvINNFpcqGCy2Er2jBSen7kpkdBz6fWuitrW3s4BBawRQQglhHEgVQSSScD1JJPualoqK5tbe9tpLa7gingkG14pUDKw9CDwa5XUfhr4d1LVYdUljujfRSbvOlnNzuXn5Cs+9dvzZ4AIIGCK8c8U3GnaL4/XS7bQrRo5ZRE0r3d35m0ysvUTgdB6V68vwz0eMyJDc3gtpD89vMsNwpGScbpo3cDnHDdh35rp9M0iw0eKaLT7cQRyyeayhiRnaFAGTwAqqoUYACgAACrtf/2Q==\" align=\"absmiddle\"><br>图中一共有（&nbsp;&nbsp;&nbsp; ）个小朋友，男孩有（&nbsp;&nbsp;&nbsp; ）个，女孩有（&nbsp;&nbsp;&nbsp; ）个。","score":"1","selectitems":[[{"itemname":"A","content":"5&nbsp; 2&nbsp; 3","issure":false},{"itemname":"B","content":"5&nbsp; 3&nbsp; 2","issure":false},{"itemname":"C","content":"5&nbsp; 2&nbsp; 2","issure":false},{"itemname":"D","content":"5&nbsp; 3&nbsp; 3","issure":false}]],"answer":"A","diff":"1","analysis":"","extend":{"knowledges":[{"id":"118840","name":"10以内数的认识"}],"testingpoints":[],"chapters":[{"id":"96876","name":"3  第几"}],"abilitytest":[],"dispower":0,"totaltime ":0}}],"score":1,"answer":"","diff":0,"analysis":"","extend":{}}]}]}],"answertime":0,"score":7,"kpcoverage":0,"diffdegree":0,"reliability":0,"validity":0,"extend":{"courseid":"14","coursename":"数学","grade":"1","year":0,"month":0,"province":"","city":"","area":"","auditor":"","auditschool":"","author":"","authorcchool":""}};
+		function dohomework(){
+			examengine.status = "do";
+			examengine.issingledisplay = true;
+			//examengine.useridentity = "student";
+			examengine.init(homeworkjson);
+			turnSencondpage();  //跳转试题页面
+		};
+	</script>
+</div>
+<input id="testName" type="hidden" value="测试组卷名称">
+
+<script>
+	function turnSencondpage(){
+		window.location.href = '#&pageSecond';
+	};
+	$.ajax({
+		url: apiurl + '/TSB_ISCHOOL_EXAM_SERVER/testpaper/getstudyidentitylist',
+		data: JSON.stringify({"tasktype":"1","publisherid":publisherid}),
+		type: 'post',
+		contentType: "application/json; charset=utf-8",
+		success: function(data){
+			getdata(data.data);
+		}
+	});
+</script>
+
+<script type="text/javascript">
+	$(document).delegate('.inactive','click',function(){
+		if($(this).siblings('ul').css('display')=='none'){
+			$(this).parent('li').siblings('li').children("a").removeClass('inactives');
+			$(this).parent("li").siblings('li').children('ul').slideUp(100).children('li');
+			$(this).addClass('inactives');
+			$(this).siblings('ul').slideDown(100).children('li');
+		}else{
+			$(this).removeClass('inactives');
+			$(this).siblings('ul').slideUp(100);
+		}
+	});
+
+	$(document).delegate(".pitch", 'click', function () {
+		$(this).toggleClass("pitch-on")
+	});
+
+	$(".unfold").click(function () {
+		$(this).parent().parent().toggleClass("regain")
+	})
+
+
+	$(document).delegate(".subtract","click",function () {
+		var num = parseInt($(this).siblings('font').html());
+		if(num > 0){
+			$(this).siblings('font').html(num-1);
+		}else{
+			return false;
+		};
+	})
+
+	$(document).delegate(".plus","click",function () {
+		var num = parseInt($(this).siblings('font').html());
+		var maxmun = parseInt($(this).attr('data-maxnum'));
+		if(num < maxmun){
+			$(this).siblings('font').html(num+1);
+		}else{
+			return false;
+		}
+	});
+</script>
+
+<script>
+	// setheight
+	setmaskheight();
+	function setmaskheight(){
+
+		var idochei=$(document).height();
+		$('.testmask').css("height",idochei);
+	}
+
+	// tab
+	tab('.memu li','.memu-con','.memu-wrap','click',setmaskheight);
+	tab('.menu2-left p','.rightul','.memu-con','click',setmaskheight);
+
+
+	function hidemask(){
+		$('.testmask').hide();
+		$('.memu-con').hide();
+		$('.memu li').removeClass('current');
+	}
+	//点击mask显示
+	$('.memu').click(function() {
+		$('.testmask').show();
+		$('body').css('overflow','hidden');
+
+		//选择年级、学科、版本后，mask隐藏。当前状态收起。
+		$('.memu-con li').click(function () {
+			$('li.current label').html($(this).html());
+			hidemask();
+			$('body').css('overflow','auto');
+			//点击年级加载全年级
+
+			//点击学校、版本提示需要依次选择
+
+		})
+		//点击空白处隐藏。
+		$('.testmask').click(function(){
+			hidemask();
+			$('body').css('overflow','auto');
+		})
+
+	});
+
+	//计算高度
+	var winH = document.documentElement.clientHeight;
+	var winremH = winH/ounit;
+	$('.list').css('max-height',(winremH-23)+'rem');
+
+	//跳转页面时隐藏弹窗
+	window.onpopstate = function(){
+		ischool.layout.hide();
+		$('.PaperLoadLayout').hide();
+		$("#PaperLoadLayoutContainer").hide();
+		if(currentAjax){
+			currentAjax.abort();
+		}
+	};
+</script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+	<title>奖品</title>
+	<link rel="stylesheet" href="css/style.css"/>
+	<link rel="stylesheet" href="css/my.css"/>
+	<script src="js/jquery-1.11.1.min.js"></script>
+	<script src="js/common.js"></script>
+	<script type="text/javascript">
+		// var urlapi = 'http://182.92.182.224/ldl/weixin/';
+		// var woriid = 'gh_50a7026bdd67';
+		// var openid = 'odAcOvwqlUlTY7CVUPcf38sCKLu4';
+		// var activityid = '1';
+		$.getUrlParam = function(name){
+			var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");    //正则？？？？！！！
+			var r = window.location.search.substr(1).match(reg);     // substr( ) 抽取字符    match() 匹配
+			if (r!=null) return unescape(r[2]); return null;        //unescape() 函数可对通过 escape() 编码的字符串进行解码。
+		};
+		if ($.getUrlParam('woriid')) {
+		    woriid = ($.getUrlParam('woriid'));
+		};
+		if ($.getUrlParam('openid')) {
+		    openid = ($.getUrlParam('openid'));
+		};
+		if ($.getUrlParam('activityid')) {
+		    activityid = ($.getUrlParam('activityid'));
+		};
+	</script>
+</head>
+<body class="back">
+	<div class="teanav">
+		<span><a href="javascript:;" class="active" data-type="0">全部</a></span>
+		<span><a href="javascript:;" data-type="1">未使用</a></span>
+		<span><a href="javascript:;" data-type="2">已使用</a></span>
+		<span><a href="javascript:;" data-type="3">失效</a></span>
+	</div>
+	<ul class="awardList jpbj">
+		<!-- <li>
+			<img src="images/ewm.jpg">
+			<p>名称：<label>一等奖苹果</label></p>
+			<p>有效期：<label>2017/09/21~2017/10/21</label></p>
+			<p>来源：<label>商城抽奖环节</label> </p>
+			<p>兑奖说明：<label>请在有效期范围内并可提前20天领取奖品</label></p>
+		</li> -->
+	</ul>
+	<script type="text/javascript">
+		var curpage = 1;
+		getawardList(0, 1);
+		function getawardList(winstatus, curpage){
+	    	var html = "";
+		    $.ajax({
+				url: urlapi+'cactivity_winlist.action',
+				data: {'woriid':woriid, 'openid':openid, 'activityid':activityid, 'curpage':curpage, 'pagesize':5, 'winstatus':winstatus},
+		        type: 'post',
+		        dataType: 'json',
+		        success: function(data){
+		        	if (data.code == '1') {
+	    				var dataarr = data.data;
+		                var length = dataarr.length;
+		                for (var i = 0; i < length; i++) {
+		                	html +=	'<li>'+
+							'<img src="'+ dataarr[i].qrcode +'">'+
+							'<p>名称：<label>'+ dataarr[i].name +'</label></p>'+
+							'<p>有效期：<label>'+ dataarr[i].valdate +'</label></p>'+
+							'<p>来源：<label>'+ dataarr[i].source +'</label></p>'+
+							'<p>兑奖说明：<label>'+ dataarr[i].useintr +'</label></p>'+
+							'</li>';
+		                }
+		                if (curpage == 1) {
+		                	$('.awardList').html(html);
+		                }else{
+		                	$('.awardList').append(html);
+		                }
+		        	}else{
+		        		alert(data.errorMessage);
+		        	};
+		        },
+		        error: function() {
+		        	alert("网络错误!");
+		        }
+			});
+		}
+		$(".teanav a").each(function(index) {
+	    	$(".teanav a").eq(index).click(function () {
+		    	$(this).addClass("active").parent().siblings().children().removeClass("active");
+		    	$(window).scrollTop(0);
+		    	var winstatus = $(this).attr('data-type');
+		    	getawardList(winstatus, 1);
+		    });
+	    });
+	    //滚动到底
+		$(window).scroll(function(){
+		    if($(window).scrollTop() == $(document).height() - $(window).height()){
+		    	var winstatus = $(".teanav a.active").attr('data-type');
+		    	curpage += 1;
+		    	getawardList(winstatus, curpage);
+		    };
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+/*navBar*/
+.navBar{display: flex;justify-content:   space-between;background: #f3f3f3;position: fixed;bottom: 0;width: 100%;height: 5rem;}
+/*.navBar a{display: block;width: 5rem;font-size: 1.2rem;color: #666666;text-align: center;padding:3rem 2rem 0;}*/
+    .navBar a{display: block;width: 33.3%;box-sizing:border-box;font-size: 1.2rem;color: #666666;text-align: center;padding:3rem 2rem 0;float: left;}
+    .navBar a:nth-child(1){background: url(../images/ico-lovechallenge.png) no-repeat center 0.8rem;background-size: 1.7rem 1.8rem;}
+    .navBar a:nth-child(2){background: url(../images/ico-cyx.png) no-repeat center 0.8rem;background-size: 1.7rem 1.8rem;}
+    .navBar a:nth-child(3){background: url(../images/ico-myzy.png) no-repeat center 0.8rem;background-size: 1.7rem 1.8rem;}
+    .navBar a.active{color: #2591eb;}
+    .navBar a:nth-child(1).active{background: url(../images/ico-lovechallenge-a.png) no-repeat center 0.8rem;background-size: 1.7rem 1.8rem;}
+    .navBar a:nth-child(2).active{background: url(../images/ico-cyx-a.png) no-repeat center 0.8rem;background-size: 1.7rem 1.8rem;}
+    .navBar a:nth-child(3).active{background: url(../images/ico-myzy-a.png) no-repeat center 0.8rem;background-size: 1.7rem 1.8rem;}
+/*video下载图标去掉*/
+/*video::-internal-media-controls-download-button {
+    display:none;
+}
+
+video::-webkit-media-controls-enclosure {
+    overflow:hidden;
+}
+
+video::-webkit-media-controls-panel {
+    width: calc(100% + 30px); 
+}*/
+
+/*底部 icon 位置*/
+.paddingBot5{padding-bottom: 6rem!important;}
+

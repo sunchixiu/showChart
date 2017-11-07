@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=9">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <title>套餐订购 </title>
+    <script src="js/jquery-1.11.1.min.js"></script> 
+    <script src="js/tsdg-setrem.js"></script>
+    <link rel="stylesheet"  href="css/newdesignstyle.css"/>
+
+</head>
+<body>
+	<div class="can">
+		<img  src="images/price.png"/>
+		<p>该功能需要订购<br><span class="color">“智慧教育和校园<label id="tcvalue">18</label>元套餐”</span><br> 才能使用哦！</p>
+	</div>
+	<div class="card card1">
+		<div class="texts">
+			<h2 id="8"> 智慧教育和校园8元套餐 </h2>
+		    <div class="clear">
+		    	<ul> 
+		    		<li>校园通知</li>
+	                <li>作业通知</li> 
+		    	</ul>
+		    	
+		    </div>	
+		</div>
+    	<div id="order8" class="state buy" >
+
+    		<!--<a class="buyBtn back" href="javascript:;">退订</a>-->
+			<!--<p class="money alreadyPay">已订购</p>-->
+
+    		<a class="buyBtn" href="javascript:;">订购</a>
+			<p class="money"><n>¥</n>  <span>8</span>元/每月</p>
+			
+    	</div>
+	</div>
+	<div class="card card2">
+		<div class="texts">
+		<h2 id="18">智慧教育和校园18元套餐</h2>
+		    <div class="clear">
+		    	<ul>
+		    		<li>8元套餐功能</li>
+	                <li>300M流量</li>
+	                <li>课堂表现</li>
+	                <li>作业报告</li>
+	                <li>查看作业</li> 
+		    	</ul>
+		    	<ul>		    		
+	                <li>孩子错题本</li>
+	                <li>历次成绩汇总</li>
+	                <li>各科资源</li>
+	                <li>家庭组卷</li>
+		    	</ul>
+		    	
+		    </div>	
+		</div>
+    	<div id="order18" class="state buy" >
+    		<a class="buyBtn" href="javascript:;">订购</a>
+			<p class="money"><n>¥</n>  <span>18</span>元/每月</p>
+			
+    	</div>
+	</div>
+	<div class="card card3">
+		<div class="texts">
+		<h2>智慧教育和校园25元套餐</h2>
+		    <div class="clear">
+		    	<ul style="width:100%;">
+		    		<li>18元套餐功能（除300M流量）</li>
+	    		<li>平安卡</li>
+		    	</ul>
+		    	 
+		    	
+		    </div>	
+		</div>
+    	<div id="order25" class="state buyOfBusiness">
+    		<a class="buyBtn fontlittle" href="javascript:;">营业厅订购</a>
+			<p class="money "><n>¥</n>  <span>25</span>元/每月</p>			
+    	</div>
+	</div>
+
+ 
+	 
+	 
+     
+
+	<div id="pop-mask"></div>
+	<div id="pop"></div>
+	<div id="popyzm">
+		<p class="yzm">退订智慧教育和校园<label>0</label>元套餐</p>
+		<p class="yzminput"><input type="number" value=""> <a href="javascript:getyzm();">获取验证码</a></p>
+		<p class="yzminput"><button onclick="closePop();">取消</button>&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="checkyzm($(this).parent().parent().find('.yzm label').html());">确定</button></p>
+	</div>
+    <script type="text/javascript">
+		String.prototype.startWith=function(str){
+			var reg=new RegExp("^"+str);
+			return reg.test(this);
+		}
+
+		String.prototype.endWith=function(str){
+			var reg=new RegExp(str+"$");
+			return reg.test(this);
+		}
+
+		var state = '1';
+		//获取地址栏参数
+		$.getUrlParam = function(name){
+			var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");    //正则
+			var r = window.location.search.substr(1).match(reg);     // substr( ) 抽取字符    match() 匹配
+			if (r!=null) return unescape(r[2]); return null;        //unescape() 函数可对通过 escape() 编码的字符串进行解码。
+		};
+
+		var urlapi = 'http://passport.gs10086edu.com:70';
+		var urlapitaocan = 'http://java.gs10086edu.com:70';
+		var sid = 'e521cda5337a4d44bd67d8fae1d8b79a';
+		var mobile = '13893635582';
+
+		if($.getUrlParam("url")){
+			urlapi = $.getUrlParam("url");
+		};
+		if($.getUrlParam("sid")){
+			sid = $.getUrlParam("sid");
+		};
+		if($.getUrlParam("mobile")){
+			mobile = $.getUrlParam("mobile");
+		};
+
+//		if (!urlapi.endWith("/"))
+//			urlapi = urlapi + "/";
+
+		if($.getUrlParam("state")){
+			state = $.getUrlParam("state");
+			switch (state){
+				case '0':
+					$('.can').remove();
+					break;
+				case '1':
+					$('#tcvalue').html(8);
+					break;
+				case '2':
+					$('#tcvalue').html(18);
+					break;
+				case '3':
+					$('#tcvalue').html(25);
+					break;
+				default :
+					break;
+			};
+
+		};
+
+		if($.getUrlParam("ishide")){
+			if($.getUrlParam("ishide") == '1' && $('.can').length > 0){
+				$('.can').remove();
+			};
+		};
+
+		var TaoCanState = {
+			"taocan5": false,
+			"taocan5Processing": false,
+			"taocan5Unsubscribing": false,
+			"taocan08": false,
+			"taocan08Processing": false,
+			"taocan08Unsubscribing": false,
+			"taocan8": false,
+			"taocan8Processing": false,
+			"taocan8Unsubscribing": false,
+			"taocan18": false,
+			"taocan18Processing": false,
+			"taocan18Unsubscribing": false,
+			"taocan25": false,
+			"taocan25Processing": false,
+			"taocan25Unsubscribing": false
+		};
+		
+    	//统一弹层
+	    var iWinW=$(window).width();
+	    var iWinH=$(document).height();
+	    $('#pop-mask').css({'width':iWinW,'height':iWinH});
+	    function closePop(){
+	    	$('#pop-mask').hide();
+			$('#popyzm').hide();
+	        $('#pop').html('').hide();
+			$('body').css('overflow','auto');
+	    }
+
+		function confirmYuan(numstr){
+			closePop();
+			if (TaoCanState["taocan"+numstr]){
+				reserveOrderUnsubscribe("2", numstr);
+			}else{
+				reserveOrderUnsubscribe("1", numstr);
+			};
+		};
+
+		//获取验证码
+		var timer = null;
+		function getyzm(){
+			if(!timer){
+				var timenum = 60;
+				$('#popyzm a').html(timenum);
+				$('#popyzm a').attr('href','javascript:;');
+				var url = urlapi+"/TSB_ISCHOOL_MOOC_SERVER/sendmsg/send";
+				var params = {
+					"sendid": sid,
+					"messagetype": "2",
+					"sid": sid,
+					"phonenumber": mobile,
+					"msgfrom":0
+				};
+				$.ajax({
+					url: url,
+					data: JSON.stringify(params),
+					type:'post',
+					dataType:'json',
+					timeout:8000,
+					contentType: "application/json; charset=utf-8",
+					success: function(data){
+						if(data.code == 1){
+							timer = setInterval(function(){
+								timenum = timenum - 1;
+								$('#popyzm a').html(timenum);
+								if(timenum == 0){
+									clearInterval(timer);
+									timer = null;
+									$('#popyzm a').html('获取验证码');
+									$('#popyzm a').attr('href','javascript:getyzm();');
+								};
+							},1000);
+						}else{
+							alert(data.errorMessage);
+							$('#popyzm a').html('获取验证码');
+							$('#popyzm a').attr('href','javascript:getyzm();');
+						};
+					},
+					error: function(data){
+						alert('网络异常');
+						$('#popyzm a').html('获取验证码');
+						$('#popyzm a').attr('href','javascript:getyzm();');
+					}
+				});
+			};
+		};
+
+		function fillyzm(numstr) {
+			closePop();
+			$('#pop-mask').show();
+			$('#popyzm .yzm label').html(numstr);
+			$('#popyzm').show();
+			if(!timer){
+				getyzm();
+			};
+			$('body').css('overflow','hidden');
+		};
+
+		//检查验证码
+		function checkyzm(yuan){
+			var val = $('#popyzm input').val();
+			if(val == ''){
+				alert('验证码不能为空！');
+			}else{
+				var url = urlapi+"/TSB_ISCHOOL_MOOC_SERVER/sendmessage/validate";
+				var params = {
+					"messagetype": "2",
+					"sid": sid,
+					"phonenumber": mobile,
+					"yanzhengma": val
+				};
+				$.ajax({
+					url: url,
+					data: JSON.stringify(params),
+					type:'post',
+					dataType:'json',
+					timeout:8000,
+					contentType: "application/json; charset=utf-8",
+					success: function(data){
+						if(data.code == 1){
+							if(data.data.flag == 1){
+								confirmYuan(yuan);
+								clearInterval(timer);
+								timer = null;
+								$('#popyzm a').html('获取验证码');
+								$('#popyzm a').attr('href','javascript:getyzm();');
+							}else{
+								alert('验证码错误！');
+							};
+						}else{
+							alert(data.errorMessage);
+						};
+					},
+					error: function(data){
+						alert('网络异常');
+					}
+				});
+			};
+		};
+		
+		function messageBox(msg) {
+			$('#pop-mask').show();
+			$('#pop').append('<p class="center-orange">' + msg + '</p><br><button onclick="closePop();">知道了</button>');
+			$('#pop').show();
+			$('body').css('overflow','hidden');
+		};
+
+	    $('.buy').bind('click', function() {
+	    	var _this=$(this);
+	        $('#pop-mask').show();
+            var _id=_this.parents('.card').find('h2').attr("id");
+			setpopcontent(_id);
+			$('#pop').show();
+			$('body').css('overflow','hidden');
+	    });
+
+		function setpopcontent(num) {
+			if (TaoCanState['taocan' + num] == false) {
+				if (TaoCanState.taocan18) {
+					$('#pop').append('<p class="center-orange">您已经订购18元套餐，请先退订再订购</p><br><button onclick="closePop();">取消</button>&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="fillyzm(\'18\');">确定</button>');
+				}else if (TaoCanState.taocan18Processing) {
+					$('#pop').append('<p class="center-orange">您订购的18元套餐正在处理中，请耐心等待</p><br><button onclick="closePop();">知道了</button>');
+				}else if (TaoCanState.taocan18Unsubscribing) {
+					$('#pop').append('<p class="center-orange">您订购的18元套餐正在退订中，请耐心等待</p><br><button onclick="closePop();">知道了</button>');
+				}else if(TaoCanState.taocan8) {
+					$('#pop').append('<p class="center-orange">您已经订购8元套餐，请先退订再订购</p><br><button onclick="closePop();">取消</button>&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="fillyzm(\'8\');">确定</button>');
+				}else if (TaoCanState.taocan8Processing) {
+					$('#pop').append('<p class="center-orange">您订购的8元套餐正在处理中，请耐心等待</p><br><button onclick="closePop();">知道了</button>');
+				}else if (TaoCanState.taocan8Unsubscribing) {
+					$('#pop').append('<p class="center-orange">您订购的8元套餐正在退订中，请耐心等待</p><br><button onclick="closePop();">知道了</button>');
+				}else if(TaoCanState.taocan5) {
+					$('#pop').append('<p class="center-orange">您已经订购5元套餐，请先退订再订购</p><br><button onclick="closePop();">取消</button>&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="fillyzm(\'5\');">确定</button>');
+				}else if (TaoCanState.taocan5Processing) {
+					$('#pop').append('<p class="center-orange">您订购的5元套餐正在处理中，请耐心等待</p><br><button onclick="closePop();">知道了</button>');
+				}else if (TaoCanState.taocan5Unsubscribing) {
+					$('#pop').append('<p class="center-orange">您订购的5元套餐正在退订中，请耐心等待</p><br><button onclick="closePop();">知道了</button>');
+				}else if(TaoCanState.taocan08) {
+					$('#pop').append('<p class="center-orange">您已经订购体验套餐，请先退订再订购</p><br><button onclick="closePop();">取消</button>&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="fillyzm(\'08\');">确定</button>');
+				}else if (TaoCanState.taocan08Processing) {
+					$('#pop').append('<p class="center-orange">您订购的体验套餐正在处理中，请耐心等待</p><br><button onclick="closePop();">知道了</button>');
+				}else if (TaoCanState.taocan08Unsubscribing) {
+					$('#pop').append('<p class="center-orange">您订购的体验套餐正在退订中，请耐心等待</p><br><button onclick="closePop();">知道了</button>');
+				}else {
+					$('#pop').append('<p class="center-orange">您即将订购' + num + '元套餐</p><br><button onclick="closePop();">取消</button>&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="confirmYuan(\''+num+'\');">确定</button>');
+				}
+			}else {
+				$('#pop').append('<p class="center-orange">您即将退订' + num + '元套餐</p><br><button onclick="closePop();">取消</button>&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="fillyzm(\''+num+'\');">确定</button>');
+			}
+		};
+
+        $('.buyOfBusiness').bind('click', function() {
+            var _this=$(this);
+            
+            $('#pop-mask').show();
+            var name=_this.parents('.card').find('h2').html();
+            var money=_this.find('p').html()
+			
+			if (TaoCanState.taocan25) {
+				$('#pop').append('<p class="center-orange">25元套餐需在移动营业厅进行退订！</p><br><button onclick="closePop();"  >知道了</button>');
+			}else if (TaoCanState.taocan25Processing) {
+				$('#pop').append('<p class="center-orange">25元套餐正在处理中，请耐心等待！</p><br><button onclick="closePop();"  >知道了</button>');
+			}else{
+				$('#pop').append('<p class="center-orange">25元套餐需在移动营业厅进行订购！</p><br><button onclick="closePop();"  >知道了</button>');
+			}
+
+            $('#pop').show();
+			$('body').css('overflow','hidden');
+        });   
+
+        //重新刷新当前 订购/退订 状态
+        function reloadState(){
+			showloading();
+            var requestParams = {
+                "sid":sid,
+                "phone":mobile
+            };
+			$.ajax({
+                url:urlapitaocan+'/TSB_ISCHOOL2_EXTERNAL_API/xkexternalimport/getUserPackage',
+				type:'post',
+                dataType:'json',
+				data:JSON.stringify(requestParams),
+                contentType: "application/json; charset=utf-8",
+                success: function(data){
+					hideloading();
+
+					if(data.code == 1){
+						var taocanData = JSON.parse(data.data);
+
+						TaoCanState.taocan5 = false;
+						TaoCanState.taocan08 = false;
+						TaoCanState.taocan8 = false;
+						TaoCanState.taocan18 = false;
+						TaoCanState.taocan25 = false;
+
+						TaoCanState.taocan5Processing = false;
+						TaoCanState.taocan08Processing = false;
+						TaoCanState.taocan8Processing = false;
+						TaoCanState.taocan18Processing = false;
+						TaoCanState.taocan25Processing = false;
+
+						TaoCanState.taocan5Unsubscribing = false;
+						TaoCanState.taocan08Unsubscribing = false;
+						TaoCanState.taocan8Unsubscribing = false;
+						TaoCanState.taocan18Unsubscribing = false;
+						TaoCanState.taocan25Unsubscribing = false;
+
+						if (taocanData.orderNum != "") {
+							if (taocanData.orderNum.startWith("15") || taocanData.orderNum.startWith("25"))
+								taocanData.package = "5";
+							else if (taocanData.orderNum.startWith("108") || taocanData.orderNum.startWith("208"))
+								taocanData.package = "08";
+							else if (taocanData.orderNum.startWith("18") || taocanData.orderNum.startWith("28"))
+								taocanData.package = "8";
+							else if (taocanData.orderNum.startWith("118") || taocanData.orderNum.startWith("218"))
+								taocanData.package = "18";
+							else if (taocanData.orderNum.startWith("125") || taocanData.orderNum.startWith("225"))
+								taocanData.package = "25";
+						}
+
+						if (taocanData.orderNum.startWith("25"))
+							TaoCanState.taocan5Unsubscribing = true;
+						else if (taocanData.orderNum.startWith("208"))
+							TaoCanState.taocan08Unsubscribing = true;
+						else if (taocanData.orderNum.startWith("28"))
+							TaoCanState.taocan8Unsubscribing = true;
+						else if (taocanData.orderNum.startWith("218"))
+							TaoCanState.taocan18Unsubscribing = true;
+						else if (taocanData.orderNum.startWith("225"))
+							TaoCanState.taocan25Unsubscribing = true;
+
+						if (taocanData.orderNum.startWith("15"))
+							TaoCanState.taocan5Processing = true;
+						else if (taocanData.orderNum.startWith("108"))
+							TaoCanState.taocan08Processing = true;
+						else if (taocanData.orderNum.startWith("18"))
+							TaoCanState.taocan8Processing = true;
+						else if (taocanData.orderNum.startWith("118"))
+							TaoCanState.taocan18Processing = true;
+						else if (taocanData.orderNum.startWith("125"))
+							TaoCanState.taocan25Processing = true;
+
+						if(taocanData.package == "8"){
+							if (TaoCanState.taocan8Unsubscribing) {
+								$('#order8').html('<p class="money alreadyPay">退订处理中,请耐心等待</p>');
+								//$('#order8').css('background','#F39801');
+							} else if (taocanData.c_isuse == "1") {
+								$('#order8').html('<a class="buyBtn back" href="javascript:;">退订</a><p class="money alreadyPay">已订购</p>');
+								//$('#order8').css('background','#27B10B');
+
+								TaoCanState.taocan8 = true;
+							} else if (taocanData.orderNum != "") {
+								$('#order8').html('<p class="money alreadyPay">订购中,请耐心等待</p>');
+								//$('#order8').css('background','#27B10B');
+
+								TaoCanState.taocan8Processing = true;
+							} else {
+								$('#order8').html('<a class="buyBtn" href="javascript:;">订购</a><p class="money"><n>¥</n>  <span>8</span>元/每月</p>');
+								//$('#order8').css('background','#F39801');
+							}
+						}else if(taocanData.package == "18"){
+							if (TaoCanState.taocan18Unsubscribing) {
+								$('#order18').html('<p class="money alreadyPay">退订处理中,请耐心等待</p>');
+								//$('#order18').css('background','#F39801');
+							} else if (taocanData.c_isuse == "1") {
+								$('#order18').html('<a class="buyBtn back" href="javascript:;">退订</a><p class="money alreadyPay">已订购</p>');
+								//$('#order18').css('background','#27B10B');
+
+								TaoCanState.taocan18 = true;
+							} else if (taocanData.orderNum != "") {
+								$('#order18').html('<p class="money alreadyPay">订购中,请耐心等待</p>');
+								//$('#order18').css('background','#27B10B');
+
+								TaoCanState.taocan18Processing = true;
+							} else {
+								$('#order18').html('<a class="buyBtn" href="javascript:;">订购</a><p class="money"><n>¥</n>  <span>18</span>元/每月</p>');
+								//$('#order18').css('background','#F39801');
+							}
+                       }else if(taocanData.package == "5"){
+							if (TaoCanState.taocan5Unsubscribing) {
+
+							} else if (taocanData.c_isuse == "1") {
+								TaoCanState.taocan5 = true;
+							} else if (taocanData.orderNum != "") {
+								TaoCanState.taocan5Processing = true;
+							} else {
+
+							}
+						}else if(taocanData.package == "08"){
+							if (TaoCanState.taocan08Unsubscribing) {
+
+							} else if (taocanData.c_isuse == "1") {
+								TaoCanState.taocan08 = true;
+							} else if (taocanData.orderNum != "") {
+								TaoCanState.taocan08Processing = true;
+							} else {
+
+							}
+						}else if(taocanData.package == "25"){
+							if (TaoCanState.taocan25Unsubscribing) {
+								$('#order25').html('<p class="money alreadyPay">退订处理中,请耐心等待</p>');
+								//$('#order25').css('background','#F39801');
+							} else if (taocanData.c_isuse == "1") {
+								$('#order25').html('<p class="money alreadyPay">已订购</p>');
+								//$('#order25').css('background','#27B10B');
+
+								TaoCanState.taocan25 = true;
+							} else if (taocanData.orderNum != "") {
+								$('#order25').html('<p class="money alreadyPay">订购中,请耐心等待</p>');
+								//$('#order25').css('background','#27B10B');
+
+								TaoCanState.taocan25Processing = true;
+							} else {
+								$('#order25').html('<a class="buyBtn fontlittle" href="javascript:;">营业厅订购</a><p class="money "><n>¥</n>  <span>25</span>元/每月</p>');
+								//$('#order25').css('background','#F39801');
+							}
+                       }
+                        if(taocanData.mainPackage){
+                            $('.state').addClass('unable');
+                            $('.state').unbind('click');
+                        }
+                    }else{
+                        messageBox("获取订购信息失败：" + data.errorMessage);
+                    };
+                },
+                error: function(data){
+					hideloading();
+					messageBox("获取订购信息失败，请稍后重试");
+				}
+            });
+        }
+
+        //订购/退订
+        function reserveOrderUnsubscribe(type,packageCode){
+			//alert(type+' , '+packageCode);
+			showloading();
+            var requestParams = {
+                "sid":sid,
+                "phone":mobile,
+                "packageCode":packageCode,
+                "type":type
+            };
+            $.ajax({
+                url:urlapitaocan+'/TSB_ISCHOOL2_EXTERNAL_API/xkexternalimport/reserveOrderUnsubscribe',
+				type:'post',
+                dataType:'json',
+                data:JSON.stringify(requestParams),
+                contentType: "application/json; charset=utf-8",
+                success: function(data){
+                    if(data.code == "1"){
+						if (packageCode == "8") {
+							if (type == "1") {
+								$('#order8').html('<p class="money alreadyPay">订购中,请耐心等待</p>');
+								//$('#order8').css('background','#27B10B');
+							}else if (type == "2") {
+								$('#order8').html('<p class="money alreadyPay">退订处理中,请耐心等待</p>');
+								//$('#order8').css('background','#F39801');
+							}
+						} else if (packageCode == "18") {
+							if (type == "1") {
+								$('#order18').html('<p class="money alreadyPay">订购中,请耐心等待</p>');
+								//$('#order18').css('background','#27B10B');
+							}else if (type == "2") {
+								$('#order18').html('<p class="money alreadyPay">退订处理中,请耐心等待</p>');
+								//$('#order18').css('background','#F39801');
+							}
+						}
+                    }else{
+                        messageBox("套餐订购失败：" + data.errorMessage);
+                    };
+					hideloading();
+					reloadState();
+                },
+                error: function(data){
+					hideloading();
+					if (type == "1")
+						messageBox("订购失败，请稍后重试");
+					else
+						messageBox("退订失败，请稍后重试");
+				}
+            });
+        };
+
+        //刷新订购状态
+        reloadState();
+
+		function showloading(){
+			var $back = '<div id="backmask" style="width: 100%; height: 100%; position: fixed; top: 0; left: 0; background: rgba(0,0,0,0.3); z-index: 9998;">' +
+					'<div style="width: 24px; height: 24px; position: fixed; z-index: 9999; top: 50%; left: 50%; margin-top: -12px; margin-top: -24px; background-image: url(\'images/loadding.gif\'); background-size: 24px; height: 24px;"></div>' +
+					'</div>';
+			$('body').css('overflow','hidden');
+			$('body').append($back);
+		};
+		function hideloading(){
+			$('body').css('overflow','auto');
+			$('#backmask').remove();
+		};
+    </script>
+     
+</body>
+</html>

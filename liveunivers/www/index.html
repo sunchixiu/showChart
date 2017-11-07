@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <meta http-equiv="expires" content="0">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <title>生命大学</title>
+    <link rel="stylesheet" href="style/css.css">
+    <link rel="stylesheet" href="style/mobilebone.css">
+    <link rel="stylesheet" href="style/lifewap.css">
+    <link rel="stylesheet" href="style/swiper.min.css">
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script src="js/vue.js"></script>
+    <script type="text/javascript" src="js/mobilebone.js"></script>
+    <script type="text/javascript" src="js/swiper.min.js"></script>
+    <script type="text/javascript">
+        document.addEventListener('touchstart', function(){});
+        document.documentElement.style.fontSize=document.documentElement.clientWidth/36+'px';
+    </script>
+</head>
+<body>
+    <!-- 首页 -->
+    <input type="button" value="返回" style="position: fixed; z-index: 9999;" onclick="goback();">
+    <input type="button" value="点播课程" style="position: fixed; z-index: 9999; margin-left: 60px;" onclick="courselistvue.gettypecourse(2,'course',true);">
+    <input type="button" value="直播课程" style="position: fixed; z-index: 9999; margin-left: 140px;" onclick="courselistvue.getmylivelist(2,'live',true);">
+    <input type="button" value="购物车" style="position: fixed; z-index: 9999; margin-left: 200px;" onclick="shopcart();">
+    <div id="q-home" class="page in">
+        <a href="javascript:Search();" class="q-a-buy" style="margin: 10px; float: right;">搜索</a>
+        <div class="coureseloading" id="coureseloadingid"></div>
+        <div class="q-home" style="display: none;">
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="q-banner">
+                            <img src="images/q-hbanner.png">
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="q-banner">
+                            <img src="images/q-hbanner1.png">
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="q-banner">
+                            <img src="images/q-hbanner.png">
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+
+            <div class="q-menu">
+                <a href="javascript:curriculum();" @click="gomycourse">
+                    <div class="q-row">
+                        <i class="q-icon icon-curriculum"></i>
+                        <em>我的课程</em>
+                    </div>
+                </a>
+                <a href="javascript:shopcart();">
+                    <div class="q-row">
+                        <i class="q-icon icon-shopcart"></i>
+                        <em>购物车</em>
+                    </div>
+                </a>
+                <a href="javascript:myorder();" @click="gomyorder">
+                    <div class="q-row">
+                        <i class="q-icon icon-order"></i>
+                        <em>我的订单</em>
+                    </div>
+                </a>
+            </div>
+            <div class="q-recommend m-top1">
+                <div class="q-rec-title">
+                    <span class="l">
+                        <!--<i class="q-love"></i>-->
+                        名师课堂
+                    </span>
+                    <a href="javascript:morecourse();" class="r" @click="gomorecourse">
+                        更多
+                        <i class="q-more"></i>
+                    </a>
+                </div>
+                <div class="q-rec-list">
+                    <div class="q-rec-row">
+                        <a href="#&q-goods" @click="getgoodsdetail(goods.goodsId)" :data-name="goods.goodsName" onclick="setTitle($(this).attr('data-name'),buycartvue.status);setbacktitle('生命大学','0','q-home');" v-for="goods in goodslist">
+                            <div class="q-row">
+                                <img :src="url+goods.goodsImg">
+                                <h2 v-html="goods.goodsName" class="nowrap"></h2>
+                                <p>
+                                    <label v-html="goods.belongsname"></label>
+                                    <span>￥
+                                        <b v-html="goods.goodsDiscountPrice" v-if="goods.goodsDiscountPrice != null"></b>
+                                        <b v-html="goods.goodsPrice" v-else="goods.goodsDiscountPrice != null"></b>
+                                    </span>
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="q-recommend m-top1">
+                <div class="q-rec-title">
+                    <span class="l">
+                        精品直播
+                    </span>
+                    <a href="javascript:morelive();" class="r" @click="gomorelive">
+                        更多
+                        <i class="q-more"></i>
+                    </a>
+                </div>
+                <div class="q-rec-list">
+                    <div class="q-rec-row">
+                        <a href="#&q-goods" @click="getlivegoodsdetail(livegoods.goodsId,livegoods.courseid)" :data-name="livegoods.goodsName" onclick="setTitle($(this).attr('data-name'),buycartvue.status);setbacktitle('生命大学','0','q-home');" v-for="livegoods in livegoodslist">
+                            <div class="q-row">
+                                <img :src="url+livegoods.goodsImg">
+                                <h2 v-html="livegoods.goodsName" class="nowrap"></h2>
+                                <p>
+                                    <span>￥
+                                        <b v-html="livegoods.goodsDiscountPrice" v-if="livegoods.goodsDiscountPrice != null"></b>
+                                        <b v-html="livegoods.goodsPrice" v-else="livegoods.goodsDiscountPrice != null"></b>
+                                    </span>
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 搜索 -->
+    <div id="q-search" class="page out">
+        <div class="q-search">
+            <div class="q-search-box clearfix">
+                <form>
+                    <div class="searchtype">
+                        <a href="javascript:;">点播</a>
+                        <ul style="display: none;">
+                            <i></i>
+                            <li @click="setsearchtype(1)">点播</li>
+                            <li @click="setsearchtype(4)">直播</li>
+                            <li @click="setsearchtype(2)">机构</li>
+                            <li @click="setsearchtype(3)">教师</li>
+                        </ul>
+                        <em></em>
+                    </div>
+                    <input type="search" class="searchvalue" placeholder="请输入您想找的课程名称..." v-model="keyword">
+                    <input class="search-btn" @click="search" type="button">
+                </form>
+            </div>
+            <div class="q-his-record">
+                <h1>历史搜索
+                    <em class="r" onclick="dellocalstorage();"></em>
+                </h1>
+                <div class="q-record-list" id="coursehistory" v-show="searchtype == 1"><!-- 课程 -->
+                    <!--<a href="#" @click="search()">课程</a>-->
+                </div>
+                <div class="q-record-list" id="unithistory" v-show="searchtype == 2"><!-- 机构 -->
+                    <!--<a href="#" @click="search()">机构</a>-->
+                </div>
+                <div class="q-record-list" id="teacherhistory" v-show="searchtype == 3"><!-- 教师 -->
+                    <!--<a href="#" @click="search()">教师</a>-->
+                </div>
+                <div class="q-record-list" id="livehistory" v-show="searchtype == 4"><!-- 直播 -->
+                    <!--<a href="#" @click="search()">直播</a>-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 我的课程 -->
+    <div id="mycourses" class="page out">
+        <div class="z-teanav" v-if="coursetype == 'course'">
+            <span class="span_3"><a href="javascript:;" :class="{'active': tabtype == 2}" @click="gettypecourse(2,'course',true)">正在学习(<label v-html="mycoursecount.studying"></label>)</a></span>
+            <span class="span_3"><a href="javascript:;" :class="{'active': tabtype == 1}" @click="gettypecourse(1,'course',true)">未学习(<label v-html="mycoursecount.unstudy"></label>)</a></span>
+            <span class="span_3"><a href="javascript:;" :class="{'active': tabtype == 3}" @click="gettypecourse(3,'course',true)">已学习(<label v-html="mycoursecount.studyed"></label>)</a></span>
+        </div>
+        <!-- 正在学习、未学习、已学习 -->
+        <div class="z-teanav" v-if="coursetype == 'live'">
+            <span class="span_3"><a href="javascript:;" :class="{'active': tabtype == 1}" @click="getmylivelist(1,'live',true)">正在学习</a></span>
+            <span class="span_3"><a href="javascript:;" :class="{'active': tabtype == 2}" @click="getmylivelist(2,'live',true)">学习完成</a></span>
+            <span class="span_3"><a href="javascript:;" :class="{'active': tabtype == 3}" @click="getmylivelist(3,'live',true)">已过期</a></span>
+        </div>
+        <courselist-component :coursejson="coursejson" :coursetype="coursetype" :scrollstatus="scrollstatus" :loading="loading" :nodata="nodata" :url="urlapi"></courselist-component>
+    </div>
+    <!-- 购物车 -->
+    <div id="q-buycart" class="page out">
+        <div class="coureseloading" v-if="loading"></div>
+        <!-- 购物车为空 -->
+        <div class="q-buycart-k" v-else-if="nodata">
+            <img src="images/q-buycart-k.png">
+            <p style="font-size: 1.4rem; color: #999;">少壮不努力，老大徒伤悲</p>
+            <p style="font-size: 1.4rem; color: #666;">看到喜欢的课程就赶紧下手吧！</p>
+            <p class="buycart-a"><a href="#&q-home" onclick="setinittitle()" class="q-a-buy">立即选课</a> </p>
+        </div>
+        <div class="q-buycart" v-else="nodata">
+            <div class="q-swipe-delete">
+                <div class="q-buy-list clearfix" v-for="buycourse in buycartlist">
+                    <div class="q-buy-del" @click="deletegoods(buycourse.goodsCartId)">
+                        删除
+                    </div>
+                    <div class="q-buy-con">
+                        <div class="l q-buy-rad">
+                            <input type="checkbox" name="checkboxone[]" @click="setallscore" :data-name="buycourse.courseName" :data-price="buycourse.goodsDiscountPrice || buycourse.goodsPrice" :data-img="buycourse.goodsImg" :data-id="buycourse.goodsCartId">
+                        </div>
+                        <div class="l q-buy-img">
+                            <img :src="url+buycourse.goodsImg">
+                        </div>
+                        <div class="l q-buy-txt">
+                            <h1 v-html="buycourse.goodsName"></h1>
+                            <p>
+                                <label v-html="buycourse.copyrightBelongsName"> </label>
+                                <label v-for="teachers in buycourse.courseTeachers" v-html="' '+teachers"></label>
+                            </p>
+                            <p class="p-buy" v-if="buycourse.goodsDiscountPrice != null"><s>￥<label v-html="buycourse.goodsPrice"></label></s> ￥<label class="singlebuycartscore" v-html="buycourse.goodsDiscountPrice"></label></p>
+                            <p class="p-buy" v-else="buycourse.goodsDiscountPrice != null">￥<label class="singlebuycartscore" v-html="buycourse.goodsPrice"></label></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p style="padding-left: 1rem; margin-bottom: 10px; font-size: 16px; color: #00abee;" v-if="invalidlist.length > 0" @click="deleteinvalid">清空过期课程</p>
+            <div class="q-swipe-delete" style="opacity: 0.3;" v-if="invalidlist.length > 0">
+                <div class="q-buy-list clearfix" v-for="buycourse in buycartlist">
+                    <div>
+                        <div class="l q-buy-rad">
+                        </div>
+                        <div class="l q-buy-img">
+                            <img :src="url+buycourse.goodsImg">
+                        </div>
+                        <div class="l q-buy-txt">
+                            <h1 v-html="buycourse.goodsName"></h1>
+                            <p>
+                                <label v-html="buycourse.copyrightBelongsName"> </label>
+                                <label v-for="teachers in buycourse.courseTeachers" v-html="' '+teachers"></label>
+                            </p>
+                            <p class="p-buy" v-if="buycourse.goodsDiscountPrice != null"><s>￥<label v-html="buycourse.goodsPrice"></label></s> ￥<label class="singlebuycartscore" v-html="buycourse.goodsDiscountPrice"></label></p>
+                            <p class="p-buy" v-else="buycourse.goodsDiscountPrice != null">￥<label class="singlebuycartscore" v-html="buycourse.goodsPrice"></label></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <input type="button" value="清空" @click="deleteall">
+            <div class="q-buy-botm">
+                <span class="l q-buy-qx"><input type="checkbox" id="checkall" @click="setallscore"> 全选</span>
+                <span class="l q-buy-hj">合计：<b><em>￥</em><label v-html="allscore"></label></b></span>
+                <span class="r q-buy-js" onclick="clearing();" @click="turnorderdetail">去结算(<em v-html="allnum"></em>)</span>
+            </div>
+        </div>
+    </div>
+    <!-- 我的订单 -->
+    <div id="myorder" class="page out">
+        <div class="z-teanav">
+            <span class="span_4"><a href="javascript:;" :class="{'active': ordertype == 0}" @click="getmyorderlist(0,true)">全部</a></span>
+            <span class="span_4"><a href="javascript:;" :class="{'active': ordertype == 1}" @click="getmyorderlist(1,true)">待支付</a></span>
+            <span class="span_4"><a href="javascript:;" :class="{'active': ordertype == 2}" @click="getmyorderlist(2,true)">已支付</a></span>
+            <span class="span_4"><a href="javascript:;" :class="{'active': ordertype == 3 || ordertype == 4}" @click="getmyorderlist(3,true)">已关闭</a></span>
+        </div>
+        <!-- 订单列表 -->
+        <div class="coureseloading" v-if="loading"></div>
+        <div class="q-myorder" v-else-if="nodata">
+            <div class="q-myorder-k">
+                <img src="images/q-myorder-k.png">
+            </div>
+        </div>
+        <div class="z-content" v-else="nodata">
+            <div class="z-chunk" v-for="myorder in myorderlist">
+                <ul class="z-jg">
+                    <li class="Ordertime clear">
+                        <p>
+                            <span class="pull-left">下单时间：<label v-html="myorder.createTime"></label></span>
+                            <span class="pull-right red" v-if="myorder.payStatus == 1">待支付</span>
+                            <span class="pull-right blue" v-if="myorder.payStatus == 2">已支付</span>
+                            <span class="pull-right" v-if="myorder.payStatus == 3 || myorder.payStatus == 4">已关闭</span>
+                        </p>
+                    </li>
+                    <li class="z-hotspace clear" v-for="orderlist in myorder.orderList" onclick="sebmitorder();" @click="goorderdetail(orderlist.orderId)">
+                        <a href="javascript:;">
+                            <img class="pull-left" :src="url + orderlist.goodsImg">
+                            <div class="right">
+                                <p class="p1 nowrap" v-html="orderlist.goodsName"></p>
+                                <!--<p class="p2 nowrap">-->
+                                    <!--<span>北京四中</span>-->
+                                    <!--<span>好孩子老师</span>-->
+                                <!--</p>-->
+                                <p class="p3 nowrap"></p>
+                                <p class="p4 nowrap">
+                                    <span class="pull-left fs14 red">￥<label v-html="orderlist.payPrice"></label></span>
+                                </p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                <P class="z-summation"><span>共<label v-html="myorder.totalCount"></label>件商品</span><label v-html="'合计：￥'+myorder.payAmount"></label></P>
+                <div class="z-footer" v-if="myorder.payStatus == 1">
+                    <a class="q-a q-a-undo" href="javascript:;" @click="cancelmyorder(myorder.orderId)">取消订单</a>
+                    <a class="q-a q-a-cart" href="javascript:;" :data-num="myorder.orderNum" :data-orderid="myorder.orderId" :data-price="myorder.payAmount" :data-title="myorder.ordertitle" onclick="showpay($(this).attr('data-num'),$(this).attr('data-price'),$(this).attr('data-title'),$(this).attr('data-orderid'));">立即付款</a>
+                </div>
+                <div class="z-footer" v-if="myorder.payStatus == 3 || myorder.payStatus == 4">
+                    <a class="q-a q-a-buy" href="javascript:;" @click="confirmorderdetail(myorder.goodsids)">重新购买</a>
+                    <a class="q-a q-a-undo" href="javascript:;" @click="delmyorder(myorder.orderId)">删除订单</a>
+                </div>
+            </div>
+            <p class="scrollloading" v-if="scrollstatus == 0" style="display: none;"></p>
+            <p class="scrollloading" v-if="scrollstatus == 1">正在加载中...</p>
+            <p class="scrollloading" v-if="scrollstatus == 2">没有更多了</p>
+        </div>
+    </div>
+    <!-- 确认订单 -->
+    <div id="confirmOrder" class="page out" style="background: #fff;">
+        <ul class="z-jg" style="border-top: 1rem solid #f8f8f8; margin-top: 0;">
+            <li class="z-hotspace clear" v-for="orderdetail in orderdetaillist.orderList">
+                <a href="javascript:;">
+                    <img class="pull-left" :src="url+orderdetail.goodsImg">
+                    <div class="right">
+                        <p class="p1 nowrap" v-html="orderdetail.goodsName"></p>
+                        <!--<p class="p2 nowrap">-->
+                            <!--<span>北京四中</span>-->
+                            <!--<span>好孩子老师</span>-->
+                        <!--</p>-->
+                        <p class="p3 nowrap"></p>
+                        <p class="p4 nowrap">
+                            <span class="pull-left fs14 red">￥<label v-html="orderdetail.payPrice"></label></span>
+                            <s v-html="orderdetail.payAmount">￥245</s>
+                        </p>
+                    </div>
+                </a>
+            </li>
+        </ul>
+        <P class="z-summation" style="margin-bottom: 5rem;"><span>共<label v-html="orderdetaillist.totalCount"></label>件商品</span><label v-html="'合计：￥'+orderdetaillist.payAmount"></label></P>
+
+        <div v-if="isbuycart">
+            <div class="z-footer fixed-b">
+                <a class="q-a q-a-buy" href="javascript:;" @click="submitgoodslist">提交订单</a>
+            </div>
+        </div>
+        <div v-else="isbuycart">
+            <div>修改确认订单页</div>
+        </div>
+    </div>
+    <!-- 订单详情 -->
+    <div id="orderdetail" class="page out" style="background: #fff; padding-bottom: 2rem;">
+        <ul class="z-jg" style="border-top: 1rem solid #f8f8f8; margin-top: 0;">
+            <li class="z-hotspace clear" v-for="orderdetail in orderdetaillist.orderList">
+                <a href="javascript:;">
+                    <img class="pull-left" :src="url+orderdetail.goodsImg">
+                    <div class="right">
+                        <p class="p1 nowrap" v-html="orderdetail.goodsName"></p>
+                        <!--<p class="p2 nowrap">-->
+                        <!--<span>北京四中</span>-->
+                        <!--<span>好孩子老师</span>-->
+                        <!--</p>-->
+                        <p class="p3 nowrap"></p>
+                        <p class="p4 nowrap">
+                            <span class="pull-left fs14 red">￥<label v-html="orderdetail.payPrice"></label></span>
+                            <s v-html="orderdetail.payAmount">￥245</s>
+                        </p>
+                    </div>
+                </a>
+            </li>
+        </ul>
+        <P class="z-summation"><span>共<label v-html="orderdetaillist.totalCount"></label>件商品</span><label v-html="'合计：￥'+orderdetaillist.payAmount"></label></P>
+        <div>
+            <div class="z-order">
+                <p class="tit">订单信息</p>
+                <p v-if="orderdetaillist.payStatus == 1">订单状态：<label class="red">待支付</label></p>
+                <p v-if="orderdetaillist.payStatus == 2">订单状态：<label class="blue">已支付</label></p>
+                <p v-if="orderdetaillist.payStatus == 2">支付方式：<label v-if="orderdetaillist.payMethod == 1">支付宝</label><label v-if="orderdetaillist.payMethod == 2">微信</label></p>
+                <p v-if="orderdetaillist.payStatus == 2">支付时间：<label v-html="orderdetaillist.payTime"></label></p>
+                <p v-if="orderdetaillist.payStatus == 3">订单状态：<label>用户取消</label></p>
+                <p v-if="orderdetaillist.payStatus == 4">订单状态：<label>系统取消</label></p>
+                <p>订单号：<label v-html="orderdetaillist.orderNum"></label></p>
+                <p>下单时间：<label v-html="orderdetaillist.createTime"></label></p>
+                <p v-if="orderdetaillist.payStatus == 1">订单支付剩余时间：<label style="font-weight: bold;" v-html="validtime"></label></p>
+                <p v-show="orderdetaillist.payStatus == 3">关闭原因：<label v-html="orderdetaillist.cancelReason"></label></p>
+                <p v-show="orderdetaillist.payStatus == 4">关闭原因：<label v-html="orderdetaillist.cancelReason"></label></p>
+            </div>
+            <div class="z-footer fixed-b" v-if="orderdetaillist.payStatus == 1">
+                <a class="q-a q-a-buy" href="javascript:;" @click="cancelmyorder(orderdetaillist.orderId)">取消订单</a>
+                <a class="q-a q-a-buy" href="javascript:;" :data-num="orderdetaillist.orderNum" :data-orderid="orderdetaillist.orderId" :data-price="orderdetaillist.payAmount" :data-title="ordertitle" onclick="showpay($(this).attr('data-num'),$(this).attr('data-price'),$(this).attr('data-title'),$(this).attr('data-orderid'));">立即付款</a>
+                <!--<a class="q-a q-a-buy" href="javascript:showMask('#z-succeed');">成功</a>-->
+                <!--<a class="q-a q-a-buy" href="javascript:showMask('#z-failure');">失败</a>-->
+            </div>
+            <div class="z-footer fixed-b" v-if="orderdetaillist.payStatus == 3 || orderdetaillist.payStatus == 4">
+                <a class="q-a q-a-buy" href="javascript:;" @click="confirmorderdetail(goodsids)">重新购买</a>
+                <a class="q-a q-a-undo" href="javascript:;" @click="delmyorder(orderdetaillist.orderId)">删除订单</a>
+            </div>
+        </div>
+    </div>
+    <!-- 商品列表 -->
+    <div id="morecourse" class="page out">
+        <div class="z-screening" style="position: fixed;" v-show="goodstype == 'goods'">
+            <span class="screening">
+                <label>综合排序</label>
+                <i></i>
+                <ul class="ranking oselect">
+                    <!--<li>综合排序</li>-->
+                    <!--<li>人气榜</li>-->
+                    <li @click="setsort(2)">最新</li>
+                    <li @click="setsort(3)">价格由低到高</li>
+                    <li @click="setsort(4)">价格由高到低</li>
+                </ul>
+            </span>
+            <span class="screening filtergoods"><label>筛选</label><i></i>
+                <div class="filtrate oselect">
+                    <div class="filter-req directfilter">
+                        <p>学段</p>
+                        <div class="check clear">
+                            <label class="box"><a href="javascript:;" class="active nowrap">全部</a></label>
+                            <label class="box" v-for="stage in stagearr"><a href="javascript:;" class="nowrap" v-html="stage.relatename" :data-id="stage.id" :data-intid="stage.intid" @click="settype(3,stage.id)"></a></label>
+                        </div>
+                    </div>
+                    <div class="filter-req directfilter">
+                        <p>年级</p>
+                        <div class="check clear">
+                            <label class="box"><a href="javascript:;" class="active nowrap">全部</a></label>
+                            <label class="box" v-for="grade in gradearr"><a href="javascript:;" class="nowrap" v-html="grade.relatename" :data-id="grade.id" :data-intid="grade.intid" @click="settype(4,grade.id)"></a></label>
+                        </div>
+                    </div>
+                    <div class="filter-req directfilter">
+                        <p>学科</p>
+                        <div class="check clear">
+                            <label class="box"><a href="javascript:;" class="active nowrap">全部</a></label>
+                            <label class="box" v-for="subject in subjectarr"><a href="javascript:;" class="nowrap" v-html="subject.relatename" :data-id="subject.id" :data-intid="subject.intid" @click="settype(5,subject.id)"></a></label>
+                        </div>
+                    </div>
+                    <div class="filter-req directfilter">
+                        <p>版本</p>
+                        <div class="check clear">
+                            <label class="box"><a href="javascript:;" class="active nowrap">全部</a></label>
+                            <label class="box" v-for="version in versionarr"><a href="javascript:;" class="nowrap" v-html="version.relatename" :data-id="version.id" :data-intid="version.intid" @click="settype(6,version.id)"></a></label>
+                        </div>
+                    </div>
+                    <div class="filter-req directfilter">
+                        <p>子版本</p>
+                        <div class="check clear">
+                            <label class="box"><a href="javascript:;" class="active nowrap">全部</a></label>
+                            <label class="box" v-for="childversion in childversionarr"><a href="javascript:;" class="nowrap" v-html="childversion.relatename" :data-id="childversion.id" :data-intid="childversion.intid"></a></label>
+                        </div>
+                    </div>
+                    <div class="filter-req" style="border: none; margin-bottom: 4.8rem;">
+                        <p>价格区间</p>
+                        <div class="check clear">
+                            <input type="text" autocomplete="off" onkeyup="this.value=this.value.replace(/\D/gi,'');if(this.value.length>6){this.value = '';}" class="rmb" placeholder="￥"/>
+                            <span>至</span>
+                            <input type="text" autocomplete="off" onkeyup="this.value=this.value.replace(/\D/gi,'');if(this.value.length>6){this.value = '';}" class="rmb" placeholder="￥"/>
+                        </div>
+                    </div>
+                    <div class="bottom clear">
+                        <span class="reset" onclick="reset($(this));" @click="setreset"><u></u>重置</span>
+                        <span class="finish" @click="getfilter"><u></u>完成</span>
+                    </div>
+                </div>
+            </span>
+        </div>
+        <div class="z-screening zb-screen" style="position: fixed;" v-show="goodstype == 'live'">
+            <span class="screening">
+                <label>综合排序</label>
+                <i></i>
+                <ul class="ranking oselect" style="width: 36rem;">
+                    <!--<li>综合排序</li>-->
+                    <!--<li>人气榜</li>-->
+                    <li @click="setsort(2)">最新</li>
+                    <li @click="setsort(3)">价格由低到高</li>
+                    <li @click="setsort(4)">价格由高到低</li>
+                </ul>
+            </span>
+            <span class="screening">
+                <label>直播时间</label>
+                <i></i>
+                <ul class="ranking oselect zb-time" style="width: 300%; left: -100%;">
+                    <p><label>开始时间</label><input type="date" placeholder="2017-04-26"><i class="ico-timein"></i></p>
+                    <p><label>结束时间</label><input type="date" placeholder="2018-04-26"><i class="ico-timein"></i></p>
+                    <div class="p-btn">
+                        <button @click="settimelist">确定</button>
+                    </div>
+                </ul>
+            </span>
+            <span class="screening filtergoods filterlive"><label>筛选</label><i></i>
+                <div class="filtrate oselect" style="width: 300%; left: -200%;">
+                    <div class="filter-req directfilter">
+                        <p>学段</p>
+                        <div class="check clear">
+                            <label class="box"><a href="javascript:;" class="active nowrap">全部</a></label>
+                            <label class="box" v-for="stage in stagearr"><a href="javascript:;" class="nowrap" v-html="stage.relatename" :data-id="stage.id" :data-intid="stage.intid" @click="settype(3,stage.id)"></a></label>
+                        </div>
+                    </div>
+                    <div class="filter-req directfilter">
+                        <p>年级</p>
+                        <div class="check clear">
+                            <label class="box"><a href="javascript:;" class="active nowrap">全部</a></label>
+                            <label class="box" v-for="grade in gradearr"><a href="javascript:;" class="nowrap" v-html="grade.relatename" :data-id="grade.id" :data-intid="grade.intid" @click="settype(4,grade.id)"></a></label>
+                        </div>
+                    </div>
+                    <div class="filter-req directfilter">
+                        <p>学科</p>
+                        <div class="check clear">
+                            <label class="box"><a href="javascript:;" class="active nowrap">全部</a></label>
+                            <label class="box" v-for="subject in subjectarr"><a href="javascript:;" class="nowrap" v-html="subject.relatename" :data-id="subject.id" :data-intid="subject.intid" @click="settype(5,subject.id)"></a></label>
+                        </div>
+                    </div>
+                    <div class="filter-req directfilter">
+                        <p>版本</p>
+                        <div class="check clear">
+                            <label class="box"><a href="javascript:;" class="active nowrap">全部</a></label>
+                            <label class="box" v-for="version in versionarr"><a href="javascript:;" class="nowrap" v-html="version.relatename" :data-id="version.id" :data-intid="version.intid" @click="settype(6,version.id)"></a></label>
+                        </div>
+                    </div>
+                    <div class="filter-req directfilter">
+                        <p>子版本</p>
+                        <div class="check clear">
+                            <label class="box"><a href="javascript:;" class="active nowrap">全部</a></label>
+                            <label class="box" v-for="childversion in childversionarr"><a href="javascript:;" class="nowrap" v-html="childversion.relatename" :data-id="childversion.id" :data-intid="childversion.intid"></a></label>
+                        </div>
+                    </div>
+                    <div class="filter-req" style="border: none; margin-bottom: 4.8rem;">
+                        <p>价格区间</p>
+                        <div class="check clear">
+                            <input type="text" autocomplete="off" onkeyup="this.value=this.value.replace(/\D/gi,'')" class="rmb" placeholder="￥"/>
+                            <span>至</span>
+                            <input type="text" autocomplete="off" onkeyup="this.value=this.value.replace(/\D/gi,'')" class="rmb" placeholder="￥"/>
+                        </div>
+                    </div>
+                    <div class="bottom clear">
+                        <span class="reset" onclick="reset($(this));" @click="setreset"><u></u>重置</span>
+                        <span class="finish" @click="getfilter"><u></u>完成</span>
+                    </div>
+                </div>
+            </span>
+        </div>
+        <morecourselist-component :morecoursejson="coursejson" :scrollstatus="scrollstatus" :loading="loading" :nodata="nodata" :url="urlapi" :goodstype="goodstype"></morecourselist-component>
+        <div class="z-shade" onclick="closeoselect()"></div>
+    </div>
+    <!-- 搜索结果 -->
+    <div id="searchResult" class="page out">
+        <div class="coureseloading" v-if="loading"></div>
+        <div class="q-myorder" v-else-if="nodata">
+            <div class="q-myorder-k">
+                <img src="images/q-myorder-k.png">
+            </div>
+        </div>
+        <div v-else="nodata">
+            <!-- 教师搜索结果 -->
+            <div id="teachersearch" v-if="searchtype == 3">
+                <ul class="z-jg" style="margin-top: 0;">
+                    <li class="z-hotspace clear" :data-name="teacherlist.realName" onclick="agencyparticulars($(this));" v-for="teacherlist in teacherdata" @click="teacherparticulars(teacherlist.userId)">
+                        <a href="javascript:;">
+                            <img class="pull-left" :src="url+teacherlist.imgPath">
+                            <div class="right">
+                                <p class="p1 nowrap" v-html="teacherlist.realName"></p>
+                                <p class="p2 nowrap" v-html="teacherlist.unitName"></p>
+                                <p class="p3 nowrap"></p>
+                                <p class="p4 nowrap" v-html="'课程数：'+teacherlist.releasecoursesum"></p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                <p class="scrollloading" v-if="scrollstatus == 0" style="display: none;"></p>
+                <p class="scrollloading" v-if="scrollstatus == 1">正在加载中...</p>
+                <p class="scrollloading" v-if="scrollstatus == 2">没有更多了</p>
+            </div>
+            <!-- 机构搜索结果 -->
+            <div id="agencysearch" v-if="searchtype == 2">
+                <!-- <div class="z-tagArea">
+                    <span class="count active">课程数<i></i></span>
+                    <span class="count">销量<i></i></span>
+                </div> -->
+                <ul class="z-jg" style="margin-top: 0;">
+                    <li class="z-hotspace clear" :data-name="unitlist.unitName" onclick="agencyparticulars($(this))" v-for="unitlist in unitdata" @click="unitparticulars(unitlist.unitId,unitlist.studysum)">
+                        <img class="pull-left" :src="url+unitlist.unitLogo">
+                        <div class="right">
+                            <p class="p1 nowrap" v-html="unitlist.unitName"></p>
+                            <p class="p2 nowrap" v-html="'已发布'+unitlist.releasecoursesum+'个课程'"></p>
+                            <p class="p3 nowrap" v-html="'所在区域：'+unitlist.provinceCode+' '+unitlist.cityCode+' '+unitlist.countryCode"></p>
+                            <p class="p4 nowrap" v-html="unitlist.studysum+'个学生学过'"></p>
+                        </div>
+                    </li>
+                </ul>
+                <p class="scrollloading" v-if="scrollstatus == 0" style="display: none;"></p>
+                <p class="scrollloading" v-if="scrollstatus == 1">正在加载中...</p>
+                <p class="scrollloading" v-if="scrollstatus == 2">没有更多了</p>
+            </div>
+        </div>
+    </div>
+    <!-- 机构 教师详情页 -->
+    <div id="agencyparticulars" class="page out">
+        <!-- 教师 -->
+        <div v-if="detailstype == 1">
+            <div class="z-dis">
+                <div class="z-hotspace clear">
+                    <img class="pull-left" :src="url+Tdetailsdata.imgPath">
+                    <div class="right">
+                        <p class="p1 nowrap" v-html="Tdetailsdata.realName"></p>
+                        <p class="p2 nowrap" v-html="Tdetailsdata.unitName"></p>
+                        <p class="p3 nowrap" v-html="'已学习人数：'+num+'人'"></p>
+                        <p class="p4 nowrap" v-html="'课程数：'+Tdetailsdatag.totalRecord"></p>
+                    </div>
+                </div>
+                <div class="z-intro">
+                    <p style="opacity:0;" v-html="'简介：'+Tdetailsdata.intro"></p>
+                    <h3 class="unfold">展开</h3>
+                    <h3 class="packup">收起</h3>
+                </div>
+            </div>
+            <div class="z-screening">
+                <span class="screening">
+                    <label>综合排序</label>
+                    <i></i>
+                    <ul class="ranking oselect">
+                        <li @click="setsort(typeid,2)">最新</li>
+                        <li @click="setsort(typeid,3)">价格由低到高</li>
+                        <li @click="setsort(typeid,4)">价格由高到低</li>
+                    </ul>
+                </span>
+                <span class="screening filterteacher">筛选<i></i>
+                    <div class="filtrate oselect">
+                        <div class="filter-req" style="border: none;">
+                            <p>价格区间</p>
+                            <div class="check clear">
+                                <input type="text" autocomplete="off" onkeyup="this.value=this.value.replace(/\D/gi,'')" class="rmb" placeholder="￥"/>
+                                <span>至</span>
+                                <input type="text" autocomplete="off" onkeyup="this.value=this.value.replace(/\D/gi,'')" class="rmb" placeholder="￥"/>
+                            </div>
+                        </div>
+                        <div class="bottom clear" style="position: relative; top: 0;">
+                            <span class="reset" onclick="reset($(this));" @click="setreset"><u></u>重置</span>
+                            <span class="finish" @click="getteacherfilter"><u></u>完成</span>
+                        </div>
+                    </div>
+                </span>
+            </div>
+            <div class="q-myorder" style="position: relative; z-index: -1; margin-top: 20px;" v-if="nochildlist">
+                <div class="q-myorder-k">
+                    <img src="images/q-myorder-k.png">
+                </div>
+            </div>
+            <ul class="z-jg" v-if="!nochildlist">
+                <li class="z-hotspace clear" v-for="courselist in TdetailsdatagL" @click="getgoodsdetail(courselist.goodsId)">
+                    <a href="#&q-goods" :data-name="courselist.goodsName" onclick="setTitle($(this).attr('data-name'),'99');">
+                        <img class="pull-left" :src="url+courselist.goodsImg">
+                        <div class="right">
+                            <p class="p1 nowrap" v-html="courselist.goodsName"></p>
+                            <p class="p2 nowrap">
+                                <span  v-html="Tdetailsdata.unitName"></span>
+                                <span v-html="Tdetailsdata.realName"></span>
+                            </p>
+                            <p class="p3 nowrap" v-html="courselist.coursesyncSubtype.coursehour+'课时'"></p>
+                            <p class="p4 nowrap">
+                                <span class="pull-left fs14 red" v-html="'￥'+courselist.goodsDiscountPrice" v-if="courselist.goodsDiscountPrice != null"></span>
+                                <span class="pull-left fs14 red" v-html="'￥'+courselist.goodsPrice" v-else="courselist.goodsDiscountPrice != null"></span>
+                                <s v-html="'￥'+courselist.goodsPrice" v-if="courselist.goodsDiscountPrice != null"></s>
+                                <span class="pull-right" v-html="courselist.buycount+'人在学'"></span>
+                            </p>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+            <div class="z-shade" onclick="closeoselect()"></div>
+        </div>
+        <!-- 机构 -->
+        <div v-if="detailstype == 2">
+            <div class="z-dis">
+                <div class="z-hotspace clear">
+                    <img class="pull-left" :src="url+unitdata.unitLogo">
+                    <div class="right">
+                        <p class="p1 nowrap" v-html="unitdata.unitName"></p>
+                        <p class="p2 nowrap" v-html="'所在区域：'+unitdata.country.fullName"></p>
+                        <p class="p3 nowrap" v-html="'已发布'+unitdatac.totalRecord+'个课程'"></p>
+                        <p class="p4 nowrap" v-html="num+'学生学过'"></p>
+                    </div>
+                </div>
+                <div class="z-intro" v-if="unitdata.unitDes != 'null'">
+                    <p style="opacity:0;" v-html="'简介：'+unitdata.unitDes"></p>
+                    <h3 class="unfold">展开</h3>
+                    <h3 class="packup">收起</h3>
+                </div>
+            </div>
+            <div class="z-screening">
+                <span class="screening">
+                    <label>综合排序</label><i></i>
+                    <ul class="ranking oselect">
+                        <li @click="setsort(typeid,2)">最新</li>
+                        <li @click="setsort(typeid,3)">价格由低到高</li>
+                        <li @click="setsort(typeid,4)">价格由高到低</li>
+                    </ul>
+                </span>
+                <span class="screening filterunit">筛选<i></i>
+                    <div class="filtrate oselect">
+                        <div class="filter-req directfilter">
+                            <p>学段</p>
+                            <div class="check clear">
+                                <label class="box"><a href="javascript:;" class="active nowrap">全部</a></label>
+                                <label class="box" v-for="stage in stagearr"><a href="javascript:;" class="nowrap" v-html="stage.relatename" :data-id="stage.id" :data-intid="stage.intid" @click="settype(3,stage.id)"></a></label>
+                            </div>
+                        </div>
+                        <div class="filter-req directfilter">
+                            <p>年级</p>
+                            <div class="check clear">
+                                <label class="box"><a href="javascript:;" class="active nowrap">全部</a></label>
+                                <label class="box" v-for="grade in gradearr"><a href="javascript:;" class="nowrap" v-html="grade.relatename" :data-id="grade.id" :data-intid="grade.intid" @click="settype(4,grade.id)"></a></label>
+                            </div>
+                        </div>
+                        <div class="filter-req directfilter">
+                            <p>学科</p>
+                            <div class="check clear">
+                                <label class="box"><a href="javascript:;" class="active nowrap">全部</a></label>
+                                <label class="box" v-for="subject in subjectarr"><a href="javascript:;" class="nowrap" v-html="subject.relatename" :data-id="subject.id" :data-intid="subject.intid" @click="settype(5,subject.id)"></a></label>
+                            </div>
+                        </div>
+                        <div class="filter-req" style="border: none; margin-bottom: 4.8rem;">
+                            <p>价格区间</p>
+                            <div class="check clear">
+                                <input type="text" autocomplete="off" onkeyup="this.value=this.value.replace(/\D/gi,'')" class="rmb" placeholder="￥"/>
+                                <span>至</span>
+                                <input type="text" autocomplete="off" onkeyup="this.value=this.value.replace(/\D/gi,'')" class="rmb" placeholder="￥"/>
+                            </div>
+                        </div>
+                        <div class="bottom clear">
+                            <span class="reset" onclick="reset($(this));" @click="setreset"><u></u>重置</span>
+                            <span class="finish" @click="getunitfilter"><u></u>完成</span>
+                        </div>
+                    </div>
+                </span>
+            </div>
+            <div class="q-myorder" style="position: relative; z-index: -1; margin-top: 20px;" v-if="nochildlist">
+                <div class="q-myorder-k">
+                    <img src="images/q-myorder-k.png">
+                </div>
+            </div>
+            <ul class="z-jg" v-if="!nochildlist">
+                <li class="z-hotspace clear" v-for="courselist in unitdatal" @click="getgoodsdetail(courselist.goodsId)">
+                    <a href="#&q-goods" :data-name="courselist.goodsName" onclick="setTitle($(this).attr('data-name'),'99');">
+                        <img class="pull-left" :src="url+courselist.goodsImg">
+                        <div class="right">
+                            <p class="p1 nowrap" v-html="courselist.goodsName"></p>
+                            <p class="p2 nowrap">
+                                <span  v-html="unitdata.unitName"></span>
+                            </p>
+                            <p class="p3 nowrap" v-html="courselist.coursesyncSubtype.stagename + ' ' + courselist.coursesyncSubtype.subjectname + ' ' + courselist.coursesyncSubtype.coursehour+'课时'"></p>
+                            <p class="p4 nowrap">
+                                <span class="pull-left fs14 red" v-html="'￥'+courselist.goodsDiscountPrice" v-if="courselist.goodsDiscountPrice != null"></span>
+                                <span class="pull-left fs14 red" v-html="'￥'+courselist.goodsPrice" v-else="courselist.goodsDiscountPrice != null"></span>
+                                <s v-html="'￥'+courselist.goodsPrice" v-if="courselist.goodsDiscountPrice != null"></s>
+                                <span class="pull-right" v-html="courselist.buycount+'人在学'"></span>
+                            </p>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+            <div class="z-shade" onclick="closeoselect()"></div>
+        </div>
+    </div>
+    <!-- 商品详情 -->
+    <div id="q-goods" style="background: #fff;" class="page out">
+        <div class="coureseloading" v-if="loading"></div>
+        <div class="q-course" v-else="loading">
+            <div class="q-play" id="goodsScriptvideoid">
+                <img :src="urlapi+goodsdetailjson.goods.goodsImg" width="100%" height="100%" />
+                <div class="q-study" v-if="isbuy == 1 && detailtype == 'goods'" @click="getvideoparam">
+                    <p>开始学习</p>
+                    <u></u>
+                </div>
+            </div>
+
+            <div class="q-course-title">
+                <div>
+                    <h1 class="q-title-h1"><label v-html="goodsdetailjson.goods.goodsName"></label><span v-if="detailtype == 'goods'" class="r q-title-p" v-html="goodsdetailjson.classHourCount+'课时'"></span></h1>
+                    <p class="q-title-p" v-show="detailtype == 'goods'" v-html="goodsdetailjson.goods.goodsTag"></p>
+                    <p class="q-title-p" v-show="detailtype == 'goods'">课程分类：<label v-html="goodsdetailjson.goods.goodscategoryName"></label></p>
+                    <p class="q-title-p" v-show="detailtype == 'goods'">好评度：<span class="q-star s4"></span></p>
+                    <p class="q-title-p" v-show="detailtype == 'livegoods'" v-html="coursejson.courseSyncStageTitle +'>'+ coursejson.courseSyncGradeTitle +'>'+ coursejson.courseSyncSubjectTitle +'>'+ coursejson.courseSyncVersionTitle +'>'+ coursejson.courseSyncSubversionTitle"></p>
+                    <p class="q-title-p" v-show="detailtype == 'livegoods'">主讲老师：<label v-for="teacher in courseteacher" v-html="teacher.teacherName + ' '"></label><span class="r q-star s4" style="margin-top: 6px;"></span></p>
+                    <p class="q-title-p" v-show="detailtype == 'livegoods'">直播次数：<label v-html="goodsdetailjson.playcout + '次'"></label></p>
+                    <p class="q-title-p" v-show="detailtype == 'livegoods'">报名时间：{{courselivejson.signupStartTime | substr(0,10)}} — {{courselivejson.signupEndTime | substr(0,10)}}</p>
+                    <p class="q-title-p" v-show="detailtype == 'livegoods'">直播时间：{{goodsdetailjson.classRoomStartTime | substr(0,16)}}</p>
+                    <p class="q-title-p" v-show="detailtype == 'livegoods'">课程有效期：{{courselivejson.validEndTime | substr(0,16)}}</p>
+                    <p class="q-title-p" v-show="detailtype == 'livegoods'">课程标签：<label v-html="coursejson.courseTag"></label></p>
+                    <p class="q-title-p" v-if="goodsdetailjson.goods.goodsDiscountPrice">
+                        <s v-html="'￥'+goodsdetailjson.goods.goodsPrice"></s>
+                        <span class="q-span-price">￥<b v-html="goodsdetailjson.goods.goodsDiscountPrice"></b></span>
+                        <span class="r" v-if="detailtype == 'goods'" v-html="'购买人数：'+goodsdetailjson.studyCount+'人'"></span>
+                        <span class="r" v-if="detailtype == 'livegoods'" v-html="'人数：'+goodsdetailjson.goods.buyCount+'/'+courselivejson.allowedNumber"></span>
+                    </p>
+                    <p class="q-title-p" v-else="goodsdetailjson.goods.goodsDiscountPrice">
+                        <span class="q-span-price">￥<b v-html="goodsdetailjson.goods.goodsPrice"></b></span>
+                        <span class="r" v-if="detailtype == 'goods'" v-html="'购买人数：'+goodsdetailjson.studyCount+'人'"></span>
+                        <span class="r" v-if="detailtype == 'livegoods'" v-html="'人数：'+goodsdetailjson.goods.buyCount+'/'+courselivejson.allowedNumber"></span>
+                    </p>
+                </div>
+            </div>
+            <div class="q-course-tab">
+                <a href="#" @click="getcoursedesc" :class="{'active': tabshow == 1}">课程介绍</a>
+                <a href="#" @click="getdirectjson" :class="{'active': tabshow == 2}">课程目录</a>
+                <a href="#" @click="getcommentall" :class="{'active': tabshow == 3}">学员评论<em v-html="'('+commentcount+')'"></em></a>
+            </div>
+            <div class="q-course-cont">
+                <div class="q-course-list" v-show="tabshow == 1">
+                    <div class="q-coures-txt">
+                        <p v-html="goodsdetailjson.goods.goodsDesc"></p>
+                    </div>
+                </div>
+                <div class="q-course-list" v-show="tabshow == 2">
+                    <coursedirect-component :directjson="coursedirectjson" :isbuy="isbuy" :type="detailtype"></coursedirect-component>
+                </div>
+                <div class="q-course-list" v-show="tabshow == 3">
+                    <coursecomment-component :commentjson="coursecommentjson" :commentlabel="coursecommentlabel" :commentscore="coursecommentscore" :url="urlapi"></coursecomment-component>
+                </div>
+            </div>
+            <!-- 已购买 -->
+            <div class="q-course-comment" :data-title="goodsdetailjson.goods.goodsName" onclick="evaluation($(this))" @click="turncomment" v-if="goodsdetailjson.isBuy == 1">
+                <em></em>
+                <span>课程评价</span>
+            </div>
+            <!-- 未购买 -->
+            <div class="q-course-buy" v-if="goodsdetailjson.isBuy == 0">
+                <a href="javascript:;" class="q-a-buy q-a" @click="confirmorderdetail(goodsdetailjson.goods.goodsName)">立即购买</a>
+                <a href="#" class="q-a-cart q-a" @click="insertbuycart(goodsdetailjson.goods.goodsId)">加入购物车</a>
+            </div>
+
+        </div>
+    </div>
+    <!-- 课程详情 -->
+    <div id="q-course" style="background: #fff;" class="page out">
+        <div class="coureseloading" v-if="loading"></div>
+        <div class="q-course" v-else="loading">
+            <div class="q-play" id="courseScriptvideoid">
+                <img :src="urlapi+coursedetailjson.courseImg" width="100%" height="100%" />
+                <div class="q-study" @click="getvideoparam">
+                    <p>开始学习</p>
+                    <u></u>
+                </div>
+            </div>
+            <div class="q-course-title">
+
+                <div>
+                    <h1 class="q-title-h1"><label v-html="coursedetailjson.courseName"></label><span class="r q-title-p" v-html="coursedetailjson.classHourCount+'课时'"></span></h1>
+                    <p class="q-title-p">好评度：<span :class="'q-star s'+coursedetailjson.copyrightBelongsType"></span></p>
+                    <p class="q-title-p">
+                        <!--<s v-html="'￥'+coursedetailjson.goodsPrice"></s>-->
+                        <!--<span class="q-span-price">￥<b v-html="coursedetailjson.goodsDiscountPrice"></b></span>-->
+                        <span class="r" v-html="'购买人数：'+coursedetailjson.studyCount+'人'"></span>
+                    </p>
+                </div>
+
+            </div>
+            <div class="q-course-tab">
+                <a href="#" @click="getcoursedesc" :class="{'active': tabshow == 1}">课程介绍</a>
+                <a href="#" @click="getdirectjson" :class="{'active': tabshow == 2}">课程目录</a>
+                <a href="#" @click="getcommentall" :class="{'active': tabshow == 3}">学员评论<em v-html="'('+commentcount+')'"></em></a>
+            </div>
+            <div class="q-course-cont">
+                <div class="q-course-list" v-show="tabshow == 1">
+                    <div class="q-coures-txt">
+                        <p v-html="coursedetailjson.courseDesc"></p>
+                    </div>
+                </div>
+                <div class="q-course-list" v-show="tabshow == 2">
+                    <coursedirect-component :directjson="coursedirectjson" :type="detailtype"></coursedirect-component>
+                </div>
+                <div class="q-course-list" v-show="tabshow == 3">
+                    <coursecomment-component :commentjson="coursecommentjson" :commentlabel="coursecommentlabel" :commentscore="coursecommentscore" :url="urlapi"></coursecomment-component>
+                </div>
+            </div>
+            <!-- 已购买 -->
+            <div class="q-course-comment" :data-title="coursedetailjson.courseName" onclick="evaluation($(this));" @click="turncomment">
+                <em></em>
+                <span>课程评价</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 课程评价 -->
+    <div id="q-evaluate" class="page out">
+        <div class="coureseloading" v-if="loading"></div>
+        <div v-else="loading">
+            <div class="q-my-evaluate" v-if="!iscomment">
+                <h1>请为该课程打分：</h1>
+                <div class="q-evaluate-star">
+                        <span class="q-star s0">
+                            <a href="#"></a>
+                            <a href="#"></a>
+                            <a href="#"></a>
+                            <a href="#"></a>
+                            <a href="#"></a>
+                        </span>
+                </div>
+                <div class="q-evaluate-tab clearfix">
+                    <a href="#" v-for="labellist in coursecommentlabel" :data-id="labellist.lableId"><label v-html="labellist.name"></label></a>
+                </div>
+            </div>
+            <div class="q-evaluate">
+                <textarea placeholder="请输入评论内容" maxlength="220"></textarea>
+                <span>你最多可输入<em id="number">220</em>字</span>
+            </div>
+            <input type="button" value="提交" @click="submitcomment">
+        </div>
+    </div>
+
+    <!-- 选择支付方式 -->
+    <div id="z-payment" class="z-tck">
+        <div class="cons">
+            <p class="tit"><i class="closeA"></i>选择支付方式</p>
+            <div class="payment clear">
+                <a href="javascript:;" class="zfb"><i></i><br/>支付宝</a>
+                <a href="javascript:;" class="wx"><i></i><br/>微信</a>
+            </div>
+            <div class="hint">
+                <p class="p1">请在24小时之内完成支付</p>
+                <p>超出24小时再支付可能导致购买失败，需要重新下单购买</p>
+            </div>
+        </div>
+    </div>
+    <!-- 成功 -->
+    <div id="z-succeed" class="z-tck">
+        <div class="cons">
+            <div class="succeed">
+                <p><i></i><br/>课程购买成功！</p>
+            </div>
+            <div class="bottom-btn clear">
+                <a class="q-a q-a-blue" href="javascript:;">立即学习</a>
+                <a class="q-a q-a-undo closeA" href="javascript:;">关闭</a>
+            </div>
+        </div>
+    </div>
+    <!-- 失败 -->
+    <div id="z-failure" class="z-tck">
+        <div class="cons">
+            <div class="failure">
+                <p><i></i><br/>课程购买失败！</p>
+            </div>
+            <div class="bottom-btn clear">
+                <a class="q-a q-a-red" href="javascript:;">重新支付</a>
+                <a class="q-a q-a-undo closeA" href="javascript:;">取消订单</a>
+            </div>
+        </div>
+    </div>
+
+    <!--组件开始-->
+
+    <!--课程列表-->
+    <template id="courselist">
+        <div class="coureseloading" v-if="loading"></div>
+        <div class="q-myorder" v-else-if="nodata">
+            <div class="q-myorder-k">
+                <img src="images/q-myorder-k.png">
+            </div>
+        </div>
+        <div class="z-content" v-else="nodata">
+            <ul class="z-jg">
+                <a href="#&q-course" :data-name="course.courseName" onclick="setTitle($(this).attr('data-name'),'99');setbacktitle('我购买的课程','99','mycourses')" v-for="course in coursejson" v-if="coursetype=='course'">
+                    <li class="z-hotspace clear" @click="getdetail(course.courseId,course.goodsId)">
+                        <img class="pull-left" :src="url+course.courseImg">
+                        <div class="right">
+                            <p class="p1 nowrap" v-html="course.courseName"></p>
+                            <p class="p2 nowrap">
+                                <span v-html="course.copyrightBelongsName"></span>
+                            </p>
+                            <p class="p3 nowrap"><span v-html="'所属商品：'+course.goodsName"></span></p>
+                            <p class="p4 nowrap">
+                                <span class="pull-left"><label v-html="course.classHourCount"></label>课时</span>
+                            </p>
+                        </div>
+                    </li>
+                </a>
+                <a href="#&q-goods" :data-name="course.goodsName" onclick="setTitle($(this).attr('data-name'),'99');setbacktitle('我购买的课程','99','mycourses')" v-for="course in coursejson" v-if="coursetype=='live'">
+                    <li class="z-hotspace clear" @click="getlivegoodsdetail(course.goodsId,course.courseid)">
+                        <img class="pull-left" :src="url+course.goodsImg">
+                        <div class="right">
+                            <p class="p1 nowrap" v-html="course.goodsName"></p>
+                            <p class="p2 nowrap">
+                                <span v-html="'主讲：'+course.courseteachers"></span>
+                            </p>
+                            <p class="p3 nowrap" v-if="course.classroomStartTime">
+                                <span v-html="'直播时间：'+course.classroomStartTime"></span>
+                            </p>
+                        </div>
+                    </li>
+                </a>
+            </ul>
+            <p class="scrollloading" v-if="scrollstatus == 0" style="display: none;"></p>
+            <p class="scrollloading" v-if="scrollstatus == 1">正在加载中...</p>
+            <p class="scrollloading" v-if="scrollstatus == 2">没有更多了</p>
+        </div>
+    </template>
+
+    <!--商品列表-->
+    <template id="morecourselist">
+        <div class="coureseloading" v-if="loading"></div>
+        <div class="q-myorder" v-else-if="nodata">
+            <div class="q-myorder-k">
+                <img src="images/q-myorder-k.png">
+            </div>
+        </div>
+        <div class="z-content" v-else="nodata">
+            <ul class="z-jg" style="margin-top: 5.8rem;">
+                <a href="javascript:;" :data-name="goods.goodsName" onclick="goodsDetails($(this));" v-for="goods in morecoursejson">
+                    <li class="z-hotspace clear" @click="getgoodsdetail(goods.goodsId,goods.courseid)">
+                        <img class="pull-left" :src="url+goods.goodsImg">
+                        <div class="right">
+                            <p class="p1 nowrap" v-html="goods.goodsName"></p>
+                            <p class="p2 nowrap" v-if="goodstype == 'goods'">
+                                <span v-html="goods.coursesyncSubtype.stagename+' '+goods.coursesyncSubtype.subjectname+' '+goods.coursesyncSubtype.coursehour+'课时'"></span>
+                            </p>
+                            <p class="p2 nowrap" v-if="goodstype == 'live'">
+                                <span v-html="'主讲：'+goods.courseteachers"></span>
+                            </p>
+                            <p class="p2 nowrap" v-if="goodstype == 'live'">
+                                <span v-html="'直播时间：'+goods.classroomStartTime"></span>
+                            </p>
+                            <p class="p3 nowrap" v-if="goodstype == 'goods'"><span v-html="goods.coursesyncSubtype.belongsname"></span></p>
+                            <p class="p4 nowrap">
+                                <span class="pull-left fs14 red">￥
+                                    <label v-html="goods.goodsDiscountPrice" v-if="goods.goodsDiscountPrice != null"></label>
+                                    <label v-html="goods.goodsPrice" v-else="goods.goodsDiscountPrice != null"></label>
+                                </span>
+                                <span class="pull-right" v-if="goodstype == 'goods'"><label v-html="goods.buycount"></label>人在学</span>
+                                <span class="pull-right" v-if="goodstype == 'live'"><label v-html="goods.buycount"></label>人购买</span>
+                            </p>
+                        </div>
+                    </li>
+                </a>
+            </ul>
+            <p class="scrollloading" v-if="scrollstatus == 0" style="display: none;"></p>
+            <p class="scrollloading" v-if="scrollstatus == 1">正在加载中...</p>
+            <p class="scrollloading" v-if="scrollstatus == 2">没有更多了</p>
+        </div>
+    </template>
+
+    <!--课程目录列表-->
+    <template id="coursedirect">
+        <div class="q-course-catalog">
+            <div v-for="coursedirect in directjson" v-if="type != 'livegoods'">
+                <h1 class="q-catalog-h1" v-if="type == 'course'">
+                    <div v-if="coursedirect.videoId == null">
+                        <label v-html="coursedirect.courseBodyName"></label>
+                        <span class="r"><a href="javascript:;" class="catalogmore active" onclick="catalogmore($(this));"></a></span>
+                    </div>
+                    <div v-else="coursedirect.videoId == null" @click="getgoodsvideo(coursedirect.videoCcId, coursedirect.studyStatus, coursedirect.lastStudyTime, coursedirect.courseBodyId, 1, coursedirect.courseId, coursedirect.courseBodyName)">
+                        <p class="r">
+                            <em v-if="coursedirect.studyStatus == 1">未学</em>
+                            <em v-if="coursedirect.studyStatus == 2" class="active">学习中</em>
+                            <em v-if="coursedirect.studyStatus == 3">已学</em>
+                            <label v-html="coursedirect.lastStudyFormatTime"></label>/<label v-html="coursedirect.videoFormatTime"></label>
+                        </p>
+                        <label v-html="coursedirect.courseBodyName" class="nowrap" style="display: block;"></label>
+                    </div>
+                </h1>
+                <h1 class="q-catalog-h1" v-if="isbuy == 0">
+                    <div v-if="coursedirect.videoId == null">
+                        <label v-html="coursedirect.courseBodyName"></label>
+                        <span class="r"><a href="javascript:;" class="catalogmore active" onclick="catalogmore($(this));"></a></span>
+                    </div>
+                    <div v-else="coursedirect.videoId == null" @click="getgoodsvideo(coursedirect.videoCcId, 4, 0, coursedirect.courseBodyId, coursedirect.isListening, coursedirect.courseId, coursedirect.courseBodyName)">
+                        <p class="r" v-if="coursedirect.isListening == 1">
+                            <em class="active">试听</em>
+                            <label v-html="coursedirect.lastStudyFormatTime"></label>/<label v-html="coursedirect.videoFormatTime"></label>
+                        </p>
+                        <label v-html="coursedirect.courseBodyName" class="nowrap" style="display: block;"></label>
+                    </div>
+                </h1>
+                <h1 class="q-catalog-h1" v-if="isbuy == 1">
+                    <div v-if="coursedirect.videoId == null">
+                        <label v-html="coursedirect.courseBodyName"></label>
+                        <span class="r"><a href="javascript:;" class="catalogmore active" onclick="catalogmore($(this));"></a></span>
+                    </div>
+                    <div v-else="coursedirect.videoId == null" @click="getgoodsvideo(coursedirect.videoCcId, coursedirect.studyStatus, coursedirect.lastStudyTime, coursedirect.courseBodyId, 1, coursedirect.courseId, coursedirect.courseBodyName)">
+                        <p class="r">
+                            <em v-if="coursedirect.studyStatus == 1">未学</em>
+                            <em v-if="coursedirect.studyStatus == 2" class="active">学习中</em>
+                            <em v-if="coursedirect.studyStatus == 3">已学</em>
+                            <label v-html="coursedirect.lastStudyFormatTime"></label>/<label v-html="coursedirect.videoFormatTime"></label>
+                        </p>
+                        <label v-html="coursedirect.courseBodyName" class="nowrap" style="display: block;"></label>
+                    </div>
+                </h1>
+                <ul style="display: block" class="q-catalog-ul">
+                    <li v-for="childcourse in coursedirect.childCourseBody" :class="{'active': childcourse.studyStatus == 2 || childcourse.isListening == 1}">
+                        <a href="javascript:;" v-if="type == 'course'" @click="getgoodsvideo(childcourse.videoCcId, childcourse.studyStatus, childcourse.lastStudyTime, childcourse.courseBodyId, 1, childcourse.courseId, childcourse.courseBodyName)">
+                            <span class="r">
+                                <em v-if="childcourse.studyStatus == 1">未学</em>
+                                <em v-if="childcourse.studyStatus == 2">学习中</em>
+                                <em v-if="childcourse.studyStatus == 3">已学</em>
+                                <label v-html="childcourse.lastStudyFormatTime"></label>/<label v-html="childcourse.videoFormatTime"></label>
+                            </span>
+                            <label v-html="childcourse.courseBodyName" class="nowrap" style="display: block;"></label>
+                        </a>
+                        <a href="javascript:;" v-if="isbuy == 0" @click="getgoodsvideo(childcourse.videoCcId, 4, 0, childcourse.courseBodyId, childcourse.isListening, childcourse.courseId, childcourse.courseBodyName)">
+                            <span class="r">
+                                <em v-if="childcourse.isListening == 1">试听</em>
+                                <label v-html="childcourse.lastStudyFormatTime"></label>/<label v-html="childcourse.videoFormatTime"></label>
+                            </span>
+                            <label v-html="childcourse.courseBodyName" class="nowrap" style="display: block;"></label>
+                        </a>
+                        <a href="javascript:;" v-if="isbuy == 1" @click="getgoodsvideo(childcourse.videoCcId, childcourse.studyStatus, childcourse.lastStudyTime, childcourse.courseBodyId, 1, childcourse.courseId, childcourse.courseBodyName)">
+                            <span class="r">
+                                <em v-if="childcourse.studyStatus == 1">未学</em>
+                                <em v-if="childcourse.studyStatus == 2">学习中</em>
+                                <em v-if="childcourse.studyStatus == 3">已学</em>
+                                <label v-html="childcourse.lastStudyFormatTime"></label>/<label v-html="childcourse.videoFormatTime"></label>
+                            </span>
+                            <label v-html="childcourse.courseBodyName" class="nowrap" style="display: block;"></label>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div v-for="coursedirect in directjson" v-if="type == 'livegoods' && isbuy == 0">
+                <h1 class="q-catalog-h1">
+                    <div>
+                        <label v-html="coursedirect.courseBodyName"></label>
+                        <span class="r"><a href="javascript:;" class="catalogmore active" onclick="catalogmore($(this));"></a></span>
+                    </div>
+                </h1>
+                <ul style="display: block" class="q-catalog-ul">
+                    <li :class="{'active': childcourse.isListening == 1}" v-for="childcourse in coursedirect.childCourseBody">
+                        <a href="javascript:;" v-if="childcourse.isListening == 1" @click="getgoodsvideo(childcourse.videoCcId, 2, childcourse.lastStudyTime, childcourse.courseBodyId, 1, childcourse.courseId, childcourse.courseBodyName)">
+                            <span class="r">
+                                <em>试听</em>
+                                <label v-html="childcourse.classroomStartTime"></label>
+                            </span>
+                            <label v-html="childcourse.courseBodyName" class="nowrap" style="display: block;"></label>
+                        </a>
+                        <a href="javascript:;" v-if="childcourse.isListening == 0">
+                            <span class="r">
+                                <em></em>
+                                <label v-html="childcourse.classroomStartTime"></label>
+                            </span>
+                            <label v-html="childcourse.courseBodyName"></label>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div v-for="coursedirect in directjson" v-if="type == 'livegoods' && isbuy == 1">
+                <h1 class="q-catalog-h1">
+                    <div>
+                        <label v-html="coursedirect.courseBodyName"></label>
+                        <span class="r"><a href="javascript:;" class="catalogmore active" onclick="catalogmore($(this));"></a></span>
+                    </div>
+                </h1>
+                <ul style="display: block" class="q-catalog-ul">
+                    <li class="active" v-for="childcourse in coursedirect.childCourseBody">
+                        <a href="javascript:;" v-if="childcourse.isOwnVideo != 0 && childcourse.isOwnVideo != null" @click="getgoodsvideo(childcourse.videoCcId, 2, childcourse.lastStudyTime, childcourse.courseBodyId, 1, childcourse.courseId, childcourse.courseBodyName)">
+                            <span class="r">
+                                <em>播放</em>
+                                <label v-html="childcourse.lastStudyFormatTime"></label>/<label v-html="childcourse.videoFormatTime"></label>
+                            </span>
+                            <label v-html="childcourse.courseBodyName" class="nowrap" style="display: block;"></label>
+                        </a>
+                        <a href="javascript:;" v-if="childcourse.liveStudyStatus == 3 && childcourse.isLive == 2" @click="gotoplayback(childcourse.courseBodyId)">
+                            <span class="r">
+                                <em>课堂回顾</em>
+                                <label v-html="childcourse.lastStudyFormatTime"></label>/<label v-html="childcourse.videoFormatTime"></label>
+                            </span>
+                            <label v-html="childcourse.courseBodyName" class="nowrap" style="display: block;"></label>
+                        </a>
+                        <a href="javascript:;" v-if="childcourse.liveStudyStatus == 2 && childcourse.isLive == 2" @click="gotolive(childcourse.courseBodyId)">
+                            <span class="r">
+                                <em>进入课堂</em>
+                                <label v-html="childcourse.lastStudyFormatTime"></label>/<label v-html="childcourse.videoFormatTime"></label>
+                            </span>
+                            <label v-html="childcourse.courseBodyName" class="nowrap" style="display: block;"></label>
+                        </a>
+                        <a href="javascript:;" v-if="childcourse.liveStudyStatus == 1 && childcourse.isLive == 2" @click="gotolive(childcourse.courseBodyId)">
+                            <span class="r">
+                                <em>未开课</em>
+                                <label v-html="childcourse.lastStudyFormatTime"></label>/<label v-html="childcourse.videoFormatTime"></label>
+                            </span>
+                            <label v-html="childcourse.courseBodyName" class="nowrap" style="display: block;"></label>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </template>
+
+    <!--评论评价组件-->
+    <template id="coursecomment">
+        <div>
+            <div class="q-my-evaluate">
+                <h1>我的评价：<label></label></h1>
+                <div class="q-evaluate-star">
+                    <span :class="'q-star s'+commentscore"></span>
+                </div>
+                <div class="q-evaluate-tab clearfix">
+                    <a href="#" :class="{'active': labellist.isUserEvaluate == 1}" v-for="labellist in commentlabel">
+                        <label v-html="labellist.name"></label>
+                        <span>(<label v-html="labellist.times"></label>)</span>
+                    </a>
+                </div>
+            </div>
+            <div class="q-evaluate-txt">
+                <ul>
+                    <li v-for="commentlist in commentjson">
+                        <div class="q-evaluate-user"><img :src="url+commentlist.imgPath"> <span v-html="commentlist.createUserName"></span></div>
+                        <p class="q-evaluate-p" v-html="commentlist.commentContent"></p>
+                        <div class="q-evaluate-t"><span class="l" v-html="commentlist.createTime"></span><span :class="{'r q-fabulous_active': commentlist.isUserVote == 1,'r q-fabulous': commentlist.isUserVote != 1}" :id="commentlist.commentId" @click="giveliked(commentlist.commentId)"><em></em>(<label v-html="commentlist.upvoteNum"></label>)</span></div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </template>
+
+
+    <script src="js/setmodal.js"></script>
+
+    <!--组件结束-->
+<script type="text/javascript" src="js/router.js"></script>
+<script>
+    //轮播
+    var swiper = new Swiper('.swiper-container', {
+        pagination: '.swiper-pagination',
+        paginationClickable: true,
+        spaceBetween: 30,
+        autoplay : 3000,
+        loop: true
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+	<style type="text/css">
+	div{
+		font-size: 30px;
+	}
+	</style>
+</head>
+<body>
+	<div class="wpy">
+		<p>未批阅</p>
+	</div>
+	<div class="wtj">
+		<p>未提交</p>
+	</div>
+	<div class="ywc">
+		<p>已完成</p>
+	</div>
+</body>
+<script type="text/javascript">
+	//获取地址栏参数
+	$.getUrlParam = function(name){
+		var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");    //正则？？？？！！！
+		var r = window.location.search.substr(1).match(reg);     // substr( ) 抽取字符    match() 匹配
+		if (r!=null) return unescape(r[2]); return null;        //unescape() 函数可对通过 escape() 编码的字符串进行解码。
+	};
+	if ($.getUrlParam('apiurl')) {
+	    apiurl = ($.getUrlParam('apiurl'));
+	};
+	if ($.getUrlParam('testurl')) {
+	    testurl = ($.getUrlParam('testurl'));
+	};
+	if ($.getUrlParam('role')) {
+	    role = ($.getUrlParam('role'));
+	};
+	if ($.getUrlParam('paperid')) {
+	    paperid = ($.getUrlParam('paperid'));
+	};
+	if ($.getUrlParam('stuid')) {
+	    stuid = ($.getUrlParam('stuid'));
+	};
+	if ($.getUrlParam('submitsum')) {
+	    submitsum = ($.getUrlParam('submitsum'));
+	};
+	if ($.getUrlParam('examtype')) {
+	    examtype = ($.getUrlParam('examtype'));
+	};
+
+	$.ajax({
+        url: apiurl+"/TSB_ISCHOOL_EXAM_SERVER/testpaper/clazzuserlistparent",
+        data: JSON.stringify({'paperid':paperid, 'curpage':1, 'pagesize':10, 'status':1}),
+        type:'post',
+        dataType:'json',
+        contentType: "application/json; charset=utf-8",
+        success: function(data){
+            if(data.code == 1){
+            	var dataarr = data.data.dataList;
+	            var l = dataarr.length;
+	            var html = "";
+	            for (var i = 0; i < l; i++) {
+	            	html += '<p><a href="dohomework_play.html?apiurl='+apiurl+'&testurl='+testurl+'&role='+role+'&paperid='+paperid+'&stuid='+dataarr[i].userid+'&dopaperid='+dataarr[i].paperstuid+'&submitsum='+submitsum+'&examtype=2">'+dataarr[i].username+'</a></p>';
+	            };
+	            $(".wpy").append(html);
+            }else{
+                alert('接口返回错误');
+            };
+        },
+        error: function(data){
+            alert('接口error');
+        }
+    });
+    $.ajax({
+        url: apiurl+"/TSB_ISCHOOL_EXAM_SERVER/testpaper/clazzuserlistparent",
+        data: JSON.stringify({'paperid':paperid, 'curpage':1, 'pagesize':10, 'status':2}),
+        type:'post',
+        dataType:'json',
+        contentType: "application/json; charset=utf-8",
+        success: function(data){
+            if(data.code == 1){
+            	var dataarr = data.data.dataList;
+	            var l = dataarr.length;
+	            var html = "";
+	            for (var i = 0; i < l; i++) {
+	            	html += '<p><a href="dohomework_play.html?apiurl='+apiurl+'&testurl='+testurl+'&role='+role+'&paperid='+paperid+'&stuid='+dataarr[i].userid+'&dopaperid='+dataarr[i].paperstuid+'&submitsum='+submitsum+'&examtype=2">'+dataarr[i].username+'</a></p>';
+	            };
+	            $(".ywc").append(html);
+            }else{
+                alert('接口返回错误');
+            };
+        },
+        error: function(data){
+            alert('接口error');
+        }
+    });
+    $.ajax({
+        url: apiurl+"/TSB_ISCHOOL_EXAM_SERVER/testpaper/clazzuserlistparent",
+        data: JSON.stringify({'paperid':paperid, 'curpage':1, 'pagesize':10, 'status':3}),
+        type:'post',
+        dataType:'json',
+        contentType: "application/json; charset=utf-8",
+        success: function(data){
+            if(data.code == 1){
+            	var dataarr = data.data.dataList;
+	            var l = dataarr.length;
+	            var html = "";
+	            for (var i = 0; i < l; i++) {
+	            	html += '<p><a href="javascript:;">'+dataarr[i].username+'</a></p>';
+	            };
+	            $(".wtj").append(html);
+            }else{
+                alert('接口返回错误');
+            };
+        },
+        error: function(data){
+            alert('接口error');
+        }
+    });
+</script>
+</html>

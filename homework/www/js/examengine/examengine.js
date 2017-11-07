@@ -226,13 +226,19 @@
                 {
                     examengine.studentpaperid = json.data.depid;
                     examengine.studentanswerjson = json.data.answerBean;
-                    examengine.studentscore = json.data.angetscore;
+                    if (json.data.answerBean!=null)
+                        examengine.studentscore =Math.round( json.data.answerBean.angetscore / json.data.answerBean.andesignscore*100);
+                   
                 }
                 else
                 {
-                    examengine.studentpaperid = json.data.dopaperid;
+                    examengine.studentpaperid = json.data.depid;
                     examengine.studentanswerjson = json.data.answerbean;
-                    examengine.studentscore = json.data.score;
+                    if (typeof json.data.score != "undefined")
+                        examengine.studentscore = json.data.score;
+                    else
+                        examengine.studentscore = json.data.answerbean.score;
+                  
                 }
                 examengine.studentanswerstatus = parseInt(json.data.status, 10);
                 examengine.init(json.data.paperbean);
@@ -240,36 +246,35 @@
         })
     },
     init: function (json) {
-        console.log(json)
+        //console.log(json);
         examengine.examjson = json;
         examengine.ispause = false;
-        console.log(json.answertime)
+        //console.log(json.answertime);
         examengine.examtime = json.answertime;
         //如果学生作答等于null
         if (examengine.studentanswerjson == null)
             examengine.studentanswerjson = {};
-        //if (examengine.studentanswerjson.questionList==undefined)
-        if (examengine.publishtotype == "bookroom") {
-            examengine.publishbtnname = "保存到书房";
+      
+        if (examengine.publishtotype == "newtask" || examengine.publishtotype == "bookroom") {
+            examengine.publishbtnname = examengine.publishtotype == "bookroom" ? "保存到书房" : "保存到新作业";
             examengine.isdisplaypublishsavebtn = false;
             examengine.postpublish = function () {
                 $.ajax({
                     url: "/Bookroom/Bookroom/ajax_volpaperbean",
-                    data: { paperbean: examengine.getexamjson() },
+                    data: { pbname: examengine.publishtotype, paperbean: examengine.getexamjson() },
                     type: "post", dataType: "json",
                     success: function (json) {
-                    if (json.status) {
-                        examengine.layout.alert("消息提示", "保存成功，请返回到书房")
-                        window.opener = null;
-                        window.open('', '_self', '');
-                        window.close();
+                        if (json.status) {
+                            examengine.layout.alert("消息提示", "保存成功，请返回到新作业")
+                            window.opener = null;
+                            window.open('', '_self', '');
+                            window.close();
+                        }
                     }
-                }
                 });
 
             }
         }
-        
         if (examengine.issingledisplay)
             examengine.isdisplayanswersheet = false;
         //判断是否当前
@@ -277,7 +282,7 @@
         {
             if (examengine.studentanswerstatus > 0)
                 examengine.status == "view";
-        }
+        };
         examengine.allexamshow();
  
     },
@@ -298,13 +303,15 @@
             $(".examlayoutbox_title").find("h2").html(json.title);
             $(".examlayoutbox_content").html(json.content);
             if (typeof json.width == "undefined")
-                json.width = 300;
+                json.width = 260;
             if (typeof json.width == "number")
                 $(".examlayoutbox").css({ width: json.width + "px" });
             if (typeof json.width == "string")
                 $(".examlayoutbox").css({ width: json.width });
             if (typeof json.surename == "string")
                 $("#examlayoutbtn_sure").html(json.surename);
+            else
+                $("#examlayoutbtn_sure").html("确定");
             if (typeof json.btnalign == "string")
                 $(".examlayoutbox_btn").css("text-align", json.btnalign)
             else
@@ -327,13 +334,14 @@
             }
             if (typeof json.callback == "function")
             {
-                $("#examlayoutbtn_sure").click(function () { json.callback()})
+                $("#examlayoutbtn_sure").bind('click', function () { json.callback();})
             }
             if (json.ispositionfixed == false)
             {
                 $("#examlayoutbox").css("position", "absolute");
             }
-            $("#examlayoutbox").css("left", ($("body").width() - $("#examlayoutbox").width()) / 2);
+            $("#examlayoutbox").css("left", ($("body").width() - $("#examlayoutbox").width() - 10) / 2);
+            $("#examlayoutbox").css("top", (($("body").height() - ($("#examlayoutbox").height()))/2 - 20));
             $("#examlayoutbg").css("height", $("body").height());
            
             $("#examlayoutbox").css("display", "block");
@@ -343,30 +351,37 @@
         },
         loadding:function(content)
         {
-            this.init({ title: "提示", content: "<div class='examloadding'>" + content+"</div>", width: 300, isshowbtn: false })
+            this.init({ title: "提示", content: "<div class='examloadding'>" + content+"</div>", width: 260, isshowbtn: false })
         }
         ,
         alert: function (title,content) {
-            this.init({ title: title, content: content, isshowbtn: true, width: 300, ishidencancel: true, callback: function () { examengine.layout.close(); } })
+            this.init({ title: title, content: content, isshowbtn: true, width: 260, ishidencancel: true, callback: function () { examengine.layout.close(); } })
         },
         confirm: function (title, content,callback) {
-            this.init({ title: title, content: content, isshowbtn: true, width: 300, ishidencancel: false, callback: callback })
+            this.init({ title: title, content: content, isshowbtn: true, width: 260, ishidencancel: false, callback: callback })
         },
-        error: function () {
+        error: function (content, fn) {
             this.init({
                 title: "错误提示", content: content, isshowbtn: true,
-                width: 300,
+                width: 260,
                 ishidencancel: true,
-                callback: function () { examengine.layout.close(); }
+                callback: function () {
+                    examengine.layout.close();
+                }
             });
         },
-        success: function (content) {
+        success: function (content, url) {
             this.init({
-                title: "成功提示", content: content, isshowbtn: true,
-                width: 300,
+                title: "提示", content: content, isshowbtn: true,
+                width: 260,
                 ishidencancel: true,
                 callback: function () { examengine.layout.close(); }
             });
+            var url = url || 2000;
+            if (typeof url=="number")
+                setTimeout(examengine.layout.close, url);
+            else
+                location.href = url;
         },
         close: function ()
         {
@@ -392,6 +407,9 @@
         {
             examengine.status = "view";
         }
+        if (examengine.status == "piyue" && examengine.studentanswerstatus > 1) {
+            examengine.status = "view";
+        }
         var html = "<div class='examengine "+_class+"'>";
         var questionlist = "";
         var _headerstyle = "";
@@ -401,18 +419,22 @@
         }
         html = html + " <div class='examheader' " + _headerstyle + ">";
 
-            html = html + "     <h1 id='examheader_title' class='examheader_title'>" + examengine.examjson.title + "</h1>";
+            html = html + "<label style='margin-left: 20px; display: block; float: left; margin-top: 26px;'>试卷名称：</label><h1 id='examheader_title' class='examheader_title'>" + examengine.examjson.title + "</h1>";
             html = html + "     <div class='info'>";
 
-            html = html + " <p>◇ 作答时间为 <span id='examsheet_time' class='examsheet_time' data-time='" + examengine.examtime + "'>" + examengine.examtime + "分钟</span>; 试卷分数为 <span id='examsheet_score' class='examsheet_score'></span>分<p>";
+            /*html = html + " <p>◇ 作答时间为 <span id='examsheet_time' class='examsheet_time' data-time='" + examengine.examtime + "'>" + examengine.examtime + "分钟</span>; 试卷分数为 <span id='examsheet_score' class='examsheet_score'></span>分<!--<span class='examsheet_settime' style='float: right;'>设置作答时间</span>--><p>";*/
+            html = html + " <p>◇ 试卷分数为 <span id='examsheet_score' class='examsheet_score'></span>分<!--<span class='examsheet_settime' style='float: right;'>设置作答时间</span>--><p>";
             if (examengine.examjson.extend != null) {
-               
-                html = html + " <p>◇ 出卷人：" + examengine.examjson.extend.author + "&nbsp;&nbsp;&nbsp;&nbsp;出卷人学校：" + examengine.examjson.extend.authorcchool + "<p>";
-                html = html + " <p>◇ 审核人：" + examengine.examjson.extend.auditor + "&nbsp;&nbsp;&nbsp;&nbsp;审核人学校：" + examengine.examjson.extend.auditschool + "<p>";
+                if (examengine.examjson.extend.auditor != null)
+                    if (examengine.examjson.extend.auditor != "") {
+                        html = html + " <p>◇ 出卷人：" + examengine.examjson.extend.author + "&nbsp;&nbsp;&nbsp;&nbsp;出卷人学校：" + examengine.examjson.extend.authorcchool + "<p>";
+                        html = html + " <p>◇ 审核人：" + examengine.examjson.extend.auditor + "&nbsp;&nbsp;&nbsp;&nbsp;审核人学校：" + examengine.examjson.extend.auditschool + "<p>";
+                    }
             }
 
             html = html + "     </div>";
-            if (examengine.studentanswerstatus == 2) {
+            if (examengine.studentanswerstatus >= 2) {
+                console.log(examengine.studentscore)
                 var scorehtml = "<div class=\"exam_score\">";
                 var myscore = examengine.studentscore + "";
                 for (var i = myscore.length - 1; i >= 0; i--) {
@@ -429,36 +451,58 @@
 
             }
             html = html + " </div>";
-       
+        var bigquestioncount = 0;
+        var subquestioncount = 0;
+
         //试卷展示
+        var _score = 0;
         $.each(examengine.examjson.examparts, function (p, model) {
             questionlist = questionlist + "<div class='examparts'>";
             $.each(model.examsections, function (se, sectionmodel) {
                 questionlist = questionlist + "<div class='examsections'>";
-               
-                if (sectionmodel.title != "") {
+
+                if (sectionmodel.title != "" && sectionmodel.title != null) {
                     questionlist = questionlist + "<div class='examsections_title'>";
                     if (examengine.status == "edit") {
-                        var _sectiontile = sectionmodel.title.replace(/[一二三四五六七八九十]{1,2}、/g,"");
+                        var _sectiontile = sectionmodel.title.replace(/[一二三四五六七八九十]{1,2}、/g, "");
 
 
-                        questionlist = questionlist + "<div><span class='examsections_name'>"  + examengine.numberconvertchinese(se + 1) + "、"+ _sectiontile + "</span></div>";
-                        questionlist = questionlist + "<div class=\"questionmenu\" style=\"display: none;\"><a class=\"editscore\">设置分数</a></div>";
+                        questionlist = questionlist + "<div><span class='examsections_name'>" + examengine.numberconvertchinese(se + 1) + "、" + _sectiontile + "</span></div>";
+                        if (!examengine.ismobile)
+                            questionlist = questionlist + "<div class=\"questionmenu\" style=\"display: none;\"><a class=\"editscore\">设置分数</a></div>";
                     }
                     else {
                         questionlist = questionlist + "<div><span class='examsections_name'>" + sectionmodel.title + "</span></div>";
                     }
                     questionlist = questionlist + "</div>";
                 }
+                //判断是否有大题
+                if ("[object Array]" === {}.toString.call(sectionmodel.questions)) {
+                    bigquestioncount = bigquestioncount + sectionmodel.questions.length;
+                    //判断必须有大题
+                    if (sectionmodel.questions.length > 0) {
+                        $.each(sectionmodel.questions, function (p, questionmodel) {
+                            questionlist = questionlist + examengine.handdlequestion(questionmodel);
+                            // if (questionmodel.subquestions.length > 1)
+                            //{
+                            if ("[object Array]" === {}.toString.call(questionmodel.subquestions)) {
+                                subquestioncount = subquestioncount + questionmodel.subquestions.length;
+                                $.each(questionmodel.subquestions, function (sbs, submodel) {
+                                    _score = _score + submodel.score;
 
-                $.each(sectionmodel.questions, function (p, questionmodel) {
-                    questionlist = questionlist + examengine.handdlequestion(questionmodel);
-                })
+                                });
+                            }
+                            // }
+                        });
+                    }
+                }
 
                 questionlist = questionlist + "</div>";
-            })
+            });
             questionlist = questionlist + "</div>";
         });
+        examengine.examjson.score = _score;
+
         var _posthtml = "";
         if (examengine.status == "edit")
         {
@@ -492,16 +536,33 @@
             _answersheet = _answersheet + "<div class='astitle'>试题统计<span></span></div>";
         }
         _answersheet = _answersheet + "<div class='ascontent' id='answercarditem'>" + examengine.htmlanswersheet + "</div>";
-        if(examengine.status=="view")
+        if (examengine.status == "view" || examengine.status == "piyue")
            _answersheet = _answersheet + "<div class='ascontent_color'><em>错误</em><i class=\"a error\"></i><em>正确</em><i class=\"a right\"></i><em>未做</em><i class=\"a normal\"></i> </div>";
         _answersheet = _answersheet + "<div class='asbtn'>" + _posthtml + "</div>";
         _answersheet = _answersheet + "</div>";
+
+        //app答题卡
+        if(examengine.issingledisplay){
+            //html = html + '<p class="Countdown"><i></i>00:01:00</p>';
+            html = html + "<div class='que-box'>" +
+            "<div style='background: #fff; position: relative; z-index: 1; padding-bottom: 40px;' id='answercardapp'>" + examengine.appanswersheet + "</div>";
+            if (examengine.status == "view" || examengine.status == "piyue"){
+                html = html + "<p class='sheet-ts clear' style='position: relative; background: #fff; margin-top: -28px; z-index: 2;'><span class='cw'><em></em>错误</span><span class='zq'><em></em>正确</span><span class='wz'><em></em>未做</span></p>";
+            };
+            html = html + "<div onclick='$(this).parent().hide();' style='position: fixed; top: 0; left: 0; background: rgba(0,0,0,0.4); width: 100%; height: 100%; z-index: 0;'>";
+            html = html + "</div></div>";
+            examengine.showcart = function(){
+                $('.que-box').toggle();
+            };
+        };
+
         html = html + " <div class='examcontainer'>";
         html = html + "     <div class='exambody' style='" + (examengine.isdisplayanswersheet == false ? " width:100%" : "") + "'>" + questionlist + "</div>";
         html = html + "     <div class='answersheet' style='" + (examengine.isdisplayanswersheet==true?"":"display:none;") + "'>" + _answersheet + "</div>";
         html = html + " </div>";
         html = html + "</div>";
         $(examengine.htmlcontainerid).html(html);
+        $('.info').append('<p>全卷有'+bigquestioncount+'道大题，共'+subquestioncount+'道题</p>');
         $("#btn-exam-publish-save").click(function () { "[object Function]" === {}.toString.call(examengine.savepublish) && examengine.savepublish(); });
         $("#btn-exam-publish-post").click(function () { "[object Function]" === {}.toString.call(examengine.postpublish) && examengine.postpublish(); });
         $("#btn-exam-save").click(function () { "[object Function]" === {}.toString.call(examengine.saveanswer) && examengine.saveanswer(); });
@@ -510,8 +571,15 @@
        
         if (examengine.status == "do") {
             //设置试卷倒计时
-            if (examengine.examtime > 0)
-                 examengine.bindevettimer();
+            if (examengine.examtime > 0){
+                if(examengine.issingledisplay){
+                    $(examengine.htmlcontainerid).css('margin-top','3rem');
+                    $(examengine.htmlcontainerid).prepend('<p class="Countdown"><i></i><label id="appexamtime_text" data-value="'+(examengine.examtime*60)+'"></label></p>');
+                    examengine.bindevetapptimer();
+                }else{
+                    examengine.bindevettimer();
+                };
+            };
         }
         window.onscroll = function () {
             var s_top = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
@@ -537,6 +605,7 @@
        
     },
     getanswersheet: function () {
+       // console.log()
         var html = "";
         var _index=1;
         $(examengine.htmlcontainerid).find(".examsections").each(function () {
@@ -545,18 +614,21 @@
                 html = html + "<dt>" + $(this).find(".examsections_name").html() + "</dt>";
             var _subhtml = "";
             $(this).find(".subquestion").each(function () {
-                $(this).find(".subquestionnum").html(_index + ".");
+                $(this).find(".subtitle_num").html(_index + ".");
                 var _isanswer = parseInt($(this).attr("data-isanswer"), 10);
                 var _isright = parseInt($(this).attr("data-isright"), 10);
-                var _class = "";
+                var _isobjective = $(this).attr("data-isobjective");
+                //console.log(_isright)
+                var _class = "this";
                 if (_isanswer == 0)
                 { _class = '' }
                 else
                 {
-                    _class = 'error'
-                    if (_isright == 1)
-                    {
-                        _class = 'right'
+                    if (_isobjective == "true") {
+                        if (_isright == 1) {
+                            _class = 'right'
+                        }
+                        if (_isright == 0) { _class = 'error' }
                     }
                 }
                 _subhtml = _subhtml + "<a href='javascript:;' data-index='" + _index + "' class='" + _class + "'>" + _index + "</a>";
@@ -568,49 +640,453 @@
         });
         return html;
     },
+    getappanswersheet: function () {
+        // console.log()
+        var html = "";
+        var _index=1;
+        $(examengine.htmlcontainerid).find(".examsections").each(function () {
+            if ($(this).find(".examsections_name").length==1){
+                html = html + "<h1 class='sheet-title'>" + $(this).find(".examsections_name").html() + "</h1>";
+                html = html + "<div class='sheet-div'>"
+            }else{
+                html = html + "<h1 class='sheet-title'></h1>";
+                html = html + "<div class='sheet-div'>"
+            };
+            var _subhtml = "";
+            $(this).find(".subquestion").each(function () {
+                $(this).find(".subtitle_num").html(_index + ".");
+                var _isanswer = parseInt($(this).attr("data-isanswer"), 10);
+                var _isright = parseInt($(this).attr("data-isright"), 10);
+                var _isobjective = $(this).attr("data-isobjective");
+                //console.log(_isright)
+                var _class = "this";
+                if (_isanswer == 0)
+                { _class = '' }
+                else
+                {
+                    if (_isobjective == "true") {
+                        if (_isright == 1) {
+                            _class = 'right'
+                        }
+                        if (_isright == 0) { _class = 'error' }
+                    }
+                }
+                _subhtml = _subhtml + "<a href='javascript:;' data-index='" + _index + "' class='" + _class + "'>" + _index + "</a>";
+                _index=_index+1;
+            });
+            html = html + _subhtml + "</div>";
+        });
+        return html;
+    },
     bindevent: function () {
         
         if (examengine.issingledisplay) {
-            $(".equestion").eq(examengine.singleindex).show();
-            $(".equestion").on("swiperight", function () {
-                $(".equestion").hide();
-                if (examengine.singleindex <= 0)
-                    examengine.singleindex = 0;
-                else
-                    examengine.singleindex = examengine.singleindex - 1;
+                    var u = navigator.userAgent;
+                    var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
 
-                $(".equestion").eq(examengine.singleindex).show();
-                //console.log(examengine.singleindex)
-            }).on("swipeleft", function () {
-                $(".equestion").hide();
-                if (examengine.singleindex >= $(".equestion").length - 1)
-                    examengine.singleindex = $(".equestion").length - 1;
-                else
-                    examengine.singleindex = examengine.singleindex + 1;
-                $(".equestion").eq(examengine.singleindex).show();
-               // console.log(examengine.singleindex)
-            })
-        }
+                    $(".equestion").hide();
+                    $(".subquestion").hide();
+                    $(".subquestion").eq(examengine.singleindex).show();
+                    $(".subquestion").eq(examengine.singleindex).parent().show();
+                    $('.examparts').css({'position': 'relative', 'height': $('body').height()+'px'});
+                    $('.examsections').css({'position': 'absolute', 'height': $('body').height()+'px'});
+                    $('.equestion').css({'display':'block', 'height':$('body').height()+'px','width':'36rem', 'position':'absolute'});
+                    $('.subquestion').css({'display':'block','width':'36rem','position':'absolute'});
+
+                    var subwidth = document.documentElement.clientWidth;
+                    var oDiv;
+                    var oDivnext;
+                    var oDivprev;
+                    var isprevnext = false;
+
+                    if(examengine.status == 'view' && examengine.useridentity == 'student'){
+                        var errornum = $('.subquestion[data-isright="0"]').length;
+                        if(examengine.istest){
+                            if(errornum > 0){
+                                var html = '<div class="errorlabel"><label>你做错了'+errornum+'道题，可到电脑端错题本中纠正</label><span onclick="$(this).parent().remove();"></span></div>';
+                                $('body').prepend(html);
+                            };
+                        };
+                    };
+
+                    var ifobjective = $('.subquestion').eq(examengine.singleindex).attr('data-isobjective');
+
+                    //批阅时第一个显示主观题
+                    if(ifobjective == 'true' && examengine.status == 'piyue' && examengine.useridentity == 'teacher'){
+                        for(var i=0; i<$('.subquestion').length; i++){
+                            if($('.subquestion').eq(i).attr('data-isobjective') == 'false'){
+                                examengine.singleindex = i;
+                                isprevnext = true;
+                                break;
+                            };
+                        };
+                    };
+
+                    listentouch(isprevnext);
+
+                    function listentouch(prevnextstate,selectitem){
+                        //显示试卷分数
+                        $('.examheader').show().children().hide();
+                        $('.exam_score').show().css({'z-index': 1000, '-webkit-transform':'scale(0.5,0.5)', 'transform':'scale(0.4,0.4)', 'position':'absolute', 'top': 0, 'right': '-30px'});
+
+                        //是否显示文本、音频点赞框
+                        var ifradio = '';
+                        if (examengine.status == 'piyue' && examengine.useridentity == 'teacher') {
+                            ifradio = $('.subquestion').eq(examengine.singleindex).attr('data-isobjective');
+                            if(examengine.studentanswerjson.ans[examengine.singleindex].isanswer == 0){
+                                ifradio = 'true';
+                            };
+                            showhideradio(ifradio, examengine.singleindex);
+                        };
+
+                        $('body').css({'overflow': 'hidden','position':'fixed','width':'100%','height':'100%'});
+                        $('html').css({'overflow': 'hidden','position':'fixed','width':'100%'});
+
+                        $('.subquestion').eq(examengine.singleindex).css('margin-left','0');
+                        $('.subquestion').eq(examengine.singleindex).parent().css('margin-left','0');
+                        var subparents = $('.subquestion').eq(examengine.singleindex).parents('.examsections');
+                        var subparent = $('.subquestion').eq(examengine.singleindex).parent();
+                        $('.examparts').css('height', (subparent.find('.title').height() + $('.subquestion').eq(examengine.singleindex).height() + 24) + 'px');
+                        subparent.css('height', (subparent.find('.title').height() + $('.subquestion').eq(examengine.singleindex).height() + 24) + 'px');
+                        var nextstate = false;
+                        var prevstate = false;
+                        $('.examsections').hide();
+                        $('.equestion').hide();
+                        $('.subquestion').hide();
+                        subparent.css({'display': 'block'});
+                        subparents.css({'display': 'block'});
+                        $('.subquestion').eq(examengine.singleindex).show();
+                        oDiv = document.querySelectorAll('.subquestion')[examengine.singleindex].parentNode;
+                        if(prevnextstate){
+                            oDiv.style.marginTop = 0;
+                        };
+                        if($('.subquestion').length > 0){
+                            var _bigid = $(".subquestion").eq(examengine.singleindex).parent().attr("data-id");
+                            var _newbigid = $(".subquestion").eq(examengine.singleindex+1).parent().attr("data-id");
+                            if(examengine.singleindex == $('.subquestion').length-1){
+                                oDivnext = null;
+                            }else{
+                                if(_bigid == _newbigid){
+                                    oDivnext = $('.subquestion').eq(examengine.singleindex + 1);
+                                }else{
+                                    nextstate = true;
+                                    oDivnext = $('.subquestion').eq(examengine.singleindex + 1).parent();
+                                    $('.subquestion').eq(examengine.singleindex + 1).parents('.examsections').show();
+                                    oDivnext.find('.subquestion').eq(0).show();
+                                };
+                                oDivnext.css({'display': 'block', 'margin-left': subwidth + 'px'});
+                            };
+
+                            if(examengine.singleindex > 0){
+                                var _bigid = $(".subquestion").eq(examengine.singleindex).parent().attr("data-id");
+                                var _newbigid = $(".subquestion").eq(examengine.singleindex-1).parent().attr("data-id");
+                                if(_bigid == _newbigid){
+                                    oDivprev = $('.subquestion').eq(examengine.singleindex - 1);
+                                }else{
+                                    prevstate = true;
+                                    oDivprev = $('.subquestion').eq(examengine.singleindex - 1).parent();
+                                    $('.subquestion').eq(examengine.singleindex - 1).parents('.examsections').show();
+                                    oDivprev.find('.subquestion').eq(oDivprev.find('.subquestion').length -1).show();
+                                };
+                                oDivprev.css({'display': 'block', 'margin-left': '-'+subwidth+'px'});
+                            }else{
+                                oDivprev = null;
+                            };
+                        };
+                        var tX = 0;
+                        var tY = 0;
+                        var istouch = false;
+                        var testtop = $(examengine.htmlcontainerid).offset().top;
+                        function fnStart(ev){
+                            if(!istouch){
+                                if($('.subquestion').eq(examengine.singleindex).find('input:focus').length > 0){
+                                    $('.subquestion').eq(examengine.singleindex).find('input:focus').blur();
+                                };
+                                var disX = ev.targetTouches[0].clientX - tX;
+                                var disY = ev.targetTouches[0].clientY - tY;
+                                var moveleftright = false;
+                                var moveupdown = false;
+                                var oldtY = oDiv.offsetTop;
+                                istouch = true;
+                                function fnMove(ev){
+                                    tX = ev.targetTouches[0].clientX - disX;
+                                    tY = ev.targetTouches[0].clientY - disY;
+                                    if(moveupdown){
+                                        tX = 0;
+                                    };
+                                    if(moveleftright){
+                                        tY = 0;
+                                    };
+                                    if(Math.abs(tY) >24 || Math.abs(tX) > 24){
+                                        if(Math.abs(tY) <= Math.abs(tX)){
+                                            if(moveupdown){
+                                                return;
+                                            }else{
+                                                moveleftright = true;
+                                                if(tX < 0) {
+                                                    if (nextstate) {
+                                                        oDiv.style.marginLeft = tX + 'px';
+                                                    } else {
+                                                        $('.subquestion').eq(examengine.singleindex)[0].style.marginLeft = tX + 'px';
+                                                    };
+                                                    if (oDivnext) {
+                                                        oDivnext[0].style.marginLeft = subwidth + tX + 'px';
+                                                    };
+                                                }else{
+                                                    if(prevstate){
+                                                        oDiv.style.marginLeft = tX + 'px';
+                                                    }else{
+                                                        $('.subquestion').eq(examengine.singleindex)[0].style.marginLeft = tX + 'px';
+                                                    };
+                                                    if(oDivprev){
+                                                        oDivprev[0].style.marginLeft = '-' + (subwidth - tX) +'px';
+                                                    };
+                                                };
+                                            };
+                                        }else{
+                                            if(moveleftright){
+                                                return;
+                                            }else{
+                                                moveupdown = true;
+                                                if(tY < -20) {
+                                                    oDiv.style.marginTop = (oldtY+tY) + 'px';
+                                                };
+                                                if(tY > 20){
+                                                    oDiv.style.marginTop = (oldtY+tY) + 'px';
+                                                };
+                                            };
+                                        };
+                                    };
+
+                                    if((ev.targetTouches[0].clientX < 2 || ev.targetTouches[0].clientX > ($('body').width()-2) || ev.targetTouches[0].clientY < 2 || ev.targetTouches[0].clientY > ($('body').height()-2)) && isiOS){
+                                        fnEnd();
+                                    };
+                                };
+                                function fnEnd(){
+                                    if(Math.abs(tX) > 0){
+                                        if(tX < -100){
+                                            var oDivend = oDiv;
+                                            if(!nextstate){
+                                                oDivend = $('.subquestion').eq(examengine.singleindex)[0];
+                                            };
+                                            if(oDivnext){
+                                                startMove('x', oDivend, tX, '-'+subwidth, true);
+                                                startMove('x', oDivnext[0], (subwidth+tX), 0);
+
+                                                examengine.singleindex = examengine.singleindex + 1;
+                                                if (examengine.status == 'piyue' && examengine.useridentity == 'teacher') {
+                                                    ifradio = $('.subquestion').eq(examengine.singleindex).attr('data-isobjective');
+                                                    if(examengine.studentanswerjson.ans[examengine.singleindex].isanswer == 0){
+                                                        ifradio = 'true';
+                                                    };
+                                                    showhideradio(ifradio, examengine.singleindex);
+                                                };
+                                                isprevnext = true;
+                                            }else{
+                                                startMove('x', oDivend, tX, 0, true);
+                                                isprevnext = false;
+                                            };
+                                            document.removeEventListener('touchstart',fnStart,false);
+                                        }else if(tX < -0){
+                                            var oDivend = oDiv;
+                                            if(!nextstate){
+                                                oDivend = $('.subquestion').eq(examengine.singleindex)[0];
+                                            };
+                                            if(oDivnext){
+                                                startMove('x', oDivend, tX, 0, true);
+                                                startMove('x', oDivnext[0], (subwidth+tX), subwidth);
+                                            }else{
+                                                startMove('x', oDivend, tX, 0, true);
+                                            };
+                                            isprevnext = false;
+                                            document.removeEventListener('touchstart',fnStart,false);
+                                        }else if(tX > 100){
+                                            var oDivendpre = oDiv;
+                                            if(!prevstate){
+                                                oDivendpre = $('.subquestion').eq(examengine.singleindex)[0];
+                                            };
+                                            if(oDivprev){
+                                                startMove('x', oDivendpre, tX, subwidth, true);
+                                                startMove('x', oDivprev[0], (-subwidth+tX), 0);
+
+                                                examengine.singleindex = examengine.singleindex - 1;
+                                                if (examengine.status == 'piyue' && examengine.useridentity == 'teacher') {
+                                                    ifradio = $('.subquestion').eq(examengine.singleindex).attr('data-isobjective');
+                                                    if(examengine.studentanswerjson.ans[examengine.singleindex].isanswer == 0){
+                                                        ifradio = 'true';
+                                                    };
+                                                    showhideradio(ifradio, examengine.singleindex);
+                                                };
+                                                isprevnext = true;
+                                            }else{
+                                                startMove('x', oDivendpre, tX, 0, true);
+                                                isprevnext = false;
+                                            };
+                                            document.removeEventListener('touchstart',fnStart,false);
+                                        }else if(tX > 0){
+                                            var oDivendpre = oDiv;
+                                            if(!prevstate){
+                                                oDivendpre = $('.subquestion').eq(examengine.singleindex)[0];
+                                            };
+                                            if(oDivprev){
+                                                startMove('x', oDivendpre, tX, 0, true);
+                                                startMove('x', oDivprev[0], (-subwidth+tX), -subwidth);
+                                            }else{
+                                                startMove('x', oDivendpre, tX, 0, true);
+                                            };
+                                            isprevnext = false;
+                                            document.removeEventListener('touchstart',fnStart,false);
+                                        };
+
+                                        document.removeEventListener('touchmove',fnMove,false);
+                                        document.removeEventListener('touchend',fnEnd,false);
+                                        tX = 0;
+                                        tY = 0;
+                                    }else{
+                                        isprevnext = false;
+                                        var documentheight = $(examengine.htmlcontainerid).height();
+                                        var windowheight = $('body').height();
+                                        if(windowheight >= documentheight){
+                                            startMove('y', oDiv, tY, 0);
+                                        }else{
+                                            if(oDiv.offsetTop > 0){
+                                                //oDiv.style.marginTop = 0;
+                                                startMove('y', oDiv, tY, 0);
+                                            }else{
+                                                if(oDiv.offsetTop <= (windowheight-documentheight)){
+                                                    var currentY = oDiv.offsetTop;
+                                                    //oDiv.style.marginTop = (windowheight-documentheight) + 'px';
+                                                    startMove('y', oDiv, currentY, (windowheight-documentheight-60));
+                                                };
+                                            };
+                                        };
+
+                                        document.removeEventListener('touchstart',fnStart,false);
+                                        document.removeEventListener('touchmove',fnMove,false);
+                                        document.removeEventListener('touchend',fnEnd,false);
+                                        tX = 0;
+                                        tY = 0;
+                                        istouch = false;
+                                        listentouch(isprevnext);
+                                    };
+                                };
+                                var event = window.event||arguments[0];
+                                if(event.target.nodeName == 'TEXTAREA' || event.target.nodeName == 'INPUT' || $.trim(event.target.className) == 'voice' || event.target.className == 'voicestop' || event.target.parentNode.className == 'lishow' || event.target.parentNode.parentNode.className == 'addphoto' || $.trim(event.target.className).indexOf('select_i') > -1 || $.trim(event.target.className) == 'del' || $.trim(event.target.className) == 'scontent' || event.target.nodeName == 'A' || event.target.className == 'linebox' || event.target.parentNode.className == 'linebox'){
+                                    document.removeEventListener('touchmove',fnMove,false);
+                                    document.removeEventListener('touchend',fnEnd,false);
+                                    istouch = false;
+                                }else{
+                                    document.addEventListener('touchmove',fnMove,false);
+                                    document.addEventListener('touchend',fnEnd,false);
+                                    ev.preventDefault();
+                                };
+                            }else{
+                                function turntouchstate(){
+                                    istouch = false;
+                                };
+                                document.addEventListener('touchend',turntouchstate,false);
+                            };
+                        };
+                        if(!selectitem){
+                            document.addEventListener('touchstart',fnStart,false);
+                        };
+
+                        function startMove(isxy, obj, starttX, iTarget, touchstate){
+                            clearTimeout(obj.timer);
+                            var count = Math.floor(1000/120);
+                            var start = starttX;
+                            var dis = iTarget-start;
+                            var n = 0;
+
+                            movetime();
+
+                            function movetime(){
+                                n++;
+                                var a = 1-n/count;
+                                starttX = start+dis*(1-Math.pow(a,3));
+
+                                if(isxy == 'x'){
+                                    if(starttX < 0){
+                                        obj.style.marginLeft = starttX + 'px';
+                                    }else{
+                                        obj.style.marginLeft = starttX + 'px';
+                                    };
+                                    obj.timer = setTimeout(movetime, 30);
+                                    if(n == count){
+                                        clearTimeout(obj.timer);
+                                        if(touchstate){
+                                            listentouch(isprevnext);
+                                        };
+                                    };
+                                }else{
+                                    if(starttX < 0){
+                                        obj.style.marginTop = starttX + 'px';
+                                    }else{
+                                        obj.style.marginTop = starttX + 'px';
+                                    };
+                                    obj.timer = setTimeout(movetime, 30);
+                                    if(n == count){
+                                        clearTimeout(obj.timer);
+                                        if(touchstate){
+                                            listentouch(isprevnext);
+                                        };
+                                    };
+                                };
+                            };
+                        };
+
+                        //监听subquestion高度
+                        $('.subquestion').resize(function(){
+                            $('.examparts').css('height', (subparent.find('.title').height() + $('.subquestion').eq(examengine.singleindex).height() + 24) + 'px');
+                            subparent.css('height', (subparent.find('.title').height() + $('.subquestion').eq(examengine.singleindex).height() + 24) + 'px');
+                        });
+                        //虚拟键盘弹出并输入字符后导致$('#testpaper')向上偏移
+                        window.onresize = function(){
+                            if($(examengine.htmlcontainerid).offset().top != testtop){
+                                $(examengine.htmlcontainerid).offset({'top': testtop});
+                            };
+                        };
+                    };
+                }
         var _totalscore = 0;
         ///重新排序,同时获取分数
-        $(examengine.htmlcontainerid).find(".subquestionnum").each(function (i) {
+        $(examengine.htmlcontainerid).find(".subtitle_num").each(function (i) {
             $(this).html((i + 1) + ".");
             $(this).parent().parent().attr("data-index", (i + 1));
             _totalscore = _totalscore + parseInt($(this).parent().parent().attr("data-score"), 10);
         });
         $("#examsheet_score").html(_totalscore);
-        ///重新生成答题卡
-        examengine.htmlanswersheet = examengine.getanswersheet();
-       // $("#answercarditem").html(examengine.htmlanswersheet);
-        //examengine.htmlanswersheet = examengine.getanswersheet();
-        $("#answercarditem").html(examengine.htmlanswersheet);
-        $("#answercarditem").css("max-height", $(window).outerHeight() / 2 - 100);
-        //设置答题卡题号按钮
-        $("#answercarditem").find("a").on("click", function () {
-            $('body,html').stop().animate({
-                scrollTop: $(".subquestion[data-index='" + $(this).html() + "']").offset().top - 20
+
+        if(examengine.issingledisplay){
+            examengine.appanswersheet = examengine.getappanswersheet();
+            $("#answercardapp").html(examengine.appanswersheet);
+            //设置答题卡题号按钮
+            $("#answercardapp").find("a").on("touchend", function () {
+                var index = parseInt($(this).attr('data-index'))-1;
+                examengine.singleindex = index;
+                if(index == 0 || index == $('.subquestion').length - 1){
+                    isprevnext = false;
+                }else{
+                    isprevnext = true;
+                };
+                listentouch(isprevnext,true);
+                $('.que-box').hide();
             });
-        });
+        }else{
+            ///重新生成答题卡
+            examengine.htmlanswersheet = examengine.getanswersheet();
+            // $("#answercarditem").html(examengine.htmlanswersheet);
+            //examengine.htmlanswersheet = examengine.getanswersheet();
+            $("#answercarditem").html(examengine.htmlanswersheet);
+            $("#answercarditem").css("max-height", $(window).outerHeight() / 2 - 100);
+            //设置答题卡题号按钮
+            $("#answercarditem").find("a").on("click", function () {
+                $('body,html').stop().animate({
+                    scrollTop: $(".subquestion[data-index='" + $(this).html() + "']").offset().top - 20
+                });
+            });
+        };
+
         //答题设置
         $(examengine.htmlcontainerid).find(".selectitem").find(".select_i").click(function () {
             var _obj = $(this).parent().parent();
@@ -638,10 +1114,47 @@
                     _val = _val + $(this).parent().attr("data-value")
             });
             _answerobj.find("input").val(_val);
-            
-            $("#answercarditem").find("[data-index='" + _subquestionindex + "']").addClass("this");
-            $("#answercarditem").find("[data-index='" + (parseInt( _subquestionindex,10)+1) + "']").click()
-        })
+
+            if(examengine.issingledisplay){
+                $("#answercardapp").find("[data-index='" + _subquestionindex + "']").addClass("this");
+            };
+//            $("#answercarditem").find("[data-index='" + _subquestionindex + "']").addClass("this");
+//            $("#answercarditem").find("[data-index='" + (parseInt( _subquestionindex,10)+1) + "']").click()
+        });
+        $(examengine.htmlcontainerid).find(".selectitem").find(".scontent").click(function () {
+            var _obj = $(this).parent().parent();
+            var _subquestionindex = _obj.parent().attr("data-index");
+            var _answerobj=_obj.parent().find(".replycontainer");
+            var selecti = $(this).parent().find('.select_i');
+            if (selecti.hasClass("checkbox"))
+            {
+                if (selecti.hasClass("checked")) {
+                    selecti.removeClass("checked")
+                }
+                else {
+                    selecti.addClass("checked")
+                }
+
+            }
+            else
+            {
+                _obj.find(".select_i").removeClass("checked");
+                selecti.addClass("checked");
+
+            }
+            var _val = "";
+            $(this).parent().parent().find(".select_i").each(function () {
+                if ($(this).hasClass("checked"))
+                    _val = _val + $(this).parent().attr("data-value")
+            });
+            _answerobj.find("input").val(_val);
+
+            if(examengine.issingledisplay){
+                $("#answercardapp").find("[data-index='" + _subquestionindex + "']").addClass("this");
+            };
+//            $("#answercarditem").find("[data-index='" + _subquestionindex + "']").addClass("this");
+//            $("#answercarditem").find("[data-index='" + (parseInt( _subquestionindex,10)+1) + "']").click()
+        });
        
         
         if (examengine.status != "edit"&&examengine.status != "insert") {
@@ -664,30 +1177,40 @@
         $(examengine.htmlcontainerid).find(".questionmenu_score").unbind();
         
         $(examengine.htmlcontainerid).find("#examheader_title").click(function () {
-            var _html = $(this).html();
+            var _html = $(this).text();
             if ($(this).find("input").length == 0) {
                 $(this).html("<input type='text'/>");
                 $(this).find("input").val(_html);
+                $(this).find("input").focus();
                 $(this).find("input").blur(function () {
-                    $(this).parent().html($(this).val());
+                    $(this).parent().text($(this).val());
+                });
+                $(this).find("input").on('input',function(){
+                    var maxlength = 20;
+                    var txtval = $(this).val();
+                    var txtlength = txtval.length;
+                    if(txtlength > maxlength){
+                        $(this).val(txtval.substring(0, maxlength));
+                        examengine.layout.alert('提示','您命名最多可输入20字!');
+                    }
                 });
             }
         })
         $(examengine.htmlcontainerid).find(".examsheet_showanswer").click(function () {
             if ($(this).html() == "显示答案") {
                 $(this).html("隐藏答案")
-                $(".answer").show();
-                $(".diff").show();
-                $(".analysis").show();
+                $(".ans_answer").show();
+                $(".ans_diff").show();
+                $(".ans_analysis").show();
                 $(".analyse").show();
                 
             }
             else {
                 $(this).html("显示答案");
-                $(".answer").hide();
-                $(".diff").hide();
-                $(".analysis").hide();
-                if ($(".knowledges").css("display") != "block")
+                $(".ans_answer").hide();
+                $(".ans_diff").hide();
+                $(".ans_analysis").hide();
+                if ($(".ans_knowledges").css("display") != "block")
                 {
                     $(".analyse").hide();
                 }
@@ -717,14 +1240,14 @@
                     {
                         _val="0";
                     }
-                   
                     if (_val != "0") {
                         if (/[1-9]\d{1,2}/.test(_val)) {
                             $("#examsheet_time").attr("data-time", _val);
-                            $("#examsheet_time").html(_val + "分钟")
-                           
+                            $("#examsheet_time").html(_val + "分钟");
                         }
-                        else { $("#examlayout_error").html("作答时间输入错误！") }
+                        else {$("#examlayout_error").html("作答时间输入错误！");
+                            return false;
+                        }
                     }
                     else {
                         _val = "0";
@@ -732,15 +1255,20 @@
                         $("#examsheet_time").html("不限制");
                     }
                     examengine.examtime = parseInt(_val, 10);
+                    examengine.layout.close();
+                    $("#examlayoutbtn_sure").unbind();
                 }
 
             });
         })
-        $(examengine.htmlcontainerid).find(".equestion").bind("mouseover", function () {
+        $(examengine.htmlcontainerid).find(".equestion").bind("click", function () {
+            //移动端区别
+            $(examengine.htmlcontainerid).find(".equestion").css("border", "1px solid #fff").find(".questionmenu").hide();
+
             if ($(".editquestion").length == 1)
                 return false;
             $(this).find(".questionmenu").show();
-            $(this).css("border", "1px solid #249f59");
+            $(this).css("border", "1px solid #1887e3");
             if (examengine.status == "insert")
             {
                 $("#exam_word_source").css("margin-top", "0px");
@@ -749,7 +1277,7 @@
                 var num = $.trim($(this).attr("data-id"));
 
                 $("#exam_word_source").find("[data-guid='" + num + "']").addClass("active");
-                var y = insertexam.getY(this);
+                var y = examengine.insert.getY(this);
 
                 var leftobjtop = 0;
                 if ($("#exam_word_source").find("[data-guid='" + num + "']").length == 1) {
@@ -760,7 +1288,7 @@
 
                 }
             }
-        }).bind("mouseout", function () {
+        })/*.bind("mouseout", function () {
             $(this).find(".questionmenu").hide();
             $(this).css("border", "1px solid #fff");
             if (examengine.status == "insert")
@@ -768,15 +1296,17 @@
                 $("#exam_word_source").find("div").removeClass("active");
                 $("#exam_word_source").css("margin-top", "0px");
             }
-        });//
+        })*/;//移动端去掉
         $(examengine.htmlcontainerid).find(".examsections_title").bind("mouseover", function () {
+            //移动端去掉设置分数
+            return false;
             $(this).find(".questionmenu").show();
-            $(this).css("border", "1px solid #249f59");
+            $(this).css("border", "1px solid #1887e3");
         }).bind("mouseout", function () {
             $(this).find(".questionmenu").hide();
             $(this).css("border", "1px solid #fff");
         });
-        $(examengine.htmlcontainerid).find(".questionmenu_moveup").bind("click touchend", function () {
+        $(examengine.htmlcontainerid).find(".questionmenu_moveup").bind("click", function () {
             var obj = $(this).parent().parent();
 
             if (!obj.prev().hasClass("examsections_title")) {
@@ -787,9 +1317,9 @@
             }
             else {
                 examengine.layout.alert("试卷提示", "无法上移");
-            }
+            };
         });
-        $(examengine.htmlcontainerid).find(".questionmenu_movedown").bind("click touchend", function () {
+        $(examengine.htmlcontainerid).find(".questionmenu_movedown").bind("click", function () {
             var obj = $(this).parent().parent();
 
             if (obj.next().length == 1) {
@@ -800,11 +1330,11 @@
             }
             else {
                 examengine.layout.alert("试卷提示", "无法下移");
-            }
+            };
         });
-        $(examengine.htmlcontainerid).find(".questionmenu_del").bind("click touchend", function () {
+        $(examengine.htmlcontainerid).find(".questionmenu_del").bind("click", function () {
             var _obj = $(this).parent().parent();
-            examengine.layout.confirm("提示", "确定是否删除",  function () {
+            examengine.layout.confirm("提示", "确定要删除吗？",  function () {
                     //console.log(_obj.html())
                     if (_obj.parent().find(".equestion").length == 1) {
                         examengine.layout.alert("提示", "无法删除，必须存在一道题")
@@ -817,7 +1347,7 @@
                 })
            
         });
-        $(examengine.htmlcontainerid).find(".questionmenu_manualchange").bind("click touchend", function () {
+        $(examengine.htmlcontainerid).find(".questionmenu_manualchange").bind("click", function () {
             var obj = $(this).parent();
             var teachingmaterial = ""
 
@@ -843,7 +1373,7 @@
             examengine.changequestion(1, currentid, teachingmaterial, questiontypeid, questionids, 0);
 
         }),
-        $(examengine.htmlcontainerid).find(".questionmenu_autochange").bind("click touchend", function () {
+        $(examengine.htmlcontainerid).find(".questionmenu_autochange").bind("click", function () {
 
             var obj = $(this).parent();
             var teachingmaterial = ""
@@ -855,9 +1385,9 @@
             var currentid = obj.parent().attr("data-id");
             var bodyobj = obj.parent();
             bodyobj.append("<div class='changequestionloading'>正在智能替换试题，请勿重复操作！</div>")
-            bodyobj.find(".chapters").find("a").each(function () {
+            bodyobj.find(".ans_chapters").find("a").each(function () {
                 if (teachingmaterial != "")
-                    teachingmaterial = teachingmaterial + ","
+                    teachingmaterial = teachingmaterial + ",";
                 teachingmaterial = teachingmaterial + $(this).attr("data-id")
             })
             //console.log(bodyobj.find(".paperbody_bq").html());
@@ -869,7 +1399,7 @@
             });
             examengine.changequestion(2, currentid, teachingmaterial, questiontypeid, questionids, 0);
         });
-        $(examengine.htmlcontainerid).find(".editscore").bind("click touchend", function () {
+        $(examengine.htmlcontainerid).find(".editscore").bind("click", function () {
             var html = "<div style='line-height:33px;'>" + $(this).parent().parent().find(".examsections_name").html() +
                 " 共" + $(this).parent().parent().parent().find(".subquestion").length + "题 共$score$分</div>";
             html = html + "<div style='padding-top:20px;margin-bottom:20px; border-bottom:1px solid #ddd; overflow:hidden;'>"
@@ -935,7 +1465,7 @@
                 
             })
         });
-        $(examengine.htmlcontainerid).find(".questionmenu_score").bind("click touchend", function () {
+        $(examengine.htmlcontainerid).find(".questionmenu_score").bind("click", function () {
             var _obj = $(this).parent().parent();
 
             examengine.layout.init({
@@ -957,7 +1487,7 @@
             })
 
         });
-        $(examengine.htmlcontainerid).find(".questionmenu_edit").bind("click touchend", function () {
+        $(examengine.htmlcontainerid).find(".questionmenu_edit").bind("click", function () {
             var _obj = $(this).parent().parent();
 
 
@@ -974,11 +1504,11 @@
                     _temphtml = _temphtml + "<p>" + $(this).find(".item").html() + " " + $(this).find(".scontent").html() + "</p>";
                 });
                 //
-                _temphtml = _temphtml + "<p>【答案】" + $(this).find(".answer").find("div").html() + "</p>";
+                _temphtml = _temphtml + "<p>【答案】" + $(this).find(".ans_answer").find("div").html() + "</p>";
                 _temphtml = _temphtml + "<p>【分值】" + $(this).attr("data-score") + "</p>";
-                _temphtml = _temphtml + "<p>【难度】" + $(this).find(".diff").attr("data-diff") + "</p>";
-                _temphtml = _temphtml + "<p>【答案说明】" + $(this).find(".analysis").find("div").html() + "</p>";
-                var _pobj = $(this).find(".knowledges").find("div");
+                _temphtml = _temphtml + "<p>【难度】" + $(this).find(".ans_diff").attr("data-diff") + "</p>";
+                _temphtml = _temphtml + "<p>【答案说明】" + $(this).find(".ans_analysis").find("div").html() + "</p>";
+                var _pobj = $(this).find(".ans_knowledges").find("div");
                 var _phtml = "";
                 _pobj.find("a").each(function () {
                     if (_phtml != "")
@@ -996,11 +1526,16 @@
             //ajax_exam_contents
             _obj.after(_html);
             $(".editquestion_save").click(function () {
-                console.log(encodeURIComponent($(this).parent().parent().find(".editquestion_content").html()))
+                // console.log(encodeURIComponent($(this).parent().parent().find(".editquestion_content").html()))
+                var _id=$(this).parent().parent().attr("data-id");
                 $.ajax({
                     url: "/Bookroom/homework/ajax_exam_contents", type: "post", dataType: "json",
                     data: { htmlcontent: encodeURIComponent( $(this).parent().parent().find(".editquestion_content").html()) }, success: function (json) {
-                        
+                        var _contenthtml = examengine.handdlequestion(json.Data);
+                        $(".equestion[data-id='" + _id + "']").after(_contenthtml);
+                        $(".equestion[data-id='" + _id + "']").remove();
+                        $(".editquestion").remove();
+                        examengine.bindevent();
                     }
                 });
 
@@ -1041,12 +1576,13 @@
     },
     bindevettimer: function ()
     {
-        var _secord =parseInt( $("#examtime_text").attr("data-value"),10)
+        var _secord =parseInt( $("#examtime_text").attr("data-value"),10);
         if (!examengine.ispause)
             _secord = _secord - 1;
         if (_secord == 0)
         {
             $("#examtime_text").html("00:00:00");
+            //examengine.postpiyue();
             //$(".btn-exam-post").attr("data-isautopost", "true");
            // $(".btn-exam-post").click();
         }
@@ -1068,6 +1604,36 @@
             setTimeout("examengine.bindevettimer()", 1000);
         }
     },
+    bindevetapptimer: function ()
+    {
+        var _secord =parseInt( $("#appexamtime_text").attr("data-value"),10);
+        if (!examengine.ispause)
+            _secord = _secord - 1;
+        if (_secord == 0)
+        {
+            $("#appexamtime_text").html("00:00:00");
+            examengine.postappanswer();
+        }
+        else
+        {
+
+            var hours = Math.floor((_secord) / 3600);
+            var minutes = Math.floor((_secord - hours * 3600) / 60);
+            var seconds = (_secord - hours * 3600 - minutes * 60);
+            if (hours < 10)
+                hours = "0" + hours;
+            if (minutes < 10)
+                minutes = "0" + minutes;
+            if (seconds < 10)
+                seconds = "0" + seconds;
+
+            $("#appexamtime_text").html(hours + ":" + minutes + ":" + seconds)
+            $("#appexamtime_text").attr("data-value", _secord);
+            setTimeout("examengine.bindevetapptimer()", 1000);
+        }
+    },
+    //移动端提交答案
+    postappanswer: function(){},
     handdlequestion: function (question) {
         var content = question.content;
         var isbigquesion = false;
@@ -1089,72 +1655,130 @@
             });
             content = tempcontent;
         }*/
-        var html = "";
-        html = html + "<div class='equestion' data-id='" + question.id + "'  data-innerid='' ";
-        html = html + " data-typeid='" + question.typeid + "'  data-typename='" + question.typename + "' ";
-        html = html + " id='big_" + question.id + "' data-index='" + question.index + "'>"
-        if (content != "") {
-            html = html + "<div class='title'>" + examengine.replaceshowcontent(content) + "</div>";
-        }
-        $.each(question.subquestions, function (q, model) {
-            html = html + examengine.handdlesubquestion(model);
-
-        });
-        ///用户编辑的时候显示
-        if (examengine.status == "edit" || examengine.status == "insert") {
-            var movemenuhtml = "<div class=\"questionmenu\" style=\"display: none;\">";
-            if(examengine.ischangequestion)
-                movemenuhtml = movemenuhtml + "       <a class=\"questionmenu_autochange\">智能换题</a><a class=\"questionmenu_manualchange\">手动换题</a>";
-            if (examengine.status == "insert")
-            {
-                movemenuhtml = movemenuhtml + " <a class=\"questionmenu_edit\">修改</a>";
+        var subquestionhtml = "";
+        //判断是否有子题
+        if ("[object Array]" === {}.toString.call(question.subquestions)) {
+            if (question.subquestions.length > 0) {
+                $.each(question.subquestions, function (q, model) {
+                    subquestionhtml = subquestionhtml+examengine.handdlesubquestion(model);
+                });
             }
-            movemenuhtml = movemenuhtml + "<a class=\"questionmenu_score\">分数</a><a class=\"questionmenu_del\">删除</a><a class=\"questionmenu_moveup\">上移</a><a class=\"questionmenu_movedown\">下移</a>";
-            movemenuhtml = movemenuhtml + "     </div>";
-            html = html + movemenuhtml;
-
         }
-        html = html + "</div>";
+        var html = "";
+        //判断子题的内容是否为空
+        if (subquestionhtml != "") {
+            html = html + "<div class='equestion' data-id='" + question.id + "'  data-innerid='' ";
+            html = html + " data-typeid='" + question.typeid + "'  data-typename='" + question.typename + "' ";
+            html = html + " id='big_" + question.id + "' data-index='" + question.index + "'>"
+            if (content != "") {
+                html = html + "<div class='title'>" + examengine.replaceshowcontent(content) + "</div>";
+            }
+            //写入子题内容
+            html = html + subquestionhtml;
+            ///用户编辑的时候显示
+            if (examengine.status == "edit" || examengine.status == "insert") {
+                var movemenuhtml = "<div class=\"questionmenu\" style=\"display: none;\">";
+                if (examengine.ischangequestion) {
+                    movemenuhtml = movemenuhtml + "       <a class=\"questionmenu_autochange\">智能换题</a>";
+                    if (!examengine.ismobile)
+                        movemenuhtml = movemenuhtml + " <a class=\"questionmenu_manualchange\">手动换题</a>";
+                }
+                if (examengine.status == "insert") {
+                    movemenuhtml = movemenuhtml + " <a class=\"questionmenu_edit\">修改</a>";
+                }
+                if (!examengine.ismobile)
+                    movemenuhtml = movemenuhtml + "<a class=\"questionmenu_score\">分数</a>";
+                movemenuhtml = movemenuhtml + "<a class=\"questionmenu_del\">删除</a>";
+                movemenuhtml = movemenuhtml + "<a class=\"questionmenu_moveup\">上移</a><a class=\"questionmenu_movedown\">下移</a>";
+                movemenuhtml = movemenuhtml + "     </div>";
+                html = html + movemenuhtml;
+
+            }
+            html = html + "</div>";
+        }
         return html;
     },
     handdlesubquestion: function (model) {
+        //添加评论
+        var comments = examengine.getcomments(model.id);
         var html = "";
-        _myanswer = examengine.getmycurrentanswer(model.id);
+        var _myanswerjson = examengine.getmycurrentanswer(model.id);
         //console.log(_myanswer)
         //var _class = "viewquestion";
         //if (examengine.status == "do") {
         //    _class = "";
         //}
-        html = html + "<div class='subquestion' data-index='" + model.index + "' data-stuqueid='" + _myanswer.stuqueid + "' ";
+
+        //我的答案错误显示红色
+        var anserrorclass = '';
+        if(_myanswerjson.isright == 0){
+            anserrorclass = " class='error'";
+        }else{
+            anserrorclass = "";
+        };
+
+        html = html + "<div class='subquestion' data-index='" + model.index + "' data-stuqueid='" + _myanswerjson.stuqueid + "' ";
         html = html + " data-score='" + model.score + "' data-innerid='' ";
         html = html + " data-id='" + model.id + "' id='sub_" + model.id + "' ";
-        html = html + " data-isanswer='" + _myanswer.isanswer + "' data-isright='"+_myanswer.isright+"'";
+        html = html + " data-isanswer='" + _myanswerjson.isanswer+ "'";
+        if (examengine.status == "view" || examengine.status == "piyue")
+            html = html + " data-isright='" + _myanswerjson.isright + "'";
         html = html + " data-isobjective='" + model.isobjective + "'>";
-        
-        html = html + "<div class='subtitle'><em class='subquestionnum'>" + model.index + ".</em>" +examengine.replaceshowcontent( model.content) + "</div>";
+       var _typenamestr = "";
+        if (typeof model.typename == "string")
+        {
+            if (model.typename != "")
+            {
+                _typenamestr =" <i class='subtitle_typename'>[" + model.typename + "]</i>"
+            }
+        }
+        html = html + "<div class='subtitle'><em class='subtitle_num'>" + model.index + ".</em>" +_typenamestr+ examengine.replaceshowcontent(model.content) + "</div>";
         var _isselectquestion = false;
         if ("[object Array]" === {}.toString.call(model.selectitems)) {
             var itemhtml = "";
             var isitempic = false;//是否有图片
             var maxlength = 0;//最大字符
-            if (model.selectitems == 2)
-            { }
+            if (model.selectitems.length == 2)
+            {
+                _isselectquestion = true;
+                var _linehtml1 = "";
+                var _linehtml2 = "";
+                for (var i = 0; i < model.selectitems[0].length; i++)
+                {
+
+                    _linehtml1 = _linehtml1 + "<div class='linebox' onclick=' examengine.line.clickevent(this)'><span class='linebox_item'>" + String.fromCharCode(65 + i) + "1</span><div class='linebox_content'>" + examengine.replaceshowcontent(model.selectitems[0][i].content) + "</div></div>";
+
+                }
+                for (var i = 0; i < model.selectitems[1].length; i++) {
+                    _linehtml2 = _linehtml2 + "<div class='linebox' onclick=' examengine.line.clickevent(this)'><span class='linebox_item'>" + String.fromCharCode(65 + i) + "2</span><div class='linebox_content'>" + examengine.replaceshowcontent(model.selectitems[1][i].content) + "</div></div>";
+                }
+                itemhtml = "<div class='linecontainer'><div class='linecontainer_left'>" + _linehtml1 + "</div><div  class='linecontainer_right'>" + _linehtml2 + "</div></div>"
+            }
             else
             {
-                if (model.selectitems == 0)
+                if (model.selectitems.length == 0)
                 { _isselectquestion = false; }
                 else
                 {
                     if (model.selectitems[0].length > 0) {
                         _isselectquestion = true;
+
                         _checkboxclass = "";
                         if (model.answer.length > 1)
                         { _checkboxclass = "checkbox"; }
                         itemhtml = " <ul class='selectitem'>";
                         $.each(model.selectitems[0], function (si, item) {
                             itemhtml = itemhtml + " <li style='#$$#' data-value='" + item.itemname + "'>";
+                            var _selectedclass = "";
+                            for (var i = 0; i < _myanswerjson.result.length; i++)
+                            {
+                                if (_myanswerjson.result.substr(i, 1) == item.itemname || _myanswerjson.result.substr(i, 1) == item.itemname.toLowerCase())
+                                {
+                                    _selectedclass=" checked"
+                                }
+                            }
                             if (examengine.status == "do") {
-                                itemhtml = itemhtml + "<i class='select_i " + _checkboxclass + "'></i>";
+                                itemhtml = itemhtml + "<i class='select_i " + _checkboxclass + _selectedclass+"'></i>";
                             }
                             itemhtml = itemhtml + "<span class='item'>" + item.itemname + ".</span>";
                             itemhtml = itemhtml + "<span class='scontent'>" + examengine.replaceshowcontent(item.content) + "</span></li>";
@@ -1188,10 +1812,11 @@
 
             }
             html = html + itemhtml;
-            
+
 
         }
-       // console.log(examengine.status)
+        //console.log(examengine.status)
+        // console.log(examengine.status)
         ///正在做题无续出题
         if (examengine.status == "view" || examengine.status == "edit"||examengine.status=="insert") {
             var diffhtml = "";
@@ -1216,75 +1841,170 @@
             {
                 _style = "";
             }
-          //  html = html + "<div class='answerline'></div>"
+            //  html = html + "<div class='answerline'></div>"
             html = html + "<div class='analyse' " + _style + ">"
-            if (examengine.status == "view")
-                 html = html + "<div class='analysebox myanswer'><span>我的答案：</span><div>" + examengine.getmycurrentanswer(model.id).result+ "</div></div>";
-            html = html + "<div class='analysebox answer' " + _style + "> <span><i></i>参考答案：</span><div>" + examengine.replaceshowcontent(model.answer.replace(/#\|#/g, " ； ").replace(/略/g, "")) + "</div></div>";
-            if (examengine.status == "insert") {
-                html = html + "<div class='analysebox score'  " + _style + "><span><i></i>试题分值：</span><div class='diffcontainer'>" + model.score + "</div></div>";
+            if (examengine.status == "view" && (examengine.studentid!="")) {
+                var _myscore = _myanswerjson.score;
+                var _myanswer = _myanswerjson.result
+                if (examengine.studentanswerstatus < 2) {
+                    if (model.isobjective == false) {
+                        if (_myanswerjson.isanswer == 0)
+                        { _myscore = "<u style='color:#ee491f;text-decoration:none;'>未作答</u>";}
+                        else {
+                            _myscore = "<u style='color:#ee491f;text-decoration:none;'>未批阅</u>";
+                        }
+
+                    }
+                    //_myscore
+                }
+                if(examengine.useridentity == 'teacher'){
+                    html = html + "<div class='analysebox myanswer  ans_answer'><span><i></i>学生答案：</span><div"+anserrorclass+">" + _myanswer + "</div></div>";
+                    html = html + "<div class='analysebox myanswer ans_score'><span><i></i>学生得分：</span><div>" + _myscore + "</div></div>";
+                }else{
+                    html = html + "<div class='analysebox myanswer  ans_answer'><span><i></i>我的答案：</span><div"+anserrorclass+">" + _myanswer + "</div></div>";
+                    html = html + "<div class='analysebox myanswer ans_score'><span><i></i>我的得分：</span><div>" + _myscore + "</div></div>";
+                };
+
             }
-            html = html + "<div class='analysebox diff'  " + _style + " data-diff='" + model.diff + "'><span><i></i>试题难度：</span><div class='diffcontainer'>" + diffhtml + "</div></div>";
-            html = html + "<div class='analysebox analysis'  " + _style + "><span><i></i>参考解析：</span><div>" + examengine.replaceshowcontent(model.analysis) + "</div></div>";
+            html = html + "<div class='analysebox ans_answer' " + _style + "> <span><i></i>参考答案：</span><div>" +(model.answer!=""? examengine.replaceshowcontent(model.answer.replace(/#\|#/g, " ； ").replace(/略/g, "")):"") + "</div></div>";
+            html = html + "<div class='analysebox ans_score'  " + _style + "><span><i></i>试题分值：</span><div>" + model.score + "</div></div>";
+
+            html = html + "<div class='analysebox ans_diff'  " + _style + " data-diff='" + model.diff + "'><span><i></i>试题难度：</span><div class='diffcontainer'>" + diffhtml + "</div></div>";
+            html = html + "<div class='analysebox ans_analysis'  " + _style + "><span><i></i>参考解析：</span><div>" + examengine.replaceshowcontent(model.analysis) + "</div></div>";
             if ("[object Object]" === {}.toString.call(model.extend)) {
                 if ("[object Array]" === {}.toString.call(model.extend.knowledges)) {
                     var _pointhtml = "";
                     $.each(model.extend.knowledges, function (s, pointmodel) {
                         _pointhtml = _pointhtml + "<a href='javascript:' data-id='" + pointmodel.id + "'>" + pointmodel.name + "</a>"
                     })
-                    html = html + "<div class='analysebox knowledges' " + _style + "><span><i></i>知&nbsp;&nbsp;识&nbsp;&nbsp;点：</span><div>" + _pointhtml + "</div></div>";
+                    html = html + "<div class='analysebox ans_knowledges' " + _style + "><span><i></i>知&nbsp;&nbsp;识&nbsp;&nbsp;点：</span><div>" + _pointhtml + "</div></div>";
                 }
                 if ("[object Array]" === {}.toString.call(model.extend.chapters)) {
                     var _pointhtml = "";
                     $.each(model.extend.chapters, function (s, pointmodel) {
                         _pointhtml = _pointhtml + "<a href='javascript:' data-id='" + pointmodel.id + "'>" + pointmodel.name + "</a>"
                     })
-                    html = html + "<div class='analysebox chapters'  " + _style + "><span><i></i>章&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;节：</span><div>" + _pointhtml + "</div></div>";
+                    html = html + "<div class='analysebox ans_chapters'  " + _style + "><span><i></i>章&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;节：</span><div>" + _pointhtml + "</div></div>";
                 }
             }
             html = html + "</div>";
+            if (examengine.issingledisplay)
+            {
+                html = html + "<div class='radiophoto'>" + comments + "</div>";
+            }
+            html = html + "<div class='replycontainer_comment' id='exam_q_comment" + model.id + "'></div>";
+
         }
         else if (examengine.status == "piyue")
         {
-            
-            if (_myanswer.status == 1) {
-                html = html + "<div class='replycontainer' style='background:#FFF9F2'>";
-                html = html + "     <div class='replycontainer_content'>";
-                html = html + "         <div style='padding-bottom:8px; '>得分：<input type='text' class='input pingscore' style='width:18px;'></div>";
-                html = html + "         <textarea placeholder=\"请在此输入您评语\"></textarea>";
-                html = html + "     </div>"
-                html = html + "</div>";
-            }
-            html = html + "<div class='analyse'>"
-            html = html + "<div class='analysebox myanswer'><span>我的答案：</span><div>" + _myanswer.result + "</div></div>";
+            ///_myanswer.status == 1 &&
+
+            html = html + "<div class='analyse'>";
+            if(examengine.useridentity == 'teacher'){
+                html = html + "<div class='analysebox myanswer'><span>学生答案：</span><div"+anserrorclass+">" + _myanswerjson.result + "</div></div>";
+            }else{
+                html = html + "<div class='analysebox myanswer'><span>我的答案：</span><div"+anserrorclass+">" + _myanswerjson.result + "</div></div>";
+            };
+
             html = html + "<div class='analysebox answer'><span><i></i>参考答案：</span><div>" + examengine.replaceshowcontent(model.answer.replace(/#\|#/g, " ； ").replace(/略/g, "")) + "</div></div>";
             html = html + "</div>";
+            if (model.isobjective == false) {
+                var _piyuestyle = "";
+                var _piyuescore = "";
+                //如果是移动app，则从新加载分数
+                //if (examengine.ismobile == true)
+                    _piyuescore = examengine.getpiyuescore(model.id);
+                if (_myanswerjson.isanswer == 0) {
+                    _piyuestyle = " display:none;";
+                    _piyuescore = "0";
+                }
+                html = html + "<div class='replycontainer' style='background:#FFF9F2;" + _piyuestyle + "'>";
+                html = html + "     <div class='replycontainer_content'>";
+                html = html + "         <div style='padding-bottom:8px;overflow:hidden; '>";
+                html = html + "             <div style='float:left;'>得分：<input type='text' class='input pingscore' style='width:18px;' value='" + _piyuescore + "'>（本题分数：" + model.score + "）</div>";
+                //是否支持评论和点赞
+                if (examengine.isdisplaycomment) {
+                    html = html + "             <div style='float:right;'><span class='exam_praise' data-value='0'></span>点赞：</div>";
+                }
+                html = html + "         </div>";
+
+                //是否支持评论和点赞
+                if (examengine.isdisplaycomment) {
+
+                    html = html + "         <textarea placeholder=\"请在此输入您评语,按回车提交\" class='replay_pingyucontent'></textarea>";
+                }
+                html = html + "     </div>"
+                if (examengine.issingledisplay)
+                {
+                    html = html + "<div class='radiophoto'>" + comments + "</div>";
+                }
+                html = html + "</div>";
+            }
+            html = html + "<div class='replycontainer_comment' id='exam_q_comment" + model.id + "'></div>";
+
         }
         else if (examengine.status == "do") {
             html = html + "<div class='replycontainer'>";
             if (!_isselectquestion) {
                 if (model.isobjective)
                 {
-                    $.each(model.answer.split("#|#"), function () {
-                        html = html + "<p><input type='text' class='input'/></p>";
+
+                    $.each(model.answer.split("#|#"), function (i) {
+                        if (examengine.issingledisplay){
+                            var blankvalue = '';
+                            if(_myanswerjson.result){
+                                var arr = _myanswerjson.result.split(' ; ');
+                                blankvalue = 'value="'+arr[i]+'"';
+                                html = html + "<p><input type='text' class='input' "+blankvalue+" /></p>";
+                            }else{
+                                html = html + "<p><input type='text' class='input'/></p>";
+                            };
+                        }else{
+                            html = html + "<p><input type='text' class='input'/></p>";
+                        };
                     });
 
                 }
                 else
                 {
-                    html = html + "<div class='replycontainer_content'><textarea placeholder=\"请在此输入您的答案\">" + _myanswer.result + "</textarea>";
-                    var _htmlformpost = "<a class='uploadcontainer' ><input type=\"file\" name=\"image\" accept='.jpg,png,jpeg,gif'  onchange=\"$('#insertPicForm" + model.id + "').prev().val('');examengine.upload('insertPicForm" + model.id + "')\"></a>";
-                    var htmlform = "<form id=\"insertPicForm" + model.id + "\" action=\"/Bookroom/Homeworkhome/ajax_questions_pic\" enctype=\"multipart/form-data\">";
-                    htmlform = htmlform + "<div class='examuploadfile examuploadfile1'>";
-                    htmlform = htmlform + _htmlformpost
-                    htmlform = htmlform + "</div>";
-                    htmlform = htmlform + "</form>";
-                    html = html + "<div class='replyinfo'><div style='float:right;width:20%'><a href='javascript:void(0)' class='btn'>确定</a></div><div style='float:left;width:80%'>" + htmlform + "</div></div>"
+
+                    if (examengine.issingledisplay) {
+                        //反显上传的图片
+                        var _myanswercontent = _myanswerjson.result;
+                        var _myanswerimage = '';
+                        if (_myanswercontent.indexOf('<img') > -1) {
+                            var answerarr = _myanswercontent.split('<img');
+                            _myanswercontent = answerarr[0];
+                            for (var k = 1; k < answerarr.length; k++) {
+                                _myanswerimage += '<li class="lishow"><span onclick="$(this).parent().remove();"></span><img class="show" ' + answerarr[k] + '</li>';
+                            };
+                        };
+                        html = html + "<div class='replycontainer_content'><textarea placeholder=\"请在此输入您的答案\">" + _myanswercontent + "</textarea>";
+                        var htmlphoto = '<p style="color: #999;">注：请把答案拍照后上传</p>';
+                        htmlphoto += '<div class="addphoto"><ul>' + _myanswerimage + '<li onclick="capturePhoto($(this));"></li></ul></div>';
+
+                        //<a href='javascript:void(0)' class='btn'>确定</a>
+                        html = html + "<div class='replyinfo'>" + htmlphoto + "</div>"
+
+                    } else {
+                        html = html + "<div class='replycontainer_content'><textarea placeholder=\"请在此输入您的答案\">" + _myanswerjson.result + "</textarea>";
+                        var _htmlformpost = "<input type=\"file\" name=\"image\" accept='.jpg,png,jpeg,gif'  onchange=\"examengine.upload('" + model.id + "')\">";
+                        var htmlform = "<form id=\"insertPicForm" + model.id + "\" action=\"/Bookroom/Homeworkhome/ajax_questions_pic\" enctype=\"multipart/form-data\">";
+                        htmlform = htmlform + "<div class='examuploadfile'>";
+                        htmlform = htmlform + _htmlformpost
+                        htmlform = htmlform + "</div>";
+                        htmlform = htmlform + "</form>";
+                        //<a href='javascript:void(0)' class='btn'>确定</a>
+                        //html = html + "<div class='replyinfo'><div style='float:right;width:20%'></div><div style='float:left;width:80%'>" + htmlform + "</div></div>"
+                        html = html + " <p style=\"color: #999;\">注：请把答案拍照后上传</p>";
+                        html = html + "<div class='replyinfo'>" + htmlform + "</div>";
+
+                    }
                     html = html + "</div>";
                 }
             }
             else {
-                html = html + "<input type='hidden' value='" + _myanswer.result + "'/>"
+                html = html + "<input type='hidden' value='" + _myanswerjson.result + "'/>"
             }
             html = html + "     <div style='display:none' class='questionanswer'>" + examengine.stringtounicode(model.answer) + "</div>";
             html = html + "</div>";
@@ -1296,7 +2016,7 @@
 
         var postjson = { questionids: questionids, chapterids: teachingMaterialID, questiontype: questiontypeid, changetype: type, pagesize: 10, currpage: 1, diff: 0 };
         $.ajax({
-            url: "/Volume/Setvolume/ajax_getchangequestionlist", type: "post", data: jQuery.param(postjson),
+            url: testurl + "/Home/Interface/ajax_getchangequestionlist", type: "post", data: jQuery.param(postjson),
             dataType: "json",
             success: function (json) {
                 //console.log(currentquestionid)
@@ -1366,7 +2086,8 @@
                     }
                 }
                 else {
-                    ischool.layout.error(json.Message);
+                    examengine.layout.error('接口：'+json.Message);
+                    $("#big_" + currentquestionid).find(".changequestionloading").remove();
                 }
 
             }
@@ -1374,105 +2095,298 @@
     },
     //获取学生作答答案
     getmycurrentanswer: function (id) {
-        var _myanswer = { result: "",stuqueid:"", status: 0, isanswer: 0,isright:0 };
+        var _myanswer = { result: "",stuqueid:"", status: 0, isanswer: 0,isright:0,score:0 };
         if (typeof examengine.studentanswerjson.questionList != "undefined")
         {
             $.each(examengine.studentanswerjson.questionList, function (q, model) {
                 $.each(model.itemlist, function (s, submodel) {
-                   
                     if (submodel.queid == id)
                     {
-                        _myanswer.result = submodel.result;
+                        _myanswer.result =examengine.replaceshowcontent(submodel.result);
                         _myanswer.stuqueid = submodel.stuqueid;
                         _myanswer.status = parseInt(submodel.status,10);
                         _myanswer.isright = parseInt(submodel.etags, 10);
                         _myanswer.isanswer = parseInt(submodel.isanswer,10);
+                        _myanswer.score = parseInt(submodel.score, 10);
                     }
                 });
             })
         }
-        console.log(examengine.studentanswerjson)
+
+        function addchoice(){
+            var index = $('#aa').find('').length;
+            var option = getoption(index+1);
+            var html = '<script id="ss"+option></script>';
+            $('#aaa').append(html);
+            $('#ss'+option).ueditor();
+        };
+
+        function getoption(num){
+            var option = 'E';
+            switch (num){
+                case 1:
+                    option =  'A';
+                    break;
+                case 2:
+                    option = 'B';
+                    break;
+                case 3:
+                    option = 'C';
+                    break;
+                case 4:
+                    option = 'D';
+                    break;
+                case 5:
+                    option = 'E';
+                    break;
+                case 6:
+                    option = 'F';
+                    break;
+                case 7:
+                    option = 'G';
+                    break;
+                default :
+                    option = 'X';
+                    break;
+            };
+            return option;
+        };
+
         //兼容书房
         if ("[object Array]" === {}.toString.call(examengine.studentanswerjson.ans))
         {
-            $.each(examengine.studentanswerjson.ans, function (q, model) {
-                $.each(model.anmainitem, function (q, model1) {
-                    $.each(model1.anpaqamainitem, function (q, model2) {
-                        if (model2.anpaqacloudnum == id)
-                        {
-                            console.log(model2.anpaqacloudnum)
-                            _myanswer.result = model2.ancont;
-                            _myanswer.stuqueid = model2.stuqueid;
-                            _myanswer.status = 1;
-                            _myanswer.isright = parseInt(model2.anisright, 10);
-                            if (_myanswer.isright == 2)
-                            {
-                                _myanswer.isanswer = 0;
-                                _myanswer.isright = 0;
+           
+            if (typeof examengine.studentanswerjson.ans[0].anmainitem != "undefined") {
+                $.each(examengine.studentanswerjson.ans, function (q, model) {
+                    $.each(model.anmainitem, function (q, model1) {
+                        $.each(model1.anpaqamainitem, function (q, model2) {
+                            if (model2.anpaqacloudnum == id) {
+                                //console.log(model2.anpaqacloudnum)
+                                _myanswer.result = model2.ancont;
+                                _myanswer.stuqueid = model2.stuqueid;
+                                _myanswer.status = 1;
+                                _myanswer.isright = parseInt(model2.anisright, 10);
+                                if (_myanswer.isright == 2) {
+                                    _myanswer.isanswer = 0;
+                                    _myanswer.isright = 0;
+                                }
+                                else
+                                    _myanswer.isanswer = 1;
                             }
-                            else
-                                _myanswer.isanswer = 1;
-                        }
+                        });
                     });
                 });
-            });
+            }
+            else {
+                $.each(examengine.studentanswerjson.ans, function (q, submodel) {
+
+
+                    if (submodel.queid == id) {
+                        _myanswer.result = examengine.replaceshowcontent(submodel.result);
+                        _myanswer.stuqueid = submodel.stuqueid;
+                        _myanswer.status = parseInt(submodel.status, 10);
+                        _myanswer.isright = parseInt(submodel.etags, 10);
+                        _myanswer.isanswer = parseInt(submodel.isanswer, 10);
+                        _myanswer.score = parseInt(submodel.score, 10);
+                    }
+
+                })
+            }
            
         }
-        return _myanswer
+        return _myanswer;
     },
     //获取用户作答json
     getmyanswerjson: function () {
 
-        var json = "";
-       
-        $(".subquestion").each(function () {
-            var _hiddenvalue = "";
-            var _textarea = "";
-            var _textvalue = "";
-            var _value = "";
-            if ($(this).find("input:hidden").length > 0) {
-                _hiddenvalue = $(this).find("input:hidden").val();
-            }
-            $(this).find("input:text").each(function () {
-                if (_textvalue != "")
-                    _textvalue = _textvalue + "#|#";
-                _textvalue = _textvalue + $(this).val();
-            });
-            if ($(this).find("textarea").length > 0) {
-                _textarea = $(this).find("textarea").val();
-            }
-            _value =examengine.replaceinsertcontent( _hiddenvalue + _textarea + _textvalue);
-            var _isanswer = 0;
-            if (_value != "")
-                _isanswer = 1;
-            if (json != "")
-                json = json+","
-            json = json + "{\"queid\":\"" + $(this).attr("data-id") + "\",\"isanswer\":" + _isanswer + ",\"whenlong\":0,\"result\":\"" + _value + "\"}"
-            
-        });
-        return eval("([" + json + "])");
+        return eval("(" + examengine.getbookroommyanswerjson() + ")");
     },
     //书房用户作答使用
-    getbookroommyanswerjson: function () {
+    //getbookroommyanswerjson: function () {
+    //    var _sectionjson = "";
+    //    var _myexamscore = 0;
+    //    var _subanswer = "";
+    //    var _examscore = examengine.examjson.score;
+    //    $(".examsections").each(function (esindex) {
+    //        var _questionanswerjson = "";
+    //        var _mytotalscore = 0;
+    //        $(this).find(".equestion").each(function () {
+    //
+    //            var _totalscore = 0;
+    //
+    //            var _errorcount = 0;
+    //            var _isquestionsure = 2;
+    //            var _bigid = $(this).attr("data-id")
+    //            $(this).find(".subquestion").each(function () {
+    //
+    //                var _hiddenvalue = "";
+    //                var _textarea = "";
+    //                var _textvalue = "";
+    //                var _value = "";
+    //                var _quetype = 1;//主观1，客观0；
+    //                //修正再没有答题的情况下，自动设置状态
+    //                if ($(this).attr("data-isobjective") == "true") {
+    //                    _quetype = 0;
+    //                };
+    //                if ($(this).find("input:hidden").length > 0 && !$(this).find("input:hidden").attr('class')) {
+    //                    _hiddenvalue = $(this).find("input:hidden").val();
+    //                }
+    //
+    //                $(this).find("input:text").each(function () {
+    //                    if (_textvalue != "")
+    //                        _textvalue = _textvalue + "#|#";
+    //                    var val;
+    //                    if($(this).val() == ''){
+    //                        val = '<##>';
+    //                    }else{
+    //                        val = $(this).val();
+    //                    };
+    //                    _textvalue = _textvalue + val;
+    //                });
+    //                if ($(this).find("textarea").length > 0) {
+    //                    _textarea = $(this).find("textarea").val();
+    //                    $(this).find(".examuploadfilecontainer").each(function () {
+    //                        _textarea = _textarea + "[img]" + $(this).find("img").attr("src") + "[/img]";
+    //                    });
+    //                    //移动端使用
+    //                    if ($(this).find('.addphoto').eq(0).find('li').length > 0) {
+    //                        for (var j = 0; j < $(this).find('.addphoto').eq(0).find('li.lishow').length; j++) {
+    //                            var imgurl = $(this).find('.addphoto').eq(0).find('li.lishow').eq(j).find('img').attr('src');
+    //                            _textarea = _textarea + '[img]' + imgurl + '[/img]';
+    //                        };
+    //                    };
+    //                }
+    //                var _sureanser = examengine.unicodetostring($(this).find(".questionanswer").html());
+    //                var _score = parseInt($(this).attr("data-score"), 10);
+    //                var _myscore = 0;
+    //                var _issure = 0;//是否正确
+    //                var _isanswer = 1;//是否作答
+    //                var _isstatus = 0;
+    //                _value = examengine.replaceinsertcontent(_hiddenvalue + _textarea + _textvalue);
+    //
+    //                if ($.trim(_value) == "") {
+    //                    _issure = 0;
+    //                    _isanswer = 0;
+    //                }
+    //                else {
+    //                    _issure = 0;
+    //                    if ($(this).attr("data-isobjective") == "true") {
+    //                        _quetype = 0;
+    //                        _isstatus = 1;
+    //                        _sureanser = _sureanser.replace(/；/g, ";").replace(/;/g, "#|#");
+    //                        if (_sureanser.indexOf("A1") >= 0 && _sureanser.indexOf("A2") >= 0) {//连线题
+    //                           // console.log(_sureanser);
+    //                            var _isliansure = true;;
+    //                            $.each(_hiddenvalue.split(","), function (i, my) {
+    //                                // console.log(my + "====");
+    //                                var _signline = false;
+    //                                $.each(_sureanser.split("#|#"), function (i, surean) {
+    //                                    if ($.trim(my) == $.trim(surean)) {
+    //                                        // console.log(surean + "-----++++");
+    //                                        _signline = true;
+    //                                    }
+    //
+    //                                });
+    //                                if (_signline == false)
+    //                                    _isliansure = false;
+    //
+    //                            });
+    //                            if (_isliansure) {
+    //                                _issure = 1;
+    //                                _myscore = _score;
+    //                            }
+    //                        }
+    //                        else if (_textvalue.indexOf("#|#") >= 0) {
+    //                            $.each(_textvalue.split("#|#"), function (i, my) {
+    //                                $.each(_sureanser.split("#|#"), function (i, surean) {
+    //                                    if ($.trim(my) == $.trim(surean)) {
+    //                                        _myscore = _myscore + _score / _textvalue.split("#|#").length;
+    //                                    }
+    //
+    //                                });
+    //
+    //                            });
+    //                            if (_myscore >= _score)
+    //                                _issure = 1;
+    //
+    //                        }
+    //                        else {
+    //                            if (_sureanser == _value) {
+    //                                _issure = 1;
+    //                                _myscore = _score;
+    //                            }
+    //
+    //                        }
+    //
+    //                    }
+    //                    else {
+    //                        //修正选择类型的题是主观题的问题
+    //                        if (_hiddenvalue == _value) {
+    //                            _issure = 1;
+    //                            _isstatus = 1;
+    //                            _quetype = 0;
+    //                            _myscore = _score;
+    //                        }
+    //
+    //                    }
+    //                }
+    //                _mytotalscore = _mytotalscore + _myscore;
+    //                _totalscore = _totalscore + _score;
+    //                if (_issure == 0)
+    //                    _errorcount = _errorcount + 1;
+    //
+    //                if (_subanswer != "") {
+    //                    _subanswer = _subanswer + ",";
+    //                }
+    //
+    //                var processanswer = "";
+    //                _subanswer = _subanswer + "{\"stuqueid\":\"" + _bigid + "\",\"queid\":\"" + $(this).attr("data-id") + "\",\"pascore\":" + _score + ",\"score\":" + _myscore +
+    //                ",\"etags\":" + _issure + ",\"quetype\":\"" + _quetype + "\",\"isanswer\":" + _isanswer +
+    //                ",\"whenlong\":0,\"result\":\"" + _value + "\",\"status\":" + _isstatus + "}";
+    //            });
+    //
+    //        });
+    //        _myexamscore = _myexamscore+_mytotalscore
+    //    });
+    //    console.log(_myexamscore+','+_examscore);
+    //    var postjson = "{\"anuuid\":\"" + examengine.paperid + "\",\"anstuid\":\"$studentid$\",\"aname\":\"$studentname$\",\"anstartime\":" + Math.round((examengine.useranswerbegintime.getTime()) / 1000) +
+    //        ",\"anendtime\":" + Math.round($.now() / 1000) + ",\"score\":" + Math.round(_myexamscore * 1.0 / _examscore * 100).toFixed(2) + ",\"actualscore\":" + _myexamscore + ",\"ans\":[" + _subanswer + "]}";
+    //    return postjson;
+    //},
+     getbookroommyanswerjson: function () {
 
         var _sectionjson = "";
         var _myexamscore = 0;
+        var _subanswer = "";
+        //读取试卷分数，如果卷面分为0则，读取题中的分数
+        if (examengine.examjson.score == "")
+            examengine.examjson.score = 0;
+        var _examscore = parseInt(examengine.examjson.score, 10);
+        if (_examscore <= 0)
+        {
+            _examscore = examengine.getexamscore();
+        }
         $(".examsections").each(function (esindex) {
             var _questionanswerjson = "";
+            var _mytotalscore = 0;
             $(this).find(".equestion").each(function () {
-                var _subanswer = "";
+
                 var _totalscore = 0;
-                var _mytotalscore = 0;
+
                 var _errorcount = 0;
                 var _isquestionsure = 2;
-                var _typeid = examengine.getbookroomtypeid($(this).attr("data-typename"));
+                var _bigid = $(this).attr("data-id")
                 $(this).find(".subquestion").each(function () {
 
                     var _hiddenvalue = "";
                     var _textarea = "";
                     var _textvalue = "";
                     var _value = "";
-
+                    var _quetype = 1;//主观1，客观0；
+                    //修正再没有答题的情况下，自动设置状态
+                    if ($(this).attr("data-isobjective") == "true") {
+                        _quetype = 0;
+                    }
                     if ($(this).find("input:hidden").length > 0) {
                         _hiddenvalue = $(this).find("input:hidden").val();
                     }
@@ -1483,64 +2397,144 @@
                     });
                     if ($(this).find("textarea").length > 0) {
                         _textarea = $(this).find("textarea").val();
+                        $(this).find(".examuploadfilecontainer").each(function () {
+                            _textarea = _textarea + "[img]" + $(this).find("img").attr("src") + "[/img]";
+                        });
+                        //移动端使用
+                        if ($(this).find('.addphoto').eq(0).find('li').length > 0) {
+                            for (var j = 0; j < $(this).find('.addphoto').eq(0).find('li').length - 1; j++) {
+                                var imgurl = $(this).find('.addphoto').eq(0).find('li').eq(j).find('img').attr('src');
+                                _textarea = _textarea + '[img]' + imgurl + '[/img]';
+                            };
+                        };
                     }
-                    var _sureanser = examengine.unicodetostring($(this).find(".questionanswer").html());
+                    var _sureanser = examengine.unicodetostring($(this).find(".questionanswer").html()).toLowerCase();
                     var _score = parseInt($(this).attr("data-score"), 10);
+                    if (_score < 0)
+                        _score = 0;
                     var _myscore = 0;
-                    var _issure = 2;
-                    _value = examengine.replaceinsertcontent(_hiddenvalue + _textarea + _textvalue);
-                    if ($(this).attr("data-isobjective") == "true") {
-                        if (_textvalue.indexOf("#|#") >= 0) {
-                            $.each(_textvalue.split("#|#"), function (i, my) {
-                                $.each(_sureanser.split("#|#"), function (i, surean) {
-                                    if (my == surean) {
-                                        _myscore = _myscore + _myscore / _textvalue.split("#|#").length;
-                                    }
+                    var _issure = 0;//是否正确
+                    var _isanswer = 1;//是否作答
+                    var _isstatus = 0;
+                    _value = examengine.replaceinsertcontent(_hiddenvalue + _textarea + _textvalue).toLowerCase();
+
+                    if ($.trim(_value) == "") {
+                        issure = 0;
+                        _isanswer = 0;
+                    }
+                    else {
+                        _issure = 0;
+                        if ($(this).attr("data-isobjective") == "true") {
+                            _quetype = 0;
+                            _isstatus = 1;
+                            _sureanser = _sureanser.replace(/；/g, ";").replace(/;/g, "#|#");
+                            if (_sureanser.indexOf("A1") >= 0 && _sureanser.indexOf("A2") >= 0) {//连线题
+                                // console.log(_sureanser);
+                                var _isliansure = true;;
+                                $.each(_hiddenvalue.split(","), function (i, my) {
+                                    // console.log(my + "====");
+                                    var _signline = false;
+                                    $.each(_sureanser.split("#|#"), function (i, surean) {
+                                        if ($.trim(my).toLowerCase() == $.trim(surean).toLowerCase()) {
+                                            // console.log(surean + "-----++++");
+                                            _signline = true;
+                                        }
+
+                                    });
+                                    if (_signline == false)
+                                        _isliansure = false;
 
                                 });
+                                if (_isliansure) {
+                                    _issure = 1;
+                                    _myscore = _score;
+                                }
+                            }
+                            else if (_textvalue.indexOf("#|#") >= 0 && _textvalue != "") {
+                                _textvalue = examengine.replacefullchar(_textvalue);
+                                _sureanser = examengine.replacefullchar(_sureanser);
+                                if (_textvalue.split("#|#").length == _sureanser.split("#|#").length) {
+                                    $.each(_textvalue.split("#|#"), function (i, my) {
+                                        if ($.trim(_textvalue.split("#|#")[i]).toLowerCase() == $.trim(_sureanser.split("#|#")[i]).toLowerCase()) {
+                                            _myscore = _myscore + _score / _textvalue.split("#|#").length;
+                                        }
+                                    });
+                                }
+                                else {
+                                    $.each(_textvalue.split("#|#"), function (i, my) {
+                                        $.each(_sureanser.split("#|#"), function (i, surean) {
+                                            if ($.trim(my).toLowerCase() == $.trim(surean).toLowerCase()) {
+                                                {
+                                                    _myscore = _myscore + _score / _textvalue.split("#|#").length;
+                                                    return false;
+                                                }
+                                            }
+                                        });
 
-                            });
-                            if (_myscore >= _score)
-                                _issure = 1;
+                                    });
+                                }
+                                if (_myscore >= _score) {
+                                    _issure = 1;
+                                    _myscore = _score;
+                                }
+
+                            }
+                            else {
+                                if (_sureanser.toLowerCase() == _value.toLowerCase()) {
+                                    _issure = 1;
+                                    _myscore = _score;
+                                }
+
+                            }
+
                         }
                         else {
-                            if (_sureanser == _value) {
+                            //修正选择类型的题是主观题的问题
+                            if (_hiddenvalue.toLowerCase() == _value.toLowerCase()) {
                                 _issure = 1;
+                                _isstatus = 1;
+                                _quetype = 0;
                                 _myscore = _score;
                             }
-                        }
 
+                        }
                     }
-                    console.log(_issure);
                     _mytotalscore = _mytotalscore + _myscore;
                     _totalscore = _totalscore + _score;
                     if (_issure == 0)
-                        _errorcount = _errorcount + 0;
-                    if ($.trim(_value) == "")
-                        issure = 2;
+                        _errorcount = _errorcount + 1;
+
                     if (_subanswer != "") {
                         _subanswer = _subanswer + ",";
                     }
+
                     var processanswer = "";
-                    _subanswer = _subanswer + "{\"anpaqanum\":" + $(this).attr("data-index") + ",\"anpaqacloudnum\":\"" + $(this).attr("data-id") + "\"," +
-                        "\"ancont\":\"" + _value + "\",\"anitemdesignscore\":" + _score + ",\"anitemgetscore\":" + _myscore + ",\"anqatype\":\"" + _typeid + "\",\"anisright\":" + _issure + ",\"ancontType\":1,\"andetail\":\"" + processanswer + "\"}"
+                    _subanswer = _subanswer + "{\"stuqueid\":\"" + _bigid + "\",\"queid\":\"" + $(this).attr("data-id") + "\",\"pascore\":" + _score + ",\"score\":" + _myscore +
+                        ",\"etags\":" + _issure + ",\"quetype\":\"" + _quetype + "\",\"isanswer\":" + _isanswer +
+                        ",\"whenlong\":0,\"result\":\"" + _value + "\",\"status\":" + _isstatus + "}";
                 });
-                if (_questionanswerjson != "")
-                    _questionanswerjson = _questionanswerjson + ","
-                _questionanswerjson = _questionanswerjson + "{\"anpaqamainnum\":" + $(this).attr("data-index") + ",\"anpaqamaincloudnum\":\"" + $(this).attr("data-id") + "\"," +
-                        "\"anpaqamaintype\":\"" + _typeid + "\",\"anpaqamainisallright\":" + _isquestionsure + ",\"anpaqamaincocount\":" + $(this).find(".subquestion").length + "," +
-                        "\"anpaqamainwrongcount\":" + _errorcount + ",\"anmainitemdesignscore\":\"" + _totalscore + "\",\"anmainitemgetscore\":\"" + _mytotalscore + "\",\"anpaqamainitem\":[" + _subanswer + "]}";
-                _myexamscore = _myexamscore + _mytotalscore;
+
             });
-            if (_sectionjson != "")
-                _sectionjson = _sectionjson+","
-            _sectionjson = _sectionjson + "{\"anmaincode\":\"" + esindex + "\",\"anmainitem\":[" + _questionanswerjson + "]}";
+            _myexamscore = _myexamscore + _mytotalscore
         });
-        var postjson = "{\"anuuid\":\"" + examengine.paperid+ "\",\"anstuid\":\"$studentid$\",\"aname\":\"$studentname$\","+
-            "\"andesignscore\":" + examengine.examjson.score + ",\"angetscore\":" + _myexamscore +
-            ",\"anstartime\":" + Math.round((examengine.useranswerbegintime.getTime()) / 1000) +
-            ",\"anendtime\":" + Math.round($.now() / 1000) + ",\"antotalusetime\":" + (examengine.examtime*60-parseInt($("#examtime_text").attr("data-value")),10) + ",\"ans\":[" + _sectionjson + "]}";
+
+        _scorerate = 0;
+        if (_examscore > 0)
+        {
+            _scorerate = Math.round(_myexamscore * 1.0 / _examscore * 100).toFixed(2);
+        }
+
+        var postjson = "{\"anuuid\":\"" + examengine.paperid + "\",\"anstuid\":\"$studentid$\",\"aname\":\"$studentname$\",\"anstartime\":" + Math.round((examengine.useranswerbegintime.getTime()) / 1000) +
+            ",\"anendtime\":" + Math.round($.now() / 1000) + ",\"score\":" + _scorerate+ ",\"actualscore\":" + _myexamscore + ",\"ans\":[" + _subanswer + "]}";
         return postjson;
+    },
+    replacefullchar:function(content) {
+        var str = "ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ１２３４５６７８９０ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ"
+        str1 = "abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        for (var i = 0; i < str.length; i++) {
+            content = content.replace(new RegExp(str.substr(i, 1), "g"), str1.substr(i, 1));
+        }
+        return content;
     },
     getbookroomtypeid: function (typename) {
         if (typename == "")
@@ -1551,7 +2545,91 @@
         if (typename.indexOf("多选题") >= 0 || typename.indexOf("多项选择题") >= 0 || typename.indexOf("不定项选择题") >= 0) {
             return 20;
         }
+        if (typename.indexOf("判断题") >= 0) {
+            return 30;
+        }
+        
+        if (typename.indexOf("连线题") >= 0) {
+            return 60;
+        }
         return 90;
+    },
+    getpiyuejson: function () {
+        var _json = "";
+        var _ispost = true;
+        var _totalscore = 0;
+        var _examscore = examengine.examjson.score;
+        $(".examsections").each(function (esindex) {
+            var _questionanswerjson = "";
+            $(this).find(".equestion").each(function () {
+                var _subanswer = "";
+                $(this).find(".subquestion").each(function () {
+                    var _score = parseInt($(this).attr("data-score"), 10);
+                    var _quetype = 1;//主观0，客观；
+                    var _myscore = $(this).find(".pingscore").val();
+                    if ($(this).attr("data-isobjective") == "true" && $(this).attr("data-isright") == "1") {
+                        _totalscore = _totalscore + _score;
+                    }
+                    if ($(this).find(".pingscore").length == 1) {
+                        var _issure = 0;
+                        if (/^(0|([1-9](\d+)?))$/.test(_myscore)) {
+                            _myscore = parseInt(_myscore, 10);
+                            if (_myscore > _score) {
+                                // _myscore = _score;
+                                _ispost = false;
+                                $(this).find(".pingscore").parent().find("span").remove();
+                                $(this).find(".pingscore").after("<span style='color:#f00'>输入的分数不能大于原始分</span>")
+                            }
+                            if (_score * 0.6 <= _myscore) {
+                                _issure = 1;
+                            }
+                            _totalscore = _totalscore + _myscore;
+                        }
+                        else {
+                            _ispost = false;
+                            $(this).find(".pingscore").parent().find("span").remove();
+                            $(this).find(".pingscore").after("<span style='color:#f00'>请输入正确的分数</span>")
+                        }
+                        if (_json != "") {
+                            _json = _json + ",";
+                        }
+                        _json = _json + "{\"queid\":\"" + $(this).attr("data-id") + "\",\"quetype\":\"" + _quetype + "\",\"pascore\":" + _score + ",\"score\":\"" + _myscore + "\",\"etags\":" + _issure + ",\"status\":1}";
+
+                    }
+                });
+
+            });
+
+        });
+        _json = "{\"anuuid\":\"" + examengine.paperid + "\",\"anstuid\":\"" + examengine.studentid + "\",\"score\":" + Math.round(_totalscore * 1.0 / _examscore * 100).toFixed(2) + ",\"actualscore\":" + _totalscore + ",\"ans\":[" + _json + "]}";
+        var jsondata = eval("(" + _json + ")");
+
+        if (_ispost == false)
+            jsondata = null;
+
+        if(examengine.issingledisplay){
+            var pingstatus = false;
+            var pingtxt = '';
+            $('.examcontainer').find('.pingscore').each(function(i){
+                if($(this).val() == ''){
+                    if(pingtxt == ''){
+                        pingtxt = i+1;
+                    }else{
+                        pingtxt += ','+(i+1);
+                    };
+                    pingstatus = true;
+                };
+            });
+            $('.pingscore').eq(examengine.singleindex).blur();
+            if(pingstatus){
+                examengine.layout.alert('提示','还有题目尚未评分，请检查！');
+                return false;
+            }else if(_ispost==false){
+                examengine.layout.alert('提示','输入的分数有不正确的，请检查！');
+                return false;
+            };
+        };
+        return jsondata;
     },
     getexamscore: function () {
         var _totalscore = 0;
@@ -1559,6 +2637,7 @@
             _totalscore = _totalscore + parseInt($(this).attr("data-score"), 10);
         });
         $("#examsheet_score").html(_totalscore);
+		return _totalscore;
     },
     //时间比较
     dateDiff: function (interval, objDate1, objDate2) {
@@ -1592,6 +2671,8 @@
         if (typeof (content) == "string")
         {
             if (content != "") {
+                content = content.replace(/\r/g, "");
+                content = content.replace(/\n/g, "<br/>");
                 content = content.replace(/\"/g, "\\\"");
                 content = content.replace(/&nbsp;/g, " ");
             }
@@ -1607,32 +2688,76 @@
             return "";
         if (content == "")
             return "";
+        content = content.replace(/\\u003d/g, "=");
+        content = content.replace(/\\u0026/g, "&");
+
         content = content.replace("：", ":");
+        content = content.replace(/&amp;/g, "&");
+
+        while (content.indexOf("&amp;") >= 0) {
+            content = content.replace(/&amp;/g, "&");
+        }
         content = content.replace(/&lt;/g, "<");
         content = content.replace(/&gt;/g, ">");
-        content = content.replace(/&amp;/g, "&");
         content = content.replace(/&nbsp;/g, " ");
         content = content.replace(/&quot;/g, "\"");
         content = content.replace(/<\\/g, "<");
-        //content = content.replace(/\&nbsp;/g, "");
         content = content.replace("\n", "<br />");
         content = content.replace("<br>", "<br />");
-        if (content.indexOf("img src='data:image")>0)
+        if (content.indexOf("img src='data:image") > 0)
         { }
         else if (content.indexOf("data:image") == 0) {
 
             content = "<img src=\"" + content + "\"/>"
         }
-        //content = content.replace(/'/g, "");
+
         content = content.replace(/\[img\]/g, "<img src=\"");
-        content = content.replace(/\[\/img\]/g, "\" />");
+        content = content.replace(/\[\/img\]/g, "\" onclick=\"window.open(this.src,'_blank')\"/>");
         content = content.replace(/\[Audio\]/g, "<audio src=\"");
         content = content.replace(/\[\/Audio\]/g, "\" />");
         content = content.replace(/<img/g, "<img style=\"vertical-align:middle\"");
-        //console.log(content);
+        content = content.replace(/\#\|\#/g, " ; ");//替换分隔符
         return content;
 
     },
+    //replaceshowcontent: function (content) {
+    //    if (content == null)
+    //        return "";
+    //    if (content == "")
+    //        return "";
+    //    content = content.replace("：", ":");
+    //    content = content.replace(/&amp;/g, "&");
+    //    content = content.replace(/&amp;/g, "&");
+    //    content = content.replace(/&amp;/g, "&");
+    //    content = content.replace(/&amp;/g, "&");
+    //    content = content.replace(/&amp;/g, "&");
+    //    content = content.replace(/&lt;/g, "<");
+    //    content = content.replace(/&gt;/g, ">");
+    //    content = content.replace(/&nbsp;/g, " ");
+    //    content = content.replace(/&quot;/g, "\"");
+    //    content = content.replace(/<\\/g, "<");
+    //    //content = content.replace(/\&nbsp;/g, "");
+    //    content = content.replace("\n", "<br />");
+    //    content = content.replace("<br>", "<br />");
+    //    content = content.replace(/<br\/>/g, "\n");
+    //    if (content.indexOf("img src='data:image")>0)
+    //    { }
+    //    else if (content.indexOf("data:image") == 0) {
+    //
+    //        content = "<img src=\"" + content + "\"/>"
+    //    }
+    //    //content = content.replace(/'/g, "");
+    //    content = content.replace(/\[img\]/g, "<img src=\"");
+    //    content = content.replace(/\[\/img\]/g, "\" />");
+    //    content = content.replace(/\[Audio\]/g, "<audio src=\"");
+    //    content = content.replace(/\[\/Audio\]/g, "\" />");
+    //    content = content.replace(/<img/g, "<img style=\"vertical-align:middle\"");
+    //    content = content.replace(/\#\|\#/g, " ; ");//替换分隔符
+    //    content = content.replace(/<##>/g, "");//移动端存储填空题，有没答填空需要
+    //    //console.log(content);
+    //    return content;
+    //
+    //},
     //获取试卷结构
     getexamjson: function () {
         var partsjson = "";
@@ -1649,49 +2774,82 @@
                         _qcontent = examengine.replaceinsertcontent($(this).find(".title").html());
                     }
                     var _typeid = $(this).attr("data-typeid");
+                    var _typename = $(this).attr("data-typename");
                     $(this).find(".subquestion").each(function () {
-                        var _content = $(this).find(".subtitle").html().replace("<em class=\"subquestionnum\">"+$(this).attr("data-index")+".</em>","");
-                       
+                        var _cobj = $(this).find(".subtitle");
+                        _cobj.find(".subtitle_num").remove();
+                        _cobj.find(".subtitle_typename").remove();
+                        var _content = _cobj.html();
+                        var _isobjective = $(this).attr("data-isobjective");
                         var _score = parseInt($(this).attr("data-score"), 10);
                         _qscore = _qscore + _score;
                         if (subquestionjson != "")
                             subquestionjson = subquestionjson + ","
                         var _selectitems = "";
-                        if ($(this).find(".selectitem").find("li").length > 0)
+
+                        if ($(this).parent().attr("data-typename") == "连线题")
                         {
-                            $(this).find(".selectitem").find("li").each(function () {
-                                if (_selectitems != "")
-                                    _selectitems = _selectitems + ",";
-                                _selectitems = _selectitems+"{\"itemname\":\"" + $(this).attr("data-value") + "\",\"content\":\"" + examengine.replaceinsertcontent($(this).find(".scontent").html()) + "\",\"issure\":false}"
+                            var _selectitems1 = "";
+                            var _selectitems2 = "";
+                            var setpi = 0;
+                            $(this).find(".linecontainer_left").find(".linebox").each(function (i) {
+                                if (_selectitems1 != "")
+                                { _selectitems1 = _selectitems1 + ","; }
+                                _selectitems1 = _selectitems1 + "{\"itemname\":\"" + String.fromCharCode(setpi + 65) + "\",\"content\":\"" + examengine.replaceinsertcontent($(this).find(".linebox_content").html()) + "\",\"issure\":false}";
+                                setpi = setpi + 1;
+
                             });
-                            _selectitems = "[" + _selectitems + "]";
+                            setpi = 0;
+                            $(this).find(".linecontainer_right").find(".linebox").each(function (i) {
+                                if (_selectitems2 != "")
+                                {  _selectitems2 = _selectitems2 + ","; }
+
+                                _selectitems2 = _selectitems2 + "{\"itemname\":\"" + String.fromCharCode(setpi + 65) + "\",\"content\":\"" + examengine.replaceinsertcontent($(this).find(".linebox_content").html()) + "\",\"issure\":false}";
+                                setpi = setpi + 1;
+
+                            });
+                            _selectitems = "[" + _selectitems1 + "],[" + _selectitems2 + "]";
+                        }
+                        else
+                        {
+                            if ($(this).find(".selectitem").find("li").length > 0) {
+                                $(this).find(".selectitem").find("li").each(function () {
+                                    if (_selectitems != "")
+                                        _selectitems = _selectitems + ",";
+                                    _selectitems = _selectitems + "{\"itemname\":\"" + $(this).attr("data-value") + "\",\"content\":\"" + examengine.replaceinsertcontent($(this).find(".scontent").html()) + "\",\"issure\":false}"
+                                });
+                                _selectitems = "[" + _selectitems + "]";
+                            }
                         }
                         var _knowledgesjson = "";
-                        $(this).find(".knowledges").find("a").each(function () {
+                        $(this).find(".ans_knowledges").find("a").each(function () {
                             if (_knowledgesjson != "")
                                 _knowledgesjson = _knowledgesjson + ",";
                             _knowledgesjson = _knowledgesjson + "{\"id\":\"" + $(this).attr("data-id") + "\",\"name\":\"" + examengine.replaceinsertcontent($(this).html()) + "\"}"
 
                         });
                         var _chaptersjson = "";
-                        $(this).find(".chapters").find("a").each(function () {
+                        $(this).find(".ans_chapters").find("a").each(function () {
                             if (_chaptersjson != "")
                                 _chaptersjson = _chaptersjson + ",";
                             _chaptersjson = _chaptersjson + "{\"id\":\"" + $(this).attr("data-id") + "\",\"name\":\"" + examengine.replaceinsertcontent($(this).html()) + "\"}"
 
-                        })
+                        });
+                        //修正题库或word无法正确设置客观题问题
+                        if (_selectitems != "")
+                            _isobjective = true;
                         subquestionjson = subquestionjson + "{\"id\": \"" + $(this).attr("data-id") + "\"," +
                         "\"innerid\": \"" + $(this).attr("data-innerid") + "\"," +
                         "\"index\":" + $(this).attr("data-index") + "," +
                         "\"typeid\": \"" + _typeid + "\"," +
-                        "\"typename\": \"\"," +
-                         "\"isobjective\": " + $(this).attr("data-isobjective") + "," +
+                        "\"typename\": \"" + _typename + "\"," +
+                        "\"isobjective\": " +  _isobjective+ "," +
                         "\"content\": \"" + examengine.replaceinsertcontent(_content) + "\"," +
                         "\"score\": \"" + _score + "\"," +
                         "\"selectitems\": [" + _selectitems + "]," +
-                        "\"answer\": \"" + examengine.replaceinsertcontent($(this).find(".answer").find("div").html().replace(/ ； /g, "#|#")) + "\"," +
-                        "\"diff\": \"" + examengine.replaceinsertcontent($(this).find(".diff").attr("data-diff")) + "\"," +
-                        "\"analysis\": \"" + examengine.replaceinsertcontent($(this).find(".analysis").find("div").html()) + "\"," +
+                        "\"answer\": \"" + examengine.replaceinsertcontent($(this).find(".ans_answer").find("div").html().replace(/；/g, "#|#")) + "\"," +
+                        "\"diff\": \"" + examengine.replaceinsertcontent($(this).find(".ans_diff").attr("data-diff")) + "\"," +
+                        "\"analysis\": \"" + examengine.replaceinsertcontent($(this).find(".ans_analysis").find("div").html()) + "\"," +
                         "\"extend\": {\"knowledges\":[" + _knowledgesjson + "]," +
                         "\"testingpoints\":[]," +
                         "\"chapters\":[" + _chaptersjson + "]," +
@@ -1733,18 +2891,37 @@
                 partsjson = partsjson + ",";
             partsjson = partsjson + "{\"title\":\"\",\"examsections\":[" + sectionjson + "]}";
         })
+        var authorhtml = "";
+        var auditorhtml = "";
+        var _author = "";
+        var _authorschool = "";
+        var _audit = "";
+        var _auditschool = "";
+        if ($("#p_exam_author").length > 0) {
+            authorhtml = $("#p_exam_author").html();
+            _authorschool = authorhtml.substr(authorhtml.indexOf("出卷人学校：") + 6).replace(/&nbsp;/g, "");
+            _author = authorhtml.substr(6, authorhtml.indexOf("出卷人学校：") - 6).replace(/&nbsp;/g, "");
+        }
+        if ($("#p_exam_audit").length > 0) {
+            auditorhtml = $("#p_exam_audit").html();
+            _auditschool = auditorhtml.substr(auditorhtml.indexOf("审核人学校：") + 6).replace(/&nbsp;/g, "");
+            _audit = auditorhtml.substr(6, auditorhtml.indexOf("审核人学校：") - 6).replace(/&nbsp;/g,"");
+
+
+
+        }
         var json="{\"id\":\""+examengine.paperid+"\","+
-        "\"title\": \"" + $(examengine.htmlcontainerid).find(".examheader_title").html() + "\"," +
-        "\"desc\": \"\","+
-        "\"type\": \"\","+
-        "\"examparts\":["+partsjson+"],"+
-        "\"answertime\": " + $(examengine.htmlcontainerid).find(".examsheet_time").attr("data-time") + "," +
-        "\"score\": " + _totalscore + "," +
-        "\"kpcoverage\": 0,"+
-        "\"diffdegree\": 0,"+
-        "\"reliability\": 0,"+
-        "\"validity\": 0,"+
-        "\"extend\": {" +
+            "\"title\": \"" + $(examengine.htmlcontainerid).find(".examheader_title").text() + "\"," +
+            "\"desc\": \"\","+
+            "\"type\": \"\","+
+            "\"examparts\":["+partsjson+"],"+
+            "\"answertime\": " + $(examengine.htmlcontainerid).find(".examsheet_time").attr("data-time") + "," +
+            "\"score\": " + _totalscore + "," +
+            "\"kpcoverage\": 0,"+
+            "\"diffdegree\": 0,"+
+            "\"reliability\": 0,"+
+            "\"validity\": 0,"+
+            "\"extend\": {" +
             "\"courseid\":\"" + examengine.courseid + "\"," +
             "\"coursename\":\"" + examengine.coursename + "\"," +
             "\"grade\":\"" + examengine.gradeid + "\"," +
@@ -1753,11 +2930,11 @@
             "\"province\":\"\"," +
             "\"city\":\"\"," +
             "\"area\":\"\"," +
-            "\"auditor\":\"\"," +
-            "\"auditschool\":\"\"," +
-            "\"author\":\"\"," +
-            "\"authorcchool\":\"\"" +
-        "}}";
+            "\"auditor\":\"" + _audit + "\"," +
+            "\"auditschool\":\"" + _auditschool + "\"," +
+            "\"author\":\"" + _author + "\"," +
+            "\"authorcchool\":\"" + _authorschool + "\"" +
+            "}}";
         //console.log(json);
         return eval("("+json+")");
     },
@@ -1788,7 +2965,7 @@
             scoresum: _examjson.score,
             paperType: examengine.type,
             taskType: 1,
-            title: $("#examheader_title").html(),
+            title: $("#examheader_title").text(),
             remark: "",
             state: type,
             subjectId: examengine.courseid,
@@ -1865,11 +3042,133 @@
         hideForm.ajaxSubmit(options);
         return false;
     },
+    line: {
+        x: [],
+        y: [],
+        _this: null,
+        tempindex: "",
+        width:120,
+        create: function (x1, y1, x2, y2) {
+            var tmp, x, y;
+            if (x1 >= x2) {
+                tmp = x1;
+                x1 = x2;
+                x2 = tmp;
+                tmp = y1;
+                y1 = y2;
+                y2 = tmp;
+            }
+            x1 = x1 + examengine.line.width;
+            x2 = x2 - 2;
+            for (var i = x1; i < x2; i++) {
+                x = i;
+                y = (y2 - y1) / (x2 - x1) * (x - x1) + y1;
+                var div = document.createElement('div');
+                div.style.left = x + 'px';
+                div.style.top = y + 'px';
+                div.className = "linepoint " + examengine.line.tempindex.replace("-", "");
+                examengine.line._this.parent().parent().append(div);
+            }
+        },
+        clickevent: function (obj) {
+            examengine.line._this = $(obj);
+            examengine.line.width = $(obj).width()+40;
+            var _height = $(obj).height()+10;
+            var _tempindex = $(obj).find(".linebox_item").html();;
+            var top = 0
+            var left = 0
+            var parObj = obj;
+            left = obj.offsetLeft;
+           // if (_tempindex.indexOf("1") > 0)
+           // { left = obj.offsetRight; }
+            
+            // parObj = parObj.offsetParent
+            //while (parObj = parObj.offsetParent) {
+            //    left += parObj.offsetLeft;
+            //}
+       
+             top = obj.offsetTop;
+
+            //while (parObj = parObj.offsetParent) {
+            //    top += parObj.offsetTop;
+            //}
+             console.log($(obj).width())
+           examengine.line.x.push(left); 
+           examengine.line.y.push(top + _height/2);
+           console.log("length:"+examengine.line.x.length)
+          // console.log(examengine.line.x[0])
+           //console.log(examengine.line.x[1])
+           // examengine.line._this = $(obj);
+            if (examengine.line.x.length == 1) {
+                examengine.line.tempindex = _tempindex;
+            }
+
+            if (examengine.line.x.length == 2 && examengine.line.y.length == 2) {
+                
+                if (Math.abs(examengine.line.x[0] - examengine.line.x[1]) > 100) {
+
+                    if (examengine.line.tempindex.indexOf("2") > 0) {
+                        examengine.line.tempindex = _tempindex + "-" + examengine.line.tempindex;
+                    }
+                    else {
+                        examengine.line.tempindex = examengine.line.tempindex + "-" + _tempindex
+                    }
+                    var isline = examengine.line.checkpointanswer(examengine.line.tempindex);
+                    if (isline == false)
+                        examengine.line.create(examengine.line.x[0], examengine.line.y[0], examengine.line.x[1], examengine.line.y[1]);
+                }
+                examengine.line.x.length = 0;
+                examengine.line.y.length = 0;
+                examengine.line.tempindex = "";
+            }
+        },
+        checkpointanswer: function (tempindex) {
+            var array = examengine.line._this.parent().parent().next().find("input").val().split(",");
+            var selectindex = "";
+            for (var key in array) {
+                if (array[key] == tempindex) {
+                    return true;
+                }
+                if (array[key].split("-")[0] == tempindex.split("-")[0] || array[key].split("-")[1] == tempindex.split("-")[1]) {
+                    $("." + array[key].replace("-", "")).remove()
+                }
+                else {
+                    if (selectindex != "")
+                        selectindex = selectindex + ","
+                    selectindex = selectindex + array[key];
+                }
+            }
+            if (selectindex != "") {
+                array = selectindex.split(",");
+            }
+            array.push(tempindex);
+            examengine.line._this.parent().parent().next().find("input").val(array.join(","));
+            /*console.log("------------------------------");
+            for (var key in array)
+            {
+            console.log(array[key]);
+            }*/
+            return false;
+        }
+
+    },
     insert:
     {
-       
+        save: function () {
+
+            examengine.htmlcontainerid = "#exam_word_paper";
+            var _json = examengine.getexamjson();
+            $('#insertexamlayoutbox').remove();
+            examengine.htmlcontainerid = "#currentexampaper_content"
+            examengine.status = 'edit';
+            examengine.isdisplayanswersheet = false;
+            examengine.isdisplayheader = false;
+            examengine.init(_json)
+            $("#exampaperscore").html(_json.score);
+            $("#exampapertime").val(_json.answertime);
+            $("#span_worktitle").val(_json.title);
+        },
         init: function (json) {
-          
            
             var _html="<div style='overflow:hidden; padding:20px;'>"+
                 "   <div style='text-align:right; padding-bottom:20px;'><a href='javascript:void(0)' class='btn' style=' width:50px; margin-right:10px;' onclick=\"$('#insertexamlayoutbox').hide();\">取消</a><a href='javascript:void(0)' class='btn btn_green insertexamsavebtn' style=' width:50px'>保存</a></div>" +
@@ -1900,27 +3199,76 @@
             examengine.init(json.Exam);
             $(".insertexamsavebtn").click(function () {
 
-                examengine.htmlcontainerid = "#exam_word_paper";
-                var _json = examengine.getexamjson();
-                $('#insertexamlayoutbox').remove();
-                examengine.htmlcontainerid = "#currentexampaper_content"
-                examengine.status = 'edit';
-                examengine.isdisplayanswersheet = false;
-                examengine.isdisplayheader = false;
-                examengine.init(_json)
-                $("#exampaperscore").html(_json.score);
-                $("#exampapertime").val(_json.answertime);
-                $("#span_worktitle").val(_json.title);
+                examengine.insert.save();
 
             });
+        }, basic64img: function (content) {
+            if ($.trim(content) == "") {
+                return "";
+            }
+            content = content.replace(/\[img\]/g, "<img src=\"");
+            content = content.replace(/\[\/img\]/g, "\" data-value=\"img\">");
+            return content;
+        },getY: function (obj) {
+            var parObj = obj;
+            var top = obj.offsetTop;
+
+            while (parObj = parObj.offsetParent) {
+                top += parObj.offsetTop;
+            }
+            return top;
         },
         getsourceshtml: function (path) {
             $.ajax({
                 url: "/Bookroom/homework/ajax_file_contents", type: "GET", dataType: "json", data: "path=" + encodeURI(path), success: function (json) {
-                    $("#exam_word_source").html(insertexam.basic64img(json.Data));
+                    $("#exam_word_source").html(examengine.insert.basic64img(json.Data));
                     //examengine.layout.close();
                 }
             });
         },
+
+        
+    },
+
+    //获取评论点赞
+    commentscontent: '',
+    getcomments: function(id){
+        if(examengine.commentscontent != ''){
+            var commentsarr = examengine.commentscontent.comments;
+            var html = '';
+            var delhtml = '';
+            if(examengine.status == 'piyue'){
+                delhtml = '<i class="del" onclick="$(this).parent().parent().remove();"></i>';
+            };
+            for(var i=0; i<commentsarr.length; i++){
+                if(commentsarr[i].ownerid == id){
+                    if(commentsarr[i].type == '1'){
+                        html = html + '<div class="gooddiv"><span class="good"></span></div>';
+                    }else if(commentsarr[i].commenttype == '2'){
+                        html = html + '<div><p class="voice"><span class="voicestop"><span></span><i class="voicetime"></i><i class="voicetime"><label>'+commentsarr[i].voicetime+'</label>”</i></span>'+delhtml+'</p><audio src="'+commentsarr[i].comment+'"></audio></div>';
+                    }else if(commentsarr[i].commenttype == '1'){
+                        html = html + '<div><p><label>'+commentsarr[i].comment+'</label>'+delhtml+'</p></div>';
+                    };
+                };
+            };
+            return html;
+        }else{
+            return '';
+        };
+    },
+
+    //获取老师批阅但没提交的分数
+    piyuescorejson: '',
+    getpiyuescore: function(id){
+        var piyuescore = '';
+        if(examengine.piyuescorejson != ''){
+            var piyuescorearr = examengine.piyuescorejson.answerbean.ans;
+            for(var i=0; i<piyuescorearr.length; i++){
+                if(piyuescorearr[i].queid == id){
+                    piyuescore = piyuescorearr[i].score;
+                };
+            };
+        };
+        return piyuescore;
     }
 }

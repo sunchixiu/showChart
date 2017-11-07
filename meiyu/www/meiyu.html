@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <title>美育资源</title>
+    <link rel="stylesheet" href="css/meiyucommon.css">
+    <link rel="stylesheet" href="css/mobilebone.css">
+    <link rel="stylesheet"  href="css/subject-resource.css"/>
+    <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="js/vue.js"></script>
+    <script src="../cordova.js"></script>
+    <script type="text/javascript" src="js/swiper-3.4.2.min.js"></script>
+    <link rel="stylesheet" href="js/swiper-3.4.2.min.css">
+
+    <link rel="stylesheet" type="text/css" href="css/meiyustyle.css">
+    <script type="text/javascript" src="js/mobilebone.js"></script>
+    <script src="js/h5connect.js"></script>
+    <script src="js/doc_reader_v2.js"></script>
+    <script type="text/javascript" src="http://resource.bcevod.com/player/cyberplayer.js"></script>
+    <script>
+        document.addEventListener('touchstart', function(){});
+        document.documentElement.style.fontSize=document.documentElement.clientWidth/36+'px';
+
+        //设置title
+        function setTitle(title,state) {
+            try {
+                if (cordova == null || cordova.plugins == null || cordova.plugins.traceclass == null) {
+                    document.addEventListener('deviceready', function () {
+                        cordova.plugins.traceclass.setmeiyuTitle(function success(arg) {
+                        }, function error(arg) {
+                        }, [title,state]);
+
+                    }, false);
+                } else {
+                    cordova.plugins.traceclass.setmeiyuTitle(function success(arg) {
+                    }, function error(arg) {
+                    }, [title,state]);
+                }
+            }catch (e) {
+
+            };
+        };
+        //销毁
+        function destroypage(state) {
+            try {
+                if (cordova == null || cordova.plugins == null || cordova.plugins.traceclass == null) {
+                    document.addEventListener('deviceready', function () {
+                        cordova.plugins.traceclass.page_finish(function success(arg) {
+                        }, function error(arg) {
+                        }, [state]);
+
+                    }, false);
+                } else {
+                    cordova.plugins.traceclass.page_finish(function success(arg) {
+                    }, function error(arg) {
+                    }, [state]);
+                }
+            }catch (e) {
+
+            };
+        };
+
+        setTitle('甘肃美育',0);
+    </script>
+    <style>
+        .swiper-container {
+            width: 100%;
+            height: 4rem;
+            background: white;
+        }
+        .swiper-slide {
+            text-align: center;
+            font-size: 18px;
+            background: #fff;
+
+            /* Center slide text vertically */
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            -webkit-justify-content: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            -webkit-align-items: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+<!--<input type="button" value="返回" onclick="goback();" style="position: fixed; z-index: 10000; background: #fff;">-->
+<div id="home" class="page in" data-title="甘肃美育">  
+    <!-- Swiper -->
+    <div class="swiper-container topselect home-swiper" style="position: fixed;">
+        <ul class="swiper-wrapper">
+            <li v-for="(subject,index) in subjectdata" :data-id="subject.nodeid" v-html="subject.nodename" :class="{'swiper-slide active': index == 0, 'swiper-slide': index != 0}" @click="getalldata(subject.nodeid)"></li>
+        </ul>
+    </div>
+    <!-- tit -->
+    <h2 class="tit whiteBg marTopsubject">
+        <a class="more" href="javascript:;" onclick="gonextpage('微课程','weilist',0);" @click="setweikesubject">更多 &gt;</a>
+        <i></i>微课程
+    </h2>
+    <!-- star -->
+    <div v-if="wkloading" style="height: 10rem; position: relative;">
+        <div class="indexloading"></div>
+    </div>
+    <div v-else="wkloading" class="classstar clear whiteBg">
+        <div class="classlist" v-for="weike in weikedata">
+            <a class="pic" href="javascript:godetail();" @click="getdetail(weike.id)">
+                <img :src="weike.imgPath" onerror="javascript:this.src='images/1.gif'">
+                <p class="name nowrap" v-html="weike.title"></p>
+                <p class="name">
+                    <span :class="'star x'+weike.star"></span>
+                </p>
+            </a>
+        </div>
+    </div>
+    <!-- tit -->
+    <h2 class="tit whiteBg marTop10">
+        <a class="more"  href="javascript:;" onclick="gonextpage('同步资源','morelist',0);" @click="settongbusubject">更多 &gt;</a>
+        <i></i>同步资源
+    </h2>
+    <!-- star -->
+    <div v-if="tbloading" style="height: 10rem; position: relative;">
+        <div class="indexloading"></div>
+    </div>
+    <div v-else="tbloading" class="classstar clear whiteBg paddingBot5">
+        <div class="classlist" v-for="resouce in resoucedata">
+            <a class="pic" href="javascript:godetail();" @click="getdetail(resouce.id)">
+                <img :src="resouce.imgPath" onerror="javascript:this.src='images/1.gif'">
+                <p class="name nowrap" v-html="resouce.title"></p>
+                <p class="down" v-html="'下载：'+resouce.downloadCount+'次'"></p>
+            </a>
+        </div>
+    </div>
+    <!-- navBar -->
+    <div class="navBar">  
+        <a href="javascript:;"  onclick="goIndex(this);">爱挑战</a>
+        <a href="javascript:;"  onclick="goCYX(this);">才艺秀</a> 
+        <a href="javascript:;" class="active">美育资源</a>  
+    </div>
+</div>
+<div id="weilist" class="page out" data-title="微课程">
+    <!-- Swiper -->
+    <div class="swiper-container topselect weilist-swiper" style="position: fixed;">
+        <ul class="swiper-wrapper">
+            <li v-for="(subject,index) in subjectdata" :data-id="subject.nodeid" v-html="subject.nodename" :class="{'swiper-slide active': index == 0, 'swiper-slide': index != 0}" @click="changesubject(subject.nodeid)"></li>
+        </ul>
+    </div>
+    <!-- tabBar    -->
+    <div class="topBar clear whiteBg">
+        <div class="padding1">
+            <div class="select pull-right nowrap wkfiltername" onclick="selectChange(this);">
+                目录筛选
+            </div>
+            <a href="javascript:;" class="search-home pull-left" onclick="gonextpage('搜索','search',0);" @click="gosearch">
+                请输入关键字...
+            </a>
+        </div>
+        
+        
+        <div class="pop-mask"></div> 
+        <div class="tabCon clear">
+            <ul>
+                <li class="nowrap" onclick="addActive(this)" v-for="unit in unitfirst" v-html="unit.nodename" @click="getunitlist(1,unit.nodeid,unit.haschild,unit.nodetype,unit.nodename)"></li>
+            </ul>
+            <ul>
+               <li class="nowrap" onclick="addActive(this)" v-for="unit in unitsecond" v-html="unit.nodename" @click="getunitlist(2,unit.nodeid,unit.haschild,unit.nodetype,unit.nodename)"></li>
+            </ul>
+            <ul>
+               <li class="nowrap" onclick="addActive(this)" v-for="unit in unitthird" v-html="unit.nodename" @click="getunitlist(3,unit.nodeid,unit.haschild,unit.nodetype,unit.nodename)"></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- star -->
+    <div class="marTopfilter">
+        <sourcelist-component :type="type" :loading="loading" :empty="empty" :sourcedata="weikedata" :scrollstatus="scrollstatus"></sourcelist-component>
+    </div>
+</div>
+<div id="morelist" class="page out"  data-title="同步资源">
+    <!-- Swiper -->
+    <div class="swiper-container topselect morelist-swiper" style="position: fixed;">
+        <ul class="swiper-wrapper">
+            <li v-for="(subject,index) in subjectdata" :data-id="subject.nodeid" v-html="subject.nodename" :class="{'swiper-slide active': index == 0, 'swiper-slide': index != 0}" @click="changesubject(subject.nodeid)"></li>
+        </ul>
+    </div>
+    <!-- tabBar    -->
+    <div class="topBar clear whiteBg morelistTab marTopsubject">
+        <div class="padding1 twoselect">
+            <div class="select pull-right nowrap tbsourcename">
+                全部资源
+            </div>
+            <div class="select pull-right nowrap tbfiltername" style="margin-right:10px;">
+                目录筛选
+            </div>
+            <a href="javascript:;" class="search-home pull-left" style="width:45%" onclick="gonextpage('搜索','search',0)" @click="gosearch">
+                请输入关键字...
+            </a>
+        </div>
+        <div class="pop-mask"></div> 
+        <div class="tabCon clear">
+            <p onclick="hidelayout();" @click="changedoctype('')">全部资源</p>
+            <p v-for="doctype in doctype" v-html="doctype.paramdes" onclick="hidelayout();" @click="changedoctype(doctype.paramid,doctype.paramdes)"></p>
+        </div>
+        <div class="tabCon clear">
+            <ul>
+                <li class="nowrap" onclick="addActive(this)" v-for="unit in unitfirst" v-html="unit.nodename" @click="getunitlist(1,unit.nodeid,unit.haschild,unit.nodetype,unit.nodename)"></li>
+            </ul>
+            <ul>
+                <li class="nowrap" onclick="addActive(this)" v-for="unit in unitsecond" v-html="unit.nodename" @click="getunitlist(2,unit.nodeid,unit.haschild,unit.nodetype,unit.nodename)"></li>
+            </ul>
+            <ul>
+                <li class="nowrap" onclick="addActive(this)" v-for="unit in unitthird" v-html="unit.nodename" @click="getunitlist(3,unit.nodeid,unit.haschild,unit.nodetype,unit.nodename)"></li>
+            </ul>
+        </div>
+    </div>    
+    <!-- star -->
+    <div class="marTopfilter">
+        <sourcelist-component :type="type" :loading="loading" :empty="empty" :sourcedata="tongbudata" :scrollstatus="scrollstatus"></sourcelist-component>
+    </div>
+</div>
+
+<div id="search" class="page out" data-title="搜索">    
+        <div class="search">
+            <a href="javascript:;" class="sear-btn" onclick="gonextpage('搜索结果','searchResult',0)" @click="gosearch"></a>
+            <input class="sear-text" type="search" placeholder="请输入查询关键字" v-model="keyword"/>
+        </div>
+</div>
+<div id="searchResult" class="page out" data-title="搜索结果">
+    <div class="marTop10">
+        <sourcelist-component :type="type" :loading="loading" :empty="empty" :sourcedata="sourcedata" :scrollstatus="scrollstatus"></sourcelist-component>
+    </div>
+</div>
+
+<div id="detail" class="page out">
+    <div id="resouce-wrap">
+
+    </div>
+
+    <h3 class="detail-tit pauto">
+        <p style="float:right">
+            <span class="star"></span>
+        </p>
+        <span id="resourcename" class="nowrap"></span>
+    </h3>
+    <p class="detail-person pauto">贡献者：</p>
+    <p class="detail-time pauto">贡献时间：</p>
+    <div class="detail-con pauto">
+
+        <p class="tit">简介：</p>
+        <div class="text">
+        </div>
+    </div>
+</div>
+
+<!--资源列表组件开始-->
+<template id="sourcelist">
+    <div>
+        <div v-if="loading" class="indexloading"></div>
+        <div v-else-if="empty" class="empty"></div>
+        <div v-else="empty" class="classstar clear whiteBg" style="margin-bottom: 26px;">
+            <div class="classlist" v-for="source in sourcedata">
+                <a class="pic" href="javascript:godetail();" @click="getdetail(source.id)">
+                    <img :src="source.imgPath" onerror="javascript:this.src='images/1.gif'">
+                    <p class="name nowrap" v-html="source.title"></p>
+                    <p v-if="type == 'weike'" class="name">
+                        <span :class="'star x'+source.star"></span>
+                    </p>
+                    <p v-else="type == 'weike'" class="down" v-html="'下载：'+source.downloadCount+'次'"></p>
+                </a>
+            </div>
+        </div>
+        <p class="scrollloading" v-if="scrollstatus == 0" style="display: none;"></p>
+        <p class="scrollloading" v-if="scrollstatus == 1">正在加载中...</p>
+        <p class="scrollloading" v-if="scrollstatus == 2">没有更多了</p>
+    </div>
+</template>
+<!--资源列表组件结束-->
+
+<script src="js/setresouce.js"></script>
+<script>
+function goToWeilist(){
+    gonextpage('微课程','weilist',0);
+    setTimeout(function() {
+        var mySwiper  = new Swiper('.morelist-swiper', {
+            slidesPerView: 6,
+            spaceBetween: 30,
+            freeMode: true
+        });
+    },1000)
+};
+
+function addActive(obj){ //筛选当前样式
+    var _thisObj=$(obj);
+    _thisObj.addClass('active');
+    _thisObj.siblings().removeClass('active');
+}
+function selectChange(obj){
+    var oparent=$(obj).parents('.topBar');
+    var iTOp=oparent.outerHeight(true) +oparent.offset().top;
+    var oPopMask=oparent.find('.pop-mask');
+    var oHideCon=oparent.find('.tabCon');
+
+    oPopMask.css('top',iTOp);
+    oPopMask.toggle();
+    oHideCon.toggle();
+
+   if( oPopMask.is(":hidden") ){
+        $('body').css('overflow', 'visible');
+        $('.page').css('overflow', 'visible');
+
+   }
+   else{
+        $('body').css('overflow', 'hidden');
+        $('.page').css('overflow', 'hidden');
+
+   }
+
+};
+
+//点击空白处隐藏筛选弹窗
+$('.pop-mask').click(function(){
+        var oparent=$(this).parents('.topBar');
+        var oHideCon=oparent.find('.tabCon');
+
+
+        $(this).hide();
+        oHideCon.hide();
+        $('body').css('overflow', 'visible');
+        $('.page').css('overflow', 'visible');
+
+
+})
+
+
+ 
+
+// titie
+function gonextpage(title, id, num) {
+    $('.page').css('overflow', 'visible');
+    $('body').css('overflow', 'visible');
+    window.location.href = '#&'+id;
+    $('#'+id).attr('data-title',title);
+    setTitle(title, num);
+};
+
+// 筛选
+$('.twoselect .select').click(function(){
+    var _this=$(this);
+    var oparent=_this.parents('.topBar');
+    var omask=oparent.find('.pop-mask');
+    var iTOp=oparent.outerHeight(true) +oparent.offset().top;
+    
+    omask.css('top',iTOp);
+
+    
+    _this.toggleClass('active').siblings().removeClass('active');
+    oparent.find('.tabCon').hide();
+    if (_this.hasClass("active")) {
+        $('body').css('overflow', 'hidden'); 
+        $('.page').css('overflow', 'hidden');
+        omask.show();
+        oparent.find('.tabCon').eq(_this.index()).show();
+    }else{
+        $('body').css('overflow', 'visible');
+        $('.page').css('overflow', 'visible');
+        omask.hide();
+        oparent.find('.tabCon').eq(_this.index()).hide();
+    }   
+ 
+})
+
+
+
+ 
+var imgurl = '';
+var apiurlhref = '';
+var rowserurl = '';
+ 
+if ($.getUrlParam('apiurlhref')) {
+    apiurlhref = $.getUrlParam('apiurlhref');
+};
+if ($.getUrlParam('imgurl')) {
+    imgurl = $.getUrlParam('imgurl');
+};
+if ($.getUrlParam('rowserurl')) {
+    rowserurl = $.getUrlParam('rowserurl');
+};
+
+function goIndex(obj){     
+
+    window.location.href = 'index.html?apiurl='+apiurlhref+'&imgurl='+imgurl+'&rowserurl='+rowserurl;
+}
+function goCYX(obj){     
+
+    window.location.href = 'caiyixiu.html?apiurl='+apiurlhref+'&imgurl='+imgurl+'&rowserurl='+rowserurl; 
+}
+
+ 
+
+</script>
+</body>
+</html>

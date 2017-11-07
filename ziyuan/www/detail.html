@@ -132,56 +132,56 @@ var player = null;
     })();
 
 //获取地址栏参数
-//$.getUrlParam = function(name){
-//    var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
-//    var r = window.location.search.substr(1).match(reg);
-//    if (r!=null) return unescape(r[2]); return null;
-//};
-//
-//var presid='';
-//var title = '资源详情';
-//
-//if($.getUrlParam('presid')){
-//    presid = $.getUrlParam('presid');
-//    title = decodeURI($.getUrlParam('title'));
-//};
-//if(title != '1'){
-//    window.top.setTitleSub(title,'1');
-//};
-//
-//    $.ajax({
-//        url:urlapi+'/common/resourcedetail',
-//        type:'post',
-//        dataType:'json',
-//        data:JSON.stringify({'presid':presid}),
-//        contentType: "application/json; charset=utf-8",
-//        success: function(data){
-//        //alert(data.data.doctype);
-//            if(data.code){
-//                $('#resourcename').html( data.data.resourcename);
-//                $('.detail-person').html('贡献者：'+data.data.submitterName);
-//                $('.detail-time').html('贡献时间：'+data.data.uploadTime);
-//                $('.detail-con .text').html( data.data.abstr );
-//
-//                title = data.data.resourcename;
-//
-//                /*
-//                资源名称：data.data.resourcename
-//                贡献者：data.data.submitterName
-//                贡献时间data.data.uploadTime,
-//
-//                简介：data.data.abstr
-//                 */
-//                 //分享
-//                var picurl = data.data.coverpath;
-//                var intro = data.data.abstr;
-//
-//                sharejson.title = title;
-//                sharejson.picurl = picurl;
-//                sharejson.intro = intro;
-//                sharejson.presid = presid;
-//
-//
+$.getUrlParam = function(name){
+    var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+    var r = window.location.search.substr(1).match(reg);
+    if (r!=null) return unescape(r[2]); return null;
+};
+
+var presid='';
+var title = '资源详情';
+
+if($.getUrlParam('presid')){
+    presid = $.getUrlParam('presid');
+    title = decodeURI($.getUrlParam('title'));
+};
+if(title != '1'){
+    window.top.setTitleSub(title,'1');
+};
+
+    $.ajax({
+        url:urlapi+'/common/resourcedetail',
+        type:'post',
+        dataType:'json',
+        data:JSON.stringify({'presid':presid}),
+        contentType: "application/json; charset=utf-8",
+        success: function(data){
+        //alert(data.data.doctype);
+            if(data.code){
+                $('#resourcename').html( data.data.resourcename);
+                $('.detail-person').html('贡献者：'+data.data.submitterName);
+                $('.detail-time').html('贡献时间：'+data.data.uploadTime);
+                $('.detail-con .text').html( data.data.abstr );
+
+                title = data.data.resourcename;
+
+                /*
+                资源名称：data.data.resourcename
+                贡献者：data.data.submitterName
+                贡献时间data.data.uploadTime,
+
+                简介：data.data.abstr
+                 */
+                 //分享
+                var picurl = data.data.coverpath;
+                var intro = data.data.abstr;
+
+                sharejson.title = title;
+                sharejson.picurl = picurl;
+                sharejson.intro = intro;
+                sharejson.presid = presid;
+
+
                 var videoarr = ['mp4','flv'];
                 if(videoarr.indexOf(data.data.doctype) > -1){
 

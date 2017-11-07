@@ -47,11 +47,19 @@ body{width: 100%; height: 100%; overflow: hidden; position: relative; font-famil
 }
 .textbook:active,.chapter:active{background-color: #eee;}
 .textbook{
-	background: #fff url(../images/textbook.png) no-repeat center left 1rem / 2rem;
+	background-color: #fff;
+	background-image: url(../images/textbook.png);
+	background-repeat: no-repeat;
+	background-position: 1rem center;
+	background-size: 2rem;
 	margin-top: 0.9rem;
 }
 .chapter{
-	background: #fff url(../images/chapter.png) no-repeat center left 1rem / 2rem;
+	background-color: #fff;
+	background-image: url(../images/chapter.png);
+	background-repeat: no-repeat;
+	background-position: 1rem center;
+	background-size: 2rem;
 }
 .list{
 	margin-top: 0.9rem;

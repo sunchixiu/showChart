@@ -1,0 +1,204 @@
+﻿.examengine {
+    font-family: "Microsoft YaHei";
+    color: #333;
+}
+.examengine  .btn{width: 100%;
+    height: 40px;
+    line-height: 40px;
+    background: #e45c40;
+    color: #fff;
+    display: block;
+    text-align: center;
+    border-radius: 2px;}
+.examengine  .btn_green{    background: #47ad76;
+    color: #fff;
+    margin-bottom: 10px;
+
+}
+.examengine em{ font-style:normal;}
+ .selectitem li i{ background:url(../img/ep_icon.png) no-repeat;}
+    .examengine .examheader {
+        background: #fff;
+        border: 1px solid #e0e3e9;
+        border-radius: 3px;
+    }
+
+        .examengine .examheader h1 {
+            font-size: 24px;
+            font-family: "Microsoft Yahei";
+            border-bottom: #e5e5e5 dashed 1px;
+            line-height: 30px;
+            text-align: center;
+            padding-top: 50px;
+            padding-bottom: 25px;
+            margin: 0 30px;
+        }
+
+        .examengine .examheader .info {
+            text-align: left;
+            font-size: 14px;
+            line-height: 25px;
+            padding: 25px 0 15px 0;
+            color: #666;
+            margin: 0 30px;
+        }
+
+    .examengine .examcontainer {
+        margin: 15px 0;
+        position: relative;
+    }
+
+        .examengine .examcontainer .exambody {
+            width: 760px;
+           
+            position: relative;
+        }
+
+        .examengine .examcontainer .answersheet {
+            width: 265px;
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+            .examengine .examcontainer .answersheet .ascontainer {
+                background: #fff;
+                border: 1px solid #e0e3e9;
+                border-radius: 3px;
+            }
+            .examengine .examcontainer .answersheet .ascontainer .timer{height: 58px;
+    line-height: 58px;
+    padding-left: 15px;
+    color: #999;
+    overflow: hidden;}
+           .examengine .examcontainer .answersheet .ascontainer  .astitle{    background-color: #f9f9f9;
+    border: #f0f0f0 solid 1px;
+    border-width: 1px 0;
+    line-height: 50px;}
+           .examengine .examcontainer .answersheet .ascontainer  .ascontent_color { padding:20px 0 0 35px; border-top:1px dotted #dbdbbd; margin:20px 15px 0 15px;}
+.panel-notice-t{ padding-left:65px;} 
+ .examengine .examcontainer .answersheet .ascontainer .ascontent_color em { display: inline-block; height:18px; line-height: 18px;   *line-height: 20px;}
+ .examengine .examcontainer .answersheet .ascontainer .ascontent_color i {margin-left: 5px; margin-right:10px; width: 12px; height: 12px;display: inline-block;vertical-align:-1px;#vertical-align:0px; overflow:hidden; border-radius:2px;}
+ .examengine .examcontainer .answersheet .ascontainer .ascontent_color i.error { background: #e45c40; }
+ .examengine .examcontainer .answersheet .ascontainer .ascontent_color i.right { background: #47ad76; }
+ .examengine .examcontainer .answersheet .ascontainer .ascontent_color i.normal { background: #fff; border:1px solid #d9dcdf; }
+ .examengine .examcontainer .answersheet .ascontainer .ascontent_color i.doit { background:#b1b6bf; }
+        .examengine .examcontainer .exambody .equestion {
+            border: 1px solid #e0e3e9;
+            margin-bottom: 15px;
+            background: #fff;
+            font-size: 16px;
+            line-height: 26px;
+            position: relative;
+        }
+
+            .examengine .examcontainer .exambody .equestion .title {
+                background: #fafafa;
+                padding: 10px 30px 20px 55px;
+            }
+
+            .examengine .examcontainer .exambody .equestion .subtitle {
+                padding: 10px 30px;
+                line-height: 24px;
+                background: #f9f9fa;
+                color: #151515;
+                position: relative;
+            }
+            .examengine .examcontainer .exambody .equestion rt,.examengine .examcontainer .exambody .equestion rp {display: inline; font-size: 100%;}
+            .examengine .examcontainer .exambody .equestion .subquestion {
+            }
+
+                .examengine .examcontainer .exambody .equestion .subquestion .subtitle em {
+                    font-size: 20px;
+                    color: #e45c40;
+                    margin-right: 10px;
+                    float: left;
+                    font-style: normal;
+    font-weight: normal;
+                }
+
+                .examengine .examcontainer .exambody .equestion .subquestion .selectitem {
+                    padding: 15px 50px 25px 65px;
+                    clear: both;
+                }
+
+                .examengine .examcontainer .exambody .equestion .subquestion .selectitem_no li:hover {
+                    background: none;
+                    cursor: text;
+                }
+
+                .examengine .examcontainer .exambody .equestion .subquestion .selectitem li {
+                    display: block;
+                    padding: 6px 0 6px 45px;
+                    margin-left: -20px;
+                    line-height: 24px;
+                    color: #151515;
+                    position: relative;
+                    cursor: pointer;
+                   
+                }
+
+                    .examengine .examcontainer .exambody .equestion .subquestion .selectitem li:hover {
+                        background: #f8f8f8;
+                        border: none;
+                    }
+
+                .examengine .examcontainer .exambody .equestion .subquestion .selectitem i {
+                    width: 21px;
+                    height: 21px;
+                    display: block;
+                    background-position: -19px -121px;
+                    position: absolute;
+                    top: 9px;
+                    left: 5px;
+                }
+                .examengine .examcontainer .exambody .equestion .subquestion .selectitem i.checked
+{
+    background-position: -42px -121px;
+}
+                .examengine .examcontainer .exambody .equestion .subquestion .selectitem i.checkbox {
+                    
+                    background-position: -14px -150px;
+                   
+                }
+                 .examengine .examcontainer .exambody .equestion .subquestion .selectitem i.checkbox.checked {
+                    
+                    background-position: -42px -150px;
+                   
+                }
+                .examengine .examcontainer .exambody .equestion .subquestion .selectitem span {
+                    color: #999;
+                    margin-right: 5px;
+                }
+
+                .examengine .examcontainer .exambody .equestion .subquestion .analyse {
+                    border: 1px solid #e0e3e9;
+                    border-width:1px 0;
+                    padding: 20px;
+                }
+
+                    .examengine .examcontainer .exambody .equestion .subquestion .analyse .analysebox {
+                        margin-bottom: 10px;
+                        clear: both;
+                        overflow:hidden;
+                    }
+
+                        .examengine .examcontainer .exambody .equestion .subquestion .analyse .analysebox span {
+                            float: left;
+                            color: #999;
+                            line-height: 18px;
+                            font-size: 14px;
+                            padding: 4px 15px 4px 35px;
+                            border-radius: 20px;
+                            position: relative;
+                        }
+
+                        .examengine .examcontainer .exambody .equestion .subquestion .analyse .analysebox div {
+                            float: left;
+                            width: 560px;
+                            line-height: 25px;
+                        }
+                .examengine .examcontainer .exambody .equestion .subquestion .answerline {
+                    background: #f9f9f9;
+                    border-top: 1px dashed #d8d8d8;
+                    padding: 15px 20px 15px 30px;
+                }

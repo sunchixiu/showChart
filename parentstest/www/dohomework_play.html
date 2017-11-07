@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+	<title>Document</title>
+	<link rel="stylesheet" href="css/css.css">
+	<link rel="stylesheet" href="css/mobilebone.css">
+	<script src="cordova.js"></script>
+	<!--<script src="../cordova.js"></script>-->
+	<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+	<script src="js/common.js"></script>
+	<script src="js/base.js"></script>
+	<script src="js/mobilebone.js"></script>
+	<!--<link rel="stylesheet" href="http://center.iischool.com/mobileapp/static/examengine/css/examengine.css">-->
+	<!--<script src="http://center.iischool.com/mobileapp/static/examengine/examengine.js"></script>-->
+	<link rel="stylesheet" href="static/examengine/css/examengine.css">
+	<script src="static/examengine/examengine.js"></script>
+</head>
+<body style="overflow-y: auto;">
+<div id="testpaper" style="overflow: auto; position: relative; width: 36rem;"></div>
+<!--<input type="button" value="交卷" onclick="submitPaper()" style="position: fixed;bottom: 10px; left: 0;">-->
+<!--<input type="button" value="批阅" onclick="markingpaper()" style="position: fixed;bottom: 10px; left: 50px;">-->
+<script src="js/json.js"></script>
+<script>
+	var apiurl = '';
+	var testurl = '';
+	var role = '';
+	var paperid = '';
+	var stuid = '';
+	var dopaperid = '';
+	var examtype = '';
+	// var submitsum = '';
+
+	var starttime;
+	var endtime;
+    var name = '';
+
+	//获取地址栏参数
+	$.getUrlParam = function(name){
+		var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");    //正则？？？？！！！
+		var r = window.location.search.substr(1).match(reg);     // substr( ) 抽取字符    match() 匹配
+		if (r!=null) return unescape(r[2]); return null;        //unescape() 函数可对通过 escape() 编码的字符串进行解码。
+	};
+	if ($.getUrlParam('apiurl')) {
+//	    apiurl = "http://"+($.getUrlParam('apiurl'));
+	    apiurl = $.getUrlParam('apiurl');
+	};
+	if ($.getUrlParam('testurl')) {
+	    testurl = "http://"+($.getUrlParam('testurl'));
+	};
+	if ($.getUrlParam('role')) {
+	    role = ($.getUrlParam('role'));
+	};
+	if ($.getUrlParam('paperid')) {
+	    paperid = ($.getUrlParam('paperid'));
+	};
+	if ($.getUrlParam('stuid')) {
+	    stuid = ($.getUrlParam('stuid'));
+	};
+	if ($.getUrlParam('dopaperid')) {
+	    dopaperid = ($.getUrlParam('dopaperid'));
+	};
+	if ($.getUrlParam('examtype')) {
+	    examtype = ($.getUrlParam('examtype'));
+	};
+	// if ($.getUrlParam('submitsum')) {
+	//     submitsum = ($.getUrlParam('submitsum'));
+	// };
+
+
+    //销毁
+    function destroypage(state) {
+        try {
+            if (cordova == null || cordova.plugins == null || cordova.plugins.traceclass == null) {
+                document.addEventListener('deviceready', function () {
+                    cordova.plugins.traceclass.page_finish(function success(arg) {
+                    }, function error(arg) {
+                    }, [state]);
+
+                }, false);
+            } else {
+                cordova.plugins.traceclass.page_finish(function success(arg) {
+                }, function error(arg) {
+                }, [state]);
+            }
+        }catch (e) {
+
+        };
+    };
+
+	examengine.layout.loadding('正在展示作业...');
+	
+
+	function dohomeworkanswer(jsonstring,url,status){
+		if (role == 2) {
+			examengine.useridentity = "parent";
+		}else{
+			examengine.useridentity = "student";
+		};
+		testurl = url;
+		examengine.status = status;
+		examengine.issingledisplay = true;
+		
+		if(jsonstring.answerbean){
+			examengine.studentanswerjson = jsonstring.answerbean;
+		};
+		if (typeof jsonstring.score != "undefined"){
+			examengine.studentscore = jsonstring.score;
+		} else{
+            examengine.studentscore = jsonstring.answerbean.score;
+        };
+		examengine.init(jsonstring.paperbean);
+		examengine.layout.close();
+		//图片预览
+		$('.subquestion .addphoto').delegate('img.show', 'click', function(){
+			var aimg = $(this).parent().parent().find('img.show');
+			var index = $(this).parent().index('.lishow');
+			var imgarr = [];
+			for(var i=0; i<aimg.length; i++){
+				imgarr.push(aimg.eq(i).attr('src'));
+			};
+			alert(index+','+imgarr);
+		});
+	};
+
+	function getexamjson(){
+		examengine.layout.loadding('正在保存答案...');
+		setTimeout(function(){
+			var answerbin = examengine.getbookroommyanswerjson();
+			answerbin = JSON.parse(answerbin);
+
+			var anstuid = '';
+			var aname = '';
+			var anuuid = '';
+			if($.getUrlParam('anstuid')){
+				anstuid = $.getUrlParam('anstuid');
+			};
+			if($.getUrlParam('aname')){
+				aname = $.getUrlParam('aname');
+			};
+			if($.getUrlParam('anuuid')){
+				anuuid = $.getUrlParam('anuuid');
+			};
+			answerbin.anstuid = anstuid;
+			answerbin.aname = decodeURI(aname);
+			answerbin.anuuid = anuuid;
+
+			var finishstatus = true;
+			$('.subquestion').each(function(i){
+				if($(this).find('i.select_i').length > 0){
+					if($(this).find('i.checked').length == 0){
+						finishstatus = false;
+						return;
+					};
+				}else if($(this).find('textarea').length > 0){
+					if($(this).find('textarea').val() == ''){
+						finishstatus = false;
+						return;
+					};
+				};
+			});
+
+			alert(answerbin);
+			examengine.layout.close();
+		},10);
+
+	};
+
+
+	//拍照
+	var pictureSource;		//图片来源
+	var destinationType;		//设置返回值的格式
+
+	// 等待PhoneGap连接设备
+	document.addEventListener("deviceready", onDeviceReady, false);
+
+	// PhoneGap准备就绪，可以使用！
+	function onDeviceReady() {
+		pictureSource = navigator.camera.PictureSourceType;
+		destinationType = navigator.camera.DestinationType;
+	};
+
+	var obj = null;
+	function capturePhoto(_this) {
+		obj = _this;
+		// 使用设备上的摄像头拍照，并获得Base64编码字符串格式的图像
+		//navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50, destinationType: 0 });//base64
+		if($(".equestion").eq(examengine.singleindex).find('.addphoto li').length > 9){
+			alert('最多上传9张图片！');
+			return false;
+		};
+
+		navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50 });
+	};
+
+
+	function onPhotoDataSuccess(imageData) {
+		// 取消注释以查看Base64编码的图像数据
+
+		var liid = new Date().getTime();
+		var lihtml = '<li id="'+liid+'" style="background: none;"><p class="imgloadding"></p></li>';
+		obj.parent().prepend(lihtml);
+		uploadPhoto(imageData, liid);
+	}
+	// 当有错误发生时触发此函数
+	function onFail(mesage) {
+		alert('Failed because: ' + message);
+	};
+
+	//上传图片
+	function uploadPhoto(imageURI, id) {
+		var options = new FileUploadOptions();
+		options.fileKey="uploadfile";
+		options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1);
+		options.mimeType="image/jpeg";
+
+		var params = new Object();
+		params.userid = stuid;
+
+		options.params = params;
+
+		var ft = new FileTransfer();
+		ft.upload(imageURI, testurl + "/Home/Interface/uploadfile", win, fail, options);
+
+		function win(r) {
+			var imgurl = JSON.parse(r.response).data.url;
+			$('#'+id).addClass('lishow').html('<span onclick="$(this).parent().remove();"></span><img class="show" src="'+imgurl+'">');
+		}
+
+		function fail(error) {
+			$('#'+id).remove();
+			alert("上传失败"+error);
+		};
+	};
+</script>
+<script type="text/javascript">
+	// 获取试卷
+	$.ajax({
+        url: apiurl+"/TSB_ISCHOOL_EXAM_SERVER/stuexam/getexaminfo",
+        data: JSON.stringify({'stuid':stuid, 'paperid':paperid}),
+        type:'post',
+        dataType:'json',
+        contentType: "application/json; charset=utf-8",
+        success: function(data){
+            if(data.code == 1){
+            	var homeworkjson = data.data;
+            	var status = '';
+            	if (data.data.status == 0) {
+            		status = 'do';
+            	}else if(data.data.status == 1){
+            		if(role == examtype){
+            			status = 'piyue';
+            		}else{
+            			status = 'view';
+            		};  		
+            	}else if (data.data.status == 2) {
+            		status = 'view';
+            		examengine.studentanswerstatus = 2;
+            	};
+            	dohomeworkanswer(homeworkjson,testurl,status);
+            }else{
+                alert('接口返回错误');
+            };
+        },
+        error: function(data){
+            alert('接口error');
+        }
+    });
+    // 开始时间
+    starttime = getNowFormatDate();
+    // 获取当前时间
+    function getNowFormatDate() {
+	    var date = new Date();
+	    var seperator1 = "-";
+	    var seperator2 = ":";
+	    var month = date.getMonth() + 1;
+	    var strDate = date.getDate();
+	    if (month >= 1 && month <= 9) {
+	        month = "0" + month;
+	    }
+	    if (strDate >= 0 && strDate <= 9) {
+	        strDate = "0" + strDate;
+	    }
+	    var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+	            + " " + date.getHours() + seperator2 + date.getMinutes();
+	    return currentdate;
+	};
+	// 提交试卷
+	function submitPaper() {
+		// 结束时间
+		endtime = getNowFormatDate();
+		var answerbean = examengine.getmyanswerjson();
+		answerbean.anstuid = stuid;
+		$.ajax({
+			url: apiurl+"/TSB_ISCHOOL_NCMS_SERVER/login/getuserinfo",
+			data: JSON.stringify({'userid':stuid}),
+			type:'post',
+			dataType:'json',
+			async: false,
+			contentType: "application/json; charset=utf-8",
+			success: function(data){
+				if(data.code == 1){
+					name = data.data.userinfo.realname;
+				}else{
+					alert('接口返回错误');
+				};
+			},
+			error: function(data){
+				alert('接口error');
+			}
+		});
+		answerbean.aname = name;
+		$.ajax({
+			url: apiurl+"/TSB_ISCHOOL_EXAM_SERVER/stuexam/studoexampaper",
+			data: JSON.stringify({'stuid':stuid, 'paperid':paperid, 'starttime':starttime, 'endtime':endtime, 'answerbean':answerbean}),
+			type:'post',
+			dataType:'json',
+			contentType: "application/json; charset=utf-8",
+			success: function(data){
+				if(data.code == 1){
+					alert('交卷成功！');
+					goback();
+				}else{
+					alert('接口返回错误');
+				};
+	        },
+	        error: function(data){
+	            alert('接口error');
+	        }
+	    });
+    };
+    examengine.postappanswer = function(){
+    	submitPaper();
+    };
+    // 批阅
+    function markingpaper() {
+    	var answerbean = examengine.getpiyuejson();
+    	answerbean.anstuid = stuid;
+    	answerbean.anuuid = dopaperid;
+		console.log(JSON.stringify(answerbean));
+    	$.ajax({
+	        url: apiurl+"/TSB_ISCHOOL_EXAM_SERVER/testpaper/markingpaper",
+	        data: JSON.stringify({'stupaperid': dopaperid, 'answerbean':answerbean}),
+	        type:'post',
+	        dataType:'json',
+	        contentType: "application/json; charset=utf-8",
+	        success: function(data){
+	            if(data.code == 1){
+	            	alert('批阅成功！');
+	            	goback();
+	            }else{
+	                alert('接口返回错误');
+	            };
+	        },
+	        error: function(data){
+	            alert('接口error');
+	        }
+	    });
+    };
+    document.addEventListener("backbutton", goback, false);
+	function goback() {
+	    destroypage(1);
+	};
+</script>
+</body>
+</html>

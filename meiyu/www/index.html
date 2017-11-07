@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="css/meiyucommon.css">
+    <script type="text/javascript" src="js/mobilebone.js"></script> 
+    <link rel="stylesheet" href="css/mobilebone.css">
+    <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="js/vue.js"></script>
+    <script src="../cordova.js"></script>
+    <script type="text/javascript" src="js/swiper-3.4.2.min.js"></script>
+    <link rel="stylesheet" href="js/swiper-3.4.2.min.css">
+
+
+    <!-- 库 -->
+
+    <script src="js/setrem-challenge.js"></script> 
+    <link rel="stylesheet" href="css/applovechallenge.css">
+    <style type="text/css"> 
+        .swiper-container {
+            width: 100%;
+            height: 16rem;
+        }
+        .swiper-slide img{display: block;width: 100%;height: 16rem;}
+    </style>
+    <script type="text/javascript">
+        setTitle('甘肃美育',2);
+        //设置title
+        function setTitle(title,state) {
+        	//alert(title,state);
+            try {
+                if (cordova == null || cordova.plugins == null || cordova.plugins.traceclass == null) {
+                    document.addEventListener('deviceready', function () {
+                        cordova.plugins.traceclass.setmeiyuTitle(function success(arg) {
+                        }, function error(arg) {
+                        }, [title,state]);
+
+                    }, false);
+                } else {
+                    cordova.plugins.traceclass.setmeiyuTitle(function success(arg) {
+                    }, function error(arg) {
+                    }, [title,state]);
+                }
+            }catch (e) {
+
+            };
+        };
+        //销毁
+        function destroypage(state) {
+            try {
+                if (cordova == null || cordova.plugins == null || cordova.plugins.traceclass == null) {
+                    document.addEventListener('deviceready', function () {
+                        cordova.plugins.traceclass.page_finish(function success(arg) {
+                        }, function error(arg) {
+                        }, [state]);
+
+                    }, false);
+                } else {
+                    cordova.plugins.traceclass.page_finish(function success(arg) {
+                    }, function error(arg) {
+                    }, [state]);
+                }
+            }catch (e) {
+
+            };
+        };
+    </script>
+</head>
+<body>
+
+
+<!--<input type="button" value="关于爱挑战" style="position: fixed;top:20px; z-index: 1000;" onclick="aboutLOveChallenge();">
+     <input type="button" value="返回" style="position: fixed; z-index: 1000;" onclick="goback();">
+     -->
+    
+    <div id="home" class="page in" data-title="甘肃美育">  
+        <div class="topBar clear whiteBg">
+            <div class="select pull-right" onclick="selectChange(this);">
+                筛选项目
+            </div>
+            <a href="javascript:;" class="search-home"    onclick="gonextpage('搜索','search',0)">
+                请输入您参赛项目关键字
+            </a>
+            
+            <div id="pop-mask"></div>    
+             <div class="selectCon" onclick="clickcon();">
+                <div class="tab">
+                    <a vtype="1" class="active" href="javascript:;" @click="getmenu(1)">个人</a>
+                    <a vtype="2"  href="javascript:;" @click="getmenu(2)">团队</a>
+                </div>
+
+
+                <div class="tabCon clear" style="display:block">
+                    
+                    <ul>
+                        <li class="nowrap" v-for="(menukey,index) in menudata" onclick="addActive(this)" @click="getsecondmenu(menukey.categoryid)" :class="{'active':index == 0}">{{ menukey.title}}</li>
+                    </ul>
+                    <ul>
+                        <li class="nowrap" v-for="(menukey,index) in secondmenudata" onclick="addActive(this)" @click="getthirdmenu(menukey.categoryid)" :class="{'active':index == 0}">{{ menukey.title }}</li>
+                    </ul>
+                    <ul>
+                    <li v-if="lengZero">暂时没有项目...</li>
+                        <li v-else="lengZero" class="nowrap" v-for="(menukey,index) in thirdmenudata"><a href="javascript:;"  onclick="gonextpage($(this).html(),'explain',0)"   @click="gorank(menukey.itemid)">{{ menukey.title }}</a></li>
+
+                    </ul>
+                </div>
+
+                <div class="tabCon clear">
+                    <ul>
+                        <li class="nowrap" v-for="(menukey,index) in menudata" onclick="addActive(this)" @click="getsecondmenu(menukey.categoryid)" :class="{'active':index == 0}">{{ menukey.title}}</li>
+                    </ul>
+                    <ul>
+                        <li class="nowrap" v-for="(menukey,index) in secondmenudata" onclick="addActive(this)" @click="getthirdmenu(menukey.categoryid)" :class="{'active':index == 0}">{{ menukey.title }}</li>
+                    </ul>
+                    <ul>
+                        <li v-if="lengZero">暂时没有项目...</li>
+                        <li v-else="lengZero" class="nowrap" v-for="(menukey,index) in thirdmenudata"><a href="javascript:;" onclick="gonextpage($(this).html(),'explain',0)" @click="gorank(menukey.itemid)">{{ menukey.title }}</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- banner -->
+        <div class="swiper-container">
+            <div class="swiper-wrapper"   >
+                <div class="swiper-slide" v-for="keys in bannerImg"><img :src="url+keys.imgurl" ></div> 
+                <!-- <div class="swiper-slide"  ><img src=" "></div>
+                <div class="swiper-slide"  ><img src=" "></div>  -->
+            </div>
+            <!-- 如果需要分页器 -->
+            <div class="swiper-pagination"></div>
+        </div>  
+
+
+        <div class="loading" v-if="loading"></div>
+        <div v-else="loading">
+            <div class="empty" style="margin-top: 50%;" v-if="empty"></div>
+            <!-- list -->
+            <div class="marginLR1 clear whiteBg  marTop10 paddingBot5"  v-else="empty">
+                <li class="classlist"  v-for="listkeys in homeList">
+                    <a class="vedioCover-wrap"  :nowid="listkeys.scoreid" href="javascript:;"       onclick="gonextpage($(this).find('.tit span').html(),'videodetail',0)" @click="videodetail(listkeys.scoreid)">
+                        <img :src="url+listkeys.videoimg"  onerror="javascript:this.src='images/1.gif'">
+                        <h3 class="tit">
+                            <span v-html="listkeys.title"><span>
+                        </h3> 
+                        <span class="record"  >
+                            
+                                <img  v-if="listkeys.recordnum==1" src="images/icon_record_s.png">   
+                                <img  v-if="listkeys.recordnum==2" src="images/icon_record_r.png">   
+                                <img  v-if="listkeys.recordnum==3" src="images/icon_record_n.png">   
+                                <img  v-if="listkeys.recordnum==4" src="images/icon_record_w.png">                             
+                        </span>
+                    </a>
+                    <p class="font14 color333 tit nowrap">
+                        <span class="pull-left">{{listkeys.groupname}}</span>
+                        
+                    </p>
+                    <p class="font12 color999">
+                        <span class="pull-right">{{listkeys.recordname}}</span>
+                        <span class="school nowrap" >{{listkeys.schoolname}}</span>
+                    </p>
+                    <p class="font12 color999">
+                        <span class="pull-left">记录：{{listkeys.unitType}} </span>
+                        <!-- <span class="pull-right">播放：<label class="color333">{{listkeys.clicks}}次</label></span> -->
+                    </p>  
+                </li>
+                <p class="noMore clear" v-if="noMore">没有更多了...</p> 
+                 
+            </div>
+        </div>
+        <!-- navBar -->
+        <div class="navBar">  
+            <a href="index.html?"   class="active">爱挑战</a>
+            <a href="javascript:;" :data-imgurl="imgurl"  :data-apiurl="apiurl"  :data-rowserurl="rowserurl"        onclick="goCYX(this);">才艺秀</a>  
+            <a href="meiyu.html"   :data-imgurl="imgurl"  :data-apiurl="apiurl"  :data-rowserurl="rowserurl"        onclick="goMY(this);">美育资源</a>
+        </div>  
+    </div>
+    <div id="explain"  class="page out">
+        
+        <h2 class="tit whiteBg"><i></i>规则说明</h2> 
+        <div class="setHei whiteBg">
+            <div class="about-texts">
+                {{regulationText}}
+            </div>
+
+        </div>
+        <div class="toggleBtn whiteBg  clear"> <span class="pull-right" onclick="toggleBtnClick(this)">展开</span></div>
+        <h2 class="tit whiteBg marTop10"><i></i>竞赛排名列表</h2> 
+
+        <div class="loading" v-if="loading"></div>
+        <div v-else="loading">
+            <div class="empty" style="margin-top: 50%;" v-if="empty"></div>
+            <!-- list -->        
+            <div class="marginLR1 clear whiteBg "  v-else="empty">
+                <li class="classlist"  v-for="listkeys in rankListData">
+                    <a class="vedioCover-wrap"  href="javascript:;"  onclick="gonextpage($(this).find('.tit span').html(),'videodetail',0)"  @click="videodetail(listkeys.scoreid)" >
+                        <img :src="url+listkeys.videoimg"  onerror="javascript:this.src='images/1.gif'">
+                        <h3 class="tit">
+                            <span v-html="listkeys.title"><span>
+                        </h3> 
+                        <span class="record">
+                            <img  v-if="listkeys.recordnum==1" src="images/icon_record_s.png">   
+                            <img  v-if="listkeys.recordnum==2" src="images/icon_record_r.png">   
+                            <img  v-if="listkeys.recordnum==3" src="images/icon_record_n.png">   
+                            <img  v-if="listkeys.recordnum==4" src="images/icon_record_w.png">                           
+                        </span>
+                    </a>
+                    <p class="font14 color333 tit nowrap">
+                        <span class="pull-left">{{listkeys.groupname}}</span>
+                        
+                    </p>
+                    <p class="font12 color999">
+                        <span class="pull-right">{{listkeys.recordname}}</span>
+                        <span class="school nowrap" >{{listkeys.schoolname}}</span>
+                    </p>
+                    <p class="font12 color999">
+                        <span class="pull-left">记录：{{listkeys.unitType}} </span><!-- 
+                        <span class="pull-right">播放：<label class="color333">{{listkeys.clicks}}次</label></span> -->
+                    </p>  
+                </li>
+                <p class="noMore clear" v-if="noMore">没有更多了...</p>
+                 
+             
+                     
+            </div>    
+        </div>
+    </div>    
+    <div id="search" class="page out" >
+        <div class="search"> 
+            <a href="JavaScript:;"    class="sear-btn" onclick="gosearch()"></a>
+            <input class="sear-text"  type="search" placeholder="请输入您参赛项目关键字" v-model="keyword"/>
+        </div>     
+    </div>
+    <div id="search-result" class="page out" >    
+    <div class="loading" v-if="loading"></div>
+    <div v-else="loading">        
+        <div class="empty" style="margin-top: 50%;" v-if="empty"></div>
+        <!-- list -->
+        <div class="marginLR1 clear"  v-else="empty">
+            <li class="classlist"  v-for="listkeys in SearchResultData">
+                <a class="vedioCover-wrap" href="javascript:;"   onclick="gonextpage($(this).find('.tit span').html(),'videodetail',0)"      @click="videodetail(listkeys.scoreid)" >
+                    <img :src="url+listkeys.videoimg"  onerror="javascript:this.src='images/1.gif'">
+                    <h3 class="tit">
+                        <span v-html="listkeys.title"><span>
+                    </h3> 
+                    <span class="record">
+                        <img  v-if="listkeys.recordnum==1" src="images/icon_record_s.png">   
+                        <img  v-if="listkeys.recordnum==2" src="images/icon_record_r.png">   
+                        <img  v-if="listkeys.recordnum==3" src="images/icon_record_n.png">   
+                        <img  v-if="listkeys.recordnum==4" src="images/icon_record_w.png">                             
+                    </span>
+                </a>
+                <p class="font14 color333 tit nowrap">
+                    <span class="pull-left">{{listkeys.groupname}}</span>
+                    
+                </p>
+                <p class="font12 color999">
+                    <span class="pull-right">{{listkeys.recordname}}</span>
+                    <span class="school nowrap" >{{listkeys.schoolname}}</span>
+                </p>
+                <p class="font12 color999">
+                    <span class="pull-left">记录：{{listkeys.unitType}} </span>
+                    <!-- <span class="pull-right">播放：<label class="color333">{{listkeys.clicks}}次</label></span> -->
+                </p>  
+            </li>
+            <p class="noMore clear" v-if="noMore">没有更多了...</p>
+             
+        </div>
+    </div>
+    </div>
+    <div id="about" class="page out" >
+        <div class="clear medol-ico whiteBg">
+                 
+                <p class="ico-w">国家纪录</p>
+                <p class="ico-n">省纪录</p> 
+                <p class="ico-r">市纪录</p>
+                <p class="ico-s">学校纪录</p> 
+        </div> 
+        <h2 class="tit whiteBg"><i></i>关于爱挑战</h2> 
+        <div class="about-texts whiteBg" id="about-texts">
+           <!--  {{context}} -->
+        </div>
+    </div>
+    <!-- 视频详情 -->
+    <div id="videodetail" class="page out">
+        <div class="loading" v-if="loading"></div>
+        <div v-else="loading"> 
+            <div class="empty" style="margin-top: 50%;" v-if="empty"></div>
+            <div v-else="empty">
+                 
+                <div style="background:black; height: 30rem; text-align:center;">
+                    <video :src="url+detaildata.videorul" id="Video" controls="controls" style="height:100%; width: 100%;"></video>
+                </div>
+
+                <div class="box whitebg">
+                    <div class="box-div">
+                        <img src="images/ico1.png"  >
+                        <span v-html="detaildata.clicks+'次'"></span>
+                    </div>
+                    <!-- <div class="box-div">
+                        <img src="images/ico2.png">
+                        <span v-html="commentdata.totalRecord"></span>
+                    </div> -->
+                   <!--  <div class="box-div">
+                        <img src="images/ico3.png">
+                        <span v-html='detaildata.videopraisecount'></span>
+                    </div> -->
+                  <!--   <div class="box-div">
+                        <img src="images/ico4.png" >  
+                        <span v-html="detaildata.videotreadcount"></span>
+                    </div> -->
+
+                     
+
+ 
+
+                    <div class="box-div"  :data-rowserurl="rowserurl" :data-scoreid="detaildata.scoreid" :data-schoolid="detaildata.schoolid"              onclick="share($(this).attr('data-rowserurl')+'/Talentchallenge/Lovechallenge/mydetail/scoreid/'+ $(this).attr('data-scoreid') +'/schoolid/'+ $(this).attr('data-schoolid')  )">
+                        <img src="images/share.png">
+                        <br/>
+                        <span>分享</span>
+                    </div>
+                </div>
+                <div class="context whitebg marb10">
+                    <div class="name clear">
+                        <span class="btn-span pull-right " onclick="closeopen(this)"></span>
+                        <p class="nowrap">
+                            <label v-html="classify1 +'/'+classify2 +'/'"></label><!-- 视频来源分类 --> 
+                            <span class="three" v-html="detaildata.title +'(' +detaildata.groupname+ ')'"></span>
+                        </p>
+                    </div>
+                    <p class="creat">上传者姓名：<label v-html="detaildata.recordname"></label></p>
+                    <div class="textp">
+                        <p>发布时间：<label>{{detaildata.createtime}}</label></p>
+                        <p>地级市：<label v-html="detaildata.cityname"></label></p>
+                        <p>上传者学校：<label v-html="detaildata.schoolname"></label></p>
+                        <p>视频简介：</p>
+                        <p v-html="detaildata.remarks"></p>
+                    </div>
+                </div>
+                <!-- <div class="video whitebg marb10">
+                    <h2 class="tit pad10">相关视频</h2>
+                    <div class="videolist clear" v-for="relatedtype in relateddata">
+                        <a href="javascript:;" @click="govideodetail(relatedtype.scoreid)" onclick="gonextpage($(this).children('.con').children('.nowrap').html(),'videodetail',0)">
+                            <img :src="url+relatedtype.videoimg" onerror="javascript:this.src='images/1.gif'">
+                            <div class="con">
+                                <p class="nowrap font14 color333" v-html="relatedtype.title"></p>
+                                <p v-html="'播放：'+relatedtype.clicks+'次'"></p>
+                            </div>
+                        </a>
+                    </div>
+                </div> -->
+
+            </div>
+        </div>
+    </div>
+<script src="js/setvue.js"></script>  
+<script type="text/javascript">
+//统一弹层
+var iWinW=$(document).width();
+var iWinH=$(window).height();
+$('#pop-mask').css({'width':iWinW,'height':iWinH,'position':'absolute','left':0});
+
+//点击空白处隐藏筛选弹窗
+$('.sortwrap').hover(function(){
+    $(this).attr('mouseover','yes');
+},function(){
+    $(this).removeAttr('mouseover');
+})
+$('#pop-mask').click(function(){
+    if( ! $('.sortwrap').attr('mouseover') ){ 
+
+        $('#pop-mask').hide(); 
+        $('.selectCon').hide();
+        $('.select').removeClass('active');
+        $('body').css('overflow', 'visible');
+        $('.page').css('overflow', 'visible');
+        $('.select ').removeClass('active');
+    }
+
+})
+
+// Swiper
+
+
+setTimeout(function() {
+    var mySwiper = new Swiper('.swiper-container',{
+        loop: true,
+        autoplay: 3000,
+        pagination: '.swiper-pagination'
+    });
+},10);
+
+// select
+ 
+
+function selectChange(obj){
+
+    var iTOp=$(obj).parents('.topBar').outerHeight(true);
+    $('#pop-mask,.selectCon').css('top',iTOp);
+    $(obj).toggleClass('active');
+   $('#pop-mask').toggle();
+   $('.selectCon').toggle(); 
+   if($(obj).hasClass('active')){
+
+        $('body').css('overflow', 'hidden');
+        $('.page').css('overflow', 'hidden');
+          
+   } 
+   else{
+
+        $('body').css('overflow', 'visible');
+        $('.page').css('overflow', 'visible');
+   }   
+   
+}
+
+function clickcon(){ 
+}
+
+
+
+function showtoggleBtn(){
+       var ocon=$('.about-texts').outerHeight(true);
+       var oConWrap=$('.about-texts').parent().outerHeight(true);
+       if(ocon>oConWrap){
+            $('.toggleBtn').show();
+       }  
+}
+showtoggleBtn();
+function toggleBtnClick(obj){
+    var _this= $(obj); 
+    var oPrev=_this.parents('.toggleBtn').prev(); 
+    if( _this.attr('hasclick') ){
+        oPrev.css('height','100px');
+        _this.html('展开');
+        _this.removeAttr('hasclick');
+    }
+    else{
+        oPrev.css('height','auto');
+
+        _this.html('收起');
+        _this.attr('hasclick','yes');
+    }
+    
+}
+
+
+// 滚动到底
+$(window).scroll(function(){
+    if($(window).scrollTop() != 0){
+        if($(window).scrollTop() == $(document).height() - $(window).height()){
+            if ($('.in').attr('id') == "home") {
+                indexvue.curpage += 1;
+                indexvue.getList();
+            }else if ($('.in').attr('id') == "explain") {
+                explainvue.curpage += 1;
+                explainvue.rankList();
+            }else if ($('.in').attr('id') == "search-result") {
+                searchResultvue.curpage += 1;
+                searchResultvue.getSearchResult();
+            }
+        };
+    };
+});
+
+tab('.tab a', '.tabCon', '.selectCon', 'click');
+
+
+
+function addActive(obj){
+    var _thisObj=$(obj);
+    _thisObj.addClass('active');
+    _thisObj.siblings().removeClass('active');
+} 
+        
+// 给端的函数
+function aboutLOveChallenge(){
+    //跳转到关于爱挑战页面   
+    abouttvue.getSearchResult();    
+    gonextpage('关于爱挑战', 'about', 0)
+
+}
+
+
+function gonextpage(title, id, num) { 
+     $('.page').css('overflow', 'visible');
+    $('body').css('overflow', 'visible');
+    window.location.href = '#&'+id;
+    $('#'+id).attr('data-title',title);
+    setTitle(title, num);
+
+};
+
+
+
+function goCYX(obj){   
+    var _this=$(obj);
+    var apiurl=_this.attr('data-apiurl');
+    var imgurl=_this.attr('data-imgurl');
+    var rowserurl=_this.attr('data-rowserurl');
+
+    window.location.href = 'caiyixiu.html?apiurl='+apiurl+'&imgurl='+imgurl+'&rowserurl='+rowserurl;
+}
+function goMY(obj){   
+    var _this=$(obj);
+    var apiurl=_this.attr('data-apiurl');
+    var imgurl=_this.attr('data-imgurl');
+    var rowserurl=_this.attr('data-rowserurl');
+
+    window.location.href = 'meiyu.html?apiurlhref='+apiurl+'&imgurl='+imgurl+'&rowserurl='+rowserurl;
+}
+
+ //分享
+function share(shareurl) {
+ 
+    try {
+        if (cordova == null || cordova.plugins == null || cordova.plugins.traceclass == null) {
+            document.addEventListener('deviceready', function () {
+                cordova.plugins.traceclass.setshare(function success(arg) {
+                }, function error(arg) {
+                }, [shareurl]);
+
+            }, false);
+        } else {
+            cordova.plugins.traceclass.setshare(function success(arg) {
+            }, function error(arg) {
+            }, [shareurl]);
+        }
+    }catch (e) {
+
+    };
+};
+ function closeopen(obj){
+        var _this=$(obj);
+        var owrap=_this.parents('.context');
+        if(!_this.hasClass('close')){
+            owrap.css('height','auto');
+            _this.addClass('close');
+        }else{
+            owrap.css('height','60px');
+            _this.removeClass('close');
+        }
+    }
+
+      
+
+</script>  
+
+ 
+</body> 
+</html>

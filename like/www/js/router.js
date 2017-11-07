@@ -1,0 +1,666 @@
+/**
+ * Created by Wilson on 2017/8/9.
+ */
+var urlapi = '182.48.115.253:8084';
+var imgurl = '192.168.20.121:81';
+
+var IINum = '3100451986';
+var SchoolID = '3204010002';
+var userid = '42939dfaaf9b432192f374ff512b581c';
+var rankiconHead = '';
+
+//var IINum = '25000034859';
+//var SchoolID = '10106410';
+//var userid = 'f7e59192cafc4db8909d15b7977ac28a';
+
+//?IINum=3100451986&SchoolID=3204010002&userid=42939dfaaf9b432192f374ff512b581c&occupation=1&numValue=1
+
+var LocString=String(window.document.location.href);
+function GetQueryString(str){
+    var rs=new RegExp("(^|)"+str+"=([^&]*)(&|$)","gi").exec(LocString),tmp;
+    if(tmp=rs)return tmp[2];
+};
+var occupation = 1;
+var numValue = 1;
+var typetitle = '初始绿色能量';
+if(GetQueryString('imgurl')){
+    imgurl = GetQueryString('imgurl');
+};
+if(GetQueryString('IINum')){
+    IINum = GetQueryString('IINum');
+};
+if(GetQueryString('SchoolID')){
+    SchoolID = GetQueryString('SchoolID');
+};
+if(GetQueryString('userid')){
+    userid = GetQueryString('userid');
+};
+if(GetQueryString('occupation')){
+    occupation = GetQueryString('occupation');
+};
+if(GetQueryString('numValue')){
+    numValue = GetQueryString('numValue');
+};
+if(GetQueryString('rankiconHead')){
+    rankiconHead = GetQueryString('rankiconHead');
+};
+
+urlapi = 'http://'+urlapi;
+imgurl = 'http://'+imgurl;
+// alert(rankiconHead);
+//occupation: 1老师、2学生
+//numValue    : 1能量、2指数
+
+getseconddetail(occupation,numValue);
+
+var rankingvue = new Vue({
+    el: '#rankhome',
+    data: {
+        loading: true,
+        curpage: 1,
+        pagesize: 20,
+        ranklist: [],
+        url: urlapi,
+        pageIndex: 0,
+        pageSize: 10,
+        scrollstatus: 0,
+        occupation: occupation,
+        numValue: numValue,
+        selfname: '',
+        selfrank: 0,
+        selfvalue: 0,
+        selfimg: '',
+        imgurl: imgurl
+    },
+    created: function(){
+        this.getranklist();
+    },
+    methods: {
+        getranklist: function(){
+            var _this = this;
+
+            if(_this.occupation == 1){
+                if(_this.numValue == 1){
+                    var url = urlapi+"/api/Greenenergy/Teacher_GreenEnergySchoolRankingList";
+                }else{
+                    var url = urlapi+"/api/Greenenergy/Teacher_BoleIndexSchoolRankingList";
+                };
+
+                var params = {
+                    "IINum": IINum,
+                    "SchoolID": SchoolID,
+                    "TeacherID": userid,
+                    "pageIndex": _this.pageIndex,
+                    "pageSize": _this.pageSize
+                };
+            }else{
+                if(_this.type == 1){
+                    var url = urlapi+"/api/Greenenergy/Student_EnergyRankList";
+                }else{
+                    var url = urlapi+"/api/Greenenergy/Student_GrowthindexRankList";
+                };
+                var params = {
+                    "Iinum": IINum,
+                    "Schoolid": SchoolID,
+                    "Userid": userid,
+                    "pageindex": _this.pageIndex,
+                    "pagesize": _this.pageSize
+                };
+            };
+
+            $.ajax({
+                url: url,
+                data: params,
+                type:'get',
+                dataType:'json',
+                success: function(data){
+                    _this.loading = false;
+                    if(data.Status){
+                        _this.selfname = data.Data.username;
+                        if(rankiconHead){
+                            _this.selfimg = 'http://'+ rankiconHead;
+                        }else{
+                            _this.selfimg = data.Data.headphoto;
+                        };
+                        _this.selfrank = data.Data.rankindex;
+                        _this.selfvalue = data.Data.value;
+                        if(_this.pageIndex == 0){
+                            for(var i=0; i<data.Data.list.length; i++){
+                                if(userid == data.Data.list[i].userid){
+                                    data.Data.list[i].headphoto = 'http://'+ rankiconHead;
+                                }else{
+                                    if(data.Data.list[i].headphoto){
+                                        data.Data.list[i].headphoto = imgurl+ data.Data.list[i].headphoto;
+                                    }else{
+                                        data.Data.list[i].headphoto = data.Data.list[i].headphoto;
+                                    };
+
+                                };
+                            };
+                            _this.ranklist = data.Data.list;
+                        }else{
+                            if(data.Data.list.length > 0){
+                                for(var i=0; i<data.Data.list.length; i++){
+                                    if(userid == data.Data.list[i].userid){
+                                        data.Data.list[i].headphoto = 'http://'+ rankiconHead;
+                                    }else{
+                                        data.Data.list[i].headphoto = imgurl+ data.Data.list[i].headphoto;
+                                    };
+                                };
+                                _this.ranklist = _this.ranklist.concat(data.Data.list);
+                                _this.scrollstatus = 0;
+                            }else{
+                                _this.scrollstatus = 2;
+                                setTimeout(function(){
+                                    _this.scrollstatus = 0;
+                                },400);
+                            };
+                        };
+                    }else{
+                        alert('提示',data.Message);
+                    };
+                },
+                error: function(data){
+                    alert('提示','网络异常');
+                }
+            });
+        },
+        godetail: function(userid,name,imgurl){
+            setTitle(name+'的'+typetitle,0);
+            getseconddetail(userid,name,imgurl);
+        }
+    }
+});
+
+//var detailvue = new Vue({
+//    el: '#secondPage',
+//    data: {
+//        loading: true,
+//        detailjson: '',
+//        url: urlapi
+//    },
+//    methods: {
+//        getdetail: function(occupation,numValue,userid){
+//            var _this = this;
+//            var url = urlapi+"/api/Greenenergy/Teacher_GreenEnergyTotal";
+//            var params = {
+//                "IINum": IINum,
+//                "SchoolID": SchoolID,
+//                "UserID": userid
+//            };
+//
+//            setTimeout(function(){
+//                $.ajax({
+//                    url: url,
+//                    data: params,
+//                    type:'get',
+//                    dataType:'json',
+//                    timeout:8000,
+//                    success: function(data){
+//                        _this.loading = false;
+//                        if(data.Status){
+//
+//                        }else{
+//                            alert('提示',data.Message);
+//                        };
+//                    },
+//                    error: function(data){
+//                        alert('提示','网络异常');
+//                    }
+//                });
+//            },300);
+//        }
+//    }
+//});
+
+function getseconddetail(seconduserid,name,imgurl){
+
+    $h_IInum = IINum;               //ii号
+    $h_SchoolID = SchoolID;         //学校id
+
+
+    // 请求地址 *******************
+    // 请求ip地址
+    $h_linkHead = urlapi + '/',
+
+    // 老师能量
+    $h_energyHeadT = $h_linkHead+'api/Greenenergy/Teacher_GreenEnergyTotal?', // 教师绿色能量统计值（教师绿色能量头部三个数值）
+    $h_energyListT = $h_linkHead+'api/Greenenergy/Teacher_GreenEnergyList?', // 教师绿色能量日期排行（教师绿色能量列表数据）
+
+    // 老师指数信息           ***待定
+    // $h_porName     = $h_linkHead+'api/Greenenergy/Teacher_GreenEnergyRankingList', //教师绿色能量排行榜 (教师绿色能量个人信息)
+    // 老师指数
+    $h_indexHeadT  = $h_linkHead+'api/Greenenergy/Teacher_BoleIndexTotal?'  // 教师伯乐指数统计值 (教师伯乐指数头部三个数值)
+    $h_indexListT  = $h_linkHead+'api/Greenenergy/Teacher_BoleIndexList?'   // 教师伯乐指数日期排行 (教师伯乐指数列表数据)
+
+    // 学生能量信息           ***待定
+    // $h_porName     = $h_linkHead+'api/Greenenergy/Teacher_GreenEnergyRankingList', //学生绿色能量排行榜 (教师绿色能量个人信息)
+    // 学生能量
+    $h_energyHeadS  = $h_linkHead+'api/Greenenergy/Student_EnergyTotal?'    // 学生绿色指数统计值 (学生绿色能量头部三个数值)
+    $h_energyListS  = $h_linkHead+'api/Greenenergy/Student_EnergyList?' // 学生绿色指数日期排行 (学生绿色能量列表数据)
+
+    // 学生指数信息           ***待定
+    // $h_porName     = $h_linkHead+'api/Greenenergy/Teacher_GreenEnergyRankingList', //学生绿色能量排行榜 (学生绿色能量个人信息)
+    // 学生指数
+    $h_indexHeadS  = $h_linkHead+'api/Greenenergy/Student_GrowthindexTotal?'    // 学生成长指数统计值 (学生成长指数头部三个数值)
+    $h_indexListS  = $h_linkHead+'api/Greenenergy/Student_GrowthindexList?' // 学生成长指数日期排行 (学生成长指数列表数据)
+
+    // 判断职业和数值    是能量还是指数&&是老师还是学生
+    if(occupation == 1 && numValue ==1){        //老师 && 能量
+
+        // 跟学生相关页面隐藏 || 展示老师和能量页面
+        $('.h_student').remove();
+        $('.h_index').remove();
+
+        if(seconduserid) {
+            $UserID = seconduserid;         //用户id
+            // 请求老师数据
+            // 三个头部信息
+            h_ajax($h_energyHeadT,$h_IInum,$h_SchoolID,$UserID,1,occupation,numValue);  // 区分请求的类别    1标题  2列表
+            // 列表数据
+            h_ajax($h_energyListT,$h_IInum,$h_SchoolID,$UserID,2,occupation,numValue);  // 区分请求的类别    1标题  2列表
+        };
+
+    }else if(occupation == 1 && numValue ==2){  //老师 && 指数
+
+        // 跟学生相关页面隐藏 || 展示老师和指数页面
+        $('.h_student').remove();
+        $('.h_energy').remove();
+
+        if(seconduserid){
+            $UserID = seconduserid;         //用户id
+            // 请求老师数据
+            // 三个头部信息
+            h_ajax($h_indexHeadT,$h_IInum,$h_SchoolID,$UserID,1,occupation,numValue);   // 区分请求的类别    1标题  2列表
+            // 列表数据
+            h_ajax($h_indexListT,$h_IInum,$h_SchoolID,$UserID,2,occupation,numValue);   // 区分请求的类别    1标题  2列表
+        };
+
+    }else if(occupation == 2 && numValue ==1){  //学生 && 能量
+
+        // 跟老师相关页面隐藏 || 展示学生和指数页面
+        $('.h_teacher').remove();
+        $('.h_index').remove();
+
+        if(seconduserid) {
+            $UserID = seconduserid;         //用户id
+            // 请求学生数据
+            // 三个头部信息
+            h_ajax($h_energyHeadS,$h_IInum,$h_SchoolID,$UserID,1,occupation,numValue);  // 区分请求的类别    1标题  2列表
+            // 列表数据
+            h_ajax($h_energyListS,$h_IInum,$h_SchoolID,$UserID,2,occupation,numValue);  // 区分请求的类别    1标题  2列表
+        };
+
+    }else if(occupation == 2 && numValue ==2){  //学生 && 指数
+
+        // 跟老师相关页面隐藏 || 展示学生和指数页面
+        $('.h_teacher').remove();
+        $('.h_energy').remove();
+
+        if(seconduserid) {
+            $UserID = seconduserid;         //用户id
+            // 请求学生数据
+            // 三个头部信息
+            h_ajax($h_indexHeadS,$h_IInum,$h_SchoolID,$UserID,1,occupation,numValue);   // 区分请求的类别    1标题  2列表
+            // 列表数据
+            h_ajax($h_indexListS,$h_IInum,$h_SchoolID,$UserID,2,occupation,numValue);   // 区分请求的类别    1标题  2列表
+        };
+
+    }else{
+        alert('非法请求，缺少必要参数，请正确访问页面。');
+    };
+
+    var secondid = $('.out').attr('id');
+    typetitle = $('.out').attr('data-title');
+    //头像、名字
+    $('.typename').html(name);
+    $('.typeimg').attr('src',imgurl);
+
+    $('.ulrankdown li').each(function(){
+        $(this).find('a').attr('href','#&'+secondid);
+    });
+
+    // 通用请求数据
+    function h_ajax(link,IINum,SchoolID,UserID,bok,occupation,numValue){
+        $.ajax({
+            type : "get",
+            url: link+'IINum='+IINum+'&SchoolID='+SchoolID+'&UserID='+UserID,
+            dataType: "jsonp",
+            success : function(json){
+                // 区分请求的类别    1标题  2列表
+                if(bok === 1){
+                    var str = '';
+                    if(numValue == 1){          //能量
+                        if(json.Status == false){
+                            str += 
+                                '<li>'+
+                                    '<h2 class="h_energy_numNl">0</h2>'+
+                                    '<span>能量值</span>'+
+                                '</li>'+
+                                '<li>'+
+                                    '<h2 class="h_energy_numZZ">0</h2>'+
+                                    '<span>节省纸张(张)</span>'+
+                                '</li>'+
+                                '<li>'+
+                                    '<h2 class="h_energy_numTZ">0</h2>'+
+                                    '<span>节省碳值(g)</span>'+
+                                '</li>';
+                            $('.h_title_list').append(str);
+                        }else{
+                            var EnergyValue = json.Data.EnergyValue,    // 能量值
+                                PaperValue  = json.Data.PaperValue,     // 纸张
+                                CarbonValue = json.Data.CarbonValue;    // 碳值
+                            str +=
+                                '<li>'+
+                                '<h2 class="h_energy_numNl">'+EnergyValue+'</h2>'+
+                                '<span>能量值</span>'+
+                                '</li>'+
+                                '<li>'+
+                                '<h2 class="h_energy_numZZ">'+PaperValue+'</h2>'+
+                                '<span>节省纸张(张)</span>'+
+                                '</li>'+
+                                '<li>'+
+                                '<h2 class="h_energy_numTZ">'+CarbonValue+'</h2>'+
+                                '<span>节省碳值(g)</span>'+
+                                '</li>';
+                            $('.h_title_list').html('');
+                            $('.h_title_list').append(str);
+                        };
+
+                    }else if(numValue == 2){    //指数
+
+                        if(occupation == 1){    //老师
+                            if(json.Status == false){
+                                str += 
+                                    '<li>'+
+                                        '<h2 class="h_energy_numNl">0</h2>'+
+                                        '<span>伯乐指数</span>'+
+                                    '</li>'+
+                                    '<li>'+
+                                        '<h2 class="h_energy_numZZ">0</h2>'+
+                                        '<span>互动(次)</span>'+
+                                    '</li>'+
+                                    '<li>'+
+                                        '<h2 class="h_energy_numTZ">0</h2>'+
+                                        '<span>表扬(次)</span>'+
+                                    '</li>';
+                                $('.h_title_list').append(str);
+                            }else{
+                                var BoleIndexValue  = json.Data.BoleIndexValue, // 伯乐指数
+                                    AskCount        = json.Data.AskCount,       // 提问次数
+                                    PraiseCount     = json.Data.PraiseCount;    // 表扬次数
+                                str +=
+                                    '<li>'+
+                                    '<h2 class="h_energy_numNl">'+BoleIndexValue+'</h2>'+
+                                    '<span>伯乐指数</span>'+
+                                    '</li>'+
+                                    '<li>'+
+                                    '<h2 class="h_energy_numZZ">'+AskCount+'</h2>'+
+                                    '<span>互动(次)</span>'+
+                                    '</li>'+
+                                    '<li>'+
+                                    '<h2 class="h_energy_numTZ">'+PraiseCount+'</h2>'+
+                                    '<span>表扬(次)</span>'+
+                                    '</li>';
+                                $('.h_title_list').html('');
+                                $('.h_title_list').append(str);
+                            };
+
+                        }else if(occupation == 2){  //学生
+                            if(json.Status == false){
+                                str += 
+                                    '<li>'+
+                                        '<h2>0</h2>'+
+                                        '<span>成长指数</span>'+
+                                    '</li>'+
+                                    '<li>'+
+                                        '<h2>0</h2>'+
+                                        '<span>主动回答(次)</span>'+
+                                    '</li>'+
+                                    '<li>'+
+                                        '<h2>0</h2>'+
+                                        '<span>受表扬(次)</span>'+
+                                    '</li>';
+                                $('.h_title_list').append(str);
+                            }else{
+                                var index = json.Data.index,                    // 成长指数
+                                    questioncount  = json.Data.questioncount,   // 主动回答(次)
+                                    praisecount = json.Data.praisecount;        // 受表扬(次)
+                                str +=
+                                    '<li>'+
+                                    '<h2>'+index+'</h2>'+
+                                    '<span>成长指数</span>'+
+                                    '</li>'+
+                                    '<li>'+
+                                    '<h2>'+questioncount+'</h2>'+
+                                    '<span>主动回答(次)</span>'+
+                                    '</li>'+
+                                    '<li>'+
+                                    '<h2>'+praisecount+'</h2>'+
+                                    '<span>受表扬(次)</span>'+
+                                    '</li>';
+                                $('.h_title_list').html('');
+                                $('.h_title_list').append(str);
+                            };
+                        };
+                    };
+                }else if(bok === 2){
+                    if(json.Status == false || json.Data.length <= 0){
+                        var str = '';
+                        str += 
+                            '<li>'+
+                                '<h3>暂无数据呦</h3>'+
+                                '<div class="h_list_box_txt">'+
+                                    '<p>暂无数据呦</p>'+
+                                '</div>'+
+                            '</li>';
+                        $('.h_list_box_ul').append(str);
+                    }else{
+                        if(json.Data.length > 0){
+                            if(occupation == 1){    //老师
+                                if(numValue == 1){          //能量
+                                    $('.h_list_box_ul').html('');
+                                    $.each(json.Data, function(n1, value) {
+                                            var str = '',
+                                            timeTxt         = value.date ;  // 时间
+                                            if(value.list.length == 0){
+                                            str +=
+                                                '<li>'+
+                                                    '<h3>'+timeTxt+'</h3>'+
+                                                    '<div class="h_list_box_txt">'+
+                                                        '<p>暂无数据呦</p>'+
+                                                    '</div>'+
+                                                '</li>';
+                                            }else{
+                                                str +=
+                                                '<li>'+
+                                                    '<h3>'+timeTxt+'</h3>'+
+                                                '<div class="h_list_box_txt">';
+                                            }
+                                            //二层循环
+                                            $.each(value.list,function(n2,value1){
+                                                // console.log(value1);
+                                                var typename        = value1.typename,         // 名称
+                                                    count           = value1.count+'次',       // 次数
+                                                    score           = value1.score  ;          // 奖励值
+
+                                                if(value1.count == 0){
+                                                    count ='';
+                                                }
+                                                str += 
+                                                        '<p>'+typename+count+'，能量值+'+score+'</p>';
+                                                    '</div>'+
+                                                '</li>';
+                                            }); 
+
+                                            $('.h_list_box_ul').append(str);
+
+                                        }); 
+                                }else if(numValue == 2){    //指数
+                                    $('.h_list_box_ul').html('');
+                                    $.each(json.Data, function(n1, value) { 
+                                            // console.log(value.date); 
+                                            var str = '',
+                                                timeTxt         = value.date ;  // 时间
+
+                                            if(value.list.length == 0){
+                                                str +=
+                                                '<li>'+
+                                                    '<h3>'+timeTxt+'</h3>'+
+                                                    '<div class="h_list_box_txt">'+
+                                                        '<p>暂无数据呦</p>'+
+                                                    '</div>'+
+                                                '</li>';;
+                                            }else{
+                                                str +=
+                                                    '<li>'+
+                                                        '<h3>'+timeTxt+'</h3>'+
+                                                        '<div class="h_list_box_txt">';
+                                            }
+                                            //二层循环
+                                            $.each(value.list,function(n2,value1){
+                                                // console.log(value1);
+                                                var typename        = value1.typename,          // 名称
+                                                    count           = value1.count+'次',        // 次数
+                                                    score           = value1.score  ;           // 奖励值
+
+                                                if(value1.count == 0){
+                                                    count ='';
+                                                }
+                                                str += 
+                                                        '<p>'+typename+count+'，指数+'+score+'</p>';
+                                                    '</div>'+
+                                                '</li>';
+                                            }); 
+
+                                            $('.h_list_box_ul').append(str);
+
+                                        });
+                                };
+                            }else if(occupation == 2){  //学生
+                                if(numValue == 1){          //能量
+                                    $('.h_list_box_ul').html('');
+                                    $.each(json.Data, function(n1, value) {
+                                            var str = '',
+                                            timeTxt         = value.date ;  // 时间
+                                            if(value.list.length == 0){
+                                            str +=
+                                                '<li>'+
+                                                    '<h3>'+timeTxt+'</h3>'+
+                                                    '<div class="h_list_box_txt">'+
+                                                        '<p>暂无数据呦</p>'+
+                                                    '</div>'+
+                                                '</li>';
+                                            }else{
+                                                str +=
+                                                '<li>'+
+                                                    '<h3>'+timeTxt+'</h3>'+
+                                                '<div class="h_list_box_txt">';
+                                            }
+                                            //二层循环
+                                            $.each(value.list,function(n2,value1){
+                                                // console.log(value1);
+                                                var typename        = value1.typename,          // 名称
+                                                    count           = value1.count+'次'  ,       // 次数
+                                                    score           = value1.score  ;           // 奖励值
+
+                                                if(value1.count == 0){
+                                                    count ='';
+                                                }
+                                                str += 
+                                                        '<p>'+typename+count+'，能量值+'+score+'</p>';
+                                                    '</div>'+
+                                                '</li>';
+                                            }); 
+
+                                            $('.h_list_box_ul').append(str);
+
+                                        }); 
+                                }else if(numValue == 2){    //指数
+                                    $('.h_list_box_ul').html('');
+                                    $.each(json.Data, function(n1, value) {
+                                        // console.log(value.date);
+                                        var str = '',
+                                            timeTxt         = value.date ;  // 时间
+
+                                        if(value.list.length == 0){
+                                            str +=
+                                                '<li>'+
+                                                '<h3>'+timeTxt+'</h3>'+
+                                                '<div class="h_list_box_txt">'+
+                                                '<p>暂无数据呦</p>'+
+                                                '</div>'+
+                                                '</li>';;
+                                        }else{
+                                            str +=
+                                                '<li>'+
+                                                '<h3>'+timeTxt+'</h3>'+
+                                                '<div class="h_list_box_txt">';
+                                        }
+                                        //二层循环
+                                        $.each(value.list,function(n2,value1){
+                                            // console.log(value1);
+                                            var typename        = value1.typename,          // 名称
+                                                count           = value1.count+'次'  ,       // 次数
+                                                score           = value1.score  ;           // 奖励值
+
+                                            if(value1.count == 0){
+                                                count ='';
+                                            }
+                                            str += 
+                                                    '<p>'+typename+count+'，指数+'+score+'</p>';
+                                                '</div>'+
+                                            '</li>';
+                                        });
+
+                                        $('.h_list_box_ul').append(str);
+
+                                    });
+                                    // for(arr in json.Data){
+                                    //  for(arrList in json.Data[arr].list){
+                                    //      var str = '',
+                                    //      timeTxt         = json.Data[arr].date       || '暂无数据呦'; // 时间
+                                    //      typename        = json.Data[arr].list[arrList].typename ,           // 名称
+                                    //      count           = json.Data[arr].list[arrList].count    ,           // 次数
+                                    //      score           = json.Data[arr].list[arrList].score    ;           // 奖励值
+                                    //  };
+                                    //  str +=
+                                    //      '<li>'+
+                                    //          '<h3>'+timeTxt+'</h3>'+
+                                    //          '<div class="h_list_box_txt">'+
+                                    //              '<p>'+typename+count+'次，指数+'+score+'</p>';
+                                    //          '</div>'+
+                                    //      '</li>';
+                                    //  $('.h_list_box_ul').append(str);
+                                    // };
+                                };
+                            };
+                        };
+                    };
+                };
+            },
+            error:function(json){
+                // console.log(json.Status);
+            }
+        });
+    }
+};
+
+
+//滚动
+$(window).scroll(function(){
+    //滚动到底
+    if($(window).scrollTop() != 0){
+        if($(window).scrollTop() == $(document).height() - $(window).height()){
+            switch ($('.in').eq(0).attr('id')){
+                case 'rankhome':
+                    rankingvue.scrollstatus = 1;
+                    rankingvue.pageIndex += 1;
+                    rankingvue.getranklist();
+                    break;
+                default :
+                    break;
+            };
+        };
+    };
+});

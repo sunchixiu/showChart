@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+	<title>我的</title>
+	<link rel="stylesheet" href="css/style.css"/>
+	<link rel="stylesheet" href="css/my.css"/>
+	<script src="js/jquery-1.11.1.min.js"></script>
+	<script src="js/common.js"></script>
+	<script type="text/javascript">
+		// var urlapi = 'http://182.92.182.224/ldl/weixin/';
+		// var woriid = 'gh_50a7026bdd67';
+		// var openid = 'odAcOvwqlUlTY7CVUPcf38sCKLu4';
+		// var activityid = '1';
+		$.getUrlParam = function(name){
+			var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");    //正则？？？？！！！
+			var r = window.location.search.substr(1).match(reg);     // substr( ) 抽取字符    match() 匹配
+			if (r!=null) return unescape(r[2]); return null;        //unescape() 函数可对通过 escape() 编码的字符串进行解码。
+		};
+		if ($.getUrlParam('woriid')) {
+		    woriid = ($.getUrlParam('woriid'));
+		};
+		if ($.getUrlParam('openid')) {
+		    openid = ($.getUrlParam('openid'));
+		};
+		if ($.getUrlParam('activityid')) {
+		    activityid = ($.getUrlParam('activityid'));
+		};
+	</script>
+</head>
+<body class="back">
+	<div class="my-wrap">
+		<img src="images/11.jpg" class="user-img">
+		<p class="user-name">好孩子</p>
+		<div id="bind"><span class="bound" onclick="showMask('手机号绑定');">绑定手机</span></div>
+		<!-- <p class="user-phone">手机号：
+			<label>13000000000</label>
+			<span onclick="showMask('修改手机号');">修改</span>
+		</p> -->
+		<a href="cjm.html" class="my-btn bj1">抽奖码</a>
+		<a href="javascript:gojp();" class="my-btn bj2">奖品</a>
+		<a href="cyhd.html" class="my-btn bj3">参与活动</a>
+		<a href="djj.html" class="my-btn bj4">代金券</a>
+		<a href="jf.html" class="my-btn bj5">积分<span id="score"></span></a>
+	</div>
+	<div class="bottommenu">
+	    <a href="javascript:goindex();"><label class="home">首页</label></a>
+	    <a href="javascript:;"><label class="shop">逛商城</label></a>
+	    <a href="javascript:;"><label class="buycat">购物车</label></a>
+	    <a href="javascript:;" class="active"><label class="my">我的</label></a>
+	</div>
+	<!-- 弹窗 -->
+	<div class="tck" id="tck" onclick="closes();">
+        <div class="cons">
+        	<h3 class="tit"></h3>
+        	<p class="former">原手机号：<label id="telno"></label></p>
+			<p>手机号：<input type="text" id="Mobile" onblur="inp($(this))" /></p>
+			<p class="captcha clear">
+				<span>验证码：<input type="text" id="vcode" /></span>
+				<span id="captcha_img" onclick="getcaptcha()"><img src="images/yzm.jpg"></span>
+			</p>
+			<button class="confirm" onclick="confirm()">确定</button>
+        </div>
+	</div>
+<script type="text/javascript">
+	// 是否绑定手机
+	$.ajax({
+		url: urlapi+'wxisbind_user.action',
+		data: {'woriid':woriid, 'openid':openid},
+        type: 'post',
+        dataType: 'json',
+        success: function(data){
+        	if (data.code == '1') {
+	            if (data.data.isbind == '1') {
+					// 个人信息
+	            	$.ajax({
+						url: urlapi+'cactivity_userinfo.action',
+						data: {'woriid':woriid, 'openid':openid, 'activityid':activityid},
+				        type: 'post',
+				        dataType: 'json',
+				        success: function(data){
+				        	if (data.code == '1') {
+	            				$('#bind').html('<p class="user-phone">手机号：<label>'+data.data.telno+'</label><span onclick="showMask(\'修改手机号\');">修改</span></p>');
+	            				$('#score').html('（' + data.data.score + '）');
+	            				$('#telno').html(data.data.telno);
+				        	}else{
+				        		alert(data.errorMessage);
+				        	};
+				        },
+				        error: function() {
+				        	alert("网络错误!");
+				        }
+					});
+	            }else{
+	            	$('#bind').html('<span class="bound" onclick="showMask(\'手机号绑定\');">绑定手机</span>');
+	            };
+        	}else{
+        		alert(data.errorMessage);
+        	};
+        },
+        error: function() {
+        	alert("网络错误!");
+        }
+	});
+    //弹窗
+    function showMask(tit){
+        $('body').css('overflow','hidden');
+        $('#tck').find('.tit').html(tit);
+        if (tit == '修改手机号') {
+        	$('.former').show();
+        }else{
+        	$('.former').hide();
+        };
+        $('#tck').show();
+        getcaptcha();
+    };
+    // 获取验证码
+    function getcaptcha() {
+    	$.ajax({
+			url: urlapi+'cactivity_createvalidatecode.action',
+			data: {'woriid':woriid, 'openid':openid},
+	        type: 'post',
+	        dataType: 'json',
+	        success: function(data){
+	        	if (data.code == '1') {
+    				$('#captcha_img').html('<img src="'+ data.data +'">')
+	        	}else{
+	        		alert(data.errorMessage);
+	        	};
+	        },
+	        error: function() {
+	        	alert("网络错误!");
+	        }
+		});
+    };
+    // 关闭弹窗
+    function closes(){
+        $('#tck').hide();
+        $('body').css('overflow','auto')
+    };
+    $(".cons").click(function(event) {
+		// 阻止冒泡
+		event.stopPropagation();
+	});
+	// 验证手机号
+    function inp(_this) {
+    	var phone = _this.val();
+		if(phone && /^1[3|4|5|8|7]\d{9}$/.test(phone)){
+		    
+		} else {
+		    alert('手机号输入不正确！');
+			_this.val('');
+		};
+    };
+    // 确定
+    function confirm() {
+    	var telno = $('#Mobile').val();
+    	var vcode = $('#vcode').val();
+    	if (telno == '') {
+    		alert('手机号不能为空...');
+    		return false;
+    	};
+    	if (vcode == '') {
+    		alert('验证码不能为空...');
+    		return false;
+    	};
+    	$.ajax({
+			url: urlapi+'cactivity_updatetelno.action',
+			data: {'woriid':woriid, 'openid':openid, 'telno':telno, 'vacode':vcode},
+	        type: 'post',
+	        dataType: 'json',
+	        success: function(data){
+	        	if (data.code == '1') {
+    				alert('手机号修改成功！');
+    				// closes();
+    				window.location.reload();
+	        	}else{
+	        		alert(data.errorMessage);
+	        		getcaptcha();
+	        		$('#vcode').val('');
+	        	};
+	        },
+	        error: function() {
+	        	alert("网络错误!");
+	        }
+		});
+    }
+	function gojp() {
+		window.location.href = 'jp.html?woriid='+woriid+'&openid='+openid+'&activityid='+activityid;
+	};
+	function goindex() {
+        window.location.href = 'index.html?woriid='+woriid+'&openid='+openid+'&activityid='+activityid;
+    }
+</script>
+</body>
+</html>

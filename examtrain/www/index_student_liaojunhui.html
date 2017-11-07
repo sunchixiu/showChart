@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="css/css.css">
+	<link rel="stylesheet" href="css/mobilebone.css">
+	<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+	<script src="js/common.js"></script>
+    <!--<script src="../cordova.js"></script>-->
+	<script src="js/base.js"></script>
+	<script src="js/mobilebone.js"></script>
+	<script src="js/Intelligent_train.js"></script>
+	<link rel="stylesheet" href="http://center.iischool.com/mobileapp/static/examengine/css/examengine.css">
+	<script src="http://center.iischool.com/mobileapp/static/examengine/examengine.js"></script>
+	<script>
+		function getexamjson(){
+			if($('#examheader_title').find('input').length > 0){
+				$('#examheader_title').find('input').blur();
+			};
+
+			if($.trim($('#examheader_title').html()) == ''){
+				examengine.layout.alert('提示','试卷名称不能为空！');
+				$('#examheader_title').find('input').focus();
+				return false;
+			};
+
+			examengine.layout.loadding('正在保存试卷...');
+			setTimeout(function(){
+				var json = examengine.getexamjson();
+				var subquestionnum = $('.subquestionnum').length;
+				json.numbers = subquestionnum;
+				examengine.layout.close();
+				alert(JSON.stringify(json));
+			},0);
+		};
+	</script>
+	<script>
+		//获取地址栏参数
+		$.getUrlParam = function(name){
+			var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");    //正则？？？？！！！
+			var r = window.location.search.substr(1).match(reg);     // substr( ) 抽取字符    match() 匹配
+			if (r!=null) return unescape(r[2]); return null;        //unescape() 函数可对通过 escape() 编码的字符串进行解码。
+		};
+		var apiurl = 'http://182.48.117.90:70';
+		var resourceurl = 'http://cloudso.iischool.com/newjspui';
+		var testurl = 'http://www.ischool100.com';
+		var publisherid = 'e2fdc5a706a24b52983d88d1678cb6dc';
+		var subjectid = '231e7a833ee646f5b42c53236c585769';
+		var papernum = 1;
+    </script>
+</head>
+<body>
+<div class="page out" id="pageHome" style="background: #fff;">
+	<div class="testmask"></div>
+	<div id="home">
+		<div class="memu-wrap">
+			<ul class="memu self clear">
+				<li id="memu-class"><label class="nowrap">年级</label></li>
+				<li id="memu-subject"><label class="nowrap">学科</label></li>
+				<li id="memu-edition"><label class="nowrap">版本</label></li>
+			</ul>
+			<div class="memu-con pauto">
+				<ul id="gradeid">
+					<li>四年级</li>
+				</ul>
+			</div>
+			<div class="memu-con pauto">
+				<ul id="subjectid">
+					<li>语文</li>
+				</ul>
+			</div>
+			<div class="memu-con pauto" >
+				<ul id="versionid">
+					<li>人民教育出版社_新课标</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="list">
+		<ul class="yiji">
+			<!--<li>-->
+			<!--<a href="#" class="inactive">第一单元第一节认识生物</a>-->
+			<!--<ul style="display: none">-->
+			<!--<li>-->
+			<!--<a class="inactive" href="#"><i></i>第一节生物与环境组成生态系统</a>-->
+			<!--<ul>-->
+			<!--<li class="three"><a class="pitch" href="#"><i></i>第一节生物与环境组成生态系统</a></li>-->
+			<!--<li class="three"><a class="pitch" href="#"><i></i>第一节生物与环境组成生态系统</a></li>-->
+			<!--</ul>-->
+			<!--</li>-->
+			<!--</ul>-->
+			<!--</li>-->
+		</ul>
+	</div>
+	<div class="type-quantity" id="questiontype">
+		<p>
+			<label onclick="getexampaper();">试题类型及数量</label>
+			<a class="unfold" href="javascript:;"></a>
+		</p>
+		<ul>
+			<!--<li>-->
+			<!--<label>简答题</label>-->
+			<!--<span class="subtract">-</span>-->
+			<!--<font>0</font>-->
+			<!--<span class="plus">+</span>-->
+			<!--</li>-->
+		</ul>
+	</div>
+</div>
+
+<div class="page out" id="pageSecond">
+	<div id="testpaper" class="paperbody" style="overflow: auto; position: relative; padding: 1rem; width: 34rem; height: 100%;">
+
+	</div>
+</div>
+<input id="testName" type="hidden" value="测试组卷名称">
+
+<script>
+	var options = {
+		apiurl : 'http://182.48.117.90:70',
+		resourceurl : 'http://testso.iischool.com/newjspui',
+		testurl : 'http://www.ischool100.com',
+		publisherid : 'e2fdc5a706a24b52983d88d1678cb6dc',
+		papernum : 1
+	};
+
+	getjson(options);
+	function getjson(options){
+		$('#testName').val('卷'+papernum);
+        $.ajax({
+		   url: apiurl + '/TSB_ISCHOOL_EXAM_SERVER/testpaper/getstudyidentitylist',
+		   data: JSON.stringify({"tasktype":"3","publisherid":publisherid}),
+		   type: 'post',
+		   contentType: "application/json; charset=utf-8",
+		   success: function(data){
+			   getdata(data.data);
+		   }
+		});
+    };
+
+	function turnSencondpage(){
+		window.location.href = '#&pageSecond';
+	};
+
+</script>
+
+<script type="text/javascript">
+	$(document).delegate('.inactive','click',function(){
+		if($(this).siblings('ul').css('display')=='none'){
+			$(this).parent('li').siblings('li').children("a").removeClass('inactives');
+			$(this).parent("li").siblings('li').children('ul').slideUp(100).children('li');
+			$(this).addClass('inactives');
+			$(this).siblings('ul').slideDown(100).children('li');
+		}else{
+			$(this).removeClass('inactives');
+			$(this).siblings('ul').slideUp(100);
+		}
+	});
+
+	$(document).delegate(".pitch", 'click', function () {
+		$(this).toggleClass("pitch-on");
+		if($('.pitch-on').length == 0){
+			$('.type-quantity').find('ul').html('');
+		};
+	});
+
+	$(".unfold").click(function () {
+		$(this).parent().parent().toggleClass("regain")
+	})
+
+
+	$(document).delegate(".subtract","click",function () {
+		var num = parseInt($(this).siblings('font').html());
+		if(num > 0){
+			$(this).siblings('font').html(num-1);
+		}else{
+			return false;
+		};
+	})
+
+	$(document).delegate(".plus","click",function () {
+		var num = parseInt($(this).siblings('font').html());
+		var maxmun = parseInt($(this).attr('data-maxnum'));
+		if(num < maxmun){
+			$(this).siblings('font').html(num+1);
+		}else{
+			examengine.layout.alert('提示','达到最大值');
+			return false;
+		}
+	});
+</script>
+
+<script>
+	// setheight
+	setmaskheight();
+	function setmaskheight(){
+
+		var idochei=$(document).height();
+		$('.testmask').css("height",idochei);
+	}
+
+	// tab
+	tab('.memu li','.memu-con','.memu-wrap','click',setmaskheight);
+
+
+	function hidemask(){
+		$('.testmask').hide();
+		$('.memu-con').hide();
+		$('.memu li').removeClass('current');
+	}
+	//点击mask显示
+	$('.memu').click(function() {
+		$('.testmask').show();
+		$('body').css('overflow','hidden');
+
+		//选择年级、学科、版本后，mask隐藏。当前状态收起。
+		$('.memu-con li').click(function () {
+			$('li.current label').html($(this).html());
+			hidemask();
+			$('body').css('overflow','auto');
+			//点击年级加载全年级
+
+			//点击学校、版本提示需要依次选择
+
+		})
+		//点击空白处隐藏。
+		$('.testmask').click(function(){
+			hidemask();
+			$('body').css('overflow','auto');
+		})
+
+	});
+
+	//计算高度
+	var winH = document.documentElement.clientHeight;
+	var winremH = winH/ounit;
+	$('.list').css('max-height',(winremH-23)+'rem');
+
+	//跳转页面时隐藏弹窗
+	window.onpopstate = function(){
+		ischool.layout.hide();
+		$('.PaperLoadLayout').hide();
+		$("#PaperLoadLayoutContainer").hide();
+		if(currentAjax){
+			currentAjax.abort();
+		}
+	};
+
+	//向上滑动展开试题类型
+	var oDiv = document.getElementById('questiontype').firstElementChild;
+	oDiv.addEventListener('touchstart',function(ev){
+		var disY = ev.targetTouches[0].pageY;
+		var disYY = 0;
+		var id=ev.targetTouches[0].identifier; //
+
+		function fnMove(ev){
+			if(ev.targetTouches[0].identifier==id){
+				disYY = ev.targetTouches[0].pageY;
+			}
+		}
+
+		function fnEnd(){
+			if(disYY - disY < -60 && !$('.unfold').eq(0).is(':hidden')){
+				if($('.regain').length == 0){
+					$('.unfold').click();
+				}else{
+					return false;
+				};
+			};
+			if(disYY - disY > 60 && !$('.unfold').eq(0).is(':hidden')){
+				if($('.regain').length > 0){
+					$('.unfold').click();
+				}else{
+					return false;
+				};
+			};
+			oDiv.removeEventListener('touchmove',fnMove,false);
+			oDiv.removeEventListener('touchend',fnEnd,false);
+		}
+
+		oDiv.addEventListener('touchmove',fnMove,false);
+		oDiv.addEventListener('touchend',fnEnd,false);
+	},false);
+</script>
+</body>
+</html>

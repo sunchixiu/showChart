@@ -1,0 +1,593 @@
+*{margin: 0; padding: 0;}
+body{
+	font-size: 1.4rem;
+	font-family: "Microsoft Yahei UI","Microsoft YaHei",Helvetica,Arial,sans-serif;
+	background: #efeff4;
+}
+ul, dl, ol {
+    list-style: none;
+}
+a:link,a:visited{text-decoration: none;}
+
+/*.title{*/
+	/*width: 100%;*/
+	/*height: 4.4rem;*/
+	/*line-height: 4.4rem;*/
+	/*font-size: 1.6rem;*/
+	/*background: #2591eb;*/
+	/*color: #fff;*/
+	/*text-align: center;*/
+	/*position: fixed;*/
+	/*top: 0;*/
+	/*z-index: 9999;*/
+/*}*/
+/*.title a.backtrack{*/
+	/*width: 1.3rem;*/
+	/*height: 1.8rem;*/
+	/*display: inline-block;*/
+	/*position: absolute;*/
+	/*top: 1.3rem;*/
+	/*left: 1.5rem;*/
+	/*background: url(../images/backtrack.png) no-repeat center / 1rem 1.8rem;*/
+/*}*/
+/*.title a.right{*/
+	/*font-size: 1.4rem;*/
+	/*float: right;*/
+	/*position: absolute;*/
+	/*right: 1.5rem;*/
+	/*top: 0;*/
+	/*height: 4.4rem;*/
+	/*line-height: 4.4rem;*/
+	/*color: #fff;*/
+/*}*/
+.list{
+	width: 100%;
+	margin-top:4.4rem;
+	background: #fff;
+	/*max-height: 60%;*/
+	overflow: auto;
+}
+.list ul li a{
+	padding-left: 1.2rem;
+	color: #4a4a4a;
+	font-size:1.4rem;
+	display: block;
+	height: 4.4rem;
+	line-height: 4.4rem;
+	border-bottom:1px solid #ececec;
+	padding-right: 2.8rem;
+}
+.list ul li .inactive{
+	background-image: url(../images/off.png);
+	background-repeat: no-repeat;
+	background-position: 33.3rem center;
+	background-size: 1.2rem 0.7rem;
+}
+.list ul li .inactives{
+	background-color: #e7f8ff;
+	background-image: url(../images/on.png);
+	background-repeat: no-repeat;
+	background-position: 33.3rem center;
+	background-size: 1.2rem 0.7rem;
+	border: none;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+} 
+.list ul li ul{
+	display: none;
+}
+.list ul li ul li .inactives{
+	background-color: #fff;
+	border-bottom:1px solid #ececec;
+}
+.list ul li ul li ul{
+	display: none;
+}
+.list ul li ul li a{
+	padding-left: 3.1rem;
+}
+.list .three a{
+	padding-left:0rem;
+	margin-left: 3.7rem;
+	/*background:url(../images/pitch.png) no-repeat right 1.3rem center / 1.5rem 1.5rem;*/
+	background-image: url(../images/pitch.png);
+	background-repeat: no-repeat;
+	background-position: 29.5rem center;
+	background-size: 1.5rem 1.5rem;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	padding-right: 2.8rem;
+}
+.list .three a.pitch-on{
+	padding-left:0rem;
+	margin-left: 3.7rem;
+	/*background:url(../images/pitch-on.png) no-repeat right 1.3rem center / 1.5rem 1.5rem;*/
+	background-image: url(../images/pitch-on.png);
+	background-repeat: no-repeat;
+	background-position: 29.5rem center;
+	background-size: 1.5rem 1.5rem;
+}
+/*.list .three:last-child a{*/
+	/*padding-left:3.7rem;*/
+	/*margin-left: 0rem;*/
+/*}*/
+.list .three a i{
+	width: 0.7rem;
+	height: 0.7rem;
+	display: inline-block;
+	background: #2591eb;
+	border: 1px solid #dadada;
+	border-radius: 50%;
+	margin-right: 1.8rem;
+}
+
+
+.type-quantity{
+	min-height: 17.7rem;
+	max-height: 17.7rem;
+	overflow: hidden;
+	width: 100%;
+	background: #fff;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	z-index: 9;
+	box-shadow: -1px 0 8px 2px #efeff4;
+	-webkit-box-shadow: -1px 0 8px 2px #efeff4;
+}
+.type-quantity ul{max-height: 320px; overflow: auto;}
+.regain{
+	max-height: none;
+}
+.type-quantity p{
+	padding: 0 1rem;
+	border-bottom: 1px solid #ececec;
+	height: 3.7rem;
+	line-height: 3.7rem;
+	font-size: 1.4rem;
+	color: #666;
+}
+.type-quantity p a{
+	width: 1.7rem;
+	height: 1.1rem;
+	float: right;
+	display: inline-block;
+	margin-top: 1.3rem;
+	/*background: url(../images/unfold.png) no-repeat center / 1.7rem 1.1rem;*/
+	background-image: url(../images/unfold.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 1.7rem 1.1rem;
+	display: none;
+}
+.type-quantity.regain p a{
+	width: 1.7rem;
+	height: 1.1rem;
+	float: right;
+	display: inline-block;
+	margin-top: 1.3rem;
+	/*background: url(../images/unfold.png) no-repeat center / 1.7rem 1.1rem;*/
+	background-image: url(../images/unfolddown.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 1.7rem 1.1rem;
+}
+.type-quantity ul{
+	margin-top: 1.5rem;
+}
+.type-quantity ul li{
+	margin-bottom: 1.5rem;
+	overflow: hidden;
+}
+.type-quantity ul li label,.type-quantity ul li span,.type-quantity ul li font{
+	display: block;
+	float: left;
+	height: 2.2rem;
+	line-height: 2.2rem;
+	font-size: 1.4rem;
+	color: #666;
+	text-align: center;
+}
+.type-quantity ul li label{
+	width: 11rem;
+}
+.type-quantity ul li span{
+	width: 6.2rem;
+	border: 2px solid #c2c2c2;
+	border-radius: 0.5rem 0 0 0.5rem;
+	cursor: pointer;
+}
+.type-quantity ul li span:active{
+	background: #ddd;
+}
+.type-quantity ul li span.plus{
+	border-radius: 0 0.5rem 0.5rem 0;
+}
+.type-quantity ul li font{
+	border-top: 2px solid #c2c2c2;
+	border-bottom: 2px solid #c2c2c2;
+	width: 8rem;
+}
+
+.selected{
+	position: fixed;
+	top: 0rem;
+	height: 4.4rem;
+	line-height: 4.4rem;
+	font-size: 1.4rem;
+	color: #666;
+	width: 100%;
+	text-indent: 1rem;
+	background: #fff url(../images/left.png) no-repeat right 1rem center / 0.7rem 1rem;
+	z-index: 9999;
+}
+.border{
+	border-bottom: 1px solid #d8d8d8;
+}
+.selected a{
+	color: #666;
+}
+.selected span{
+	float: right;
+	margin-right: 2.4rem;
+}
+.selected font{
+	margin-left: 1rem;
+}
+.testQuestions{
+	margin-top: 8.8rem;
+}
+.paperbody_bq{
+	padding: 1rem 0 0.4rem;
+	border-bottom: 1px solid #cdcdcd;
+	font-size: 1.4rem;
+	color: #4a4a4a;
+	line-height: 2.2rem;
+	position: relative;
+}
+.operation{
+	background: #00abee;
+	padding: 0.8rem 0;
+	overflow: hidden;
+	position: absolute;
+	top: 0;
+	left: 0rem;
+	width: 34rem;
+	display: none;
+	z-index: 2;
+}
+.operation span{
+	display: block;
+	width: 25%;
+	height: 3.2rem;
+	line-height: 3.2rem;
+	text-align: center;
+	float: left;
+	color: #fff;
+	font-size: 1.4rem;
+	border-right: 1px solid #98ddf8;
+	margin-right: -1px;
+}
+
+
+.clickAdd{
+	width: 8.6rem;
+	height: 2rem;
+	padding-top: 5rem;
+	font-size: 1.4rem;
+	color: #9b9b9b; 
+	display: block;
+	background: url(../images/clickAdd.png) no-repeat top center / 3.5rem 3.5rem;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-left: -3.5rem;
+	margin-top: -7.2rem;
+}
+
+/*menu*/
+.testmask{width: 36rem;background: rgba(0,0,0,0.3) ;position: absolute;z-index: 10;display: none;}
+.memu-wrap{position: relative;z-index: 11;}
+.memu{background: #F4F4F4;padding:0.6rem 0;position: fixed;width: 100%;height: 3.3rem;overflow: hidden;}
+.memu li{width:50%;float: left;height: 3.2rem;border-right: 0.1rem solid #E8E8E8;line-height: 3.2rem;text-align: center;
+	box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	font-size: 1.4rem;
+	background-image: url(../images/def-ico.png);
+	background-repeat: no-repeat;
+	background-position: 16.2rem center;
+	background-size: 1.2rem 0.9rem;
+	cursor: pointer;
+}
+.memu li label{display: inline-block; width: 13.8rem; height: 3.2rem; line-height: 3.2rem; cursor: pointer;}
+.memu li.current{
+	background-image: url(../images/active-ico.png);
+	background-repeat: no-repeat;
+	background-position: 16.2rem center;
+	background-size: 1.2rem 0.9rem;
+	cursor: pointer;
+}
+
+.memu-con{width:100%;position: fixed;top:4.4rem;background: white;display: none;min-height: 21.6rem;max-height: 25rem;overflow-y:auto; }
+
+.memu-con p.tip{text-align: center;padding:1rem 0;}
+.memu-con li{ width:100%;height: 3.5rem;line-height: 3.5rem;text-align: center;border-bottom: 0.1rem solid #F1F1F1;}
+
+/*自我训练样式三列*/
+.memu.self li{width:33.3%;float: left;height: 3.2rem;border-right: 0.1rem solid #E8E8E8;line-height: 3.2rem;text-align: center;
+	box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	font-size: 1.4rem;
+	background-image: url(../images/def-ico.png);
+	background-repeat: no-repeat;
+	background-position: 10.5rem center;
+	background-size: 1.2rem 0.9rem;
+	cursor: pointer;
+}
+.memu.self li label{display: inline-block; width: 9.2rem; height: 3.2rem; line-height: 3.2rem; cursor: pointer;}
+.memu.self li.current{
+	background-image: url(../images/active-ico.png);
+	background-repeat: no-repeat;
+	background-position: 10.5rem center;
+	background-size: 1.2rem 0.9rem;
+	cursor: pointer;
+}
+
+/*.memu-con{width:100%;position: fixed;top:4.4rem;background: white;display: none;min-height: 21.6rem;max-height: 25rem;overflow-y:auto; }*/
+
+/*.memu-con p.tip{text-align: center;padding:1rem 0;}*/
+/*.memu-con li{ width:100%;height: 3.5rem;line-height: 3.5rem;text-align: center;border-bottom: 0.1rem solid #F1F1F1;}*/
+
+.menu2-left,.menu2-right{
+	width: 50%;
+	box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	float: left;
+	height: 100%;
+	padding-bottom: 100rem;
+	margin-bottom: -100rem;
+
+}
+.menu2-left{background: #F7F7F7;}
+.menu2-left p{ width:100%;height: 3.6rem;line-height: 3.5rem;text-align: center;}
+.menu2-left p.current{background: white;}
+
+.menu2-right .rightul{display: none;}
+
+.nowrap {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	word-wrap: normal;
+}
+
+/*组卷样式*/
+.PaperLoadLayout {
+	position: absolute;
+	z-index: 2000;
+	background: rgba(0,0,0,0.5);
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: none;
+}
+
+.PaperLoadLayoutContainer {
+	position: absolute;
+	z-index: 2001;
+	background: #fff;
+	top: 30%;
+	left: 3rem;
+	border-radius: 0.4rem;
+	font-size: 1.4rem;
+	width: 30rem;
+	display: none;
+}
+
+.paperbody_bq .paperbody_question .questionloading {
+	width:100%; height:100%; background: rgba(0,0,0,0.5); position:absolute; left:0; top:0;
+	text-align:center;
+	color: #fff;
+	font-size: 1.4rem;
+	z-index: 3;
+}
+/***************************** 全局浮动层样式 ************************************************/
+#globallayoutbg {
+	position:absolute;
+	width:100%;
+	z-index:10000;
+	height:100%;
+	background:#000;
+	filter:alpha(opacity=30);
+	opacity:0.3;
+	top:0;
+	color：#333;
+}
+#globallayout {
+	z-index:10001;
+	position:absolute;
+	width:280px;
+	border:1px solid #ccc;
+	-moz-border-radius:4px;
+	-webkit-border-radius:4px;
+	border-radius:4px;
+	margin-left:auto;
+	margin-right:auto;
+	background:#fff;
+	overflow:hidden;
+}
+#globallayout .globallayout_title {
+	padding-top:8px;
+	padding-left:15px;
+	font-size:16px;
+	height:32px;
+	font-weight:bold;
+	background:#efefef;
+	border-bottom:1px solid #ccc;
+	-moz-border-radius:4px;
+	-webkit-border-radius:4px;
+	border-radius:4px;
+	border-bottom-left-radius:0;
+	border-bottom-right-radius:0;
+	color:#000;
+}
+#globallayout .globallayout_title h1 {
+	font-size:16px;
+}
+#globallayout .globallayout_title span {
+	float:right;
+	cursor:pointer;
+	margin-right:10px;
+}
+#globallayout .globallayout_title span:hover {
+	color:#f00;
+}
+#globallayout .globallayout_content {
+	padding:15px;
+	background:#fff;
+}
+#globallayout .ajax {
+	padding-left:20px;
+}
+#globallayout .ok {
+	padding-left:20px;
+}
+#globallayout .error {
+	padding-left:20px;
+}
+#globallayout .info {
+	padding-left:20px;
+}
+#globallayout .globallayout_content .skin li {
+	width:125px;
+	float:left;
+	margin-right:15px;
+	position:relative;
+	margin-bottom:10px;
+	cursor:pointer;
+}
+#globallayout .globallayout_content .skin li span.active {
+	/*background-size:21px 21px;*/
+	/*height:21px;*/
+	/*width:21px;*/
+	/*right:10px;*/
+	/*bottom:22px;*/
+	/*position:absolute;*/
+	/*z-index:2;*/
+}
+#globallayout .globallayout_footer {
+	clear:both;
+	text-align:right;
+	padding-top:10px;
+	padding-bottom:10px;
+}
+#globallayout .globallayout_footer button {
+	margin-right:10px;
+}
+
+.operationcotainer{
+	position: relative;
+	width: 100%;
+	height: 2.5rem;
+	line-height: 2.5rem;
+	padding-bottom: 2rem;
+}
+/*.questionmenu{*/
+	/*position: absolute;*/
+	/*background: #515151;*/
+	/*height: 2.4rem;*/
+	/*overflow: hidden;*/
+	/*width: 29rem;*/
+	/*display: none;*/
+	/*z-index: 2;*/
+	/*border-radius: 0.5rem;*/
+	/*right: 2.6rem;*/
+	/*top: 0.6rem;*/
+/*}*/
+/*.questionmenu span{*/
+	/*display: inline-block;*/
+	/*width: 25%;*/
+	/*height: 2.4rem;*/
+	/*line-height: 2.4rem;*/
+	/*text-align: center;*/
+	/*color: #fff;*/
+	/*font-size: 1.4rem;*/
+	/*border-right: 1px solid #333333;*/
+	/*margin-right: -1px;*/
+/*}*/
+.icowarp{position: relative;height: 4rem;}
+.ico{display: block;width: 2.3rem;height: 1.8rem;background:url(../images/new-ico.png) no-repeat; position: absolute; background-size:100%; right:0;top:1rem;}
+.ico:active{opacity: 0.6;}
+
+.btn {
+	height: 30px;
+	line-height: 30px;
+	display: inline-block;
+	background: #e45c40;
+	color: #fff;
+	text-align: center;
+	border-radius: 2px;
+	padding: 2px 6px;
+	border: none;
+}
+
+/*拍照上传答案*/
+.addphoto ul li{width: 8rem; height: 6rem; background-image: url("../images/addphoto.jpg"); background-size: 8rem 6rem; margin: 0.6rem 1rem 0 0; float: left; position: relative;}
+.addphoto ul li span{position: absolute; width: 2rem; height: 2rem; background-image: url("../images/i_del.png"); background-size: 2rem 2rem; display: inline-block; right: -0.5rem; top: -0.5rem; text-align: center; line-height: 2rem; font-size: 1.2rem;}
+.addphoto ul li img{width: 8rem; height: 6rem;}
+.subquestion .replycontainer .replyinfo{height: auto !important; overflow: hidden;}
+.addphoto ul li p.imgloadding{width: 8rem; height: 6rem; background-image: url("../images/loadding.gif"); background-size: 2rem 2rem; background-color: rgba(0,0,0,0.4); background-repeat: no-repeat; background-position: center;}
+
+
+/*改为蓝色背景*/
+.questionmenu a{background-color: #2591eb !important;}
+.examlayoutbox .examlayoutbox_title{background-color: #2591eb !important;}
+
+/*拍照、录音、文本输入*/
+/*.radiophoto{margin: 26px 30px 12px;}*/
+.radiophoto{margin: 26px 30px 12px;}
+.radiophoto p{max-width: 26rem; min-height: 14px; padding: 8px; color: #333; font-size: 14px; line-height: 14px; position: relative; background: #82db70; border-radius: 4px; -webkit-border-radius: 4px; display: inline-block; margin-bottom: 26px;  word-wrap: break-word;}
+.radiophoto p i{display: inline-block; position: absolute;}
+.radiophoto p span{display: inline-block; position: absolute;}
+.radiophoto p i.del{width: 24px; height: 24px; background-image: url("../images/i_del.png"); background-size: 24px 24px; top: -16px; right: -20px;}
+.radiophoto p i.del:active{opacity: 0.6;}
+.radiophoto p.voice{width: 100px;}
+.radiophoto span{display: inline-block;}
+.radiophoto span.voicestop{cursor: pointer; width: 100%; height: 90%;}
+.radiophoto span.voiceplay{cursor: pointer; width: 100%; height: 90%;}
+.radiophoto span.voicestop span{width: 14px; height: 14px; background-image: url("../images/voicestop.png"); background-size: 14px 14px;}
+.radiophoto span.voiceplay span{width: 14px; height: 14px; background-image: url("../images/voiceplay.gif"); background-size: 14px 14px;}
+.radiophoto p.voice i.voicetime{right: 8px; color: #fff; font-size: 12px; font-weight: 100; padding-right: 4px;}
+
+.radiophoto div.gooddiv{margin-bottom: 18px;}
+.radiophoto span.good{display: inline-block; width: 24px; height: 23px; background-image: url("../images/icon_good.png"); background-size: 24px 23px;}
+
+/*组卷标题样式*/
+.examengine .examheader h1{border: 1px dashed #ddd; width: 18rem; font-weight: 200 !important; text-align: left !important; padding-left: 36px; font-size: 16px !important; background-image: url("../images/edit_title.png"); background-size: 20px 18px; background-position: 7px; background-repeat: no-repeat; color: #666; margin: 0 !important; padding-top: 0 !important; margin-top: 20px !important; padding-bottom: 0 !important; display: inline-block; height: 30px; overflow: hidden; white-space: normal; text-overflow: ellipsis;}
+.examengine .examheader h1 input{border: none !important; text-align: left !important; padding-left: 0px; font-weight: 200 !important; font-size: 16px !important; width: 200px; outline:0px;}
+
+/*限制图片最宽为26rem*/
+.subquestion{overflow-x: hidden;}
+.subquestion img{max-width: 26rem;}
+
+/*loadding*/
+.loadding{width: 20px; height: 20px; display: inline-block; background-image: url("../images/loadding.gif"); background-size: 20px 20px; position: absolute; top: 180px; left: 50%; margin-left: -10px;}
+
+/*按钮颜色，修改插件默认*/
+.ui-body-c .ui-link{color: #fff !important;}
+
+/*做作业倒计时*/
+.examtime_text{text-align: center; font-size: 14px; color: #666;}
+
+/*试卷标题左移20px*/
+.examengine .examheader h1{margin-left: 0px !important;}
+
+/*批阅试卷时图片显示*/
+.analyse .analysebox img{max-width: 100%; height: auto !important;}
+
+/*为了移动端试题解析、评分等不换行*/
+.examengine .equestion .subquestion .analyse .analysebox div{width: 60% !important;}
+
