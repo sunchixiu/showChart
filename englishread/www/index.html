@@ -93,7 +93,8 @@
 <body>
 	<!--<input type="button" onclick="gohtmlback();" value="返回" style="position: fixed; z-index: 10">-->
 	<div id="home" class="page in">
-		<div class="nodata" v-if="nodata"></div>
+		<div class="loading" v-if="loading"></div>
+		<div class="nodata" v-else-if="nodata"></div>
 		<div v-else="nodata">
 			<div class="swiper-container">
 				<div class="swiper-wrapper">

@@ -700,6 +700,7 @@
                     var oDivnext;
                     var oDivprev;
                     var isprevnext = false;
+                    var testtop = $(examengine.htmlcontainerid).offset().top;
 
                     if(examengine.status == 'view' && examengine.useridentity == 'student'){
                         var errornum = $('.subquestion[data-isright="0"]').length;
@@ -798,7 +799,6 @@
                         var tX = 0;
                         var tY = 0;
                         var istouch = false;
-                        var testtop = $(examengine.htmlcontainerid).offset().top;
                         function fnStart(ev){
                             if(!istouch){
                                 if($('.subquestion').eq(examengine.singleindex).find('input:focus').length > 0){
@@ -811,7 +811,8 @@
                                 var oldtY = oDiv.offsetTop;
                                 istouch = true;
                                 function fnMove(ev){
-                                    if(winheight != curwinheight){
+                                    if(winheight > curwinheight + 100){
+                                        fnEnd();
                                         return;
                                     };
                                     tX = ev.targetTouches[0].clientX - disX;

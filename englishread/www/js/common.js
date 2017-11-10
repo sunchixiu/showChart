@@ -7,6 +7,7 @@ document.documentElement.style.fontSize=document.documentElement.clientWidth/36+
 var indexvue = new Vue({
     el: '#home',
     data: {
+        loading: true,
         nodata: false,
         usertype: usertype,
         teacherid: '',
