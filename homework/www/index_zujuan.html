@@ -34,6 +34,7 @@
 			setTimeout(function(){
 				var json = examengine.getexamjson();
 				var subquestionnum = $('.subquestion').length;
+				alert(subquestionnum);
 				json.numbers = subquestionnum;
 				examengine.layout.close();
 				console.log(JSON.stringify(json));

@@ -1,8 +1,8 @@
 //全局变量
 var datajson;
-function getdata(subjectid){
+function getdata(subjectid,zjtype){
     var subjectid = parseInt(subjectid);
-    var chaptertype = "1";		//1:章节，2:知识点
+    var chaptertype = zjtype;		//1:章节，2:知识点
     var allgradejson = {};
     allgradejson.chaptertype = chaptertype;
     allgradejson.chapterlist = [];
@@ -43,7 +43,6 @@ function getdata(subjectid){
     allgradejson.chapterlist.push(primaryschool);
     allgradejson.chapterlist.push(middleschool);
     allgradejson.chapterlist.push(highschool);
-    console.log(JSON.stringify(allgradejson));
     $.ajax({
         url: resourceurl + '/common/assmbly_rolequerychapter',
         data: JSON.stringify(allgradejson),
@@ -52,7 +51,11 @@ function getdata(subjectid){
         success: function(data){
             if(data.code){
                 datajson = data.data;
-                getgrade(datajson);
+                if(chaptertype == '1'){
+                    getgrade(datajson);
+                }else if(chaptertype == '2'){
+                    getknowladgepoint(datajson);
+                };
             }else{
                 alert('目录：'+data.errorMessage);
             };
@@ -60,36 +63,37 @@ function getdata(subjectid){
     });
 };
 
-    function getgrade(dataarr){
-        $('#gradeid').html('');
-        var lihtml = '';
-        for(var i=0; i<dataarr.length; i++){
-            //$('.menu2-left').append('<p>'+dataarr[i].nodename+'</p>');
-            if(dataarr[i].children.length > 0){
-                for(var j=0; j<dataarr[i].children.length; j++){
-                    if(dataarr[i].children[j].intid == gradenum){
-                        var tempjson = dataarr[i].children[j].children;
-                        getsubject(tempjson);
-                        $('#memu-class label').html(dataarr[i].children[j].nodename);
-                    };
-                    lihtml += '<li data-intid="'+dataarr[i].children[j].intid+'">'+dataarr[i].children[j].nodename+'</li>';
+//按章节开始
+function getgrade(dataarr){
+    $('#gradeid').html('');
+    var lihtml = '';
+    for(var i=0; i<dataarr.length; i++){
+        //$('.menu2-left').append('<p>'+dataarr[i].nodename+'</p>');
+        if(dataarr[i].children.length > 0){
+            for(var j=0; j<dataarr[i].children.length; j++){
+                if(dataarr[i].children[j].intid == gradenum){
+                    var tempjson = dataarr[i].children[j].children;
+                    getsubject(tempjson);
+                    $('#memu-class label').html(dataarr[i].children[j].nodename);
+                };
+                lihtml += '<li data-intid="'+dataarr[i].children[j].intid+'">'+dataarr[i].children[j].nodename+'</li>';
+            };
+        };
+    };
+    $('#gradeid').append(lihtml);
+
+    $('#gradeid').find('li').bind('click',function(){
+        $('#memu-class label').html($(this).html());
+        for(var i = 0; i<dataarr.length; i++){
+            for(var j=0; j<dataarr[i].children.length; j++){
+                if (dataarr[i].children[j].intid == $(this).attr("data-intid")){
+                    var tempjson = dataarr[i].children[j].children;
+                    getsubject(tempjson);
                 };
             };
         };
-        $('#gradeid').append(lihtml);
-
-        $('#gradeid').find('li').bind('click',function(){
-            $('#memu-class label').html($(this).html());
-            for(var i = 0; i<dataarr.length; i++){
-                for(var j=0; j<dataarr[i].children.length; j++){
-                    if (dataarr[i].children[j].intid == $(this).attr("data-intid")){
-                        var tempjson = dataarr[i].children[j].children;
-                        getsubject(tempjson);
-                    };
-                };
-            };
-        });
-    };
+    });
+};
 
 function getsubject(dataarr){
     if(dataarr == ''){
@@ -123,13 +127,13 @@ function getvertion(dataarr){
         $('#memu-edition label').html($(this).html());
         var tempjson = [];
         var nodeid = $(this).attr("data-nodeid");
-        getupdown(nodeid);
+        getupdown(nodeid,'1');
     });
     $('#versionid').find('li').eq(0).click();
 };
 
-function getupdown(nodeid){
-    var nodetype = '1';
+function getupdown(nodeid,zjtype){
+    var nodetype = zjtype;
     $.ajax({
         url: resourceurl + '/common/assmbly_chapterquery',
         data: JSON.stringify({
@@ -155,11 +159,6 @@ function getunit(dataarr){
             lihtml += '<li><a href="#" class="inactive" data-childs="'+dataarr[i].haschild+'" data-nodeid="'+dataarr[i].nodeid+'">'+dataarr[i].nodename+'</a><ul></ul></li>';
         };
         $('.yiji').html(lihtml);
-        //$('.yiji li a').bind('click',function(){
-        //    var nodeid = $(this).attr('data-nodeid');
-        //    var nodetype = '1';
-        //    getpoint(nodeid, nodetype);
-        //});
         $('.yiji li a').eq(0).click();
     };
 };
@@ -180,13 +179,12 @@ function getpoint(nodeid, nodetype){
                     var json = data.data;
                     for(var i=0; i<json.length; i++){
                         if(json[i].haschild == 0){
-                            lihtml += '<li class="three"><a class="pitch" href="#" data-nodeid="'+json[i].nodeid+'"><i></i>'+json[i].nodename+'</a></li>';
+                            lihtml += '<li class="three"><a class="pitch" href="#" data-nodeid="'+json[i].nodeid+'">'+json[i].nodename+'</a></li>';
                         }else{
-                            lihtml += '<li><a class="inactive" href="#" data-nodeid="'+json[i].nodeid+'"><i></i>'+json[i].nodename+'</a></li>';
+                            lihtml += '<li><a class="inactive" href="#" data-nodeid="'+json[i].nodeid+'">'+json[i].nodename+'</a><ul></ul></li>';
                         };
                     };
                     $('a[data-nodeid="'+nodeid+'"]').next('ul').html(lihtml);
-
                 };
                 if($('.pitch-on').length == 0){
                     $('.type-quantity').find('ul').html('');
@@ -195,6 +193,26 @@ function getpoint(nodeid, nodetype){
         });
     };
 };
+//按章节结束
+
+//按知识点开始
+function getknowladgepoint(dataarr){
+    var sectionid = 0;
+    if(gradenum >= 1 && gradenum <= 6){
+        sectionid = 17;
+    }else if(gradenum >= 7 && gradenum <= 9){
+        sectionid = 31;
+    }else{
+        sectionid = 72;
+    };
+    for(var i=0; i<dataarr.length; i++){
+        if(sectionid == parseInt(dataarr[i].intid)){
+            var nodeid = dataarr[i].children[0].nodeid;
+            getupdown(nodeid,'1');
+        };
+    };
+};
+//按知识点结束
 
 $(document).delegate('.yiji li a.inactive','click',function(){
     var nodeid = $(this).attr('data-nodeid');
@@ -223,7 +241,6 @@ function gettesttype(pointarr){
         contentType: "application/json; charset=utf-8",
         success: function(data){
             if(data.code){
-                var html = "";
                 var _arrjson = ["选择", "单选", "单项选择", "多选", "多项选择", "不定项选择", "判断题","填空"];
                 var _tempdata = [];
                 $.each(_arrjson, function (i, item) {
@@ -301,6 +318,7 @@ function gettesttype(pointarr){
                     };
                 });
             };
+
         }
     });
 };
@@ -314,15 +332,19 @@ function getexampaper(){
     if (ids.length == 0) {
         examengine.layout.alert("提示","没有选择章节！");
         return;
-    }
-    $("#questiontype").find("li").each(function () {
+    };
+    $(".type-quantity").find("li").each(function () {
         //题型设置为0，不出题
-        if ($(this).find("font").html() != "0") {
-            if (model != "") {
-                model = model + ",";
-            };
-            model = model + "{\"QuestionType\":\"" + $(this).find('label').attr("data-id") + "\",\"QuestionCount\":" + $(this).find("font").html() + ",\"SubQuestionCount\":0,\"PointIDs\": []}";
-        };
+		if ($(this).find("font").length==1)
+		{
+		
+		   if ($(this).find("font").html() != "0") {
+				if (model != "") {
+					model = model + ",";
+				};
+				model = model + "{\"QuestionType\":\"" + $(this).find('label').attr("data-id") + "\",\"QuestionCount\":" + $(this).find("font").html() + ",\"SubQuestionCount\":0,\"PointIDs\": []}";
+			};
+		}
     });
     if (model=="") {
         examengine.layout.alert("提示", "没有选择题型！");
@@ -330,21 +352,14 @@ function getexampaper(){
     }
     var _chapters=ids.join(",").replace(/,/g, "\",\"");
     var _points="";
-
-    var _isObjective=2;
-    if($("#chkkeguan").is(":checked"))
-    {
-        _isObjective=1;
-    }
-
-    var examdate = new Date();
-    var testyear = examdate.getFullYear().toString();
-    var testmonth = (examdate.getMonth() + 1).toString();
-    var testdate = examdate.getDate().toString();
-    var testhour = examdate.getHours() < 10 ? "0" + examdate.getHours().toString() : examdate.getHours().toString();
-    var testminute = examdate.getMinutes() < 10 ? "0" + examdate.getMinutes().toString() : examdate.getMinutes().toString();
-    var testtitle = testyear + testmonth + testdate +'-'+ testhour +':'+ testminute;
-    var examjson = "\"Title\":\"" + testtitle + "\",\"CourseID\":\"" + subjectid + "\",\"Chapters\": [\"" + _chapters + "\"], \"PointIDs\": [],\"ExamModelQuestions\": [" + model + "]";
+	var _isObjective=2;
+		//if($("#chkkeguan").is(":checked"))
+		//{
+		//    _isObjective=1;
+		//}
+    var examjson = "\"Title\":\"" + $("#testName").val() + "\",\"CourseID\":\"" + subjectid + "\","+
+		"\"IsObjective\":"+_isObjective+",\"Chapters\": [\"" + _chapters + "\"], \"PointIDs\": [],\"ExamModelQuestions\": [" + model + "]";
+     // alert(examjson);
     intelligent(eval("({" + examjson + "})"));
 
 };
@@ -376,6 +391,7 @@ function intelligent (exammodeljson) {
     $("#PaperLoadLayoutContainer").css("top", top + "px");
 
     $("#PaperLoadLayoutContainer").css("left", ($(document).width() / 2 - $("#PaperLoadLayoutContainer").width() / 2) + "px");
+
     $.ajax({
         type: "POST",
         url: testurl+"/Home/Interface/ajax_testpaper", data: exammodeljson, dataType: "json",
@@ -395,8 +411,8 @@ function intelligent (exammodeljson) {
                     examengine.isdisplayanswersheet = false;    //不显示答题卡
                     examengine.ischangequestion = true;         //设置可以换题
                     examengine.init(json.Data);
-                    turnSencondpage();  //组卷成功，跳转页面
-                    //setClick("保存","试卷预览");
+                    turnThirdpage();  //组卷成功，跳转页面
+                    setClick("保存","试卷预览");
                 }
                 else {
                     ischool.layout.error(json.Message);
@@ -405,9 +421,9 @@ function intelligent (exammodeljson) {
                 }
             }
         }, error: function () {
-            ischool.layout.error("服务器异常")
+            ischool.layout.error("服务器异常");
             $("#PaperLoadLayout").hide();
             $("#PaperLoadLayoutContainer").hide();
         }
     });
-};
+}

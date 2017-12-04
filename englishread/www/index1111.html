@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <title>点读</title>
+    <link rel="stylesheet" href="css/css.css">
+    <link rel="stylesheet" href="css/mobilebone.css">
+	<script src="../cordova.js"></script>
+    <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="js/jquery.jplayer.min.js"></script>
+    <script type="text/javascript" src="js/mobilebone.js"></script>
+	<script src="js/vue.js"></script>
+    <link rel="stylesheet" href="css/idangerous.swiper.css">
+	<script src="js/idangerous.swiper.min.js"></script>
+	<script>
+//		var urlapi = 'http://182.48.117.90:70';
+//		var userId = 'cd87bc381b9e466599f9199c6d08e0cf';
+//		var eurl = 'http://182.48.115.253:8082';
+//		var IINum = '89900000660';
+//		var usertype = 'teacher';
+
+		var urlapi = '182.48.117.90:70';
+		var userId = 'f5b39a046e1049f2923c801dd836f6ff';
+		var eurl = 'http://182.48.115.253:8082';
+		var IINum = '89910001176';
+		var usertype = 'student';
+
+		//获取地址栏参数
+		$.getUrlParam = function (name) {
+			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+			var r = window.location.search.substr(1).match(reg);
+			if (r != null) return unescape(r[2]);
+			return null;
+		};
+		if ($.getUrlParam('urlapi')) {
+			urlapi = $.getUrlParam('urlapi');
+		};
+		if ($.getUrlParam('userId')) {
+			userId = $.getUrlParam('userId');
+		};
+		if ($.getUrlParam('IINum')) {
+			IINum = $.getUrlParam('IINum');
+		};
+		if ($.getUrlParam('urlapi')) {
+			usertype = $.getUrlParam('usertype');
+		};
+
+		if(urlapi.indexOf('http') == -1){
+			urlapi = 'http://' + urlapi;
+		};
+
+		//设置title
+		function setTitle(title) {
+			try {
+				if (cordova == null || cordova.plugins == null || cordova.plugins.traceclass == null) {
+					document.addEventListener('deviceready', function () {
+						cordova.plugins.traceclass.setenglishTitle(function success(arg) {
+						}, function error(arg) {
+						}, [title]);
+
+					}, false);
+				} else {
+					cordova.plugins.traceclass.setenglishTitle(function success(arg) {
+					}, function error(arg) {
+					}, [title]);
+				}
+			}catch (e) {
+
+			};
+		};
+
+		function destroyenglish(state) {
+			try {
+				if (cordova == null || cordova.plugins == null || cordova.plugins.traceclass == null) {
+					document.addEventListener('deviceready', function () {
+						cordova.plugins.traceclass.english_finish(function success(arg) {
+						}, function error(arg) {
+						}, [state]);
+
+					}, false);
+				} else {
+					cordova.plugins.traceclass.english_finish(function success(arg) {
+					}, function error(arg) {
+					}, [state]);
+				}
+			}catch (e) {
+
+			};
+		};
+	</script>
+</head>
+<body>
+	<!--<input type="button" onclick="gohtmlback();" value="返回" style="position: fixed; z-index: 10">-->
+	<div id="home" class="page in">
+		<div class="loading" v-if="loading"></div>
+		<div class="nodata" v-else-if="nodata"></div>
+		<div v-else="nodata">
+			<div class="swiper-container">
+				<div class="swiper-wrapper">
+					<div class="headWrapper swiper-slide" v-for="book in bookarr">
+						<img src="images/wrapper.png">
+						<div class="info">
+							<p><label v-if="book.gradetype == 1">小学</label><label v-if="book.gradetype == 2">初中</label><label v-if="book.gradetype == 3">高中</label><label v-html="book.gradename"></label>（<label v-if="book.termtype == 10">上</label><label v-if="book.termtype == 20">下</label>）</p>
+							<p v-html="book.versionname"></p>
+						</div>
+					</div>
+				</div>
+				<div class="pagination"></div>
+			</div>
+			<ul class="list">
+				<li v-for="unit in unitarr">
+					<a href="javascript:;" v-if="unit.unitid != '88'" class="inactive" v-html="'Unit' + unit.unitid" :data-unitid="unit.unitid"></a>
+					<a href="javascript:;" v-else="unit.unitid != '88'" class="inactive" v-html="'假期作业'" :data-unitid="unit.unitid"></a>
+					<ul style="display: none">
+						<p v-if="!classhourdata[unit.unitid]">loading...</p>
+						<li v-for="classhour in classhourdata[unit.unitid]" @click="getewordtext(unit.unitid, classhour.pointid, classhour.pointname, classhour.linktype)"><a class="pitch nowrap" href="javascript:;"><label v-html="classhour.pointname"></label></a></li>
+						<!--<li><a class="pitch" href="#section">第一节生物与环境组成生态系统</a></li>-->
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div id="section" class="page out">
+		<div class="nodata" v-if="nodata"></div>
+		<div v-else="nodata">
+			<div class="content">
+				<div class="wordtextdiv">
+					<div v-if="wordloading" class="eloading"></div>
+					<div v-else="wordloading">
+						<p class="form">单词</p>
+						<ul class="formList">
+							<li class="readlist" v-for="word in wordarr" :id="word.guid" data-type="word" onclick="wordplay($(this).attr('id'));"><a href="javascript:;" v-html="word.DcName"></a></li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="wordtextdiv">
+					<div v-if="textloading" class="eloading"></div>
+					<div v-else="textloading">
+						<p class="form">句子</p>
+						<ul class="formList">
+							<li class="readlist" v-for="text in textarr" :id="text.GUID" data-type="text" :data-speed="text.List[0].Speed" :data-voice="text.List[0].VoiceName" onclick="wordplay($(this).attr('id'));"><a href="javascript:;" v-html="text.English"></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="bottom">
+				<a class="goon" href="javascript:;">连续</a>
+				<a href="javascript:gohtmlback();">课程结束</a>
+			</div>
+		</div>
+
+	</div>
+	<div id="jplayMP3"></div>
+
+	<script src="http://center.iischool.com/mobileapp/englishread/js/common.js"></script>
+	<script type="text/javascript">
+		$(document).delegate('.inactive','click',function(){
+			if($(this).siblings('ul').css('display')=='none'){
+				$(this).parent("li").siblings('li').children('ul').slideUp(100).children('li');
+				$(this).siblings('ul').slideDown(100).children('li');
+				if($(this).siblings('ul').find('li').length == 0){
+					if(usertype == 'teacher'){
+						indexvue.getteaclasshourdata($(this).attr('data-unitid'));
+					}else if(usertype == 'student'){
+						indexvue.getstuclasshourdata($(this).attr('data-unitid'));
+					};
+				};
+			}else{
+				$(this).siblings('ul').slideUp(100);
+			}
+		});
+
+		$(document).delegate('.bottom .goon','click',function(){
+			if($(this).hasClass('current')){
+				_minglobalstatus = 0;
+				closeplay();
+			}else{
+				_minglobalstatus = 0;
+				closeplay();
+				$(this).addClass('current');
+				var id = $(".readlist").eq(goonindex).attr("id");
+				wordplay(id,true);
+			};
+		});
+	</script>
+</body>
+</html>

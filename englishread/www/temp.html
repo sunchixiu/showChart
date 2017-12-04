@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+    <style>
+        html,body{height: 100%;}
+        *{margin: 0; padding: 0;}
+        .maskdiv{width: 100%; height: 100%; background: rgba(0,0,0,0.4); position: fixed;}
+        .popdiv{width: 200px; height: 200px; position: fixed; margin: auto; left: 0; right: 0; top: 0; bottom: 0; background: #fff; text-align: center; line-height: 200px;}
+    </style>
+</head>
+<body>
+<input type="file" accept="video/mp4">
+<div class="maskdiv">
+    <!--<div class="popdiv">-->
+        <!--弹窗-->
+    <!--</div>-->
+</div>
+<script>
+    $('.maskdiv').click(function(e){
+        if(e.target == e.currentTarget){
+            closepop();
+        };
+    });
+    function closepop(){
+        $('.maskdiv').hide();
+        $('.popdiv').hide();
+    };
+
+    function log(){
+        var arg = Array.prototype.slice.apply(arguments);
+        arg.unshift('app');
+        console.log.apply(log,arg);
+    };
+    //log('ddd','323423423','daasss');
+
+
+    String.prototype.spes = function(){
+        return this.replace(' ','').split('').join(' ');
+    };
+    var str = 'hello world!';
+    console.log(str.spes());
+
+    var xiaowang = {
+        name: '小王',
+        say: function(){
+            alert('我的名字是：'+this.name);
+        }
+    };
+    var xiaohong = {
+        name: '小红'
+    };
+    //xiaowang.say.call(xiaohong);
+
+    var module = {
+        exports: {}
+    };
+
+    (function(module, exports) {
+        exports.multiply = function (n) { return n * 100 };
+    }(module, module.exports));
+
+    var f = module.exports.multiply;
+    //alert(f(5)); // 5000
+</script>
+</body>
+</html>

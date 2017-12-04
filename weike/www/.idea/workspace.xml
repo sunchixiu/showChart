@@ -28,12 +28,24 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.73386186" vertical-offset="3240" max-vertical-offset="15984">
-              <caret line="141" column="25" selection-start-line="141" selection-start-column="25" selection-end-line="143" selection-end-column="25" />
+            <state vertical-scroll-proportion="0.4912075" vertical-offset="4738" max-vertical-offset="13689">
+              <caret line="270" column="31" selection-start-line="270" selection-start-column="31" selection-end-line="270" selection-end-column="31" />
               <folding>
-                <marker date="1509072247449" expanded="true" signature="8051:8105" placeholder="..." />
-                <marker date="1509072247449" expanded="true" signature="11218:11272" placeholder="..." />
+                <element signature="e#5935#8450#0" expanded="false" />
+                <element signature="e#8534#9929#0" expanded="false" />
+                <marker date="1511856049122" expanded="true" signature="8119:8173" placeholder="..." />
+                <marker date="1511856049122" expanded="true" signature="11286:11340" placeholder="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index_videoid.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/index_videoid.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-7.5" vertical-offset="648" max-vertical-offset="3537">
+              <caret line="34" column="63" selection-start-line="34" selection-start-column="63" selection-end-line="34" selection-end-column="63" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -100,6 +112,7 @@
         <option value="$USER_HOME$/Desktop/wwwMicroCourse/index.html" />
         <option value="$USER_HOME$/Desktop/wkindex.html" />
         <option value="$PROJECT_DIR$/temp.html" />
+        <option value="$PROJECT_DIR$/index_videoid.html" />
         <option value="$PROJECT_DIR$/index.html" />
       </list>
     </option>
@@ -204,7 +217,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../工作/按项目/励课/课堂表现/课堂报" />
     <property name="recentsLimit" value="5" />
     <property name="options.lastSelected" value="File.Encoding" />
     <property name="options.splitter.main.proportions" value="0.3" />
@@ -216,7 +229,7 @@
       <recent name="F:\sunchi\github\showChart\weike\www" />
     </key>
   </component>
-  <component name="RunManager" selected="JavaScript Debug.temp.html">
+  <component name="RunManager" selected="JavaScript Debug.index_videoid.html">
     <configuration default="false" name="index.html" type="JavascriptDebugType" factoryName="JavaScript Debug" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/www/index.html">
       <RunnerSettings RunnerId="JavascriptDebugRunner" />
       <ConfigurationWrapper RunnerId="JavascriptDebugRunner" />
@@ -228,6 +241,11 @@
       <method />
     </configuration>
     <configuration default="false" name="temp.html" type="JavascriptDebugType" factoryName="JavaScript Debug" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/www/temp.html">
+      <RunnerSettings RunnerId="JavascriptDebugRunner" />
+      <ConfigurationWrapper RunnerId="JavascriptDebugRunner" />
+      <method />
+    </configuration>
+    <configuration default="false" name="index_videoid.html" type="JavascriptDebugType" factoryName="JavaScript Debug" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/www/index_videoid.html">
       <RunnerSettings RunnerId="JavascriptDebugRunner" />
       <ConfigurationWrapper RunnerId="JavascriptDebugRunner" />
       <method />
@@ -257,16 +275,18 @@
       <envs />
       <method />
     </configuration>
-    <list size="3">
+    <list size="4">
       <item index="0" class="java.lang.String" itemvalue="JavaScript Debug.index.html" />
       <item index="1" class="java.lang.String" itemvalue="JavaScript Debug.index.html (1)" />
       <item index="2" class="java.lang.String" itemvalue="JavaScript Debug.temp.html" />
+      <item index="3" class="java.lang.String" itemvalue="JavaScript Debug.index_videoid.html" />
     </list>
     <recent_temporary>
-      <list size="3">
-        <item index="0" class="java.lang.String" itemvalue="JavaScript Debug.temp.html" />
-        <item index="1" class="java.lang.String" itemvalue="JavaScript Debug.index.html" />
-        <item index="2" class="java.lang.String" itemvalue="JavaScript Debug.index.html (1)" />
+      <list size="4">
+        <item index="0" class="java.lang.String" itemvalue="JavaScript Debug.index_videoid.html" />
+        <item index="1" class="java.lang.String" itemvalue="JavaScript Debug.temp.html" />
+        <item index="2" class="java.lang.String" itemvalue="JavaScript Debug.index.html" />
+        <item index="3" class="java.lang.String" itemvalue="JavaScript Debug.index.html (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -331,20 +351,15 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../../video/www/play.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="305" max-vertical-offset="1188">
-          <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="6696">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1509072247449" expanded="true" signature="8051:8105" placeholder="..." />
-            <marker date="1509072247449" expanded="true" signature="11218:11272" placeholder="..." />
+            <element signature="e#5935#8450#0" expanded="false" />
+            <element signature="e#8534#9929#0" expanded="false" />
+            <marker date="1511856049122" expanded="true" signature="8119:8173" placeholder="..." />
+            <marker date="1511856049122" expanded="true" signature="11286:11340" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -396,8 +411,10 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="6696">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1509072247449" expanded="true" signature="8051:8105" placeholder="..." />
-            <marker date="1509072247449" expanded="true" signature="11218:11272" placeholder="..." />
+            <element signature="e#5935#8450#0" expanded="false" />
+            <element signature="e#8534#9929#0" expanded="false" />
+            <marker date="1511856049122" expanded="true" signature="8119:8173" placeholder="..." />
+            <marker date="1511856049122" expanded="true" signature="11286:11340" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -449,8 +466,10 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="513" max-vertical-offset="5238">
           <caret line="19" column="32" selection-start-line="19" selection-start-column="24" selection-end-line="19" selection-end-column="32" />
           <folding>
-            <marker date="1509072247449" expanded="true" signature="8051:8105" placeholder="..." />
-            <marker date="1509072247449" expanded="true" signature="11218:11272" placeholder="..." />
+            <element signature="e#5935#8450#0" expanded="false" />
+            <element signature="e#8534#9929#0" expanded="false" />
+            <marker date="1511856049122" expanded="true" signature="8119:8173" placeholder="..." />
+            <marker date="1511856049122" expanded="true" signature="11286:11340" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -502,8 +521,10 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2133">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1509072247449" expanded="true" signature="8051:8105" placeholder="..." />
-            <marker date="1509072247449" expanded="true" signature="11218:11272" placeholder="..." />
+            <element signature="e#5935#8450#0" expanded="false" />
+            <element signature="e#8534#9929#0" expanded="false" />
+            <marker date="1511856049122" expanded="true" signature="8119:8173" placeholder="..." />
+            <marker date="1511856049122" expanded="true" signature="11286:11340" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -513,8 +534,10 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2133">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1509072247449" expanded="true" signature="8051:8105" placeholder="..." />
-            <marker date="1509072247449" expanded="true" signature="11218:11272" placeholder="..." />
+            <element signature="e#5935#8450#0" expanded="false" />
+            <element signature="e#8534#9929#0" expanded="false" />
+            <marker date="1511856049122" expanded="true" signature="8119:8173" placeholder="..." />
+            <marker date="1511856049122" expanded="true" signature="11286:11340" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -696,13 +719,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/Desktop/wwwMicroCourse/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.0151515" vertical-offset="8653" max-vertical-offset="17847">
-          <caret line="318" column="14" selection-start-line="318" selection-start-column="8" selection-end-line="318" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/temp.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.31034482" vertical-offset="0" max-vertical-offset="2295">
@@ -710,13 +726,31 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/index_videoid.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.5" vertical-offset="648" max-vertical-offset="3537">
+          <caret line="34" column="63" selection-start-line="34" selection-start-column="63" selection-end-line="34" selection-end-column="63" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Desktop/新建文件夹/css/css.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8237214" vertical-offset="1484" max-vertical-offset="2403">
+          <caret line="83" column="1" selection-start-line="13" selection-start-column="0" selection-end-line="83" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.73386186" vertical-offset="3240" max-vertical-offset="15984">
-          <caret line="141" column="25" selection-start-line="141" selection-start-column="25" selection-end-line="143" selection-end-column="25" />
+        <state vertical-scroll-proportion="0.4912075" vertical-offset="4738" max-vertical-offset="13689">
+          <caret line="270" column="31" selection-start-line="270" selection-start-column="31" selection-end-line="270" selection-end-column="31" />
           <folding>
-            <marker date="1509072247449" expanded="true" signature="8051:8105" placeholder="..." />
-            <marker date="1509072247449" expanded="true" signature="11218:11272" placeholder="..." />
+            <element signature="e#5935#8450#0" expanded="false" />
+            <element signature="e#8534#9929#0" expanded="false" />
+            <marker date="1511856049122" expanded="true" signature="8119:8173" placeholder="..." />
+            <marker date="1511856049122" expanded="true" signature="11286:11340" placeholder="..." />
           </folding>
         </state>
       </provider>

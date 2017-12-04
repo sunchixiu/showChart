@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+	<title>Document</title>
+	<link type="text/css" href="css/css.css" rel="stylesheet">
+	<script type="text/javascript" src="../h5common/js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../h5common/js/common.js"></script>
+	<script src="js/base.js"></script>
+	<script>
+		function destroypage(state) {
+			try
+			{
+				if (cordova == null || cordova.plugins == null || cordova.plugins.traceclass == null) {
+					document.addEventListener('deviceready', function () {
+						cordova.plugins.traceclass.page_finish(function success(arg) {
+						}, function error(arg) {
+						}, [state]);
+
+					}, false);
+				} else {
+					cordova.plugins.traceclass.page_finish(function success(arg) {}, function error(arg) {}, [state]);
+				}
+
+			}
+			catch (e)
+			{
+			}
+		};
+		function setpointnameid(id,name) {
+			try
+			{
+				if (cordova == null || cordova.plugins == null || cordova.plugins.traceclass == null) {
+					document.addEventListener('deviceready', function () {
+						cordova.plugins.traceclass.setpointnameid(function success(arg) {
+						}, function error(arg) {
+						}, [id,name]);
+
+					}, false);
+				} else {
+					cordova.plugins.traceclass.setpointnameid(function success(arg) {}, function error(arg) {}, [id,name]);
+				}
+
+			}
+			catch (e)
+			{
+			}
+
+			destroypage(1);
+		};
+	</script>
+	<style>
+		html,body{background: #fff; height: 100%;}
+	</style>
+</head>
+<body>
+	<div class="periphery">
+		<p class="edition nowrap"></p>
+		<div class="left">
+			<!--<p class="active" onclick="selection($(this))"><i></i><span class="nowrap2">第一单元 认识厘米和米认识厘米</span></p>-->
+		</div>
+		<div class="right">
+			<!--<a href="javascript:;" class="nowrap">小数点后面能有几位数值呢几位数值呢</a>-->
+		</div>
+	</div>
+	<script type="text/javascript">
+		//获取地址栏参数
+		$.getUrlParam = function(name){
+			var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");    //正则？？？？！！！
+			var r = window.location.search.substr(1).match(reg);     // substr( ) 抽取字符    match() 匹配
+			if (r!=null) return unescape(r[2]); return null;        //unescape() 函数可对通过 escape() 编码的字符串进行解码。
+		};
+		String.prototype.fullhttp = function(){
+			var str = this;
+			if(this.indexOf('http://') == -1){
+				str = 'http://' + this;
+			};
+			return str;
+		};
+
+		var urlapi = '182.48.115.246:70';
+		var userid = '5416a932a1764db2a325052fc1e3b1c6';
+		var subjectid = '18';
+		var gradenum = '4';
+		var versionid = '28';
+		var termtype = '10';
+
+		if($.getUrlParam('urlapi')){
+			urlapi = $.getUrlParam('urlapi');
+		};
+		urlapi = urlapi.fullhttp();
+
+		if($.getUrlParam('userid')){
+			userid = $.getUrlParam('userid');
+		};
+		if($.getUrlParam('subjectid')){
+			subjectid = $.getUrlParam('subjectid');
+		};
+		if($.getUrlParam('gradenum')){
+			gradenum = $.getUrlParam('gradenum');
+		};
+		if($.getUrlParam('versionid')){
+			versionid = $.getUrlParam('versionid');
+		};
+//		if($.getUrlParam('termtype')){
+//			termtype = $.getUrlParam('termtype');
+//		};
+
+		if(!urlapi || !userid || !subjectid || !gradenum || !versionid){
+			$('.periphery').html('<p style="margin-top: 36px; color: #999; text-align: center;">参数不全</p>');
+		};
+		getbook(userid);
+		function getbook(id){
+			var typeoptions = {"teacherid": id};
+			$.ajax({
+				url: urlapi + '/TSB_ISCHOOL_LCS_SERVER/tchmyroom/getgradecourseunitlist',
+				type: 'post',
+				dataType: 'json',
+				data: JSON.stringify(typeoptions),
+				contentType: "application/json; charset=utf-8",
+            	headers: {"Accept-Language": "zh-CN"},
+				success: function (data) {
+					var jsonarr = data.data.courselist;
+					for(var i=0; i<jsonarr.length; i++){
+						if(subjectid == jsonarr[i].subjectid && gradenum == jsonarr[i].gradenum  && versionid == jsonarr[i].versionid){
+							termtype = jsonarr[i].termtype;
+							var termtypename = '上册';
+							if(termtype == '10'){
+								termtypename = '上册';
+							}else{
+								termtypename = '下册';
+							};
+							$('.edition').html(jsonarr[i].versionname + ' ' + termtypename);
+							if(jsonarr[i].unitlist.length > 0){
+								getunit(jsonarr[i].unitlist);
+							};
+							break;
+						};
+					};
+				},
+				error: function (data) {
+					applayout.layout.alert('提示','网络访问错误！');
+				}
+			});
+		};
+		function getunit(arr){
+			var phtml = '';
+			for(var i=0; i<arr.length; i++){
+				phtml += '<p onclick="getpoint(\''+ arr[i].unitid +'\')"><label><i></i><span class="nowrap2">'+ arr[i].unitname +'</span></label></p>';
+			};
+			$('.left').html(phtml);
+			$('.left p').eq(0).click();
+		};
+		function getpoint(unitid){
+			$('.right').html('<p style="color: #999; text-align: center; margin-top: 32px;">loading...</p>');
+			var lessonoptions = {
+				"teacherid": userid,
+				"subjectid": subjectid,
+				"gradenum": gradenum,
+				"termtype": termtype,
+				"versionid": versionid,
+				"unitid": unitid
+			};
+			$.ajax({
+				url: urlapi + '/TSB_ISCHOOL_LCS_SERVER/tchmyroom/getunitpointlist',
+				type: 'post',
+				dataType: 'json',
+				data: JSON.stringify(lessonoptions),
+				contentType: "application/json; charset=utf-8",
+				success: function (data) {
+					var ahtml = '';
+					for (var i = 0; i < data.data.length; i++) {
+						var pointname = data.data[i].pointname;
+						var pointid = data.data[i].pointid;
+						ahtml += '<a href="javascript:setpointnameid(\''+pointid+'\',\''+pointname+'\');" class="nowrap">'+pointname+'</a>';
+					};
+					$('.right').html(ahtml);
+				},
+				error: function (data) {
+					applayout.layout.alert('提示','网络访问错误！');
+				}
+			});
+		};
+
+		$('.left').delegate('p','click',function(){
+			$(this).addClass('active').siblings().removeClass('active');
+		});
+	</script>
+</body>
+</html>

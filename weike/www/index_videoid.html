@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0"/>
+    <title>书房</title>
+    <link rel="stylesheet" href="css/mobilebone.css">
+    <link rel="stylesheet" href="css/css.css">
+    <script src="cordova.js"></script>
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/iscroll4.js"></script>
+    <script src="js/every.js"></script>
+    <script src="js/h5connect.js"></script>
+    <script src="http://resource.bcevod.com/player/cyberplayer.js"></script>
+    <style>
+        video::-internal-media-controls-download-button {display:none;}
+        video::-webkit-media-controls-enclosure {overflow:hidden;}
+        video::-webkit-media-controls-panel {width: calc(100% + 30px);}
+    </style>
+</head>
+<body style="background: #efeff4;">
+
+<div class="page out" id="pageHome">
+    <div class="vedio" id="id_video_container"></div>
+</div>
+
+
+<script src="js/mobilebone.js"></script>
+
+<!--测试书皮接口-->
+<script>
+    //获取地址栏参数
+    $.getUrlParam = function (name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    };
+
+
+    var txid = '';
+    var fileurl = 'http://givg84qrnwrgnqkxcab.exp.bcevod.com/mda-gjkthk4k1whvjaat/mda-gjkthk4k1whvjaat.m3u8';
+    if ($.getUrlParam('txid')) {
+        txid = $.getUrlParam('txid');
+    };
+    if ($.getUrlParam('fileurl')) {
+        fileurl = $.getUrlParam('fileurl');
+    };
+
+    var player;
+</script>
+<script>
+
+player = null;
+$('#id_video_container').html('');
+
+
+//获取视频音频播放
+
+if(txid != ''){
+    var option = {
+        "width": "800",
+        "height": "600",
+        "auto_play": "1",
+        "file_id": txid,
+        "app_id": "1251972963",
+        "disable_full_screen": 0,
+        "stretch_full": 1,
+        "hide_h5_setting": true
+    };
+    player = new qcVideo.Player("id_video_container", option);
+}else if(fileurl != ''){
+    var option = {
+        width: 800,
+        height: 600,
+        file: fileurl,
+        image: "",
+        autostart: true,
+        stretching: "uniform",
+        repeat: false,
+        volume: 100,
+        controls: true,
+        ak: '34f319b1f2424ca1ad0db966e1ad2bec'
+    };
+    player = new cyberplayer("id_video_container").setup(option);
+};
+
+</script>
+<script>
+
+    function setTitle(title, state) {
+        try {
+            if (cordova == null || cordova.plugins == null || cordova.plugins.traceclass == null) {
+                document.addEventListener('deviceready', function () {
+                    cordova.plugins.traceclass.setTitle(function success(arg) {
+                    }, function error(arg) {
+                    }, [title,state]);
+
+                }, false);
+            } else {
+                cordova.plugins.traceclass.setTitle(function success(arg) {
+                }, function error(arg) {
+                }, [title,state]);
+            }
+
+        }
+        catch (e) {
+        }
+
+    };
+
+function pause() {
+    player.pause();
+};
+
+document.addEventListener("backbutton", onBackKeyDown, false);
+function onBackKeyDown() {
+setTitle("", "1");
+pause();
+};
+
+</script>
+</body>
+</html>
