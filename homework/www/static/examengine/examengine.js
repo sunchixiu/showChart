@@ -340,13 +340,12 @@
             {
                 $("#examlayoutbox").css("position", "absolute");
             }
-            $("#examlayoutbox").css("left", ($("body").width() - $("#examlayoutbox").width() - 10) / 2);
-            $("#examlayoutbox").css("top", (($("body").height() - ($("#examlayoutbox").height()))/2 - 20));
+            $("#examlayoutbox").css({"left": "50%", "margin-left": -(($("#examlayoutbox").width() + 20) / 2) + 'px'});
+            $("#examlayoutbox").css({"top": "50%", "margin-top": -($("#examlayoutbox").height() / 2 + 20) + 'px'});
             $("#examlayoutbg").css("height", $("body").height());
            
             $("#examlayoutbox").css("display", "block");
             $("#examlayoutbg").css("display", "block");
-           
         
         },
         loadding:function(content)
@@ -602,7 +601,7 @@
         };
         examengine.bindevent();
         //设置滚动条事件
-       
+		
     },
     getanswersheet: function () {
        // console.log()
@@ -679,7 +678,6 @@
         return html;
     },
     bindevent: function () {
-        
         if (examengine.issingledisplay) {
                     var u = navigator.userAgent;
                     var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
@@ -742,7 +740,7 @@
                             showhideradio(ifradio, examengine.singleindex);
                         };
 
-                        $('body').css({'overflow': 'hidden','position':'fixed','width':'100%','height':'100%'});
+                        $('body').css({'overflow': 'hidden','position':'fixed','width':'100%','height':'100%','top':0,'left':0});
                         $('html').css({'overflow': 'hidden','position':'fixed','width':'100%'});
 
                         $('.subquestion').eq(examengine.singleindex).css('margin-left','0');

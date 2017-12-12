@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <title></title>
+    <link rel="stylesheet" href="../../../h5common/css/appglobal.css">
+    <script type="text/javascript" src="../../../h5common/js/jquery-1.11.1.min.js"></script>
+    <script src="../../../h5common/js/common.js"></script>
+    <script src="js/base.js"></script>
+    <script>
+        var apptemplayout = new appfnlayout();
+    </script>
+</head>
+<body>
+<input type="button" value="alert" onclick="apptemplayout.alert('提示','alert');">
+<input type="button" value="confirm" onclick="apptemplayout.confirm('提示','confirm',function(){alert('是');});">
+<input type="button" value="loading" onclick="apptemplayout.loadding('正在loadding...');">
+<input type="button" value="success" onclick="apptemplayout.success('成功！');">
+<input type="button" value="error" onclick="apptemplayout.error('失败！');">
+</body>
+</html>

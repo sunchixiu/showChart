@@ -1,4 +1,5 @@
-﻿.examengine {
+﻿
+.examengine {
     font-family: "Microsoft YaHei";
     color: #333;
     background: #f0f0f0;
@@ -807,7 +808,6 @@
 
 .examlayoutbox {
     position: fixed;
-    _position: absolute;
     text-align: left;
     padding: 10px;
     background: url(../img/layer_bg.png) repeat scroll 0 0 transparent;

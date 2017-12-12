@@ -3,9 +3,11 @@
  */
 var currentAjax = null;     //ajax参数，为组卷时，需要停止准备；
 document.addEventListener('touchstart', function(){});
-var ounit = document.documentElement.clientWidth/36;
-document.documentElement.style.fontSize=ounit+'px';
-var clientheight = document.documentElement.clientHeight;
+window.onload = function(){
+    var ounit = document.documentElement.clientWidth/36;
+    document.documentElement.style.fontSize = ounit+'px';
+    var clientheight = document.documentElement.clientHeight;
+};
 
 function tab(liclass, conclass, wrap, event,fn) {
     var a_li = $(liclass);
